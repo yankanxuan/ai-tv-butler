@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI 电视管家 · 手机语音（V4.4）</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { font-family: system-ui, -apple-system, "PingFang SC", "Noto Sans CJK SC", sans-serif;
+         margin: 0; padding: 16px; line-height: 1.55; }
+  h1 { font-size: 1.15rem; margin: 0 0 4px; }
+  .hint { color: #777; font-size: .82rem; margin: 0 0 14px; }
+  .card { border: 1px solid #d5d5d5; border-radius: 12px; padding: 12px; margin-bottom: 12px; }
+  label { display: block; font-size: .85rem; margin-bottom: 6px; }
+  input[type=password], input[type=text] { width: 100%; box-sizing: border-box; padding: 10px;
+         font-size: 1rem; border: 1px solid #ccc; border-radius: 8px; }
+  button { font-size: 1rem; padding: 12px 16px; border-radius: 10px; border: 1px solid #888;
+           background: #f5f5f5; min-height: 46px; }
+  button.primary { background: #1a6ee0; color: #fff; border-color: #1a6ee0; }
+  button:disabled { opacity: .5; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; }
+  #status { font-size: .88rem; min-height: 1.4em; margin-top: 8px; }
+  #transcript { font-size: 1.02rem; background: rgba(127,127,127,.10); padding: 10px;
+                border-radius: 8px; min-height: 1.4em; word-break: break-word; }
+  #reply { white-space: pre-wrap; word-break: break-word; }
+  .cands { margin: 8px 0 0; padding-left: 1.2em; font-size: .92rem; }
+  .err { color: #c62828; }
+  .ok { color: #1b7f3b; }
+  #level { height: 6px; background: rgba(127,127,127,.2); border-radius: 3px; overflow: hidden; margin-top: 8px; }
+  #level > i { display: block; height: 100%; width: 0; background: #1a6ee0; }
+</style>
+</head>
+<body>
+<h1>AI 电视管家 · 手机语音</h1>
+<p class="hint">录音只在你按住按钮时进行；识别在 NAS 本地完成（离线 ASR），不上传云端。</p>
+
+<div class="card" id="login-card">
+  <label for="token">控制台令牌（NAS 上 <code>deploy/data/runtime/console.token</code>）</label>
+  <input id="token" type="password" autocomplete="off" placeholder="粘贴令牌后保存">
+  <div class="row" style="margin-top:10px">
+    <button class="primary" id="save">保存并检查连接</button>
+  </div>
+  <div id="status"></div>
+</div>
+
+<div class="card" id="talk-card" hidden>
+  <div class="row">
+    <button class="primary" id="rec">按住说话</button>
+    <button id="send" disabled>发送</button>
+    <button id="clear">清空</button>
+  </div>
+  <div id="level"><i></i></div>
+  <div id="status2" style="font-size:.88rem;min-height:1.3em;margin-top:6px"></div>
+  <label style="margin-top:10px">识别文本（可先改错别字再发送）</label>
+  <div id="transcript" contenteditable="true"></div>
+</div>
+
+<div class="card" id="reply-card" hidden>
+  <label>管家回复</label>
+  <div id="reply"></div>
+  <ul class="cands" id="cands"></ul>
+</div>
+
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const state = { token: '', recording: false, chunks: [], ctx: null, stream: null,
+                  proc: null, startedAt: 0, maxSeconds: 20 };
+
+  function setStatus(el, text, cls) {
+    const node = $(el);
+    node.textContent = text || '';
+    node.className = cls || '';
+  }
+
+  function savedToken() { return sessionStorage.getItem('v44token') || ''; }
+
+  async function checkConnection(token) {
+    const r = await fetch('/api/config', { headers: { 'X-Auth-Token': token } });
+    if (!r.ok) throw new Error('令牌无效或控制台不可用（HTTP ' + r.status + '）');
+    const d = await r.json();
+    const voice = (d.voice || {});
+    return { voice: voice.enabled === true, intelligence: !!(voice.intelligence || {}).enabled };
+  }
+
+  $('save').onclick = async () => {
+    const token = $('token').value.trim();
+    if (!token) { setStatus('status', '请先粘贴令牌', 'err'); return; }
+    setStatus('status', '正在检查…');
+    try {
+      const info = await checkConnection(token);
+      sessionStorage.setItem('v44token', token);
+      state.token = token;
+      $('login-card').hidden = true;
+      $('talk-card').hidden = false;
+      $('reply-card').hidden = false;
+      setStatus('status2', '已连接（语音 ' + (info.voice ? '开' : '关') +
+                           ' / 语义 ' + (info.intelligence ? '开' : '关') + '）', 'ok');
+    } catch (e) {
+      setStatus('status', e.message, 'err');
+    }
+  };
+
+  // ---- 16k mono PCM capture -------------------------------------------
+  function downsample(buffer, fromRate, toRate) {
+    if (fromRate === toRate) return buffer;
+    const ratio = fromRate / toRate;
+    const length = Math.round(buffer.length / ratio);
+    const out = new Float32Array(length);
+    for (let i = 0; i < length; i++) {
+      const start = Math.floor(i * ratio);
+      const end = Math.min(buffer.length, Math.floor((i + 1) * ratio));
+      let sum = 0, n = 0;
+      for (let j = start; j < end; j++) { sum += buffer[j]; n++; }
+      out[i] = n ? sum / n : 0;
+    }
+    return out;
+  }
+
+  function encodeWav(samples, rate) {
+    const buffer = new ArrayBuffer(44 + samples.length * 2);
+    const view = new DataView(buffer);
+    const writeStr = (offset, str) => {
+      for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i));
+    };
+    writeStr(0, 'RIFF');
+    view.setUint32(4, 36 + samples.length * 2, true);
+    writeStr(8, 'WAVE');
+    writeStr(12, 'fmt ');
+    view.setUint32(16, 16, true);
+    view.setUint16(20, 1, true);              // PCM
+    view.setUint16(22, 1, true);              // mono
+    view.setUint32(24, rate, true);
+    view.setUint32(28, rate * 2, true);
+    view.setUint16(32, 2, true);
+    view.setUint16(34, 16, true);
+    writeStr(36, 'data');
+    view.setUint32(40, samples.length * 2, true);
+    let offset = 44;
+    for (let i = 0; i < samples.length; i++, offset += 2) {
+      const s = Math.max(-1, Math.min(1, samples[i]));
+      view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7fff, true);
+    }
+    return new Blob([view], { type: 'audio/wav' });
+  }
+
+  async function startRecording() {
+    if (state.recording) return;
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      setStatus('status2', '此浏览器不支持录音（需要 HTTPS 与 getUserMedia）', 'err');
+      return;
+    }
+    try {
+      state.stream = await navigator.mediaDevices.getUserMedia({
+        audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true } });
+    } catch (e) {
+      setStatus('status2', '麦克风被拒绝或不可用：' + e.name, 'err');
+      return;
+    }
+    state.ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const src = state.ctx.createMediaStreamSource(state.stream);
+    state.proc = state.ctx.createScriptProcessor(4096, 1, 1);
+    state.chunks = [];
+    const bar = $('level').firstElementChild;
+    state.proc.onaudioprocess = (e) => {
+      const data = e.inputBuffer.getChannelData(0);
+      state.chunks.push(new Float32Array(data));
+      let peak = 0;
+      for (let i = 0; i < data.length; i += 16) peak = Math.max(peak, Math.abs(data[i]));
+      bar.style.width = Math.min(100, Math.round(peak * 140)) + '%';
+    };
+    src.connect(state.proc);
+    state.proc.connect(state.ctx.destination);
+    state.recording = true;
+    state.startedAt = Date.now();
+    $('rec').textContent = '松开结束';
+    setStatus('status2', '正在录音…（最长 ' + state.maxSeconds + ' 秒）');
+    state.timer = setTimeout(stopRecording, state.maxSeconds * 1000);
+  }
+
+  async function stopRecording() {
+    if (!state.recording) return;
+    state.recording = false;
+    clearTimeout(state.timer);
+    $('rec').textContent = '按住说话';
+    $('level').firstElementChild.style.width = '0';
+    try { state.proc.disconnect(); } catch (e) {}
+    try { state.stream.getTracks().forEach((t) => t.stop()); } catch (e) {}
+    const rate = state.ctx ? state.ctx.sampleRate : 16000;
+    try { await state.ctx.close(); } catch (e) {}
+    const total = state.chunks.reduce((n, c) => n + c.length, 0);
+    if (total < rate * 0.25) { setStatus('status2', '录音太短，请按住多说一会儿', 'err'); return; }
+    const merged = new Float32Array(total);
+    let offset = 0;
+    for (const chunk of state.chunks) { merged.set(chunk, offset); offset += chunk.length; }
+    const wav = encodeWav(downsample(merged, rate, 16000), 16000);
+    setStatus('status2', '正在本地识别…（' + (wav.size / 1024).toFixed(0) + ' KB）');
+    try {
+      const r = await fetch('/phone/transcribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'audio/wav', 'X-Auth-Token': state.token },
+        body: wav,
+      });
+      const d = await r.json();
+      if (!r.ok) throw new Error(d.error || ('HTTP ' + r.status));
+      const text = (d.text || '').trim();
+      $('transcript').textContent = text;
+      $('send').disabled = !text;
+      setStatus('status2', text ? '已识别，请检查后发送' : '没有识别到内容，请重试', text ? 'ok' : 'err');
+    } catch (e) {
+      setStatus('status2', '识别失败：' + e.message, 'err');
+    }
+  }
+
+  $('rec').addEventListener('pointerdown', (e) => { e.preventDefault(); startRecording(); });
+  $('rec').addEventListener('pointerup', (e) => { e.preventDefault(); stopRecording(); });
+  $('rec').addEventListener('pointercancel', stopRecording);
+  $('rec').addEventListener('pointerleave', () => { if (state.recording) stopRecording(); });
+
+  $('clear').onclick = () => {
+    $('transcript').textContent = '';
+    $('reply').textContent = '';
+    $('cands').innerHTML = '';
+    $('send').disabled = true;
+    setStatus('status2', '');
+  };
+
+  $('send').onclick = async () => {
+    const text = ($('transcript').textContent || '').trim();
+    if (!text) return;
+    $('send').disabled = true;
+    setStatus('status2', '管家正在处理…');
+    try {
+      const r = await fetch('/phone/voice', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Auth-Token': state.token },
+        body: JSON.stringify({ text: text, source: 'web_microphone' }),
+      });
+      const d = await r.json();
+      if (!r.ok) throw new Error(d.error || ('HTTP ' + r.status));
+      $('reply').textContent = d.reply || '（无回复）';
+      $('cands').innerHTML = '';
+      (d.candidates || []).slice(0, 8).forEach((c) => {
+        const li = document.createElement('li');
+        li.textContent = c.title + (c.episodes ? '（' + c.episodes + ' 集）' : '');
+        $('cands').appendChild(li);
+      });
+      setStatus('status2', '完成（' + (d.status || '') + '）', 'ok');
+    } catch (e) {
+      setStatus('status2', '失败：' + e.message, 'err');
+    } finally {
+      $('send').disabled = false;
+    }
+  };
+
+  // 恢复上次登录（仅本标签页）
+  const token = savedToken();
+  if (token) { $('token').value = token; $('save').click(); }
+})();
+</script>
+</body>
+</html>

@@ -319,3 +319,43 @@ chmod 600 key.pem cert.pem
 `docker-compose.voice-portal.yml`（8443/8765 实验栈）是 V4.1 的门户，它的提交路径是旧的
 `/api/tool` + `/api/runs`，**不经过 V4.4 的 `VoiceDialogue`**。手机端要验证 V4.4 自然语言能力，
 用本文的 HTTPS 网关 + 控制台页面；要验证「NAS 本地离线 ASR」，用独立 ASR 实验服务。
+
+### 手机页面（离线 ASR，推荐）
+
+浏览器 Web Speech 在部分国产 ROM / 内置浏览器上不可用（`语音不可用：aborted`），因此网关另提供
+一个**不依赖浏览器语音服务**的页面：手机录音 → 上传到 NAS → 本地 sherpa-onnx 离线识别 → 文本进入
+V4.4 对话链路。
+
+启动（ASR 实验服务 + 网关）：
+
+```bash
+# 1) 离线 ASR 实验服务（模型与清单已就绪于 deploy/data/v44-portal/asr-model）
+source /tmp/asr.env      # 内含 ASR_LAB_TOKEN（≥32 位随机串）
+ASR_LAB_TOKEN=$ASR_LAB_TOKEN \
+ASR_LAB_MODEL_DIR=$HOME/ai-tv-butler/deploy/data/v44-portal/asr-model \
+ASR_LAB_AUDIO_DIR=$HOME/.cache/ai-tv-b8-asr \
+docker compose -p ai-tv-asr-lab -f docker-compose.asr-lab.yml --profile asr-lab up -d
+
+# 2) HTTPS 网关（同时提供手机页面）
+python3 scripts/v44_https_gateway.py \
+  --listen 0.0.0.0 --port 8443 \
+  --upstream http://<NAS_LAN_IP>:8771 \
+  --cert deploy/data/v44-portal/certs/cert.pem \
+  --key  deploy/data/v44-portal/certs/key.pem \
+  --page poc/v44_phone/index.html \
+  --asr-url http://127.0.0.1:8765 \
+  --asr-token-file deploy/data/v44-portal/asr.token
+```
+
+手机访问 `https://<NAS_LAN_IP>:8443/phone/`：粘贴控制台令牌 → 「按住说话」→ 松开后本地识别 →
+检查文本 → 发送 → 回复与候选显示在页面下方。
+
+接口（均要求 `X-Auth-Token`，由控制台校验）：
+
+| 方法 | 路径 | 说明 |
+|---|---|---|
+| GET | `/phone/` | 录音页面（HTTPS，CSP 限制为 self） |
+| POST | `/phone/transcribe` | `audio/wav`（≤2 MB，16 kHz 单声道）→ 离线 ASR → `{text}` |
+| POST | `/phone/voice` | `{text, source}` → 控制台 `/api/voice` → V4.4 回复与候选 |
+
+限制：单客户端识别 10 次/分钟；录音只在按住时采集，松开立即停止并关闭音轨；网关不记录请求体。
