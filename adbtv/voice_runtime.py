@@ -969,10 +969,13 @@ class VoiceDialogue:
                    else '现在没有待确认的操作，我没有执行任何电视动作。')
             return self._ask(tv,reply)
         if d.route=='clarify' and not d.requires_confirmation:
-            # A model that asks "similar to which one?" while the session already
-            # holds candidates is asking a question the session can answer.
-            if d.intent=='refine' and self.assistant is not None \
-                    and self.sessions.get(tv).recent_results:
+            # A library question the model could not classify ("不要那么长的。")
+            # is still answerable from the catalog; a vague clarify is not an
+            # answer. The assistant also covers "similar to which one?" when the
+            # session already holds candidates.
+            if self.assistant is not None and (
+                    self._library_question(text)
+                    or (d.intent=='refine' and self.sessions.get(tv).recent_results)):
                 outcome=self._assistant_turn(tv,text,extra,
                                              budget=getattr(self,'_remaining_budget',None))
                 if outcome is not None:

@@ -99,7 +99,11 @@ catalog_get_episodes / catalog_get_playback_progress` 名称与参数不变（�
 | 新增 `tests/test_assistant_v44.py` | 24 项 |
 | 新增 `tests/test_v44_dialogue_acceptance.py` | 15 条话术 + 对抗测试 |
 | 真实库 + 真实 LLM 闭环冒烟 | `docs/evidence/V44_LEAD_CLOSED_LOOP.json` |
-| 真实 LLM 验收 A–O | `docs/evidence/V44_REAL_LLM_ACCEPTANCE.json` |
+| 真实 LLM 验收 A–O（fixture + 生产库，各 reps=3） | **17/17 全部 PASS（两套数据）**，见 `docs/evidence/V44_REAL_LLM_ACCEPTANCE.json` |
+| 生产部署与端到端记录 | `docs/evidence/V44_DEPLOYMENT_RECORD.txt` |
+
+最终验收（真实模型 `cn:deepseek-v4.1-flash`，fixture 与 `/vol1/1000/影视` 各 3 次）：
+17 条话术 × 2 套数据 **全部 PASS**；延迟 P50 4.05s / P95 9.62s，峰值内存 63.1MB（tracemalloc）/ 146MB RSS。
 
 真实闭环（`scripts/v44_smoke.py`，`/vol1/1000/影视` + `cn:deepseek-v4.1-flash`）：
 

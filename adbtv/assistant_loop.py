@@ -1493,6 +1493,17 @@ class AssistantLoop:
         if genre_unverifiable:
             model_failure = 'genre_unverifiable'
             diagnostics['failed_stage'] = 'grounding'
+        # "我想看电影" in a library with zero movies must be answered from the
+        # catalog counters, not by the model picking some series instead.
+        if not genre_unverifiable and '电影' in (text or '') \
+                and not any(word in (text or '') for word in ('电视剧', '剧集', '短剧')):
+            try:
+                if not (self.tools.summary().get('movies') or 0):
+                    model_failure = 'no_movies_in_library'
+                    diagnostics['failed_stage'] = 'grounding'
+                    genre_unverifiable = True  # forces the deterministic planner
+            except Exception:  # noqa: BLE001 - a probe must never break the turn
+                pass
         if self._model_available() and not genre_unverifiable:
             context = {'library_scope': state.get('library_scope') or 'local',
                        'last_query': state.get('last_query') or {},
