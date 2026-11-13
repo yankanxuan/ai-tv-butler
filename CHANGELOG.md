@@ -2,6 +2,35 @@
 
 本文件记录各版本实际完成并验证过的内容。未验证项会明确标注。
 
+## 4.3.2（2026-11-13）媒体事实校验最后一轮专项修复
+
+基于 4.3.1 的最小增量，只改事实校验（`adbtv/assistant_loop.py`），保留 Agent / 模型路由 / 媒体库 / ADB / MCP / 语音 / SQLite / Docker 全部能力，无新增模型或引擎。
+
+**P0 推荐列表的媒体类型未核对**
+
+- 根因：`grounded()` 里 `references_returned_group()` 只用返回列表长度证明“N 部”，不检查这些条目的 `kind`，于是 3 部剧集可被说成“3 部电影”。
+- 现在：事实台账记录每次列表结果的**逐条 kind 组成**（`lists`）。分组声明按类型校验：`N 部电影` 要求返回行里至少 N 条 `kind=movie`，`N 部剧集` 要求 `kind=series`；`N 部作品` 才可按任意作品计数。类型未知（`unknown`）不能被说成电影/剧集。合法的“推荐三部作品”“选第三部”保持通过。
+
+**P0 量词变化绕过计数**
+
+- 支持 `部 / 个 / 条` 与“部片子”，以及“电影有 100 个”“电影数量为 0 部”等词序；所有数量仍绑定具体字段（movies / series / total / episodes / seasons），不用新正则取代结构化台账。
+
+**P0 影视属性编造**
+
+- 新增结构化属性证据：`years`、`title_kinds`、`genres/genres_by_title`、`runtimes`、`playback`、`recommend_reasons`。
+- 上映年份必须等于观测到的年份；作品类型必须匹配观测 kind（未知只能称未知）；题材/类型标签必须在观测 genres 中（缺失时允许“没有类型标签/无法判断”的否定表述）；时长必须匹配观测 runtime；`正在播放/正在观看`、百分比进度必须有真实 playback 观测；`评分/豆瓣/票房/导演/主演` 等工具从不返回的属性一律拒绝。
+- 原则：模型输出 = **自然语言表达 + 已验证事实引用**，数量与属性由工具结果填充；只对无法证明的“事实声明”拒绝，正常闲聊/推荐/进度/序号选择不受影响。
+
+**版本**
+
+- `adbtv/__init__.py`、`pyproject.toml`、`docker-compose.yml` 统一为 `4.3.2`；`test_image_version_matches_code_version` 同步。
+
+**测试**
+
+- 新增 `tests/test_assistant_v432.py`（24 项）；在 V4.3.1 源码上运行有 11 项失败（失败复现，见 `docs/evidence/V432_FAILURE_REPRODUCTION.txt`）。
+- 全套单元测试 **1007 通过 / 0 失败**（原 983 + 新增 24）；22 项模拟电视集成通过。
+- 真实 NAS 媒体库（movies=0, series=35）+ 真实 LLM 复验，受控对抗用例证明“推荐剧集不会被说成电影”，记录见 `docs/evidence/V432_REAL_LLM_VERIFICATION.json`。
+
 ## 4.3.1（2026-11-13）AI 管家事实可靠性修复
 
 基于 4.3.0 的增量修复，只动事实校验与播放进度识别，不重构 ADB / 媒体服务器 / SQLite / MCP / 语音 / 播放链路。

@@ -1,0 +1,1461 @@
+{
+  "generated_at": "2026-11-13T09:33:17+0800",
+  "summary": {
+    "available": true,
+    "total": 35,
+    "movies": 0,
+    "series": 35,
+    "unknown_kind": 0,
+    "episodes": 8483,
+    "metadata_missing": 35
+  },
+  "runs": [
+    {
+      "utterance": "现在资源库里有什么？",
+      "observations": [
+        {
+          "tool": "library_summary",
+          "arguments": {},
+          "result": {
+            "available": true,
+            "total": 35,
+            "movies": 0,
+            "series": 35,
+            "unknown_kind": 0,
+            "episodes": 8483,
+            "with_metadata": 0,
+            "metadata_missing": 35,
+            "ambiguous_folders": 0,
+            "ambiguous_videos": 0,
+            "roots": [
+              "<MEDIA_ROOT>"
+            ],
+            "index_age_seconds": 154239.08141946793,
+            "errors": []
+          }
+        },
+        {
+          "tool": "library_browse",
+          "arguments": {
+            "kind": "any",
+            "sort": "title",
+            "limit": 20
+          },
+          "result": {
+            "kind": "any",
+            "sort": "title",
+            "total": 35,
+            "items": [
+              {
+                "id": "3a6c4d7029ba3aa71e851c1b",
+                "title": "作品1",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 107,
+                "seasons": [
+                  3
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1793937251.42597,
+                "season": null,
+                "episode": null
+              },
+              {
+                "id": "07f4dd129959ad2594a94013",
+                "title": "作品2",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 202,
+                "seasons": [
+                  14
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1793995869.587782,
+                "season": null,
+                "episode": null
+              },
+              {
+                "id": "c68f2f337ac96e70cc70f4aa",
+                "title": "作品3",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 226,
+                "seasons": [
+                  4
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1793715137.0005803,
+                "season": null,
+                "episode": null
+              },
+              {
+                "id": "3700e476cf08265cf7ca85b2",
+                "title": "作品4",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 257,
+                "seasons": [
+                  1
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1794271247.1754944,
+                "season": null,
+                "episode": null
+              },
+              {
+                "id": "9b9db5294cfe9b7d92f2fa96",
+                "title": "作品5",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 73,
+                "seasons": [
+                  1
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1794287826.2753475,
+                "season": null,
+                "episode": null
+              },
+              {
+                "id": "f4c868189de03cee0490cf67",
+                "title": "作品6",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 18,
+                "seasons": [
+                  1
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1794287964.861153,
+                "season": null,
+                "episode": null
+              },
+              {
+                "id": "aa11654c5d453e7eda22932a",
+                "title": "作品7",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 151,
+                "seasons": [
+                  1
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1793782334.5251179,
+                "season": null,
+                "episode": null
+              },
+              {
+                "id": "ed66b1d214d3f9b7e855a7f8",
+                "title": "作品8",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 308,
+                "seasons": [
+                  1
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1793943148.025297,
+                "season": null,
+                "episode": null
+              },
+              {
+                "id": "eeed1516963ef82726441bd4",
+                "title": "作品9",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 142,
+                "seasons": [
+                  1
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1793780617.7527635,
+                "season": null,
+                "episode": null
+              },
+              {
+                "id": "42115a642f47a52b91b08159",
+                "title": "作品10",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 318,
+                "seasons": [
+                  1
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1793764618.5426257,
+                "season": null,
+                "episode": null
+              },
+              {
+                "id": "fa093543e8489faff1d9515f",
+                "title": "作品11",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 1000,
+                "seasons": [
+                  1
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1793938675.154941,
+                "season": null,
+                "episode": null
+              },
+              {
+                "id": "889b3447c19769f727fa4811",
+                "title": "作品12",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 60,
+                "seasons": [
+                  1
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1794288690.454461,
+                "season": null,
+                "episode": null
+              },
+              {
+                "id": "18345b99124249cb4b295888",
+                "title": "作品13",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 60,
+                "seasons": [
+                  1
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1793870770.712453,
+                "season": null,
+                "episode": null
+              },
+              {
+                "id": "19a87d781516fa11f2db2bb4",
+                "title": "作品14",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 2,
+                "seasons": [
+                  1
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1790969387.6379862,
+                "season": null,
+                "episode": null
+              },
+              {
+                "id": "b2c33eb208286246b5c6fe64",
+                "title": "作品15",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 265,
+                "seasons": [
+                  1
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1793778620.118809,
+                "season": null,
+                "episode": null
+              },
+              {
+                "id": "cadc97ff222cb08035d68cf0",
+                "title": "作品16",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 2,
+                "seasons": [
+                  1
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1790837557.0,
+                "season": null,
+                "episode": null
+              },
+              {
+                "id": "ce92dd5d999c1b86065624ad",
+                "title": "作品17",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 99,
+                "seasons": [
+                  1
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1794289300.2123833,
+                "season": null,
+                "episode": null
+              },
+              {
+                "id": "ca5d0a8554a1a9fab4132a47",
+                "title": "作品18",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 351,
+                "seasons": [
+                  1
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1794220618.837664,
+                "season": null,
+                "episode": null
+              },
+              {
+                "id": "8d108492045e64b7d2564a68",
+                "title": "作品19",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 179,
+                "seasons": [
+                  1
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1793872739.9380927,
+                "season": null,
+                "episode": null
+              },
+              {
+                "id": "97828abdd621cc8d43fad655",
+                "title": "作品20",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 190,
+                "seasons": [
+                  1
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1793871539.058063,
+                "season": null,
+                "episode": null
+              }
+            ]
+          }
+        }
+      ],
+      "rejected_model_answers": [
+        "本地影视库目前共 35 部作品，全部是剧集，没有电影，合计 8483 集。元数据覆盖为 0，35 部都没有类型标签等信息，所以暂时无法按类型筛选。\n\n按片名排序，前几部是：《作品1》（107 集）、《作品2》（202 集）、《作品3》（226 集）、《作品4》（257 集）、《作品8》（308 集）、《作品10》（318 集）、《作品18》（351 集）、《作品11》（1000 集）等。需要我按集数或入库时间再排一下，或者帮你挑几部看看吗？"
+      ],
+      "result": {
+        "status": "SUCCESS",
+        "reply": "找到 35 部影视作品：1.《作品1》（2026） · 107 集；2.《作品2》（2026） · 202 集；3.《作品3》（2026） · 226 集；4.《作品4》（2026） · 257 集；5.《作品5》（2026） · 73 集；6.《作品6》（2026） · 18 集；7.《作品7》（2026） · 151 集；8.《作品8》（2026） · 308 集；9.《作品9》（2026） · 142 集；10.《作品10》（2026） · 318 集；11.《作品11》（2026） · 1000 集；12.《作品12》（2026） · 60 集；13.《作品13》（2026） · 60 集；14.《作品14》（2026） · 2 集；15.《作品15》（2026） · 265 集；16.《作品16》（2026） · 2 集；17.《作品17》（2026） · 99 集；18.《作品18》（2026） · 351 集；19.《作品19》（2026） · 179 集；20.《作品20》（2026） · 190 集。可以说“第几部”继续选择。",
+        "candidates": [
+          {
+            "id": "3a6c4d7029ba3aa71e851c1b",
+            "title": "作品1",
+            "year": 2026,
+            "kind": "series",
+            "genres": [],
+            "region": null,
+            "episodes": 107,
+            "seasons": [
+              3
+            ],
+            "runtime_minutes": null,
+            "updated_at": 1793937251.42597,
+            "season": null,
+            "episode": null
+          },
+          {
+            "id": "07f4dd129959ad2594a94013",
+            "title": "作品2",
+            "year": 2026,
+            "kind": "series",
+            "genres": [],
+            "region": null,
+            "episodes": 202,
+            "seasons": [
+              14
+            ],
+            "runtime_minutes": null,
+            "updated_at": 1793995869.587782,
+            "season": null,
+            "episode": null
+          },
+          {
+            "id": "c68f2f337ac96e70cc70f4aa",
+            "title": "作品3",
+            "year": 2026,
+            "kind": "series",
+            "genres": [],
+            "region": null,
+            "episodes": 226,
+            "seasons": [
+              4
+            ],
+            "runtime_minutes": null,
+            "updated_at": 1793715137.0005803,
+            "season": null,
+            "episode": null
+          },
+          {
+            "id": "3700e476cf08265cf7ca85b2",
+            "title": "作品4",
+            "year": 2026,
+            "kind": "series",
+            "genres": [],
+            "region": null,
+            "episodes": 257,
+            "seasons": [
+              1
+            ],
+            "runtime_minutes": null,
+            "updated_at": 1794271247.1754944,
+            "season": null,
+            "episode": null
+          },
+          {
+            "id": "9b9db5294cfe9b7d92f2fa96",
+            "title": "作品5",
+            "year": 2026,
+            "kind": "series",
+            "genres": [],
+            "region": null,
+            "episodes": 73,
+            "seasons": [
+              1
+            ],
+            "runtime_minutes": null,
+            "updated_at": 1794287826.2753475,
+            "season": null,
+            "episode": null
+          },
+          {
+            "id": "f4c868189de03cee0490cf67",
+            "title": "作品6",
+            "year": 2026,
+            "kind": "series",
+            "genres": [],
+            "region": null,
+            "episodes": 18,
+            "seasons": [
+              1
+            ],
+            "runtime_minutes": null,
+            "updated_at": 1794287964.861153,
+            "season": null,
+            "episode": null
+          },
+          {
+            "id": "aa11654c5d453e7eda22932a",
+            "title": "作品7",
+            "year": 2026,
+            "kind": "series",
+            "genres": [],
+            "region": null,
+            "episodes": 151,
+            "seasons": [
+              1
+            ],
+            "runtime_minutes": null,
+            "updated_at": 1793782334.5251179,
+            "season": null,
+            "episode": null
+          },
+          {
+            "id": "ed66b1d214d3f9b7e855a7f8",
+            "title": "作品8",
+            "year": 2026,
+            "kind": "series",
+            "genres": [],
+            "region": null,
+            "episodes": 308,
+            "seasons": [
+              1
+            ],
+            "runtime_minutes": null,
+            "updated_at": 1793943148.025297,
+            "season": null,
+            "episode": null
+          },
+          {
+            "id": "eeed1516963ef82726441bd4",
+            "title": "作品9",
+            "year": 2026,
+            "kind": "series",
+            "genres": [],
+            "region": null,
+            "episodes": 142,
+            "seasons": [
+              1
+            ],
+            "runtime_minutes": null,
+            "updated_at": 1793780617.7527635,
+            "season": null,
+            "episode": null
+          },
+          {
+            "id": "42115a642f47a52b91b08159",
+            "title": "作品10",
+            "year": 2026,
+            "kind": "series",
+            "genres": [],
+            "region": null,
+            "episodes": 318,
+            "seasons": [
+              1
+            ],
+            "runtime_minutes": null,
+            "updated_at": 1793764618.5426257,
+            "season": null,
+            "episode": null
+          },
+          {
+            "id": "fa093543e8489faff1d9515f",
+            "title": "作品11",
+            "year": 2026,
+            "kind": "series",
+            "genres": [],
+            "region": null,
+            "episodes": 1000,
+            "seasons": [
+              1
+            ],
+            "runtime_minutes": null,
+            "updated_at": 1793938675.154941,
+            "season": null,
+            "episode": null
+          },
+          {
+            "id": "889b3447c19769f727fa4811",
+            "title": "作品12",
+            "year": 2026,
+            "kind": "series",
+            "genres": [],
+            "region": null,
+            "episodes": 60,
+            "seasons": [
+              1
+            ],
+            "runtime_minutes": null,
+            "updated_at": 1794288690.454461,
+            "season": null,
+            "episode": null
+          },
+          {
+            "id": "18345b99124249cb4b295888",
+            "title": "作品13",
+            "year": 2026,
+            "kind": "series",
+            "genres": [],
+            "region": null,
+            "episodes": 60,
+            "seasons": [
+              1
+            ],
+            "runtime_minutes": null,
+            "updated_at": 1793870770.712453,
+            "season": null,
+            "episode": null
+          },
+          {
+            "id": "19a87d781516fa11f2db2bb4",
+            "title": "作品14",
+            "year": 2026,
+            "kind": "series",
+            "genres": [],
+            "region": null,
+            "episodes": 2,
+            "seasons": [
+              1
+            ],
+            "runtime_minutes": null,
+            "updated_at": 1790969387.6379862,
+            "season": null,
+            "episode": null
+          },
+          {
+            "id": "b2c33eb208286246b5c6fe64",
+            "title": "作品15",
+            "year": 2026,
+            "kind": "series",
+            "genres": [],
+            "region": null,
+            "episodes": 265,
+            "seasons": [
+              1
+            ],
+            "runtime_minutes": null,
+            "updated_at": 1793778620.118809,
+            "season": null,
+            "episode": null
+          },
+          {
+            "id": "cadc97ff222cb08035d68cf0",
+            "title": "作品16",
+            "year": 2026,
+            "kind": "series",
+            "genres": [],
+            "region": null,
+            "episodes": 2,
+            "seasons": [
+              1
+            ],
+            "runtime_minutes": null,
+            "updated_at": 1790837557.0,
+            "season": null,
+            "episode": null
+          },
+          {
+            "id": "ce92dd5d999c1b86065624ad",
+            "title": "作品17",
+            "year": 2026,
+            "kind": "series",
+            "genres": [],
+            "region": null,
+            "episodes": 99,
+            "seasons": [
+              1
+            ],
+            "runtime_minutes": null,
+            "updated_at": 1794289300.2123833,
+            "season": null,
+            "episode": null
+          },
+          {
+            "id": "ca5d0a8554a1a9fab4132a47",
+            "title": "作品18",
+            "year": 2026,
+            "kind": "series",
+            "genres": [],
+            "region": null,
+            "episodes": 351,
+            "seasons": [
+              1
+            ],
+            "runtime_minutes": null,
+            "updated_at": 1794220618.837664,
+            "season": null,
+            "episode": null
+          },
+          {
+            "id": "8d108492045e64b7d2564a68",
+            "title": "作品19",
+            "year": 2026,
+            "kind": "series",
+            "genres": [],
+            "region": null,
+            "episodes": 179,
+            "seasons": [
+              1
+            ],
+            "runtime_minutes": null,
+            "updated_at": 1793872739.9380927,
+            "season": null,
+            "episode": null
+          },
+          {
+            "id": "97828abdd621cc8d43fad655",
+            "title": "作品20",
+            "year": 2026,
+            "kind": "series",
+            "genres": [],
+            "region": null,
+            "episodes": 190,
+            "seasons": [
+              1
+            ],
+            "runtime_minutes": null,
+            "updated_at": 1793871539.058063,
+            "season": null,
+            "episode": null
+          }
+        ],
+        "tool_trace": [
+          {
+            "tool": "library_summary",
+            "status": "ok",
+            "arguments": {}
+          },
+          {
+            "tool": "library_browse",
+            "status": "ok",
+            "arguments": {
+              "kind": "any",
+              "sort": "title",
+              "limit": 20
+            }
+          }
+        ],
+        "answer_source": "local_catalog",
+        "diagnostics": {
+          "model_name": "cn:deepseek-v4.1-flash",
+          "decision_source": "deterministic",
+          "tool_name": "library_browse",
+          "tool_status": "ok",
+          "llm_latency_ms": 6666.68726199714,
+          "tool_latency_ms": 0.5718280008295551,
+          "total_latency_ms": 6677.853815002891,
+          "fallback_reason": "ungrounded_answer",
+          "steps": 3,
+          "budget_seconds": 45.0,
+          "failed_stage": null,
+          "answer_source": "local_catalog"
+        }
+      }
+    },
+    {
+      "utterance": "一共有多少部电影？",
+      "observations": [
+        {
+          "tool": "library_summary",
+          "arguments": {},
+          "result": {
+            "available": true,
+            "total": 35,
+            "movies": 0,
+            "series": 35,
+            "unknown_kind": 0,
+            "episodes": 8483,
+            "with_metadata": 0,
+            "metadata_missing": 35,
+            "ambiguous_folders": 0,
+            "ambiguous_videos": 0,
+            "roots": [
+              "<MEDIA_ROOT>"
+            ],
+            "index_age_seconds": 154245.64844179153,
+            "errors": []
+          }
+        }
+      ],
+      "rejected_model_answers": [],
+      "result": {
+        "status": "SUCCESS",
+        "reply": "本地影视库里目前没有电影：共 35 部作品，全部都是剧集，合计 8483 集；这 35 部的元数据都缺失。",
+        "candidates": [],
+        "tool_trace": [
+          {
+            "tool": "library_summary",
+            "status": "ok",
+            "arguments": {}
+          }
+        ],
+        "answer_source": "local_catalog",
+        "diagnostics": {
+          "model_name": "cn:deepseek-v4.1-flash",
+          "decision_source": "llm",
+          "tool_name": "library_summary",
+          "tool_status": "ok",
+          "llm_latency_ms": 3437.6286229962716,
+          "tool_latency_ms": 0.11756100138882175,
+          "total_latency_ms": 3438.502220000373,
+          "fallback_reason": null,
+          "steps": 2,
+          "budget_seconds": 45.0,
+          "failed_stage": null,
+          "answer_source": "local_catalog"
+        }
+      }
+    },
+    {
+      "utterance": "有多少部电视剧？",
+      "observations": [
+        {
+          "tool": "library_summary",
+          "arguments": {},
+          "result": {
+            "available": true,
+            "total": 35,
+            "movies": 0,
+            "series": 35,
+            "unknown_kind": 0,
+            "episodes": 8483,
+            "with_metadata": 0,
+            "metadata_missing": 35,
+            "ambiguous_folders": 0,
+            "ambiguous_videos": 0,
+            "roots": [
+              "<MEDIA_ROOT>"
+            ],
+            "index_age_seconds": 154249.33027553558,
+            "errors": []
+          }
+        }
+      ],
+      "rejected_model_answers": [],
+      "result": {
+        "status": "SUCCESS",
+        "reply": "本地影视库共有 35 部电视剧（剧集）。当前 35 部均缺少元数据。",
+        "candidates": [],
+        "tool_trace": [
+          {
+            "tool": "library_summary",
+            "status": "ok",
+            "arguments": {}
+          }
+        ],
+        "answer_source": "local_catalog",
+        "diagnostics": {
+          "model_name": "cn:deepseek-v4.1-flash",
+          "decision_source": "llm",
+          "tool_name": "library_summary",
+          "tool_status": "ok",
+          "llm_latency_ms": 4205.3535930026555,
+          "tool_latency_ms": 0.12181799684185535,
+          "total_latency_ms": 4206.371378000767,
+          "fallback_reason": null,
+          "steps": 2,
+          "budget_seconds": 45.0,
+          "failed_stage": null,
+          "answer_source": "local_catalog"
+        }
+      }
+    },
+    {
+      "utterance": "给我推荐三部。",
+      "observations": [
+        {
+          "tool": "library_recommend",
+          "arguments": {
+            "limit": 3
+          },
+          "result": {
+            "preferences": [],
+            "kind": "any",
+            "max_episodes": null,
+            "excluded": 0,
+            "total": 35,
+            "items": [
+              {
+                "id": "7a52615b3bbdba3beb2670d5",
+                "title": "穿成野神我靠香火斩诸神",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 1305,
+                "seasons": [
+                  1,
+                  5,
+                  6,
+                  8,
+                  9,
+                  10,
+                  11
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1794284626.81589,
+                "season": null,
+                "episode": null,
+                "reasons": [
+                  "本地已入库"
+                ]
+              },
+              {
+                "id": "3700e476cf08265cf7ca85b2",
+                "title": "作品4",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 257,
+                "seasons": [
+                  1
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1794271247.1754944,
+                "season": null,
+                "episode": null,
+                "reasons": [
+                  "本地已入库"
+                ]
+              },
+              {
+                "id": "ca5d0a8554a1a9fab4132a47",
+                "title": "作品18",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 351,
+                "seasons": [
+                  1
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1794220618.837664,
+                "season": null,
+                "episode": null,
+                "reasons": [
+                  "本地已入库"
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "rejected_model_answers": [],
+      "result": {
+        "status": "SUCCESS",
+        "reply": "从本地库里给你挑了3部，都是剧集，且暂无类型标签，可以按片名了解：\n1.《作品21》（2026年，1305集，含第1、5、6、8、9、10、11季）\n2.《作品4》（2026年，257集，第1季）\n3.《作品18》（2026年，351集，第1季）\n需要我直接帮你播放其中某一部吗？",
+        "candidates": [],
+        "tool_trace": [
+          {
+            "tool": "library_recommend",
+            "status": "ok",
+            "arguments": {
+              "limit": 3
+            }
+          }
+        ],
+        "answer_source": "local_catalog",
+        "diagnostics": {
+          "model_name": "cn:deepseek-v4.1-flash",
+          "decision_source": "llm",
+          "tool_name": "library_recommend",
+          "tool_status": "ok",
+          "llm_latency_ms": 4164.521289996628,
+          "tool_latency_ms": 1.253670001460705,
+          "total_latency_ms": 4172.215088001394,
+          "fallback_reason": null,
+          "steps": 2,
+          "budget_seconds": 45.0,
+          "failed_stage": null,
+          "answer_source": "local_catalog"
+        }
+      }
+    },
+    {
+      "utterance": "我上次看到哪一集？",
+      "observations": [
+        {
+          "tool": "catalog_get_playback_progress",
+          "arguments": {},
+          "result": {
+            "source": "none",
+            "available": false,
+            "reason": "no_playback_record",
+            "playing": false
+          }
+        }
+      ],
+      "rejected_model_answers": [
+        "目前没有查到你的播放记录，所以看不出上次看到哪一集。你可以直接告诉我正在看的剧名，我帮你查季集结构。"
+      ],
+      "result": {
+        "status": "SUCCESS",
+        "reply": "我还没有记录到你上次播放到哪一集。可以说片名让我查，或说“随便推荐一部”。",
+        "candidates": [],
+        "tool_trace": [
+          {
+            "tool": "catalog_get_playback_progress",
+            "status": "ok",
+            "arguments": {}
+          }
+        ],
+        "answer_source": "device_status",
+        "diagnostics": {
+          "model_name": "cn:deepseek-v4.1-flash",
+          "decision_source": "deterministic",
+          "tool_name": "catalog_get_playback_progress",
+          "tool_status": "ok",
+          "llm_latency_ms": 3616.489610998542,
+          "tool_latency_ms": 0.01369600067846477,
+          "total_latency_ms": 3617.1539329952793,
+          "fallback_reason": "ungrounded_answer",
+          "steps": 2,
+          "budget_seconds": 45.0,
+          "failed_stage": null,
+          "answer_source": "device_status"
+        }
+      }
+    },
+    {
+      "utterance": "给我推荐三部",
+      "scripted_replies": [
+        "{\"action\":\"tool\",\"tool\":\"catalog_recommend\",\"arguments\":{\"limit\":3}}",
+        "{\"action\":\"answer\",\"text\":\"我给你推荐了三部电影：《作品21》、《作品4》、《作品18》。\"}"
+      ],
+      "observations": [
+        {
+          "tool": "catalog_recommend",
+          "arguments": {
+            "limit": 3
+          },
+          "result": {
+            "preferences": [],
+            "kind": "any",
+            "max_episodes": null,
+            "excluded": 0,
+            "total": 35,
+            "items": [
+              {
+                "id": "7a52615b3bbdba3beb2670d5",
+                "title": "穿成野神我靠香火斩诸神",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 1305,
+                "seasons": [
+                  1,
+                  5,
+                  6,
+                  8,
+                  9,
+                  10,
+                  11
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1794284626.81589,
+                "season": null,
+                "episode": null,
+                "reasons": [
+                  "本地已入库"
+                ]
+              },
+              {
+                "id": "3700e476cf08265cf7ca85b2",
+                "title": "作品4",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 257,
+                "seasons": [
+                  1
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1794271247.1754944,
+                "season": null,
+                "episode": null,
+                "reasons": [
+                  "本地已入库"
+                ]
+              },
+              {
+                "id": "ca5d0a8554a1a9fab4132a47",
+                "title": "作品18",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 351,
+                "seasons": [
+                  1
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1794220618.837664,
+                "season": null,
+                "episode": null,
+                "reasons": [
+                  "本地已入库"
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "result": {
+        "status": "SUCCESS",
+        "reply": "从本地已入库内容里给你挑了这几部：1.《作品21》（2026） · 1305 集；2.《作品4》（2026） · 257 集；3.《作品18》（2026） · 351 集。可以说“第几部”继续选择。",
+        "candidates": [
+          {
+            "id": "7a52615b3bbdba3beb2670d5",
+            "title": "穿成野神我靠香火斩诸神",
+            "year": 2026,
+            "kind": "series",
+            "genres": [],
+            "region": null,
+            "episodes": 1305,
+            "seasons": [
+              1,
+              5,
+              6,
+              8,
+              9,
+              10,
+              11
+            ],
+            "runtime_minutes": null,
+            "updated_at": 1794284626.81589,
+            "season": null,
+            "episode": null,
+            "reasons": [
+              "本地已入库"
+            ]
+          },
+          {
+            "id": "3700e476cf08265cf7ca85b2",
+            "title": "作品4",
+            "year": 2026,
+            "kind": "series",
+            "genres": [],
+            "region": null,
+            "episodes": 257,
+            "seasons": [
+              1
+            ],
+            "runtime_minutes": null,
+            "updated_at": 1794271247.1754944,
+            "season": null,
+            "episode": null,
+            "reasons": [
+              "本地已入库"
+            ]
+          },
+          {
+            "id": "ca5d0a8554a1a9fab4132a47",
+            "title": "作品18",
+            "year": 2026,
+            "kind": "series",
+            "genres": [],
+            "region": null,
+            "episodes": 351,
+            "seasons": [
+              1
+            ],
+            "runtime_minutes": null,
+            "updated_at": 1794220618.837664,
+            "season": null,
+            "episode": null,
+            "reasons": [
+              "本地已入库"
+            ]
+          }
+        ],
+        "tool_trace": [
+          {
+            "tool": "catalog_recommend",
+            "status": "ok",
+            "arguments": {
+              "limit": 3
+            }
+          }
+        ],
+        "answer_source": "local_catalog",
+        "diagnostics": {
+          "model_name": "scripted-adversarial",
+          "decision_source": "deterministic",
+          "tool_name": "catalog_recommend",
+          "tool_status": "ok",
+          "llm_latency_ms": 1.0454919975018129,
+          "tool_latency_ms": 0.8910149990697391,
+          "total_latency_ms": 3.1778499978827313,
+          "fallback_reason": "ungrounded_answer",
+          "steps": 2,
+          "budget_seconds": 30.0,
+          "failed_stage": null,
+          "answer_source": "local_catalog"
+        }
+      },
+      "adversarial": "recommend_series_as_movies"
+    },
+    {
+      "utterance": "本地有多少电影",
+      "scripted_replies": [
+        "{\"action\":\"tool\",\"tool\":\"catalog_summary\",\"arguments\":{}}",
+        "{\"action\":\"answer\",\"text\":\"我查到有100个电影。\"}"
+      ],
+      "observations": [
+        {
+          "tool": "catalog_summary",
+          "arguments": {},
+          "result": {
+            "available": true,
+            "total": 35,
+            "movies": 0,
+            "series": 35,
+            "unknown_kind": 0,
+            "episodes": 8483,
+            "with_metadata": 0,
+            "metadata_missing": 35,
+            "ambiguous_folders": 0,
+            "ambiguous_videos": 0,
+            "roots": [
+              "<MEDIA_ROOT>"
+            ],
+            "index_age_seconds": 154259.42096853256,
+            "errors": []
+          }
+        }
+      ],
+      "result": {
+        "status": "SUCCESS",
+        "reply": "本地影视库共 35 部作品（8483 集），其中电影 0 部、剧集 35 部。其中 35 部缺少类型/地区元数据（没有 NFO 信息），所以我不会猜测它们的类型。",
+        "candidates": [],
+        "tool_trace": [
+          {
+            "tool": "catalog_summary",
+            "status": "ok",
+            "arguments": {}
+          }
+        ],
+        "answer_source": "local_catalog",
+        "diagnostics": {
+          "model_name": "scripted-adversarial",
+          "decision_source": "deterministic",
+          "tool_name": "catalog_summary",
+          "tool_status": "ok",
+          "llm_latency_ms": 0.6774090070393868,
+          "tool_latency_ms": 0.5833230025018565,
+          "total_latency_ms": 1.8696129991440102,
+          "fallback_reason": "ungrounded_answer",
+          "steps": 2,
+          "budget_seconds": 30.0,
+          "failed_stage": null,
+          "answer_source": "local_catalog"
+        }
+      },
+      "adversarial": "quantifier_100_ge"
+    },
+    {
+      "utterance": "资源库里有什么",
+      "scripted_replies": [
+        "{\"action\":\"tool\",\"tool\":\"catalog_list\",\"arguments\":{\"kind\":\"any\",\"limit\":5}}",
+        "{\"action\":\"answer\",\"text\":\"《作品21》拍摄于2099年。\"}"
+      ],
+      "observations": [
+        {
+          "tool": "catalog_list",
+          "arguments": {
+            "kind": "any",
+            "limit": 5
+          },
+          "result": {
+            "kind": "any",
+            "sort": "title",
+            "total": 35,
+            "items": [
+              {
+                "id": "3a6c4d7029ba3aa71e851c1b",
+                "title": "作品1",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 107,
+                "seasons": [
+                  3
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1793937251.42597,
+                "season": null,
+                "episode": null
+              },
+              {
+                "id": "07f4dd129959ad2594a94013",
+                "title": "作品2",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 202,
+                "seasons": [
+                  14
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1793995869.587782,
+                "season": null,
+                "episode": null
+              },
+              {
+                "id": "c68f2f337ac96e70cc70f4aa",
+                "title": "作品3",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 226,
+                "seasons": [
+                  4
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1793715137.0005803,
+                "season": null,
+                "episode": null
+              },
+              {
+                "id": "3700e476cf08265cf7ca85b2",
+                "title": "作品4",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 257,
+                "seasons": [
+                  1
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1794271247.1754944,
+                "season": null,
+                "episode": null
+              },
+              {
+                "id": "9b9db5294cfe9b7d92f2fa96",
+                "title": "作品5",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 73,
+                "seasons": [
+                  1
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1794287826.2753475,
+                "season": null,
+                "episode": null
+              }
+            ]
+          }
+        }
+      ],
+      "result": {
+        "status": "SUCCESS",
+        "reply": "找到 35 部影视作品：1.《作品1》（2026） · 107 集；2.《作品2》（2026） · 202 集；3.《作品3》（2026） · 226 集；4.《作品4》（2026） · 257 集；5.《作品5》（2026） · 73 集。可以说“第几部”继续选择。",
+        "candidates": [
+          {
+            "id": "3a6c4d7029ba3aa71e851c1b",
+            "title": "作品1",
+            "year": 2026,
+            "kind": "series",
+            "genres": [],
+            "region": null,
+            "episodes": 107,
+            "seasons": [
+              3
+            ],
+            "runtime_minutes": null,
+            "updated_at": 1793937251.42597,
+            "season": null,
+            "episode": null
+          },
+          {
+            "id": "07f4dd129959ad2594a94013",
+            "title": "作品2",
+            "year": 2026,
+            "kind": "series",
+            "genres": [],
+            "region": null,
+            "episodes": 202,
+            "seasons": [
+              14
+            ],
+            "runtime_minutes": null,
+            "updated_at": 1793995869.587782,
+            "season": null,
+            "episode": null
+          },
+          {
+            "id": "c68f2f337ac96e70cc70f4aa",
+            "title": "作品3",
+            "year": 2026,
+            "kind": "series",
+            "genres": [],
+            "region": null,
+            "episodes": 226,
+            "seasons": [
+              4
+            ],
+            "runtime_minutes": null,
+            "updated_at": 1793715137.0005803,
+            "season": null,
+            "episode": null
+          },
+          {
+            "id": "3700e476cf08265cf7ca85b2",
+            "title": "作品4",
+            "year": 2026,
+            "kind": "series",
+            "genres": [],
+            "region": null,
+            "episodes": 257,
+            "seasons": [
+              1
+            ],
+            "runtime_minutes": null,
+            "updated_at": 1794271247.1754944,
+            "season": null,
+            "episode": null
+          },
+          {
+            "id": "9b9db5294cfe9b7d92f2fa96",
+            "title": "作品5",
+            "year": 2026,
+            "kind": "series",
+            "genres": [],
+            "region": null,
+            "episodes": 73,
+            "seasons": [
+              1
+            ],
+            "runtime_minutes": null,
+            "updated_at": 1794287826.2753475,
+            "season": null,
+            "episode": null
+          }
+        ],
+        "tool_trace": [
+          {
+            "tool": "catalog_list",
+            "status": "ok",
+            "arguments": {
+              "kind": "any",
+              "limit": 5
+            }
+          }
+        ],
+        "answer_source": "local_catalog",
+        "diagnostics": {
+          "model_name": "scripted-adversarial",
+          "decision_source": "deterministic",
+          "tool_name": "catalog_list",
+          "tool_status": "ok",
+          "llm_latency_ms": 2.0126110030105338,
+          "tool_latency_ms": 0.24495200341334566,
+          "total_latency_ms": 3.3864969955175184,
+          "fallback_reason": "ungrounded_answer",
+          "steps": 2,
+          "budget_seconds": 30.0,
+          "failed_stage": null,
+          "answer_source": "local_catalog"
+        }
+      },
+      "adversarial": "fabricated_year"
+    }
+  ],
+  "redaction": {
+    "titles": "stable pseudonyms 作品N",
+    "paths": "<MEDIA_ROOT>",
+    "network": "<IP>",
+    "secrets": "masked"
+  }
+}

@@ -1,0 +1,28 @@
+# V4.3.2 失败复现记录（在 V4.3.1 源码 14729e0 上运行新测试）
+
+结果：24 项中 11 项失败，均为本轮要修的漏洞
+
+FAIL: test_fabricated_year_with_real_title_is_rejected (tests.test_assistant_v432.AttributeTests.test_fabricated_year_with_real_title_is_rejected)
+AssertionError: True is not false
+FAIL: test_runtime_without_metadata_is_rejected (tests.test_assistant_v432.AttributeTests.test_runtime_without_metadata_is_rejected)
+AssertionError: True is not false
+FAIL: test_year_without_metadata_is_rejected (tests.test_assistant_v432.AttributeTests.test_year_without_metadata_is_rejected)
+AssertionError: True is not false
+FAIL: test_one_movie_one_series_not_two_movies (tests.test_assistant_v432.MixedCountKindTests.test_one_movie_one_series_not_two_movies)
+AssertionError: True is not false
+FAIL: test_full_loop_keeps_real_movie_count (tests.test_assistant_v432.QuantifierTests.test_full_loop_keeps_real_movie_count)
+AssertionError: None != 'ungrounded_answer'
+FAIL: test_hundred_ge_movies_rejected (tests.test_assistant_v432.QuantifierTests.test_hundred_ge_movies_rejected)
+AssertionError: True is not false
+FAIL: test_hundred_tiao_movies_rejected (tests.test_assistant_v432.QuantifierTests.test_hundred_tiao_movies_rejected)
+AssertionError: True is not false
+FAIL: test_reversed_order_with_quantifier_rejected (tests.test_assistant_v432.QuantifierTests.test_reversed_order_with_quantifier_rejected)
+AssertionError: True is not false
+FAIL: test_full_loop_replaces_mislabelled_recommendation (tests.test_assistant_v432.RecommendKindTests.test_full_loop_replaces_mislabelled_recommendation)
+AssertionError: None != 'ungrounded_answer'
+FAIL: test_row_count_and_real_classification_mismatch (tests.test_assistant_v432.RecommendKindTests.test_row_count_and_real_classification_mismatch)
+AssertionError: True is not false
+FAIL: test_zero_movies_three_series_cannot_be_called_three_movies (tests.test_assistant_v432.RecommendKindTests.test_zero_movies_three_series_cannot_be_called_three_movies)
+AssertionError: True is not false
+Ran 24 tests in 0.450s
+FAILED (failures=11)

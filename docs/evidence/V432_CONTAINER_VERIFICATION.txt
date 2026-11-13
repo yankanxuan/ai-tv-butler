@@ -1,0 +1,22 @@
+# V4.3.2 部署后容器内复验（console 容器，镜像 ai-tv-butler:4.3.2）
+date: 2026-11-13T09:38+08:00
+镜像: ai-tv-butler:4.3.2 (sha256 0c7710a86960..., 173MB)
+容器: console/media/scheduler/voice 均 ai-tv-butler:4.3.2，health=healthy
+media_key sha256: 6300f53d...（部署前一致）
+
+version: 4.3.2
+OBS: available=True total=35 movies=0 series=35 episodes=8483
+
+Q: 一共有多少部电影？
+   status=SUCCESS source=local_catalog fallback=ungrounded_answer
+   A: 本地影视库共 35 部作品（8483 集），其中电影 0 部、剧集 35 部。…（无电影，未把剧集当电影）
+Q: 有多少部电视剧？
+   status=SUCCESS source=local_catalog fallback=None
+   A: 本地影视库共有 35 部电视剧，合计 8483 集。…
+Q: 给我推荐三部。
+   status=SUCCESS source=local_catalog fallback=None
+   A: 本地影库里给你挑了三部已入库的剧集：1.《…》（2026年，1305集）2.《…》3.《…》。这三部的类型标签都还没补全…
+ADV（受控模型输出，真实工具/真实库）: “我给你推荐了三部电影：《…》《…》《…》”
+   status=SUCCESS fallback=ungrounded_answer
+   A: 从本地已入库内容里给你挑了这几部：1.《…》 · 1305 集；2.《…》；3.《…》。可以说“第几部”继续选择。
+   核对：回答不含“电影”，含真实剧集标题 → 编造的“电影”声明被拦截并替换为真实数据。

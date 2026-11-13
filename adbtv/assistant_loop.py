@@ -50,25 +50,27 @@ _NUM_TOKEN = re.compile(_NUM)
 _TITLE_QUOTED = re.compile(r'「([^」]{1,40})」|『([^』]{1,40})』')
 
 # Count words -> the exact ledger field they must match.
-_KIND_WORDS = ('影视作品', '电视剧', '连续剧', '剧集', '短剧', '电影', '影片', '剧', '作品')
+_KIND_WORDS = ('影视作品', '电视剧', '连续剧', '剧集', '短剧', '电影', '影片', '片子', '剧', '作品')
 _KIND_FIELD = {
-    '电影': 'movies', '影片': 'movies',
+    '电影': 'movies', '影片': 'movies', '片子': 'movies',
     '剧集': 'series', '电视剧': 'series', '连续剧': 'series',
     '短剧': 'series', '剧': 'series',
     '作品': 'total', '影视作品': 'total',
 }
 _KIND_ALT = '|'.join(_KIND_WORDS)
-# "2 部电影" / "电影 2 部" / "共 2 部作品"; the (?!第) keeps "第二部" an ordinal.
+_QUANT = r'部|个|条'
+# "2 部电影" / "电影 2 部" / "电影有 100 个" / "共 2 部作品"; (?!第) keeps ordinals.
 _COUNT_BEFORE = re.compile(
-    r'(?<![第哪这那])(?P<num>' + _NUM + r')\s*部\s*(?P<word>' + _KIND_ALT + r')')
+    r'(?<![第哪])(?P<num>' + _NUM + r')\s*(?:' + _QUANT + r')\s*(?P<word>' + _KIND_ALT + r')')
 _COUNT_AFTER = re.compile(
-    r'(?P<word>' + _KIND_ALT + r')\s*(?P<num>' + _NUM + r')\s*(?:部|个)')
+    r'(?P<word>' + _KIND_ALT + r')\s*(?:数量)?\s*(?:有|共有|共|为|是)?\s*'
+    r'(?P<num>' + _NUM + r')\s*(?:' + _QUANT + r')')
 # Unit counts that are ambiguous with ordinals, so "第" is excluded.
 _EPISODE_COUNT = re.compile(r'(?<![第哪这那])(?P<num>' + _NUM + r')\s*集')
 _SEASON_COUNT = re.compile(r'(?<![第哪这那])(?P<num>' + _NUM + r')\s*季')
-# Bare "N 部" (no kind word); cannot be satisfied by a page of list items.
+# Bare "N 部/个/条" (no kind word); cannot be satisfied by a page of list items.
 _BARE_WORK = re.compile(
-    r'(?<![第哪这那])(?P<num>' + _NUM + r')\s*部'
+    r'(?<![第哪])(?P<num>' + _NUM + r')\s*(?:' + _QUANT + r')'
     r'(?!\s*(?:' + _KIND_ALT + r'|分|钟))')
 _WORK_ORDINAL = re.compile(r'第(?P<num>' + _NUM + r')\s*部')
 _ITEM_ORDINAL = re.compile(r'第(?P<num>' + _NUM + r')\s*(?:个|项)')
@@ -78,8 +80,7 @@ _SEASON_ORDINAL = re.compile(r'第(?P<num>' + _NUM + r')\s*季')
 # Verbs that introduce a work title in free text. Used only as a *candidate*
 # extractor; the candidate must still be found in the tool ledger.
 _TITLE_VERB = re.compile(
-    r'(?:推荐|看看|观看|看|播放|搜一下|搜索|搜搜|搜|找一下|找找|找|'
-    r'名为|名叫|叫做|叫|片名是)'
+    r'(?:推荐|播放|名为|名叫|叫做|叫|片名是)'
     r'\s*(?P<name>[\u4e00-\u9fffA-Za-z0-9·]{2,40})')
 _CONNECTORS = ('以及', '还有', '和', '与', '及', '、', '，', ',', '/', '或', '再', '也')
 # Everyday filler that can follow a verb without naming a work. Removed before
@@ -97,9 +98,11 @@ _FILLER = ('很好看', '挺好看', '值得一看', '值得看', '很精彩', '
            '四', '五', '六', '七', '八', '九', '十', '几', '两', '些',
            '到', '哪', '哪里', '哪儿', '第', '记录', '历史', '状态', '观测', '设备',
            '正在', '最新', '更新', '显示', '以下', '这些', '那些', '信息', '元数据',
-           '类型', '年份', '详情', '合计', '总计', '其中', '全部', '无法', '确认',
+           '类型', '类型标签', '片名', '数量', '年份', '详情', '合计', '总计', '其中', '全部', '无法', '确认',
            '更早', '继续', '选择', '需要', '筛选', '完整', '列表', '收录', '目前',
            '加入', '最近', '当前', '最近一次', '还有', '以及',
+           '结果', '清单', '条目', '索引', '地区', '时长', '大约', '约', '天',
+           '剧名', '它', '结构', '季集', '集数',
            '悬疑', '科幻', '喜剧', '爱情', '动作', '犯罪', '历史剧', '战争', '恐怖',
            '家庭', '动画', '纪录片', '奇幻', '武侠', '都市', '古装')
 _TIME_CLOCK = re.compile(r'\d{1,2}\s*[:：]\s*\d{2}')
@@ -108,6 +111,34 @@ _TIME_CLOCK = re.compile(r'\d{1,2}\s*[:：]\s*\d{2}')
 _TIME_CN = re.compile(
     r'(?<!第)(?:\d{1,2}|[零〇一二三四五六七八九十两]{1,3})\s*点'
     r'(?:半|(?:\s*(?:\d{1,2}|[零〇一二三四五六七八九十]{1,3})\s*分))')
+
+# ---------------------------------------------------------------------------
+# Attribute claims (V4.3.2). Counts alone never prove a year, a media type, a
+# genre, a runtime, a recency/reason or a live playback state; those must be
+# present in the tool observation. When metadata is missing, the model may say
+# so (negated forms below) but must not fill it in.
+# ---------------------------------------------------------------------------
+_YEAR_CLAIM = re.compile(r'(?<!\d)(\d{4})\s*年')
+_KIND_CLAIM = re.compile(
+    r'《(?P<title>[^》]{1,60})》[^。；，\n]{0,10}?'
+    r'(?P<kind>电影|影片|片子|电视剧|剧集|连续剧|短剧)')
+_KIND_EXPECT = {'电影': 'movie', '影片': 'movie', '片子': 'movie',
+                '电视剧': 'series', '剧集': 'series', '连续剧': 'series',
+                '短剧': 'series'}
+_GENRE_WORDS = ('悬疑', '科幻', '喜剧', '爱情', '动作', '犯罪', '历史', '战争',
+                '恐怖', '家庭', '动画', '纪录片', '奇幻', '武侠', '都市', '古装')
+_GENRE_ALT = '|'.join(_GENRE_WORDS)
+# Only treat a genre as *claimed* when it is explicitly framed as a genre ("题材是
+# 科幻" / "科幻片" / "悬疑剧"), never when the word merely appears in prose.
+_GENRE_CLAIM = re.compile(
+    r'(?:题材|类型|风格)\s*(?:是|为|：|:)?\s*(?P<g1>' + _GENRE_ALT + r')|'
+    r'(?P<g2>' + _GENRE_ALT + r')\s*(?:题材|类型|片|剧)')
+_GENRE_NEGATION = re.compile(r'(?:没有|无|缺少|缺|未|不|非|无法|不能|未知|不详|暂无)')
+_RUNTIME_CLAIM = re.compile(r'(?<!\d)(\d{1,3})\s*(分钟|小时|min|mins|hour|hours)', re.I)
+_PLAYING_CLAIM = re.compile(r'正在播放|正在观看|正在看|播放中')
+_PERCENT_CLAIM = re.compile(r'\d{1,3}\s*%')
+# Attributes the tools never return: a model must not invent them.
+_UNSUPPORTED_ATTR = re.compile(r'评分|豆瓣|票房|IMDb|imdb|获奖|口碑|热度|导演|主演|演员|编剧')
 
 
 def cn_number(token):
@@ -541,20 +572,55 @@ class AssistantLoop:
         if type(value) is int and value >= 0:
             ledger[field].add(value)
 
+    def _ledger_absorb_item(self, ledger, item):
+        """Record one observed work plus its verifiable attributes."""
+        title = item.get('title')
+        kind = item.get('kind')
+        if title:
+            ledger['titles'].add(title)
+            if kind in ('movie', 'series', 'unknown'):
+                ledger['title_kinds'][title] = kind
+        year = item.get('year')
+        if type(year) is int:
+            ledger['years'].add(year)
+        genres = item.get('genres') or []
+        if isinstance(genres, (list, tuple)):
+            for genre in genres:
+                if isinstance(genre, str) and genre.strip():
+                    ledger['genres'].add(genre.strip())
+                    if title:
+                        ledger['genres_by_title'].setdefault(title, set()).add(genre.strip())
+        runtime = item.get('runtime_minutes')
+        if type(runtime) is int:
+            ledger['runtimes'].add(runtime)
+        elif isinstance(runtime, str) and runtime.isdigit():
+            ledger['runtimes'].add(int(runtime))
+        self._ledger_add(ledger, 'item_episodes', item.get('episodes'))
+        item_seasons = item.get('seasons') or []
+        if item_seasons:
+            self._ledger_add(ledger, 'seasons', len(item_seasons))
+            for number in item_seasons:
+                if type(number) is int:
+                    ledger['season_numbers'].add(number)
+
     def _build_ledger(self, observations):
         """Collapse every successful observation into typed, field-bound facts.
 
-        A number only ever lives under the field it was observed as: ``movies``,
-        ``series``, ``total``, ``episodes``, ``seasons``, an episode number, or a
-        season number. That is what stops "2 部电影" being satisfied by a total of
-        2, by 4 episodes, or by a page that happened to list 2 rows.
+        Counts live under the field they were observed as: ``movies``, ``series``,
+        ``total``, ``episodes``, ``seasons``, an episode/season number or a title.
+        Attributes (year, kind, genre, runtime, playback) live beside the title
+        that carried them. Per-list kind composition is kept so a claim such as
+        "推荐了三部电影" can be checked against what those three rows actually are.
         """
         ledger = {
             'titles': set(), 'movies': set(), 'series': set(), 'unknown': set(),
             'total': set(), 'episodes': set(), 'item_episodes': set(),
             'seasons': set(), 'matched': set(),
             'episode_numbers': set(), 'season_numbers': set(),
-            'list_len': 0, 'playback': {}, 'has_updated_at': False,
+            'list_len': 0, 'lists': [], 'title_kinds': {},
+            'years': set(), 'genres': set(), 'genres_by_title': {},
+            'runtimes': set(), 'recommend_reasons': set(),
+            'playback': {}, 'has_updated_at': False,
         }
         for observation in observations:
             result = observation.get('result') or {}
@@ -571,8 +637,7 @@ class AssistantLoop:
                     self._ledger_add(ledger, field, kind_support.get(key))
             elif canonical == 'catalog_get_episodes':
                 item = result.get('item') or {}
-                if item.get('title'):
-                    ledger['titles'].add(item['title'])
+                self._ledger_absorb_item(ledger, item)
                 seasons = result.get('seasons') or []
                 if seasons:
                     self._ledger_add(ledger, 'seasons', len(seasons))
@@ -587,8 +652,7 @@ class AssistantLoop:
                 # the returned page, so it can stand for a "found N" claim.
                 self._ledger_add(ledger, 'matched', result.get('total'))
                 raw_tool = observation.get('tool')
-                # An unfiltered browse (catalog_list / library_browse, no
-                # genre/query/year) reports the true count of its kind, so its
+                # An unfiltered browse reports the true count of its kind, so its
                 # total may stand for the library total / movie / series count.
                 # Filtered search, recommendations and recent subsets may not.
                 if raw_tool in ('catalog_list', 'library_browse') \
@@ -602,16 +666,21 @@ class AssistantLoop:
                         ledger['total'].add(result['total'])
                 items = result.get('items') or []
                 ledger['list_len'] = max(ledger['list_len'], len(items))
+                kinds = []
                 for item in items:
-                    if item.get('title'):
-                        ledger['titles'].add(item['title'])
-                    self._ledger_add(ledger, 'item_episodes', item.get('episodes'))
-                    item_seasons = item.get('seasons') or []
-                    if item_seasons:
-                        self._ledger_add(ledger, 'seasons', len(item_seasons))
-                        for number in item_seasons:
-                            if type(number) is int:
-                                ledger['season_numbers'].add(number)
+                    self._ledger_absorb_item(ledger, item)
+                    item_kind = item.get('kind')
+                    kinds.append(item_kind if item_kind in ('movie', 'series', 'unknown')
+                                 else 'unknown')
+                    for reason in item.get('reasons') or []:
+                        if isinstance(reason, str) and reason.strip():
+                            ledger['recommend_reasons'].add(reason.strip())
+                ledger['lists'].append({
+                    'kind': result.get('kind') or 'any',
+                    'items': kinds,
+                    'len': len(items),
+                    'total': result.get('total'),
+                })
             elif canonical == 'catalog_get_playback_progress':
                 ledger['playback'] = result
                 if result.get('updated_at'):
@@ -632,12 +701,72 @@ class AssistantLoop:
         if field == 'episodes':
             return value in (ledger['episodes'] or ledger['item_episodes'])
         if field == 'seasons':
-            return value in ledger['seasons']
+            # A season number in an enumerated list ("第1、5-6、8-11季") is a real
+            # observed season, not a season *count*; accept either reading.
+            return value in ledger['seasons'] or value in ledger['season_numbers']
         if field == 'bare':
             # A bare "N 部" is only trustworthy as the library total from a
             # summary; it may never be satisfied by a page of list results.
             return value in ledger['total']
         return False
+
+    @staticmethod
+    def _group_count_ok(ledger, field, value):
+        """Validate a "recommended/searched N <kind>" claim against row kinds.
+
+        The count must not merely fit the page length: at least *value* of the
+        returned rows have to be of the claimed kind. "N 部作品" may count any
+        work, but "N 部电影" may only count rows whose kind is ``movie``.
+        """
+        want = {'movies': 'movie', 'series': 'series', 'unknown': 'unknown'}.get(field)
+        for listing in ledger['lists']:
+            if value > listing['len']:
+                continue
+            if field in ('total', 'bare'):
+                return True
+            if want and len([k for k in listing['items'] if k == want]) >= value:
+                return True
+        return False
+
+    def _attributes_grounded(self, text, ledger):
+        """Verify year / media type / genre / runtime / playback claims.
+
+        A statement may only use metadata the tools actually returned. Absence is
+        allowed to be *stated* ("没有元数据/类型未知"), but not filled in.
+        """
+        for match in _YEAR_CLAIM.finditer(text):
+            if int(match.group(1)) not in ledger['years']:
+                return False
+        for match in _KIND_CLAIM.finditer(text):
+            expected = _KIND_EXPECT.get(match.group('kind'))
+            if expected is None:
+                continue
+            actual = ledger['title_kinds'].get(match.group('title'))
+            if actual is None or actual != expected:
+                return False
+        scan = _TITLE.sub('', text)
+        for match in _GENRE_CLAIM.finditer(scan):
+            genre = match.group(1) or match.group(2)
+            prefix = scan[max(0, match.start() - 6):match.start()]
+            if _GENRE_NEGATION.search(prefix):
+                continue
+            if genre not in ledger['genres']:
+                return False
+        for match in _RUNTIME_CLAIM.finditer(text):
+            amount = int(match.group(1))
+            unit = match.group(2).lower()
+            minutes = amount * 60 if unit.startswith(('小时', 'hour')) else amount
+            if minutes not in ledger['runtimes']:
+                return False
+        if _PLAYING_CLAIM.search(text):
+            playback = ledger['playback'] or {}
+            if not (playback.get('available') and playback.get('playing')):
+                return False
+        if _PERCENT_CLAIM.search(text) and not (ledger['playback'] or {}).get('available'):
+            return False
+        if _UNSUPPORTED_ATTR.search(_TITLE.sub('', text)):
+            return False
+        return True
 
     def _unverified_title(self, text, known_titles):
         """Return a leftover name fragment when a title is written without 《》.
@@ -702,13 +831,15 @@ class AssistantLoop:
                     return False
                 if self._count_supported(field, value, ledger):
                     continue
-                # "这三部剧集" names the works just returned, not the library size.
+                # A returned group may only prove a kind-qualified count if the
+                # returned rows really are that kind (V4.3.2): "推荐了三部电影"
+                # cannot be satisfied by three series.
                 if references_returned_group(match.start()) \
-                        and 1 <= value <= ledger['list_len']:
+                        and self._group_count_ok(ledger, field, value):
                     continue
                 return False
 
-        # ---- ambiguous "N 部" (no kind) may not use a page size ----
+        # ---- ambiguous "N 部/个/条" (no kind) may not use a page size ----
         for match in _BARE_WORK.finditer(text):
             # Skip "N 部" that is already part of a "<kind> N 部" claim above.
             if any(start <= match.start() < end for start, end in covered):
@@ -719,7 +850,7 @@ class AssistantLoop:
             if self._count_supported('bare', value, ledger):
                 continue
             if references_returned_group(match.start()) \
-                    and 1 <= value <= ledger['list_len']:
+                    and self._group_count_ok(ledger, 'bare', value):
                 continue
             return False
 
@@ -764,6 +895,10 @@ class AssistantLoop:
         if not ledger['has_updated_at']:
             if _TIME_CLOCK.search(text) or _TIME_CN.search(text):
                 return False
+
+        # ---- year / media type / genre / runtime / playback need real metadata ----
+        if not self._attributes_grounded(text, ledger):
+            return False
 
         # ---- names written without 《》 must resolve to real titles ----
         if self._unverified_title(text, ledger['titles']):

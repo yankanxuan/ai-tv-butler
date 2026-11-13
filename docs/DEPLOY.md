@@ -251,3 +251,20 @@ PY
 5. 我上次看到哪一集？
 
 回滚步骤见 [V431_DELIVERY.md](V431_DELIVERY.md) 第 7 节与 [ROLLBACK.md](ROLLBACK.md)。
+
+## V4.3.2 增量部署（媒体事实校验专项）
+
+版本：`4.3.2`。仅改 `adbtv/assistant_loop.py`（事实台账：列表 kind 组成、年份/类型/题材/时长/播放状态证据）。无数据库迁移、无新增依赖、无模型/语音变更。
+
+```bash
+cd "$HOME/ai-tv-butler"
+stamp=$(date +%Y%m%dT%H%M%S); bk="$HOME/ai-tv-butler-backups/pre-v432-$stamp"
+mkdir -p "$bk"; chmod 700 "$bk"
+tar -czf "$bk/source-private.tar.gz" adbtv config.yaml config.example.yaml
+docker image tag ai-tv-butler:4.3.1 "ai-tv-butler:pre-v432-$stamp"
+docker compose -p ai-tv-butler build
+docker compose -p ai-tv-butler up -d
+docker compose -p ai-tv-butler exec -T console ai-tv --version   # ai-tv 4.3.2
+```
+
+验收：真实库 movies=0/series=35 时，"一共有多少部电影"必须回答 0 部电影；"给我推荐三部"只能说剧集，不能称电影；问"上次看到哪一集"无记录时如实说明。回滚见 [V432_DELIVERY.md](V432_DELIVERY.md) 第 7 节。

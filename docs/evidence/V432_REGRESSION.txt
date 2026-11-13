@@ -1,0 +1,21 @@
+# V4.3.2 回归结果（本机实跑）
+date: 2026-11-13T09:35+08:00
+
+## 单元测试
+command: python3 -m unittest discover -s tests -p 'test_*.py'
+Ran 1007 tests
+OK (skipped=14)
+
+## 新增测试
+tests/test_assistant_v432.py  24 项（推荐类型/量词/属性/合法流程）
+（V4.3.1 源码上运行：24 项中 11 项失败，见 V432_FAILURE_REPRODUCTION.txt）
+
+## 模拟电视集成
+command: python3 tests/test_suite.py
+结果：22 通过 / 0 失败
+
+## 版本一致性
+tests.test_deployment: OK（断言 4.3.2）
+
+## 发布包审计
+python3 scripts/package.py public --check：通过
