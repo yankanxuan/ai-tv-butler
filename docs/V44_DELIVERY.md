@@ -146,7 +146,8 @@ catalog_get_episodes / catalog_get_playback_progress` 名称与参数不变（�
 | 项 | 状态 | 原因 |
 |---|---|---|
 | 真人手机麦克风录音 → 上传 → ASR → 播放 | **未验收** | 需要真人持手机在 HTTPS 网关下操作；本轮未做真人测试 |
-| 小米电视真机播放 | **未验收** | 冒烟与验收用 stub device/agent，确认链路走通但未在物理电视上执行 |
+| 小米电视真机播放 | **已验收**（2026-11-13 13:24） | 物理电视实机：确认 → `com.mitv.mivideoplayer/VideoPlayerActivity` `state=PLAYING` `audio_track_started=true` → 「电视现在在放什么？」如实回报；记录见 `docs/evidence/V44_DEPLOYMENT_RECORD.txt` |
+| 播放器标题可见性 | 部分场景不可用 | 部分片源播放器 UI 不暴露标题，此时只能证明「正在播放」，不能证明「播放的是哪一部」，系统如实说"标题暂不可见"而不编造 |
 | TTS 首帧延迟 | 未测 | 依赖生产 TTS 服务，本轮未纳入指标 |
 | 外部元数据（TMDB 等）增强 | 未实现 | 需先解决身份匹配与许可合规 |
 

@@ -57,3 +57,27 @@ K rep2: SUCCESS | 查了一下，本地影视库里目前没有电影（电影�
 K rep3: SUCCESS | 本地影视库共 35 部作品，（电影 0 部、剧集 2 部、短剧 33 部），共 8483 集，42 季。最近 7 天新增 19 部。
 
 说明：电视为 stub，未在物理电视执行；真人手机语音链路未验收。
+
+== 真实硬件链路只读验证（2026-11-13 13:20）==
+[电视 ADB] 目标 <tv-host>:5555，adb connect => device（真机可达）
+[电视状态] current_package=com.mitv.screensaver（待机屏保，未在播放）
+           playback={"playing": false, "state": "", "package": "com.mitv.screensaver"}
+[媒体流]   MediaServer.url_for() 生成签名直链，源 <nas-host>:8899
+           Range 请求 => HTTP 206 / 2048 bytes / video/mp4 / 文件头 b'ftypisom'
+           作品：一身腱子肉，乱世做谋臣（真实剧集文件，非桩件）
+结论：状态读取链路与播放源链路在真机上可用；「电视应用实际播放某片」这一步需要主动
+      点亮电视执行，本轮未擅自执行（见 docs/V44_DELIVERY.md 第十节未验收项）。
+
+== 真机播放端到端验收（2026-11-13 13:24，物理小米电视）==
+[前]  package=com.mitv.screensaver, playing=false（待机屏保）
+[第1轮] "播放《一身腱子肉，乱世做谋臣》第一集" => NEEDS_CONFIRMATION
+        「确认执行 播放《一身腱子肉，乱世做谋臣》第3季第一集 吗？」（真实解析到第 3 季）
+[第2轮] "确认" => SUCCESS「已完成」（走既有幂等 pending + ADB 执行）
+[后]  playing=true, state=PLAYING, package=com.mitv.mivideoplayer,
+      activity=com.mitv.videoplayer.VideoPlayerActivity,
+      evidence: audio_track_started=true, activity_is_player=true
+[反馈] "电视现在在放什么？" => SUCCESS「正在播放：播放内容标题暂不可见」
+        —— 播放器 UI 未暴露标题时如实报告"标题暂不可见"，未编造片名
+[清理] 已发送 KEYCODE_HOME 回到桌面
+结论：确认 → 真实播放 → 真实状态反馈 全链路在物理电视上通过。已知限制：部分片源
+      播放器 UI 不显示标题，此时只能证明"正在播放"，不能证明"播放的是哪一部"。
