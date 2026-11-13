@@ -62,3 +62,11 @@ git-autosync --skip-tests         # 应急跳过测试（不建议）
 ## 禁止事项
 
 `git push --force`、`git push --force-with-lease`、`git reset --hard`、`git clean -fd`、`git checkout -- .` 一律禁止使用。
+
+## 验收记录
+
+| 日期 | 项目 | 结果 |
+|------|------|------|
+| 2026-11-13 | SSH 认证（`~/.ssh/id_ed25519_github` → GitHub 账号 `yankanxuan`） | 通过 |
+| 2026-11-13 | `pre-push` 守卫：推 main / 强推 / 无法验证祖先关系 | 全部按预期拦截 |
+| 2026-11-13 | `git-autosync` 流水线（测试 + 扫描 + 提交 + 推送 + 远程校验） | 通过，远程 `agent/dev` 可见提交 |
