@@ -57,8 +57,10 @@ class LibraryVoiceCatalog:
         self.index=index
         self._loaded_at=0.0
         self._rows=[]
+        self._library=None
 
     def _load(self):
+        """Rows come from LibraryTools so ids/kinds/counts match the tools."""
         if self._loaded_at and time.monotonic()-self._loaded_at<60:return
         index=self.index or index_from_config(self.cfg)
         self.index=index
@@ -66,31 +68,13 @@ class LibraryVoiceCatalog:
         if index is None:
             self._loaded_at=time.monotonic()
             return
-        for key,group in index._grouped().items():
-            entry=group[0]; metadata={}; paths=[]
-            for item in group:
-                for episodes in item.seasons.values():paths.extend(episodes.values())
-            # The persisted index may outlive moved/unmounted files. Verify a
-            # real local path before reporting the title as currently present.
-            first_video=next((video for video in paths if Path(video).is_file()),None)
-            if first_video is None:continue
-            for video in (first_video,):
-                current=Path(video).parent
-                for directory in (current,current.parent):
-                    nfo=directory/'tvshow.nfo'
-                    try:
-                        if not nfo.is_file() or nfo.stat().st_size>1024*1024:continue
-                        node=ET.fromstring(nfo.read_bytes())
-                        metadata={'genres':[e.text.strip() for e in node.findall('genre') if e.text],
-                                  'region':node.findtext('country') or node.findtext('region')}
-                        break
-                    except (OSError,ValueError,ET.ParseError):continue
-                if metadata:break
-            kind='movie' if '电影' in Path(first_video).parts else 'series'
-            row={'id':hashlib.sha256(key.encode()).hexdigest()[:24],'title':entry.base,
-                 'year':int(entry.year) if entry.year and str(entry.year).isdigit() else None,
-                 'genres':metadata.get('genres',[]),'region':metadata.get('region'),
-                 'season':None,'episode':None,'kind':kind}
+        if self._library is None:
+            self._library=LibraryTools(self.cfg,index=index)
+        data=self._library.all_items()
+        for item in data.get('items') or []:
+            row=dict(item)
+            row.setdefault('season',None)
+            row.setdefault('episode',None)
             self._rows.append(row)
         self._loaded_at=time.monotonic()
 
@@ -118,16 +102,20 @@ class LibraryVoiceCatalog:
         Only the local mounted media index is visible. Online fnmedia-ext and
         other external catalogs are not claimed to be linked.
         """
-        if kind not in ('any','movie','series'):
+        if kind not in ('any','movie','series','short_drama','unknown'):
             raise ValueError('invalid library kind')
         self._load()
         rows=[dict(item) for item in self._rows if kind=='any' or item['kind']==kind]
         has_mount=bool(self.index is not None and any(root.is_dir() for root in self.index.roots))
-        return {'available': has_mount,
-                'total':len(rows),
-                'movies':sum(1 for item in self._rows if item['kind']=='movie'),
-                'series':sum(1 for item in self._rows if item['kind']=='series'),
-                'rows':rows[:min(8,max(0,int(limit)))]}
+        info={'available':has_mount,'total':len(rows),
+              'movies':0,'series':0,'short_dramas':0,'unknown_kind':0,'episodes':0}
+        for item in self._rows:
+            key={'movie':'movies','series':'series','short_drama':'short_dramas',
+                 'unknown':'unknown_kind'}.get(item.get('kind'),'unknown_kind')
+            info[key]=info.get(key,0)+1
+            info['episodes']+=item.get('episodes') or 0
+        info['rows']=rows[:min(8,max(0,int(limit)))]
+        return info
 
     def exact_title(self,requested,actual):
         if normalize(requested)==normalize(actual):return True
@@ -414,12 +402,14 @@ class VoiceDialogue:
                     'candidates':[],'answer_source':'unverified', 'speech':self.responder.respond('failure',reply,status='UNAVAILABLE')}
         rows=info['rows']
         count=info.get('total')
-        label={'movie':'电影','series':'剧集','any':'影视作品'}[kind]
+        label={'movie':'电影','series':'剧集','short_drama':'短剧','any':'影视作品'}[kind]
         if count==0 or (not rows and count is None):
             summary=self.tools.summary() if self.tools is not None else {}
-            if kind=='movie' and summary.get('movies')==0 and summary.get('series'):
-                reply=(f'本地库里目前没有电影，有 {summary["series"]} 部剧集'
-                       f'（共 {summary["episodes"]} 集）。要我列几部剧集，或者按片名找吗？')
+            if kind=='movie' and summary.get('movies')==0 and (
+                    summary.get('series') or summary.get('short_dramas')):
+                reply=(f'本地库里目前没有电影，有 {summary.get("series", 0)} 部剧集'
+                       + (f'、{summary["short_dramas"]} 部短剧' if summary.get('short_dramas') else '')
+                       + f'（共 {summary["episodes"]} 集）。要我列几部剧，或者按片名找吗？')
             elif kind=='series' and summary.get('series')==0 and summary.get('movies'):
                 reply=f'本地库里目前没有剧集，有 {summary["movies"]} 部电影。要看电影吗？'
             elif summary.get('ambiguous_folders'):
@@ -429,8 +419,12 @@ class VoiceDialogue:
                 reply=f'当前本地媒体索引中没有查到{label}。如果 NAS 实际有文件，请检查媒体目录是否已扫描。'
         else:
             quantity=f'共 {count} 部{label}' if count is not None else f'查到以下{label}'
-            breakdown=('，其中电影 '+str(info['movies'])+' 部、剧集 '+str(info['series'])+' 部'
-                       if kind=='any' and info.get('movies') is not None else '')
+            breakdown=''
+            if kind=='any' and info.get('movies') is not None:
+                parts=['电影 '+str(info['movies'])+' 部','剧集 '+str(info['series'])+' 部']
+                if info.get('short_dramas'):
+                    parts.append('短剧 '+str(info['short_dramas'])+' 部')
+                breakdown='，其中'+'、'.join(parts)
             titles='；'.join(f"{i+1}.《{item['title']}》" for i,item in enumerate(rows))
             reply='已查询 NAS 本地影视库：'+quantity+breakdown+'。例如：'+titles+'。'
             if count is None or count>len(rows):
@@ -464,7 +458,7 @@ class VoiceDialogue:
         safe={}
         genres=[g for g in (preferences.get('genres') or []) if isinstance(g,str) and 0<len(g)<=20][:8]
         if genres:safe['genres']=genres
-        if preferences.get('kind') in ('any','movie','series'):safe['kind']=preferences['kind']
+        if preferences.get('kind') in ('any','movie','series','short_drama'):safe['kind']=preferences['kind']
         if type(preferences.get('max_episodes')) is int:safe['max_episodes']=preferences['max_episodes']
         if not safe:return
         self._preferences[tv]=safe
@@ -520,14 +514,36 @@ class VoiceDialogue:
         if self.assistant is None:return None
         session=self.sessions.get(tv)
         state=dict(self.sessions.assistant_state(tv))
-        preferences=self._preferences_for(tv)
+        # V4.4: the session's own preference memory (genres / exclude_genres /
+        # max_episodes / exclude_ids) is what makes "不要太长的" and "换一个"
+        # survive across turns; the opt-in persisted file only adds long-term
+        # explicit preferences on top.
+        preferences={}
+        try:
+            preferences.update(self.sessions.preferences(tv) or {})
+        except (AttributeError,KeyError,ValueError):
+            pass
+        stored=self._preferences_for(tv)
+        for key in ('genres','kind','max_episodes'):
+            if stored.get(key) and not preferences.get(key):
+                preferences[key]=stored[key]
         if preferences:state['preferences']=preferences
         state['tv']=dict(session.current_playback or {})
-        state['candidates']=[{'id':row['id'],'title':row['title']}
+        state['candidates']=[{'id':row['id'],'title':row['title'],
+                              'kind':row.get('kind'),'episodes':row.get('episodes'),
+                              'genres':row.get('genres')}
                              for row in session.recent_results]
         state['played_history']=[{'id':row.get('id'),'title':row.get('title'),
                                   'season':row.get('season'),'episode':row.get('episode')}
                                  for row in session.played_history[:3]]
+        try:
+            self.sessions.update_preferences(tv,text)
+        except (AttributeError,KeyError,ValueError,TypeError):
+            pass
+        try:
+            state['preferences']=self.sessions.preferences(tv) or state.get('preferences') or {}
+        except (AttributeError,KeyError,ValueError):
+            pass
         try:
             outcome=self.assistant.run(text,state=state,budget=budget)
         except Exception:
@@ -549,6 +565,17 @@ class VoiceDialogue:
         if rows:
             try:self.sessions.set_results(tv,rows,source='library')
             except ValueError:rows=[]
+        # V4.4: "第二个讲什么" makes that work the focus, so the follow-up
+        # "就看刚才那个" restores it instead of asking again.
+        for call in reversed(trace):
+            if call.get('tool')=='catalog_detail':
+                item_id=(call.get('arguments') or {}).get('item_id')
+                if item_id:
+                    try:
+                        self.sessions.focus_on(tv,item_id)
+                    except (AttributeError,KeyError,ValueError,TypeError):
+                        pass
+                break
         status=outcome.get('status') or 'SUCCESS'
         reply=_clean_reply(outcome.get('reply') or '')
         stage='success' if status=='SUCCESS' else 'failure'
@@ -559,7 +586,7 @@ class VoiceDialogue:
     @staticmethod
     def _library_question(text):
         clean=text or ''
-        if not re.search(r'资源|影视库|媒体库|片库|电影|电视剧|剧集|短剧|推荐|好看|新加|最近|多少部|几部|有什么|有哪些|类似|换一部|太长|短一点|集数',clean):
+        if not re.search(r'资源|影视库|媒体库|片库|电影|电视剧|剧集|短剧|推荐|好看|新加|最近|多少部|几部|有什么|有哪些|类似|换一部|太长|短一点|集数|讲什么|讲啥|剧情|简介|说的是什么|什么故事|看过了|不要恐怖|那么长|长一点|短的|别太长',clean):
             return False
         # Pure playback/control wording keeps the existing deterministic path.
         if re.fullmatch(r'(?:请|帮我)?(?:播放|打开|暂停|继续|音量|返回|回到桌面).*',clean.strip()):
@@ -567,6 +594,46 @@ class VoiceDialogue:
         return True
 
     _PRONOUN=re.compile(r'(?:这|那)(?:一)?部(?:作品|剧|电影|剧集)?|这个|那个|它|这部|那部')
+    _SEASON_OPEN=re.compile(r'(?:打开|播放|看|放)\s*(?:这部|那部|这个|那个)?\s*剧?\s*'
+                            r'第\s*([0-9]+|[零一二三四五六七八九十百]+)\s*季')
+    _REFERENCE_SELECT=re.compile(r'就看|就选|就要这个|就要这部|看这个|看这部|选这个|选这部|'
+                                 r'播放这个|播放这部|放这个|放这部|接着看|继续看这个')
+
+    def _reference_decision(self,tv,text):
+        """Turn "就看刚才那个 / 打开这部剧第三季" into a real selection."""
+        clean=text or ''
+        match=self._SEASON_OPEN.search(clean)
+        if match:
+            from .assistant_loop import cn_number
+            season=cn_number(match.group(1))
+            if season:
+                return VoiceDecision('agent','play',parameters={'season':season},
+                                     confidence=1,source='context_rule',reason='season_open')
+        if self._REFERENCE_SELECT.search(clean):
+            try:
+                referenced=self.sessions.reference(tv,clean)
+            except (AttributeError,KeyError,ValueError,TypeError):
+                referenced=None
+            if referenced is None:
+                try:
+                    last=(self.sessions.assistant_state(tv) or {}).get('last_item') or {}
+                except (AttributeError,KeyError,ValueError):
+                    last={}
+                if last.get('id'):
+                    referenced=last
+            if referenced:
+                ordinal = re.search(r'第\s*(?:[0-9]+|[零一二三四五六七八九十两]+)\s*(?:个|部|条|项)',
+                                    clean)
+                if ordinal:
+                    return VoiceDecision('agent','select',
+                                         parameters={'candidate_id':referenced['id']},
+                                         confidence=1,source='context_rule',
+                                         reason='reference_selection')
+                return VoiceDecision('agent','play',
+                                     parameters={'candidate_id':referenced['id']},
+                                     confidence=1,source='context_rule',
+                                     reason='reference_play')
+        return None
 
     def _play_selection(self,tv,decision):
         p=decision.parameters
@@ -769,6 +836,22 @@ class VoiceDialogue:
         if source not in ('xiaomi_logcat','web_microphone','text'):raise ValueError('unsupported voice source')
         with self._lock:
             start=time.monotonic();extra=self._extra(tv_id)
+            if re.search(r'能做什么|会做什么|帮我做什么|有什么功能|能干嘛|都能干|你可以做什么',text or ''):
+                reply=_CAPABILITY
+                # The capability answer must still reflect the real library state:
+                # "资源库不可用时还能做什么" may not sound like everything is fine.
+                try:
+                    health=self.tools.status()
+                except Exception:
+                    health={}
+                if health and not health.get('available'):
+                    reply='本地影视库当前不可用（挂载或权限异常），暂时查不到资源。'+reply
+                return {'route':'agent','status':'SUCCESS','reply':reply,'candidates':[],
+                        'answer_source':'builtin_capability',
+                        'speech':self.responder.respond('success',reply,status='SUCCESS'),
+                        'metrics':{'route_ms':0.0,'llm_ms':0.0,
+                                   'total_ms':(time.monotonic()-start)*1000,
+                                   'adb_ms':0,'observe_ms':0.0,'tts_ms':0}}
             context=self.sessions.snapshot(tv_id)
             # A pending question (selection / episode) must survive this turn's
             # device observation: update_observation replaces app/playback and
@@ -783,6 +866,11 @@ class VoiceDialogue:
             if pending_question:
                 model_context['waiting_question']=pending_question
             decision=self.router.decide(text,model_context)
+            reference=self._reference_decision(tv_id,text)
+            if (reference is not None and decision.route in ('clarify','agent')
+                    and not decision.requires_confirmation
+                    and decision.intent not in ('confirm','deny','play')):
+                decision=reference
             # Clear, finite slot answers are safe even if the model is offline.
             contextual=self._context_decision(self.router.policy_text(text)[0],tv_id,
                                               pending=pending_question)

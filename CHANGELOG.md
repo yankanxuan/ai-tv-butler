@@ -2,6 +2,69 @@
 
 本文件记录各版本实际完成并验证过的内容。未验证项会明确标注。
 
+## 4.4.0（2026-11-13）自然语言 AI 管家闭环
+
+基于 4.3.2 的增量升级，目标是「不需要记固定口令」：用户用自然中文提问，管家查真实媒体库、
+多轮对话、推荐真实存在的作品，确认后走既有幂等链路播放并回报真实状态。未重写既有架构，
+`assistant_loop.py` / `LLMClient` / `ToolBox` / MCP / ADB / SQLite / Docker 全部保留。
+
+**阶段一：真正理解影视资源**
+
+- 根因修复：`with_metadata` 一直是 0，因为解析器只读 NFO `<genre>`，而真实库用的是
+  `<plot>`/`<tag>`/`<studio>`/`<uniqueid>`。现在读取 `plot / genre / tag / studio / uniqueid /
+  runtime / year / country`，1 MiB 上限、无外部实体解析、坏 XML 静默降级。
+- 五级证据驱动类型判定：`movie.nfo`/`<type>movie</type>` → 短剧三证据（`<studio>` 含「短剧」、
+  `uniqueid type="hongguo"`、路径 `/短剧/`）→ 存在 `SxxExx` 集号 → 单文件 → `unknown`。
+  另加「库级分类目录 `电影/`」作为电影证据（与 `/短剧/` 对称）。
+- `summary()` 新增 `short_dramas / seasons / with_plot / recent_added_7d / recent_added_30d`，
+  维持不变式 `total == movies + series + short_dramas + unknown_kind`；新增 `overview()`、
+  `all_items()`；`browse/search/recommend` 支持 `short_drama`、`max_episodes`、`exclude_genres`。
+- 真实库实测（`/vol1/1000/影视`）：`total=35, movies=0, series=2, short_dramas=33, episodes=8483,
+  with_metadata=35, with_plot=33, seasons=42, recent_added_7d=21`（改造前 `with_metadata=0`）。
+
+**阶段二：多步骤工具调用与事实台账**
+
+- 新增只读工具 `catalog_overview` / `catalog_recent` / `catalog_detail`，工具 schema 与
+  `ACTION_SCHEMA` 枚举同步；`kind` 枚举增加 `short_drama`。
+- 事实台账新增可验证字段：`short_dramas`、`seasons`、`genres`、`studio`、`runtime`、
+  `added_days_ago`、`plot_text`。「短剧 N 部」只能由 `short_dramas` 证明，不能拿 `series` 顶替。
+- 简介（plot）属于工具数据：允许复述/改写观测到的 plot（2-gram 重叠 ≥15%），
+  但**不得编造另一段剧情**；plot 里出现过的题材词可作为该题材的证据，未观测到的题材仍然拒绝。
+- 工具全部失败时返回 `UNKNOWN` + 明确报错，绝不把「读取失败」说成「库里没有」。
+
+**阶段三：多轮对话上下文**
+
+- `ConversationManager` 新增 `reference()`（中文序号/指示代词/片名子串，越界不夹边界、并列不猜）、
+  `preferences()` / `update_preferences()`（合并语义）、`focus_on()` / `focus()` / `note_played()`。
+- 候选投影新增 `kind / kind_label / episodes / studio / runtime_minutes / added_days_ago`，
+  `export()`/`hydrate()` 完整往返，旧快照缺键按默认值兼容。
+- 「就看刚才那个」：`VoiceDialogue` 现在把 `catalog_detail` 的查询对象设为会话 focus，
+  并通过 `reference()` 解析成真实 `select`，不再回落到「我还不能确定你要做什么」。
+
+**阶段四：智能影视推荐**
+
+- `recommend()` 增加 `reasons`（只引用真实字段：题材标签、集数、新增天数、出品方、已看过），
+  缺题材时只给结构化理由，不编造「悬疑/喜剧」。
+- 「换一个/类似」排除本会话已展示的全部候选，若因此无结果再退化为只排除当前 focus；
+  「这几个我都看过了」把当前候选全部排除；「不要太长」用 `max_episodes`。
+
+**修复（并行验收发现）**
+
+- `LibraryVoiceCatalog` 不再自行扫描统计（短剧被算进「剧集」，真实库会答成「剧集 35 部」），
+  改为委托 `LibraryTools`，id/kind/计数与工具面完全一致。
+- 模型走 grounded 自然语言回答时丢失候选列表 → 后续「第二个讲什么」断链，已随观察结果回填。
+- 「打开这部剧第三季」解析为 `play{season}`；「不要那么长的」等说法进入助手路由。
+
+**版本**
+
+- `adbtv/__init__.py`、`pyproject.toml`、`docker-compose.yml` 统一 `4.4.0`。
+
+**测试**
+
+- 新增 `tests/test_library_metadata_v44.py`（35）、`tests/test_dialogue_context_v44.py`（29）、
+  `tests/test_assistant_v44.py`（24）、`tests/test_v44_dialogue_acceptance.py`（验收 A–O + 对抗）。
+- 真实库 + 真实 LLM 闭环冒烟：`scripts/v44_smoke.py`，证据 `docs/evidence/V44_LEAD_CLOSED_LOOP.json`。
+
 ## 4.3.2（2026-11-13）媒体事实校验最后一轮专项修复
 
 基于 4.3.1 的最小增量，只改事实校验（`adbtv/assistant_loop.py`），保留 Agent / 模型路由 / 媒体库 / ADB / MCP / 语音 / SQLite / Docker 全部能力，无新增模型或引擎。

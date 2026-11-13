@@ -1,0 +1,350 @@
+{
+  "version": "4.4.0",
+  "library_summary": {
+    "available": true,
+    "total": 35,
+    "movies": 0,
+    "series": 2,
+    "unknown_kind": 0,
+    "episodes": 8483,
+    "with_metadata": 35,
+    "metadata_missing": 0,
+    "ambiguous_folders": 0,
+    "ambiguous_videos": 0,
+    "roots": [
+      "<media-root>"
+    ],
+    "index_age_seconds": 0.36164188385009766,
+    "errors": [],
+    "short_dramas": 33,
+    "seasons": 42,
+    "with_plot": 33,
+    "recent_added_7d": 21,
+    "recent_added_30d": 33
+  },
+  "library_overview": {
+    "state": "ok",
+    "source": "local_catalog",
+    "read_only": true,
+    "available": true,
+    "total": 35,
+    "movies": 0,
+    "series": 2,
+    "short_dramas": 33,
+    "unknown_kind": 0,
+    "episodes": 8483,
+    "seasons": 42,
+    "with_metadata": 35,
+    "metadata_missing": 0,
+    "with_plot": 33,
+    "recent_added_7d": 21,
+    "recent_added_30d": 33,
+    "index_age_seconds": 0.3618130683898926,
+    "roots_available": 1,
+    "recent": [
+      {
+        "id": "ce92dd5d999c1b86065624ad",
+        "title": "我，史前霸王龙",
+        "year": 2026,
+        "kind": "short_drama",
+        "kind_label": "短剧",
+        "genres": [],
+        "studio": "红果短剧",
+        "plot": "我重生成一头史前霸王龙，踩死过骷髅岛的大金刚，生吞过体长百米的泰坦巨蟒。就连海洋霸主苍龙也根本不是我的对手。就当我要称霸整个侏罗纪，面前却忽然出现神秘黑洞。全副武装的人类穿着机械装甲从未来走出。敢叫我猎物？那就看看，谁先死！",
+        "region": null,
+        "episodes": 99,
+        "seasons": [
+          1
+        ],
+        "runtime_minutes": null,
+        "updated_at": 1794289300.2123833,
+        "added_days_ago": 2.87,
+        "season": null,
+        "episode": null
+      },
+      {
+        "id": "889b3447c19769f727fa4811",
+        "title": "巨人纪元",
+        "year": 2026,
+        "kind": "short_drama",
+        "kind_label": "短剧",
+        "genres": [],
+        "studio": "红果短剧",
+        "plot": "巨兽降临，人类濒危，异能觉醒。高三生林渊身负雷霆、自愈双S级异能，更是护国龙将林天阙之子，却当众拒征，被万人唾为懦夫。无人知晓，他曾亲眼见父亲遭内奸暗算、修为尽废。隐忍潜伏中，救世系统终觉醒。他戴面具接下千人猎杀令，五昼夜血战功成，解锁霸王之躯，破境无羁。征兵现场再拒入伍，军团长陈虎威逼，林天阙含辱鞠躬。当夜，林渊接下A级清剿令，驭百头亡灵巨人，独闯巨人教巢穴，誓斩所有背弃人族的叛徒！",
+        "region": null,
+        "episodes": 60,
+        "seasons": [
+          1
+        ],
+        "runtime_minutes": null,
+        "updated_at": 1794288690.454461,
+        "added_days_ago": 2.88,
+        "season": null,
+        "episode": null
+      },
+      {
+        "id": "b2e57a3f75fc197cd99c7796",
+        "title": "我的巨人",
+        "year": 2026,
+        "kind": "short_drama",
+        "kind_label": "短剧",
+        "genres": [],
+        "studio": "红果短剧",
+        "plot": "西北荒原出土百米巨人，长久沉睡。科学家陈维邦持续刺激巨人无果。背负争议的苏念受邀来到基地，依靠共情安抚让巨人产生反应，却遭陈维邦针对。苏念查到非法实验秘密，联合他人收集证据，直播公开真相。苏念借精神共鸣窥见巨人万年记忆，陪它疗愈伤痛。巨人守护小镇，荒原生出绿洲。苏念洗清非议，常回荒原，晚年安然在巨人掌心长眠。",
+        "region": null,
+        "episodes": 70,
+        "seasons": [
+          1
+        ],
+        "runtime_minutes": null,
+        "updated_at": 1794288252.9756436,
+        "added_days_ago": 2.88,
+        "season": null,
+        "episode": null
+      },
+      {
+        "id": "f4c868189de03cee0490cf67",
+        "title": "光之战神奥帝伽",
+        "year": 2026,
+        "kind": "short_drama",
+        "kind_label": "短剧",
+        "genres": [],
+        "studio": "红果短剧",
+        "plot": "少年吴浩四年前救下落水少女英梨梨，体内觉醒海洋意志，化身巨人奥帝伽并苦修四年。这天，斩铁巨兽突袭城市大肆破坏，吴浩变身蓝色奥帝伽徒手迎战怪兽，硬抗炮火，以光子粉碎技能将其消灭后悄然返校。英梨梨在电视上看见蓝色巨人的新闻，认出恩人。此次怪兽入侵事件仅仅只是开端，地球即将迎来更多灾祸。",
+        "region": null,
+        "episodes": 18,
+        "seasons": [
+          1
+        ],
+        "runtime_minutes": null,
+        "updated_at": 1794287964.861153,
+        "added_days_ago": 2.89,
+        "season": null,
+        "episode": null
+      },
+      {
+        "id": "9b9db5294cfe9b7d92f2fa96",
+        "title": "光之巨人：原初之光",
+        "year": 2026,
+        "kind": "short_drama",
+        "kind_label": "短剧",
+        "genres": [],
+        "studio": "红果短剧",
+        "plot": "少年迪嘉表面是成绩垫底的“废物”见习骑士，实则十年前融合了光之巨人“原初之光”的本源之力，以“煌耀骑士”身份暗中守护城市。当远古封印被阴谋者打破，恐怖的塞克洛普斯星人复苏，全球陷入异兽灾难时，迪嘉的身份被迫曝光。面对强大的敌人和伙伴们的信任危机，他选择逆光而行，燃烧自己守护人类。当光即将熄灭时，无数普通人举起双手，将信念汇聚成新的光芒。",
+        "region": null,
+        "episodes": 73,
+        "seasons": [
+          1
+        ],
+        "runtime_minutes": null,
+        "updated_at": 1794287826.2753475,
+        "added_days_ago": 2.89,
+        "season": null,
+        "episode": null
+      }
+    ],
+    "errors": []
+  },
+  "model": "cn:deepseek-v4.1-flash",
+  "scan_ms": 579.2,
+  "turns": [
+    {
+      "utterance": "现在资源库有什么？",
+      "status": "SUCCESS",
+      "reply": "已查询 NAS 本地影视库：共 35 部影视作品，其中电影 0 部、剧集 2 部、短剧 33 部。例如：1.《一身腱子肉，乱世做谋臣》；2.《万妖图录传》；3.《从小兵开始》；4.《从布衣开始成圣》；5.《光之巨人：原初之光》；6.《光之战神奥帝伽》；7.《全民机械飞升》；8.《大夏之始》。以上只是部分条目，可以继续按片名或类型搜索。",
+      "candidates": [
+        {
+          "id": "3a6c4d7029ba3aa71e851c1b",
+          "title": "一身腱子肉，乱世做谋臣",
+          "kind": "short_drama",
+          "episodes": 107
+        },
+        {
+          "id": "07f4dd129959ad2594a94013",
+          "title": "万妖图录传",
+          "kind": "short_drama",
+          "episodes": 202
+        },
+        {
+          "id": "c68f2f337ac96e70cc70f4aa",
+          "title": "从小兵开始",
+          "kind": "short_drama",
+          "episodes": 226
+        },
+        {
+          "id": "3700e476cf08265cf7ca85b2",
+          "title": "从布衣开始成圣",
+          "kind": "short_drama",
+          "episodes": 257
+        },
+        {
+          "id": "9b9db5294cfe9b7d92f2fa96",
+          "title": "光之巨人：原初之光",
+          "kind": "short_drama",
+          "episodes": 73
+        },
+        {
+          "id": "f4c868189de03cee0490cf67",
+          "title": "光之战神奥帝伽",
+          "kind": "short_drama",
+          "episodes": 18
+        },
+        {
+          "id": "aa11654c5d453e7eda22932a",
+          "title": "全民机械飞升",
+          "kind": "short_drama",
+          "episodes": 151
+        },
+        {
+          "id": "ed66b1d214d3f9b7e855a7f8",
+          "title": "大夏之始",
+          "kind": "short_drama",
+          "episodes": 308
+        }
+      ],
+      "tool_calls": [],
+      "decision": {
+        "route": "agent",
+        "intent": "browse_library",
+        "reason": "read_only_inventory"
+      },
+      "answer_source": "local_catalog",
+      "llm_latency_ms": null,
+      "tool_latency_ms": null,
+      "turn_ms": 430.3
+    },
+    {
+      "utterance": "推荐三部好看的。",
+      "status": "SUCCESS",
+      "reply": "从本地已入库内容里给你挑了这几部：1.《穿成野神我靠香火斩诸神》（2026） · 1305 集；2.《从布衣开始成圣》（2026） · 257 集；3.《我合成了全世界啊》（2026） · 351 集。可以说“第几部”继续选择。",
+      "candidates": [
+        {
+          "id": "7a52615b3bbdba3beb2670d5",
+          "title": "穿成野神我靠香火斩诸神",
+          "kind": "short_drama",
+          "episodes": 1305
+        },
+        {
+          "id": "3700e476cf08265cf7ca85b2",
+          "title": "从布衣开始成圣",
+          "kind": "short_drama",
+          "episodes": 257
+        },
+        {
+          "id": "ca5d0a8554a1a9fab4132a47",
+          "title": "我合成了全世界啊",
+          "kind": "short_drama",
+          "episodes": 351
+        }
+      ],
+      "tool_calls": [],
+      "decision": {
+        "route": "agent",
+        "intent": "assistant",
+        "reason": "schema_valid"
+      },
+      "answer_source": "local_catalog",
+      "llm_latency_ms": 4262.818809998862,
+      "tool_latency_ms": 355.60770300071454,
+      "turn_ms": 7907.6
+    },
+    {
+      "utterance": "第二个讲什么？",
+      "status": "SUCCESS",
+      "reply": "《从布衣开始成圣》（短剧，2026 年，257 集，出品：红果短剧）讲的是：陈实本是靖安侯府骑奴，因卷入顾承泽与萧凤箫的后宅阴谋，被迫夹缝求生。为挣脱奴籍救下翠浓，他毅然踏上武道之路。凭借绝佳天赋与坚韧心性，他修成神力象胎，周旋于权贵与江湖帮派之间。随着实力攀升，他卷入扶风会养蛊与叛军平定等惊天风暴，最终打破阶层桎梏迎娶侯门千金，逆袭掌控自身命运，登顶大乾武道巅峰。",
+      "candidates": [],
+      "tool_calls": [],
+      "decision": {
+        "route": "agent",
+        "intent": "assistant",
+        "reason": "library_question"
+      },
+      "answer_source": "local_catalog",
+      "llm_latency_ms": 4095.3085360015393,
+      "tool_latency_ms": 0.04198899841867387,
+      "turn_ms": 8080.1
+    },
+    {
+      "utterance": "不要太长的。",
+      "status": "SUCCESS",
+      "reply": "从本地已入库内容里给你挑了这几部：1.《光之战神奥帝伽》（2026） · 18 集。可以说“第几部”继续选择。",
+      "candidates": [
+        {
+          "id": "f4c868189de03cee0490cf67",
+          "title": "光之战神奥帝伽",
+          "kind": "short_drama",
+          "episodes": 18
+        }
+      ],
+      "tool_calls": [],
+      "decision": {
+        "route": "agent",
+        "intent": "assistant",
+        "reason": "library_question"
+      },
+      "answer_source": "local_catalog",
+      "llm_latency_ms": 5436.5967709964025,
+      "tool_latency_ms": 0.6939289960428141,
+      "turn_ms": 9447.0
+    },
+    {
+      "utterance": "就看刚才那个。",
+      "status": "NEEDS_CLARIFICATION",
+      "reply": "已选择《从布衣开始成圣》。你想从第几集开始？",
+      "candidates": [],
+      "tool_calls": [],
+      "decision": {
+        "route": "clarify",
+        "intent": "select",
+        "reason": "unresolved_context_or_target"
+      },
+      "answer_source": null,
+      "llm_latency_ms": null,
+      "tool_latency_ms": null,
+      "turn_ms": 4007.0
+    },
+    {
+      "utterance": "第一集。",
+      "status": "NEEDS_CONFIRMATION",
+      "reply": "确认执行 播放《从布衣开始成圣》第1季第一集 吗？小爱可能也响应同一句话；请明确说“确认”或“不确认”。",
+      "candidates": [],
+      "tool_calls": [],
+      "decision": {
+        "route": "clarify",
+        "intent": "play",
+        "reason": "native_conflict_confirmation"
+      },
+      "answer_source": null,
+      "llm_latency_ms": null,
+      "tool_latency_ms": null,
+      "turn_ms": 18.0
+    },
+    {
+      "utterance": "确认。",
+      "status": "SUCCESS",
+      "reply": "已完成。",
+      "candidates": [],
+      "tool_calls": [],
+      "decision": {
+        "route": "agent",
+        "intent": "confirm",
+        "reason": ""
+      },
+      "answer_source": "local_catalog",
+      "llm_latency_ms": null,
+      "tool_latency_ms": null,
+      "turn_ms": 4011.1
+    }
+  ],
+  "metrics": {
+    "turn_ms_p50": 4011.1,
+    "turn_ms_p95": 8080.1,
+    "peak_rss_mb": 35.8
+  },
+  "verified": {
+    "real_media_library": true,
+    "real_llm": true,
+    "real_tv_execution": false,
+    "note": "agent/device are stubs: playback was confirmed by the dialogue stack but not executed on the physical TV."
+  }
+}

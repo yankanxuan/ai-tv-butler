@@ -96,6 +96,196 @@ def parse_episode(name: str) -> tuple[int | None, int | None]:
     return None, None
 
 
+# ---------------------------------------------------------------------------
+# NFO metadata (V4.4)
+#
+# Real hongguo-style NFO files carry <plot>/<studio>/<uniqueid>/<tag>, not the
+# <genre> element the older parser only looked at. Parsing stays defensive: a
+# size ceiling, no external entities (stdlib ElementTree never resolves them,
+# defusedxml is used when the deployment image happens to ship it), and every
+# failure degrades to "no metadata" instead of raising.
+# ---------------------------------------------------------------------------
+NFO_NAMES = ('movie.nfo', 'tvshow.nfo')
+_NFO_MAX_BYTES = 1024 * 1024
+KIND_LABELS = {'movie': '电影', 'series': '电视剧', 'short_drama': '短剧', 'unknown': '未知'}
+_GENRE_SPLIT = re.compile(r'[,，、/|;；]')
+
+try:  # pragma: no cover - depends on the deployment image
+    from defusedxml import ElementTree as _XML  # type: ignore
+except Exception:  # pragma: no cover - the stdlib fallback is the normal case
+    import xml.etree.ElementTree as _XML
+
+
+def empty_evidence() -> dict[str, Any]:
+    """Neutral evidence record: nothing known, nothing guessed."""
+    return {'movie_nfo': False, 'tvshow_nfo': False, 'plot': None, 'genres': [],
+            'studio': None, 'uniqueids': [], 'runtime': None, 'year': None,
+            'region': None, 'type': None, 'sources': []}
+
+
+def _local(tag: Any) -> str:
+    return tag.rsplit('}', 1)[-1] if isinstance(tag, str) else ''
+
+
+def _first(values: list[str]) -> str | None:
+    return values[0] if values else None
+
+
+def parse_nfo(path: str | Path) -> dict[str, Any] | None:
+    """Parse one Kodi-style NFO. ``None`` when absent, oversized or malformed."""
+    target = Path(path)
+    try:
+        if not target.is_file() or target.stat().st_size > _NFO_MAX_BYTES:
+            return None
+        raw = target.read_bytes()
+    except OSError:
+        return None
+    try:
+        root = _XML.fromstring(raw)
+    except Exception:  # malformed XML, entity bombs, encoding errors
+        return None
+
+    def texts(name: str) -> list[str]:
+        out = []
+        for node in root.iter():
+            if _local(node.tag) == name and node.text and node.text.strip():
+                out.append(node.text.strip())
+        return out
+
+    uniqueids: list[tuple[str | None, str]] = []
+    for node in root.iter():
+        if _local(node.tag) != 'uniqueid':
+            continue
+        value = (node.text or '').strip()
+        kind = (node.get('type') or '').strip().casefold() or None
+        if value and (kind, value) not in uniqueids:
+            uniqueids.append((kind, value))
+
+    genres: list[str] = []
+    for raw_genre in texts('genre') + texts('tag'):
+        for part in _GENRE_SPLIT.split(raw_genre):
+            part = part.strip()
+            if part and part not in genres:
+                genres.append(part)
+
+    return {'plot': _first(texts('plot')),
+            'genres': genres,
+            'studio': _first(texts('studio')),
+            'uniqueids': uniqueids,
+            'runtime': _first(texts('runtime')),
+            'year': _first(texts('year')),
+            'region': _first(texts('country')) or _first(texts('region')),
+            'type': (_first(texts('type')) or '').casefold() or None}
+
+
+def _read_directory_nfo(directory: Path) -> dict[str, Any]:
+    """Merge movie.nfo/tvshow.nfo found directly inside ``directory``."""
+    evidence = empty_evidence()
+    for name in NFO_NAMES:
+        path = directory / name
+        try:
+            present = path.is_file()
+        except OSError:
+            present = False
+        if not present:
+            continue
+        evidence['movie_nfo' if name == 'movie.nfo' else 'tvshow_nfo'] = True
+        evidence['sources'].append(name)
+        parsed = parse_nfo(path)
+        if parsed is None:
+            continue
+        for field in ('plot', 'studio', 'runtime', 'year', 'region', 'type'):
+            if not evidence[field] and parsed.get(field):
+                evidence[field] = parsed[field]
+        for genre in parsed.get('genres') or []:
+            if genre not in evidence['genres']:
+                evidence['genres'].append(genre)
+        for pair in parsed.get('uniqueids') or []:
+            if pair not in evidence['uniqueids']:
+                evidence['uniqueids'].append(pair)
+    return evidence
+
+
+class NfoCache:
+    """Per-directory NFO cache invalidated by the NFO files' (mtime_ns, size).
+
+    Rebuilding the index must not re-read 45 unchanged files every minute; the
+    signature check costs two ``stat`` calls per directory instead.
+    """
+
+    def __init__(self) -> None:
+        self._data: dict[str, tuple[tuple, dict[str, Any]]] = {}
+        self.parses = 0
+
+    @staticmethod
+    def _signature(directory: Path) -> tuple:
+        signature = []
+        for name in NFO_NAMES:
+            try:
+                info = (directory / name).stat()
+                signature.append((name, info.st_mtime_ns, info.st_size))
+            except OSError:
+                signature.append((name, None, None))
+        return tuple(signature)
+
+    def get(self, directory: str | Path) -> dict[str, Any]:
+        directory = Path(directory)
+        key = str(directory)
+        signature = self._signature(directory)
+        cached = self._data.get(key)
+        if cached is not None and cached[0] == signature:
+            return cached[1]
+        evidence = _read_directory_nfo(directory)
+        self.parses += 1
+        self._data[key] = (signature, evidence)
+        return evidence
+
+
+def nfo_evidence(directory: str | Path, cache: "NfoCache | None" = None) -> dict[str, Any]:
+    """Metadata for one work: its own video directory first, then the parent.
+
+    ``tvshow.nfo`` normally sits one level above a ``Season NN`` folder, so the
+    parent is consulted only when the video directory itself has no NFO at all.
+    """
+    directory = Path(directory)
+    getter = cache.get if cache is not None else _read_directory_nfo
+    own = getter(directory)
+    if own['sources']:
+        return own
+    parent = directory.parent
+    if parent == directory:
+        return own
+    return getter(parent)
+
+
+def classify_kind(entry: "MediaEntry", paths: list[str], evidence: dict[str, Any]) -> str:
+    """Evidence-only kind decision, in the V4.4 contract's priority order.
+
+    Nothing here inspects the title: a work is only a short drama when the NFO
+    or the folder path proves it.
+    """
+    if evidence.get('movie_nfo') or (evidence.get('type') or '') == 'movie':
+        return 'movie'
+    # A library-level category folder ("电影/…") is structural evidence, the same
+    # way "短剧/…" is: fnOS keeps category folders at the root of the library.
+    # It only applies to an exact category component, never to a title fragment,
+    # and NFO evidence above always wins.
+    if any(part in ('电影', '影片') for path in paths for part in Path(str(path)).parts):
+        if not any('短剧' in Path(str(path)).parts for path in paths):
+            return 'movie'
+    studio = evidence.get('studio') or ''
+    hongguo = any((kind or '') == 'hongguo' for kind, _value in evidence.get('uniqueids') or [])
+    short_path = any('短剧' in Path(str(path)).parts for path in paths)
+    if '短剧' in studio or hongguo or short_path:
+        return 'short_drama'
+    marked = sum(1 for path in paths if parse_episode(path)[1] is not None)
+    if marked or len(getattr(entry, 'seasons', {}) or {}) > 1:
+        return 'series'
+    if len(paths) == 1:
+        return 'movie'
+    return 'unknown'
+
+
 @dataclass
 class MediaEntry:
     base: str
@@ -372,7 +562,16 @@ def index_from_config(cfg: dict, *, rebuild_if_empty: bool = True):
             index = MediaIndex.load(cache, aliases=aliases)
         except (OSError, ValueError, KeyError):
             index = None
-    if index is None or (rebuild_if_empty and not index.entries):
+    # V4.4: a cached index must not outlive the library it describes, otherwise
+    # "最近新增" answers with stale data forever. The scan is read-only and cheap
+    # (~0.6 s for 35 works), so a bounded TTL is the safe default.
+    try:
+        refresh = float(media.get("refresh_seconds") or 900)
+    except (TypeError, ValueError):
+        refresh = 900.0
+    stale = (index is not None and refresh > 0
+             and time.time() - float(getattr(index, "scanned_at", 0) or 0) > refresh)
+    if index is None or (rebuild_if_empty and not index.entries) or stale:
         index = MediaIndex(media.get("roots") or [], aliases=aliases, cache_path=cache or None).scan()
         if cache:
             try:

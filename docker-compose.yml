@@ -5,7 +5,7 @@ x-common: &common
       BUTLER_UID: ${BUTLER_UID:-10001}
       BUTLER_GID: ${BUTLER_GID:-10001}
       INSTALL_PIPER: ${INSTALL_PIPER:-0} # optional; standard image excludes unused TTS packages
-  image: ai-tv-butler:4.3.2
+  image: ai-tv-butler:4.4.0
   restart: unless-stopped
   network_mode: host
   user: "${BUTLER_UID:-10001}:${BUTLER_GID:-10001}"

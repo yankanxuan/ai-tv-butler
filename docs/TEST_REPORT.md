@@ -92,3 +92,23 @@ V4.1/V4.2 全部测试保留：ADB 设备控制、应用打开、音量/按键�
 - 媒体库无 NFO：类型/地区/时长缺失，题材筛选只能如实回答"无法判断"。
 - 本机 LLM 单次 1.7–9s，多步循环接近预算上限；预算 14s 超时即回退确定性答案。
 - 电视 ADB 在长时间会话后偶发 `dumpsys` 超时，影响播放核验与 voice 健康检查（设备侧）。
+
+## V4.4（4.4.0）测试记录 — 2026-11-13
+
+| 项 | 结果 |
+|---|---|
+| `make test`（22 项模拟电视集成 + 单元测试） | **1126 通过 / 0 失败**（skipped=14） |
+| 基线对比 | V4.3.2 为 1007 项；新增 119 项 |
+| `tests/test_library_metadata_v44.py` | 35 项（NFO 解析、五级类型判定、元数据口径、投影不含路径） |
+| `tests/test_dialogue_context_v44.py` | 29 项（序号/代词/片名指代、偏好合并、TTL、export/hydrate 兼容） |
+| `tests/test_assistant_v44.py` | 24 项（overview/recent/detail、短剧计数绑定、plot 复述校验、工具失败 UNKNOWN） |
+| `tests/test_v44_dialogue_acceptance.py` | 31 项（契约 A–O 15 条话术 + 6 组对抗） |
+| `python3 -m compileall adbtv` | 通过 |
+| 真实库 + 真实 LLM 闭环冒烟 | `scripts/v44_smoke.py` → `docs/evidence/V44_LEAD_CLOSED_LOOP.json` |
+
+真实库实测（容器内 `LibraryTools.overview()`）：
+`total=35, movies=0, series=2, short_dramas=33, episodes=8483, with_metadata=35, with_genres=2,
+with_plot=33, seasons=42, recent_added_7d=21`。
+
+口径说明：`with_metadata` = plot/genres/studio/year 任一存在；`with_genres` = 仅 `genres` 非空。
+题材相关的回答一律使用 `with_genres`，不得用 `total - metadata_missing` 冒充「有题材标签的作品数」。

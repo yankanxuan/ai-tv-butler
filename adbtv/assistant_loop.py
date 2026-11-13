@@ -54,7 +54,8 @@ _KIND_WORDS = ('影视作品', '电视剧', '连续剧', '剧集', '短剧', '�
 _KIND_FIELD = {
     '电影': 'movies', '影片': 'movies', '片子': 'movies',
     '剧集': 'series', '电视剧': 'series', '连续剧': 'series',
-    '短剧': 'series', '剧': 'series',
+    # V4.4: short dramas are counted in their own field, never as ``series``.
+    '短剧': 'short_dramas', '剧': 'series',
     '作品': 'total', '影视作品': 'total',
 }
 _KIND_ALT = '|'.join(_KIND_WORDS)
@@ -124,7 +125,7 @@ _KIND_CLAIM = re.compile(
     r'(?P<kind>电影|影片|片子|电视剧|剧集|连续剧|短剧)')
 _KIND_EXPECT = {'电影': 'movie', '影片': 'movie', '片子': 'movie',
                 '电视剧': 'series', '剧集': 'series', '连续剧': 'series',
-                '短剧': 'series'}
+                '短剧': 'short_drama'}
 _GENRE_WORDS = ('悬疑', '科幻', '喜剧', '爱情', '动作', '犯罪', '历史', '战争',
                 '恐怖', '家庭', '动画', '纪录片', '奇幻', '武侠', '都市', '古装')
 _GENRE_ALT = '|'.join(_GENRE_WORDS)
@@ -139,6 +140,10 @@ _PLAYING_CLAIM = re.compile(r'正在播放|正在观看|正在看|播放中')
 _PERCENT_CLAIM = re.compile(r'\d{1,3}\s*%')
 # Attributes the tools never return: a model must not invent them.
 _UNSUPPORTED_ATTR = re.compile(r'评分|豆瓣|票房|IMDb|imdb|获奖|口碑|热度|导演|主演|演员|编剧')
+# Sentences that explicitly retell the story; only these are checked against the
+# observed synopsis, so plain chat stays free-form.
+_PLOT_CLAIM = re.compile(r'讲的是|讲的是|讲述|剧情是|剧情为|故事是|故事讲|说的是|内容讲|'
+                         r'简介是|简介为|大概讲|主要讲')
 
 
 def cn_number(token):
@@ -196,7 +201,7 @@ TOOL_SCHEMAS = {
         'parameters': {
             'type': 'object', 'additionalProperties': False,
             'properties': {
-                'kind': {'type': 'string', 'enum': ['any', 'movie', 'series', 'unknown']},
+                'kind': {'type': 'string', 'enum': ['any', 'movie', 'series', 'short_drama', 'unknown']},
                 'limit': {'type': 'integer', 'minimum': 1, 'maximum': 20},
                 'sort': {'type': 'string', 'enum': ['title', 'year', 'episodes', 'recent']},
             },
@@ -210,7 +215,7 @@ TOOL_SCHEMAS = {
                 'query': {'type': 'string', 'maxLength': 60},
                 'genre': {'type': 'string', 'maxLength': 20},
                 'year': {'type': 'integer', 'minimum': 1900, 'maximum': 2100},
-                'kind': {'type': 'string', 'enum': ['any', 'movie', 'series', 'unknown']},
+                'kind': {'type': 'string', 'enum': ['any', 'movie', 'series', 'short_drama', 'unknown']},
                 'limit': {'type': 'integer', 'minimum': 1, 'maximum': 20},
             },
         },
@@ -225,8 +230,10 @@ TOOL_SCHEMAS = {
                 'exclusions': {'type': 'array', 'maxItems': 20,
                                'items': {'type': 'string', 'maxLength': 60}},
                 'limit': {'type': 'integer', 'minimum': 1, 'maximum': 20},
-                'kind': {'type': 'string', 'enum': ['any', 'movie', 'series', 'unknown']},
+                'kind': {'type': 'string', 'enum': ['any', 'movie', 'series', 'short_drama', 'unknown']},
                 'max_episodes': {'type': 'integer', 'minimum': 1, 'maximum': 10000},
+                'exclude_genres': {'type': 'array', 'maxItems': 8,
+                                   'items': {'type': 'string', 'maxLength': 20}},
             },
         },
     },
@@ -236,7 +243,7 @@ TOOL_SCHEMAS = {
             'type': 'object', 'additionalProperties': False,
             'properties': {
                 'limit': {'type': 'integer', 'minimum': 1, 'maximum': 20},
-                'kind': {'type': 'string', 'enum': ['any', 'movie', 'series', 'unknown']},
+                'kind': {'type': 'string', 'enum': ['any', 'movie', 'series', 'short_drama', 'unknown']},
             },
         },
     },
@@ -304,6 +311,33 @@ PLAYBACK_PROGRESS_RESULT_SCHEMA = {
     },
 }
 TOOL_SCHEMAS['catalog_get_playback_progress']['returns'] = PLAYBACK_PROGRESS_RESULT_SCHEMA
+# V4.4: catalog-wide questions ("资源库有什么/最近加了什么/这部讲什么") get their
+# own read-only tools instead of overloading summary/list with loose arguments.
+TOOL_SCHEMAS['catalog_overview'] = {
+    'description': '影视库总览：作品/电影/剧集/短剧数量、总季数与集数、'
+                   '元数据覆盖、最近 7/30 天新增数量。',
+    'parameters': {'type': 'object', 'additionalProperties': False, 'properties': {}},
+}
+TOOL_SCHEMAS['catalog_recent'] = {
+    'description': '最近加入或更新的本地作品，按入库时间倒序，含新增天数。',
+    'parameters': {
+        'type': 'object', 'additionalProperties': False,
+        'properties': {
+            'limit': {'type': 'integer', 'minimum': 1, 'maximum': 20},
+            'kind': {'type': 'string',
+                     'enum': ['any', 'movie', 'series', 'short_drama', 'unknown']},
+        },
+    },
+}
+TOOL_SCHEMAS['catalog_detail'] = {
+    'description': '查询单部已入库作品的详情：简介(plot)、题材标签、出品方、'
+                   '年份、季集结构。简介只能来自工具返回的原文。',
+    'parameters': {
+        'type': 'object', 'additionalProperties': False,
+        'required': ['item_id'],
+        'properties': {'item_id': {'type': 'string', 'maxLength': 32}},
+    },
+}
 
 ACTION_SCHEMA = {
     'type': 'object', 'additionalProperties': False,
@@ -339,6 +373,13 @@ SYSTEM_PROMPT_TEMPLATE = '''你是电视管家里的“影视库助理”，只�
 8. 只有确实缺少关键条件时才 clarify，且一次只问一个问题。
 9. 与影视库无关的闲聊可直接 answer，简短自然，不假装查询过电视或网络。
 10. 禁止输出 ADB、shell、SQL、URL 或任何文件路径。
+11. 问“资源库有什么/最近加了什么”用 catalog_overview / catalog_recent；问某部作品讲什么用
+    catalog_detail，并且**只能复述该工具返回的 plot 原文或它的压缩改写**，不得自行编造剧情、
+    演员、评分、导演等工具从未返回的内容。
+12. kind 取值含义：movie=电影，series=剧集，short_drama=短剧，unknown=无法判定。
+    说“短剧 N 部”时 N 必须来自 short_dramas 字段；说“剧集 N 部”时 N 必须来自 series 字段。
+13. 上下文里给了 candidates（本轮候选，含 id）与 focus（最近引用过的作品）时，用户说
+    “第二个/刚才那个/它”就指这些候选，用 catalog_detail 查它们的 id；不要重新猜片名。
 '''
 
 # Concatenated, not .format(): the example JSON above contains braces.
@@ -515,6 +556,19 @@ class AssistantLoop:
             data = self.tools.recommend(**arguments)
         elif canonical == 'catalog_get_episodes':
             data = self.tools.episodes(**arguments)
+        elif canonical == 'catalog_overview':
+            overview = getattr(self.tools, 'overview', None)
+            data = overview() if callable(overview) else self.tools.summary()
+        elif canonical == 'catalog_recent':
+            recent = getattr(self.tools, 'recent', None)
+            if callable(recent):
+                data = recent(**arguments)
+            else:  # pre-V4.4 catalog: browse by recency, same contract
+                data = self.tools.browse(limit=arguments.get('limit', 5),
+                                         kind=arguments.get('kind', 'any'),
+                                         sort='recent')
+        elif canonical == 'catalog_detail':
+            data = self.tools.item(**arguments)
         elif canonical == 'catalog_get_playback_progress':
             data = self._progress_from_state(state or {})
         else:
@@ -578,8 +632,20 @@ class AssistantLoop:
         kind = item.get('kind')
         if title:
             ledger['titles'].add(title)
-            if kind in ('movie', 'series', 'unknown'):
+            if kind in ('movie', 'series', 'short_drama', 'unknown'):
                 ledger['title_kinds'][title] = kind
+        plot = item.get('plot')
+        if title and isinstance(plot, str) and plot.strip():
+            # A synopsis is observed data: quoting/paraphrasing it is allowed,
+            # inventing a different one is not (checked via ``plot_text``).
+            ledger['plots'][title] = plot.strip()
+            ledger['plot_text'] = (ledger['plot_text'] + ' ' + plot.strip()).strip()
+        studio = item.get('studio')
+        if isinstance(studio, str) and studio.strip():
+            ledger['studios'].add(studio.strip())
+        added = item.get('added_days_ago')
+        if isinstance(added, (int, float)) and not isinstance(added, bool):
+            ledger['added_days'].add(round(float(added), 1))
         year = item.get('year')
         if type(year) is int:
             ledger['years'].add(year)
@@ -614,6 +680,8 @@ class AssistantLoop:
         """
         ledger = {
             'titles': set(), 'movies': set(), 'series': set(), 'unknown': set(),
+            'short_dramas': set(), 'plots': {}, 'plot_text': '', 'studios': set(),
+            'added_days': set(),
             'total': set(), 'episodes': set(), 'item_episodes': set(),
             'seasons': set(), 'matched': set(),
             'episode_numbers': set(), 'season_numbers': set(),
@@ -625,16 +693,22 @@ class AssistantLoop:
         for observation in observations:
             result = observation.get('result') or {}
             canonical = self._canon(observation.get('tool'))
-            if canonical in ('catalog_summary', 'catalog_status'):
+            if canonical in ('catalog_summary', 'catalog_status', 'catalog_overview'):
                 for field, key in (('total', 'total'), ('movies', 'movies'),
                                    ('series', 'series'), ('unknown', 'unknown_kind'),
-                                   ('episodes', 'episodes')):
+                                   ('episodes', 'episodes'),
+                                   ('short_dramas', 'short_dramas')):
                     self._ledger_add(ledger, field, result.get(key))
                 self._ledger_add(ledger, 'total', result.get('entries'))
                 kind_support = result.get('kind_support') or {}
                 for field, key in (('movies', 'movie'), ('series', 'series'),
-                                   ('unknown', 'unknown')):
+                                   ('unknown', 'unknown'),
+                                   ('short_dramas', 'short_drama')):
                     self._ledger_add(ledger, field, kind_support.get(key))
+            elif canonical == 'catalog_detail':
+                item = result.get('item') or result
+                if isinstance(item, dict):
+                    self._ledger_absorb_item(ledger, item)
             elif canonical == 'catalog_get_episodes':
                 item = result.get('item') or {}
                 self._ledger_absorb_item(ledger, item)
@@ -670,7 +744,8 @@ class AssistantLoop:
                 for item in items:
                     self._ledger_absorb_item(ledger, item)
                     item_kind = item.get('kind')
-                    kinds.append(item_kind if item_kind in ('movie', 'series', 'unknown')
+                    kinds.append(item_kind if item_kind in ('movie', 'series',
+                                                            'short_drama', 'unknown')
                                  else 'unknown')
                     for reason in item.get('reasons') or []:
                         if isinstance(reason, str) and reason.strip():
@@ -696,6 +771,8 @@ class AssistantLoop:
             return value in ledger['movies']
         if field == 'series':
             return value in ledger['series']
+        if field == 'short_dramas':
+            return value in ledger['short_dramas']
         if field == 'total':
             return value in ledger['total']
         if field == 'episodes':
@@ -718,7 +795,8 @@ class AssistantLoop:
         returned rows have to be of the claimed kind. "N 部作品" may count any
         work, but "N 部电影" may only count rows whose kind is ``movie``.
         """
-        want = {'movies': 'movie', 'series': 'series', 'unknown': 'unknown'}.get(field)
+        want = {'movies': 'movie', 'series': 'series', 'unknown': 'unknown',
+                'short_dramas': 'short_drama'}.get(field)
         for listing in ledger['lists']:
             if value > listing['len']:
                 continue
@@ -750,7 +828,9 @@ class AssistantLoop:
             prefix = scan[max(0, match.start() - 6):match.start()]
             if _GENRE_NEGATION.search(prefix):
                 continue
-            if genre not in ledger['genres']:
+            # A genre word is grounded by a real genre tag OR by the observed
+            # synopsis text itself (the plot is tool data, not model invention).
+            if genre not in ledger['genres'] and genre not in (ledger['plot_text'] or ''):
                 return False
         for match in _RUNTIME_CLAIM.finditer(text):
             amount = int(match.group(1))
@@ -767,6 +847,34 @@ class AssistantLoop:
         if _UNSUPPORTED_ATTR.search(_TITLE.sub('', text)):
             return False
         return True
+
+    @staticmethod
+    def _shingles(text, size=2):
+        """CJK character n-grams; punctuation and digits are separators."""
+        grams = set()
+        for run in re.split(r'[^\u4e00-\u9fff]+', text or ''):
+            for index in range(len(run) - size + 1):
+                grams.add(run[index:index + size])
+        return grams
+
+    def _synopsis_grounded(self, text, ledger):
+        """A plot statement must overlap a synopsis the tools actually returned.
+
+        Paraphrasing real NFO text is allowed (that is what a butler should do);
+        inventing a different story is not. The check only applies when the
+        sentence is explicitly *about* the story, so ordinary chat about a work
+        is unaffected.
+        """
+        if not ledger['plots']:
+            return not _PLOT_CLAIM.search(text)
+        if not _PLOT_CLAIM.search(text):
+            return True
+        observed = self._shingles(ledger['plot_text'])
+        claimed = self._shingles(_PLOT_CLAIM.sub('', text))
+        if not claimed:
+            return True
+        shared = observed & claimed
+        return len(shared) >= max(3, int(0.15 * len(claimed)))
 
     def _unverified_title(self, text, known_titles):
         """Return a leftover name fragment when a title is written without 《》.
@@ -900,6 +1008,10 @@ class AssistantLoop:
         if not self._attributes_grounded(text, ledger):
             return False
 
+        # ---- a synopsis may be paraphrased, never invented ----
+        if not self._synopsis_grounded(text, ledger):
+            return False
+
         # ---- names written without 《》 must resolve to real titles ----
         if self._unverified_title(text, ledger['titles']):
             return False
@@ -914,7 +1026,8 @@ class AssistantLoop:
         if not used:
             return 'unverified'
         if used & {'catalog_summary', 'catalog_status', 'catalog_list',
-                   'catalog_search', 'catalog_recommend', 'catalog_get_episodes'}:
+                   'catalog_search', 'catalog_recommend', 'catalog_get_episodes',
+                   'catalog_overview', 'catalog_recent', 'catalog_detail'}:
             return 'local_catalog'
         if 'catalog_get_playback_progress' in used:
             return 'device_status'
@@ -934,7 +1047,8 @@ class AssistantLoop:
 
     @staticmethod
     def _label(kind):
-        return {'movie': '电影', 'series': '剧集', 'unknown': '类型未知的作品',
+        return {'movie': '电影', 'series': '剧集', 'short_drama': '短剧',
+                'unknown': '类型未知的作品',
                 'any': '影视作品'}.get(kind, '影视作品')
 
     def _render_items(self, items, intro):
@@ -968,6 +1082,65 @@ class AssistantLoop:
             text += '可以说“接着看”继续。'
         return text
 
+    def _render_overview(self, observations):
+        """Deterministic answer for "资源库有什么" from real counters only."""
+        overview = self._result_of(observations, 'catalog_overview')
+        if not overview or 'total' not in overview:
+            summary = self._result_of(observations, 'catalog_summary', 'library_summary')
+            overview = summary or {}
+        if not overview.get('total') and overview.get('total') != 0:
+            return '这次没有取到影视库总览。' + CAPABILITY_REPLY
+        if not overview.get('available', True):
+            return '现在读不到本地影视库索引（挂载或权限异常）。' + CAPABILITY_REPLY
+        parts = [f'本地影视库共 {overview["total"]} 部作品']
+        detail = [f'电影 {overview.get("movies", 0)} 部',
+                  f'剧集 {overview.get("series", 0)} 部']
+        if overview.get('short_dramas'):
+            detail.append(f'短剧 {overview["short_dramas"]} 部')
+        parts.append('（' + '、'.join(detail) + '）')
+        if overview.get('episodes'):
+            parts.append(f'共 {overview["episodes"]} 集')
+        if overview.get('seasons'):
+            parts.append(f'{overview["seasons"]} 季')
+        text = '，'.join(parts) + '。'
+        if overview.get('recent_added_7d') is not None:
+            text += f'最近 7 天新增 {overview["recent_added_7d"]} 部。'
+        browse = self._result_of(observations, 'catalog_list', 'library_browse')
+        items = browse.get('items') or []
+        if items:
+            text += self._render_items(items, '例如')
+        if overview.get('metadata_missing'):
+            text += (f'其中 {overview["metadata_missing"]} 部缺少类型/简介元数据，'
+                     '我不会猜测它们的题材。')
+        return text
+
+    def _render_detail(self, observations):
+        """Answer "第二个讲什么" strictly from the observed NFO synopsis."""
+        result = self._result_of(observations, 'catalog_detail')
+        item = (result.get('item') if isinstance(result.get('item'), dict) else result) or {}
+        if not item.get('title'):
+            return '我没有查到这部作品的详情，可以说片名让我重新查。'
+        head = f'《{item["title"]}》'
+        meta = []
+        if item.get('kind_label'):
+            meta.append(item['kind_label'])
+        if item.get('year'):
+            meta.append(f'{item["year"]} 年')
+        if item.get('episodes'):
+            meta.append(f'{item["episodes"]} 集')
+        if item.get('genres'):
+            meta.append('题材：' + '、'.join(item['genres']))
+        if item.get('studio'):
+            meta.append(f'出品：{item["studio"]}')
+        text = head + ('（' + '，'.join(meta) + '）' if meta else '')
+        plot = item.get('plot')
+        if isinstance(plot, str) and plot.strip():
+            body = plot.strip()
+            if body[-1] in '。！？!?':
+                return text + '讲的是：' + body
+            return text + '讲的是：' + body + '。'
+        return text + '没有可用的剧情简介（NFO 里没有 plot 信息），我不编造内容。'
+
     def _render_summary(self, summary):
         if not isinstance(summary, dict) or 'total' not in summary:
             return '这次没有取到影视库统计。' + CAPABILITY_REPLY
@@ -975,6 +1148,10 @@ class AssistantLoop:
             return ('现在读不到本地影视库索引。' + CAPABILITY_REPLY)
         parts = [f'本地影视库共 {summary["total"]} 部作品（{summary["episodes"]} 集）',
                  f'其中电影 {summary["movies"]} 部、剧集 {summary["series"]} 部']
+        if summary.get('short_dramas'):
+            parts.append(f'短剧 {summary["short_dramas"]} 部')
+        if summary.get('seasons'):
+            parts.append(f'共 {summary["seasons"]} 季')
         if summary.get('unknown_kind'):
             parts.append(f'另有 {summary["unknown_kind"]} 部类型无法确定')
         text = '，'.join(parts) + '。'
@@ -987,6 +1164,47 @@ class AssistantLoop:
     GENRE_WORDS = ('悬疑', '科幻', '喜剧', '爱情', '动作', '犯罪', '历史', '战争',
                    '恐怖', '家庭', '动画', '纪录片', '奇幻', '武侠', '都市', '古装')
 
+    @staticmethod
+    def _referenced_item_id(text, state):
+        """Resolve "第二个/第2部/刚才那个/片名" to a real candidate id.
+
+        Only this turn's candidate list (or the last focused item) may be used:
+        the fallback planner must never invent an item id.
+        """
+        state = state or {}
+        candidates = [c for c in (state.get('candidates') or []) if c.get('id')]
+        compact = re.sub(r'[\s，,。？?！!]', '', text or '')
+        ordinal = re.search(r'第(?P<num>[0-9]+|[零〇一二三四五六七八九十两]+)\s*(?:个|部|集|项|条)',
+                            compact)
+        if ordinal:
+            value = cn_number(ordinal.group('num'))
+            if value is None or not (1 <= value <= len(candidates)):
+                return None
+            return candidates[value - 1]['id']
+        if re.search(r'刚才那个|刚才那部|上一个|上一部|这个|这部|那部|它', compact):
+            focus = state.get('last_item') or {}
+            if focus.get('id'):
+                return focus['id']
+            if candidates:
+                return candidates[-1]['id']
+            return None
+        for candidate in candidates:
+            title = candidate.get('title') or ''
+            if title and title in compact:
+                return candidate['id']
+        return None
+
+    @staticmethod
+    def _wanted_kind(compact):
+        """Explicit media kind only: never infer "movie" from a vague request."""
+        if '短剧' in compact:
+            return 'short_drama'
+        if '电影' in compact or '影片' in compact:
+            return 'movie'
+        if re.search(r'电视剧|剧集|连续剧', compact):
+            return 'series'
+        return 'any'
+
     def _plan(self, text, state):
         """Rule-based tool choice used without a model and to render fallbacks."""
         clean = (text or '').strip()
@@ -996,18 +1214,61 @@ class AssistantLoop:
             return [('catalog_get_playback_progress', {})], 'progress'
         if re.search(r'不可用|还能做什么|能做什么|坏了|连不上|怎么回事|健康', compact):
             return [('library_health', {})], 'health'
+        if re.search(r'讲什么|讲啥|讲的什么|剧情|简介|说什么的|什么故事|内容是什么|讲的啥', compact):
+            item_id = self._referenced_item_id(clean, state)
+            if item_id:
+                return [('catalog_detail', {'item_id': item_id})], 'detail'
+        if re.search(r'资源库有什么|库里有什么|有什么资源|都有什么|片库有啥|影视库有什么|'
+                     r'资源库有啥|资源库里有什么', compact):
+            return [('catalog_overview', {}),
+                    ('library_browse', {'kind': 'any', 'limit': 8})], 'overview'
         if re.search(r'最近|新加|新增|刚加|更新了', compact):
-            return [('library_recent', {'limit': 5})], 'recent'
-        short = bool(re.search(r'不要太长|别太长|短一点|短些|集数少|少一点|太长', compact))
-        if re.search(r'类似|差不多|换一部|换一个|再来一部', compact):
+            return [('catalog_recent', {'limit': 5})], 'recent'
+        short = bool(re.search(r'不要太长|别太长|别那么长|那么长|短一点|短一些|短些|短的|'
+                               r'集数少|少一点|太长|长一点', compact))
+        prefs = state.get('preferences') or {}
+        excluded = list(prefs.get('exclude_ids') or [])
+        if re.search(r'类似|差不多|换一部|换一个|再来一部|换一部吧', compact):
             previous = state.get('last_item') or {}
             arguments = {'limit': 5}
-            if previous.get('id'):
-                arguments['exclusions'] = [previous['id']]
+            for row in (state.get('candidates') or []):
+                if row.get('id') and row['id'] not in excluded:
+                    excluded.append(row['id'])
+            if previous.get('id') and previous['id'] not in excluded:
+                excluded.append(previous['id'])
+            if excluded:
+                arguments['exclusions'] = excluded
+            if prefs.get('kind'):
+                arguments['kind'] = prefs['kind']
+            if prefs.get('max_episodes'):
+                arguments['max_episodes'] = prefs['max_episodes']
+            if prefs.get('exclude_genres'):
+                arguments['exclude_genres'] = prefs['exclude_genres']
+            return [('library_recommend', arguments)], 'recommend'
+        if re.search(r'都看过了|都看过|看过了|这些我都', compact):
+            rows = state.get('candidates') or []
+            arguments = {'limit': 5}
+            seen = [row['id'] for row in rows if row.get('id')]
+            if seen:
+                arguments['exclusions'] = seen
+            if prefs.get('max_episodes'):
+                arguments['max_episodes'] = prefs['max_episodes']
+            if prefs.get('exclude_genres'):
+                arguments['exclude_genres'] = prefs['exclude_genres']
             return [('library_recommend', arguments)], 'recommend'
         if re.search(r'推荐|随便|挑一部|挑个|好看的|来一部|来点|有什么好看', compact):
-            kind = 'movie' if '电影' in compact else ('series' if re.search(r'剧|短剧', compact) else 'any')
-            arguments = {'limit': 5, 'kind': kind}
+            kind = self._wanted_kind(compact)
+            wanted_genre = next((g for g in self.GENRE_WORDS if g in compact), None)
+            if wanted_genre:
+                # Only real genre tags can satisfy "悬疑剧"; the search renderer
+                # reports the missing-metadata case honestly.
+                return [('library_search', {'genre': wanted_genre, 'kind': kind,
+                                            'limit': 8})], 'search'
+            wanted = re.search(r'(?:推荐|来|挑|选)?\s*([0-9]+|[一二两三四五六七八九十]+)\s*部', compact)
+            limit = cn_number(wanted.group(1)) if wanted else None
+            # The reply always offers a numbered candidate list, so "推荐一部"
+            # still returns a few options; an explicit larger count is honoured.
+            arguments = {'limit': max(3, min(10, limit)) if limit else 5, 'kind': kind}
             if short:
                 arguments['max_episodes'] = (state.get('last_query') or {}).get('max_episodes') or 120
             return [('library_recommend', arguments)], 'recommend'
@@ -1018,8 +1279,7 @@ class AssistantLoop:
             if previous.get('kind'):
                 arguments['kind'] = previous['kind']
             return [('library_recommend', arguments)], 'recommend'
-        kind = 'movie' if '电影' in compact else (
-            'series' if re.search(r'电视剧|剧集|短剧', compact) else 'any')
+        kind = self._wanted_kind(compact)
         genre = next((g for g in self.GENRE_WORDS if g in compact), None)
         # An explicit quoted/short title still wins over a genre guess.
         lookup = re.fullmatch(r'(?:帮我|给我)?(?:搜索|找一下|搜一下|找|搜|查)\s*(?:一下)?\s*(.+)', compact)
@@ -1058,8 +1318,16 @@ class AssistantLoop:
                     f'索引更新于 {round((health.get("index_age_seconds") or 0) / 60)} 分钟前；'
                     f'{coverage.get("missing", 0)} 部缺少类型元数据。' + CAPABILITY_REPLY)
         if plan_kind == 'recent':
-            items = self._items_of({'result': self._result_of(observations, 'catalog_list', 'library_recent')})
+            result = self._result_of(observations, 'catalog_recent', 'catalog_list',
+                                     'library_recent')
+            items = result.get('items') or []
+            if not items:
+                return '最近没有新增或更新的本地作品。' + CAPABILITY_REPLY
             return self._render_items(items, '最近加入/更新的本地作品是')
+        if plan_kind == 'overview':
+            return self._render_overview(observations)
+        if plan_kind == 'detail':
+            return self._render_detail(observations)
         if plan_kind == 'recommend':
             result = self._result_of(observations, 'catalog_recommend', 'library_recommend')
             items = result.get('items') or []
@@ -1067,11 +1335,18 @@ class AssistantLoop:
                 summary = self.tools.summary()
                 wanted = result.get('kind', 'any')
                 if wanted == 'movie' and not summary.get('movies'):
-                    return (f'本地库里目前没有电影，有 {summary["series"]} 部剧集'
+                    return (f'本地库里目前没有电影，有 {summary.get("series", 0)} 部剧集'
                             f'（共 {summary["episodes"]} 集）。要我列几部剧集，或者按片名找吗？')
                 if result.get('max_episodes'):
                     return (f'没有 {result["max_episodes"]} 集以内的作品。'
                             '可以放宽集数限制，或者换个条件。')
+                if result.get('exclude_genres') and not summary.get('with_metadata'):
+                    return ('本地库里的作品都没有题材标签（NFO 里没有 genre/tag 信息），'
+                            '所以我无法按题材筛选，也不会凭空猜类型。'
+                            '可以按集数、新增时间或片名来找。')
+                if result.get('exclusions'):
+                    return ('排除这些之后库里没有更多符合条件的作品了。'
+                            '可以让我放宽条件，或者换个类型。')
                 return '本地库里没有可推荐的作品。' + CAPABILITY_REPLY
             return self._render_items(items, '从本地已入库内容里给你挑了这几部')
         if plan_kind == 'search':
@@ -1081,12 +1356,15 @@ class AssistantLoop:
             kind = result.get('kind', 'any')
             if result.get('genre') and not items and not result.get('total'):
                 summary = self.tools.summary()
-                if summary.get('metadata_missing'):
-                    return (f'本地库没有类型标签（{summary["metadata_missing"]}/{summary["total"]} 部缺元数据），'
-                            f'所以无法按“{result["genre"]}”筛选。可以按片名搜索，或直接浏览最近作品。')
-                labelled = summary['total'] - summary['metadata_missing']
-                return (f'本地库里有类型标签的 {labelled} 部作品中没有“{result["genre"]}”。'
-                        '可以按片名搜索，或让我列几部带类型标签的作品。')
+                labelled = summary.get('with_genres')
+                if labelled is None:
+                    labelled = summary['total'] - summary['metadata_missing']
+                if not labelled:
+                    return (f'本地库里的作品都没有题材标签（NFO 元数据里没有 genre/tag 信息），'
+                            f'所以我无法按“{result["genre"]}”筛选，也不会凭空猜类型。'
+                            '可以按集数、新增时间或片名来找。')
+                return (f'本地库里有题材标签的 {labelled} 部作品中没有“{result["genre"]}”。'
+                        '可以按片名搜索，或让我列几部带题材标签的作品。')
             if not items:
                 summary = self.tools.summary()
                 if kind == 'movie' and not summary.get('movies'):
@@ -1173,8 +1451,12 @@ class AssistantLoop:
             context = {'library_scope': state.get('library_scope') or 'local',
                        'last_query': state.get('last_query') or {},
                        'preferences': state.get('preferences') or {},
-                       'candidates': [{'id': c.get('id'), 'title': c.get('title')}
+                       'candidates': [{'id': c.get('id'), 'title': c.get('title'),
+                                       'kind': c.get('kind'),
+                                       'episodes': c.get('episodes')}
                                       for c in (state.get('candidates') or [])][:8],
+                       'focus': state.get('last_item') or {},
+                       'played_history': (state.get('played_history') or [])[:3],
                        'tv': state.get('tv') or {}}
             messages = [{'role': 'user', 'content': json.dumps(
                 {'utterance': text, 'context': context,
@@ -1245,9 +1527,12 @@ class AssistantLoop:
                                        tool_status=('ok' if trace else 'none'),
                                        answer_source=self.answer_source(observations, trace))
                     diagnostics['total_latency_ms'] = (self.clock() - started) * 1000
+                    answered = []
+                    for observation in observations:
+                        answered.extend(self._items_of(observation))
                     return {'status': 'SUCCESS' if validated['action'] == 'answer'
                             else 'NEEDS_CLARIFICATION',
-                            'reply': answer, 'candidates': [], 'tool_trace': trace,
+                            'reply': answer, 'candidates': answered, 'tool_trace': trace,
                             'answer_source': diagnostics.get('answer_source', 'unverified'),
                             'diagnostics': diagnostics}
                 model_failure = 'ungrounded_answer'
@@ -1263,6 +1548,7 @@ class AssistantLoop:
                          'catalog_get_episodes': 'search',
                          'catalog_get_playback_progress': 'progress'}.get(
                              self._canon(observations[-1].get('tool')), plan_kind)
+        tool_failures = 0
         if not observations:
             for name, arguments in calls:
                 try:
@@ -1270,6 +1556,7 @@ class AssistantLoop:
                 except (ToolError, ValueError, TypeError, KeyError, RuntimeError,
                         OSError) as exc:
                     diagnostics['failed_stage'] = 'tool'
+                    tool_failures += 1
                     trace.append({'tool': name, 'status': 'error',
                                   'error': type(exc).__name__})
                     continue
@@ -1277,6 +1564,31 @@ class AssistantLoop:
                 observations.append({'tool': name, 'arguments': arguments,
                                      'result': result})
                 trace.append({'tool': name, 'status': 'ok', 'arguments': arguments})
+        if not observations and tool_failures:
+            diagnostics.update(fallback_reason=model_failure or 'tool_error',
+                               decision_source='deterministic',
+                               answer_source='unverified')
+            diagnostics['total_latency_ms'] = (self.clock() - started) * 1000
+            return {'status': 'UNKNOWN',
+                    'reply': '读取本地影视库时出错了，我没有得到可信数据，'
+                             '所以不会凭猜测回答，也没有执行任何电视动作。请稍后重试。',
+                    'candidates': [], 'tool_trace': trace,
+                    'diagnostics': diagnostics}
+        if (plan_kind == 'recommend' and observations and calls
+                and not self._items_of(observations[-1])):
+            name, arguments = calls[0]
+            exclusions = list((arguments or {}).get('exclusions') or [])
+            if len(exclusions) > 1:
+                retry = dict(arguments)
+                retry['exclusions'] = exclusions[:1]
+                try:
+                    result, tool_ms = self._run_tool(name, retry, state)
+                except (ToolError, ValueError, TypeError, KeyError, RuntimeError, OSError):
+                    result = None
+                if result and result.get('items'):
+                    diagnostics['tool_latency_ms'] += tool_ms
+                    observations = [{'tool': name, 'arguments': retry, 'result': result}]
+                    trace.append({'tool': name, 'status': 'ok', 'arguments': retry})
         if plan_kind is None:
             diagnostics.update(fallback_reason=model_failure or 'no_plan',
                                decision_source='deterministic')

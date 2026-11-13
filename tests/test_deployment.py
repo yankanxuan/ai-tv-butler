@@ -368,7 +368,7 @@ class ComposeServiceSetTests(unittest.TestCase):
         # match) is the invariant that keeps rollback tags unambiguous.
         import tomllib
         from adbtv import __version__
-        self.assertEqual(__version__, "4.3.2")
+        self.assertEqual(__version__, "4.4.0")
         declared = tomllib.loads((ROOT / "pyproject.toml").read_text())["project"]["version"]
         self.assertEqual(declared, __version__)
         for name, service in self.services.items():

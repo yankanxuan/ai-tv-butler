@@ -4,27 +4,42 @@ Every answer is derived from the scanned local filesystem index (plus optional
 NFO metadata). Nothing here invents titles, genres, durations or counts, and
 nothing here can execute a television command.
 
-Kind detection deliberately does **not** depend on a directory literally named
-"电影": NFO ``<movie>``/``<tvshow>`` wins, then explicit episode/season
-structure, then a single unmarked video file. Anything else stays ``unknown``
-instead of being reported as a series.
+Kind detection is evidence-driven and never title-driven (V4.4):
+
+1. a ``movie.nfo`` or ``<type>movie</type>`` declares a movie;
+2. a ``<studio>`` mentioning 短剧, a ``<uniqueid type="hongguo">`` or a
+   ``/短剧/`` path segment declares a short drama;
+3. real ``SxxExx`` episode numbers declare a series;
+4. a single unmarked video file is a movie;
+5. anything else stays ``unknown`` instead of being reported as a series.
+
+Metadata comes from real NFO fields only (``plot``/``genre``/``tag``/``studio``/
+``uniqueid``/``runtime``/``year``/``country``). Missing metadata is reported as
+missing, never filled in.
 """
 from __future__ import annotations
 
 import hashlib
 import re
 import time
-import xml.etree.ElementTree as ET
 from pathlib import Path
 
-from .media_index import MediaIndex, VIDEO_EXT, index_from_config, normalize, parse_episode
+from .media_index import (KIND_LABELS, NfoCache, classify_kind, index_from_config,
+                          nfo_evidence, normalize)
 
-KINDS = ('any', 'movie', 'series', 'unknown')
+KINDS = ('any', 'movie', 'series', 'short_drama', 'unknown')
 SORTS = ('title', 'year', 'episodes', 'recent')
 MAX_LIMIT = 20
-_NFO_MAX_BYTES = 1024 * 1024
-_GENRE_HINTS = ('悬疑', '科幻', '喜剧', '爱情', '动作', '犯罪', '历史', '战争',
-                '恐怖', '家庭', '动画', '纪录片', '奇幻', '武侠', '都市', '古装')
+PLOT_LIMIT = 300
+SHORT_EPISODES = 24
+RECENT_DAYS = 7
+RECENT_DAYS_WIDE = 30
+_ITEM_ID = re.compile(r'[0-9a-f]{24}')
+
+# The only fields a caller may ever see. Paths are deliberately absent.
+_PROJECT_FIELDS = ('id', 'title', 'year', 'kind', 'kind_label', 'genres', 'studio',
+                   'plot', 'region', 'episodes', 'seasons', 'runtime_minutes',
+                   'updated_at', 'added_days_ago', 'season', 'episode')
 
 
 def _safe_id(text):
@@ -41,43 +56,20 @@ def _first_existing(paths):
     return None
 
 
-def _nfo_kind_and_metadata(directory: Path):
-    """Return (kind, metadata) from movie.nfo/tvshow.nfo, never guessed."""
-    for name, kind in (('movie.nfo', 'movie'), ('tvshow.nfo', 'series')):
-        path = directory / name
-        try:
-            if not path.is_file() or path.stat().st_size > _NFO_MAX_BYTES:
-                continue
-            node = ET.fromstring(path.read_bytes())
-        except (OSError, ValueError, ET.ParseError):
-            continue
-        declared = (node.findtext('type') or '').strip().casefold()
-        if declared in ('movie', 'series'):
-            kind = declared
-        metadata = {
-            'genres': [e.text.strip() for e in node.findall('genre') if e.text and e.text.strip()],
-            'region': (node.findtext('country') or node.findtext('region') or '').strip() or None,
-            'year': (node.findtext('year') or '').strip() or None,
-            'runtime_minutes': (node.findtext('runtime') or '').strip() or None,
-        }
-        return kind, metadata
-    return None, {}
+def _episode_paths(group):
+    return [path for entry in group for season in entry.seasons.values()
+            for path in season.values()]
 
 
-def _structural_kind(entry, paths):
-    """Infer kind from real structure; ``unknown`` when evidence is insufficient."""
-    marked = 0
-    for path in paths:
-        _season, episode = parse_episode(path)
-        if episode is not None:
-            marked += 1
-    if marked:
-        return 'series'
-    if len(entry.seasons) > 1:
-        return 'series'
-    if len(paths) == 1:
-        return 'movie'
-    return 'unknown'
+def _days_ago(mtime, now):
+    if not mtime:
+        return None
+    return round(max(0.0, (now - mtime) / 86400.0), 2)
+
+
+def _wanted_genres(values):
+    return [normalize(value) for value in (values or [])
+            if isinstance(value, str) and value.strip()]
 
 
 class LibraryTools:
@@ -92,6 +84,9 @@ class LibraryTools:
         self._build_seconds = 0.0
         self._errors = []
         self._root_state = []
+        # NFO parses survive the 60 s rebuild, keyed by directory signature.
+        self._nfo_cache = NfoCache()
+        self._seen = set()
 
     # ---------- build ----------
     def _build(self):
@@ -104,6 +99,7 @@ class LibraryTools:
         items = []
         errors = list(getattr(index, 'errors', []) or []) if index is not None else []
         root_state = []
+        wall = time.time()
         if index is not None:
             for root in index.roots:
                 exists = root.is_dir()
@@ -117,20 +113,14 @@ class LibraryTools:
                 root_state.append({'root': str(root), 'exists': exists, 'readable': readable})
             for key, group in index._grouped().items():
                 entry = group[0]
-                paths = [p for item in group for season in item.seasons.values()
-                         for p in season.values()]
+                paths = _episode_paths(group)
                 if not paths:
                     continue
                 first = _first_existing(paths)
                 if first is None:
                     continue
-                directory = Path(first).parent
-                kind, metadata = _nfo_kind_and_metadata(directory)
-                if kind is None:
-                    # tvshow.nfo may live one level above the Season folder.
-                    kind, metadata = _nfo_kind_and_metadata(directory.parent)
-                if kind is None:
-                    kind = _structural_kind(entry, paths)
+                evidence = nfo_evidence(Path(first).parent, self._nfo_cache)
+                kind = classify_kind(entry, paths, evidence)
                 season_counts = {}
                 for item in group:
                     for season_no, episodes in item.seasons.items():
@@ -147,22 +137,29 @@ class LibraryTools:
                     except OSError:
                         continue
                 year = None
-                raw_year = entry.year or metadata.get('year')
+                raw_year = entry.year or evidence.get('year')
                 if raw_year and str(raw_year).isdigit():
                     year = int(raw_year)
-                genres = list(metadata.get('genres') or [])
                 items.append({
                     'id': _safe_id(key),
                     'title': entry.base,
                     'year': year,
                     'kind': kind,
-                    'genres': genres,
-                    'region': metadata.get('region'),
+                    'kind_label': KIND_LABELS.get(kind, KIND_LABELS['unknown']),
+                    'genres': list(evidence.get('genres') or []),
+                    'studio': evidence.get('studio'),
+                    'plot': evidence.get('plot'),
+                    'region': evidence.get('region'),
                     'episodes': episodes,
                     'seasons': sorted(season_counts),
                     'episode_count_by_season': season_counts,
-                    'runtime_minutes': metadata.get('runtime_minutes'),
+                    'runtime_minutes': evidence.get('runtime'),
                     'updated_at': mtime,
+                    'added_days_ago': _days_ago(mtime, wall),
+                    # Metadata means a real NFO field; a year parsed out of the
+                    # folder name is structure, not metadata.
+                    'has_metadata': bool(evidence.get('plot') or evidence.get('genres')
+                                         or evidence.get('studio') or evidence.get('year')),
                     'season': None,
                     'episode': None,
                 })
@@ -176,13 +173,28 @@ class LibraryTools:
     # ---------- helpers ----------
     def _project(self, item):
         """Only fields a caller may see; no filesystem paths leave this module."""
-        return {key: item.get(key) for key in
-                ('id', 'title', 'year', 'kind', 'genres', 'region', 'episodes',
-                 'seasons', 'runtime_minutes', 'updated_at', 'season', 'episode')}
+        projected = {key: item.get(key) for key in _PROJECT_FIELDS}
+        projected['genres'] = list(item.get('genres') or [])
+        plot = item.get('plot')
+        projected['plot'] = plot[:PLOT_LIMIT] if isinstance(plot, str) and plot else None
+        return projected
 
     @staticmethod
     def _match_kind(item, kind):
         return kind in (None, 'any') or item['kind'] == kind
+
+    @staticmethod
+    def _filter_rows(rows, max_episodes=None, exclude_genres=None):
+        if max_episodes is not None:
+            if type(max_episodes) is not int or not 1 <= max_episodes <= 10000:
+                raise ValueError('max_episodes must be 1..10000')
+            rows = [item for item in rows if (item['episodes'] or 0) <= max_episodes]
+        excluded = _wanted_genres(exclude_genres)
+        if excluded:
+            rows = [item for item in rows
+                    if not any(want and want in normalize(genre)
+                               for want in excluded for genre in item['genres'])]
+        return rows
 
     def _sort(self, rows, sort):
         if sort == 'year':
@@ -193,14 +205,29 @@ class LibraryTools:
             return sorted(rows, key=lambda r: (-(r['updated_at'] or 0), normalize(r['title'])))
         return sorted(rows, key=lambda r: normalize(r['title']))
 
+    @staticmethod
+    def _state(summary):
+        if not summary['available']:
+            return 'unavailable'
+        if summary['total'] == 0:
+            return 'empty'
+        return 'ok'
+
+    def note_seen(self, item_id):
+        """Remember an already-watched work for this session (id or title)."""
+        if isinstance(item_id, str) and item_id.strip():
+            self._seen.add(item_id.strip())
+        return sorted(self._seen)
+
     # ---------- tools ----------
     def summary(self):
         self._build()
         items = self._items
-        kinds = {'movie': 0, 'series': 0, 'unknown': 0}
+        kinds = {'movie': 0, 'series': 0, 'short_drama': 0, 'unknown': 0}
         for item in items:
             kinds[item['kind']] = kinds.get(item['kind'], 0) + 1
-        metadata = sum(1 for item in items if item['genres'] or item['region'])
+        metadata = sum(1 for item in items if item['has_metadata'])
+        recent = [item for item in items if item['added_days_ago'] is not None]
         age = None
         if self._index is not None and getattr(self._index, 'scanned_at', 0):
             age = max(0.0, time.time() - self._index.scanned_at)
@@ -223,6 +250,45 @@ class LibraryTools:
             'roots': [state['root'] for state in self._root_state],
             'index_age_seconds': age,
             'errors': list(self._errors),
+            # V4.4 additions
+            'short_dramas': kinds['short_drama'],
+            'seasons': sum(len(item['seasons']) for item in items),
+            'with_plot': sum(1 for item in items if item['plot']),
+            # "有元数据" (plot/studio/year) is not "有题材标签": genre filtering
+            # matches ``item['genres']``, so genre coverage must count that field.
+            'with_genres': sum(1 for item in items if item['genres']),
+            'recent_added_7d': sum(1 for item in recent if item['added_days_ago'] <= RECENT_DAYS),
+            'recent_added_30d': sum(1 for item in recent
+                                    if item['added_days_ago'] <= RECENT_DAYS_WIDE),
+        }
+
+    def overview(self):
+        """Stable, path-free view for natural-language catalogue answers."""
+        summary = self.summary()
+        rows = self._sort([item for item in self._items if item['updated_at']], 'recent')
+        return {
+            'state': self._state(summary),
+            'source': 'local_catalog',
+            'read_only': True,
+            'available': summary['available'],
+            'total': summary['total'],
+            'movies': summary['movies'],
+            'series': summary['series'],
+            'short_dramas': summary['short_dramas'],
+            'unknown_kind': summary['unknown_kind'],
+            'episodes': summary['episodes'],
+            'seasons': summary['seasons'],
+            'with_metadata': summary['with_metadata'],
+            'metadata_missing': summary['metadata_missing'],
+            'with_plot': summary['with_plot'],
+            'with_genres': summary['with_genres'],
+            'recent_added_7d': summary['recent_added_7d'],
+            'recent_added_30d': summary['recent_added_30d'],
+            'index_age_seconds': summary['index_age_seconds'],
+            'roots_available': sum(1 for state in self._root_state
+                                   if state['exists'] and state['readable']),
+            'recent': [self._project(item) for item in rows[:5]],
+            'errors': list(summary['errors']),
         }
 
     def status(self):
@@ -232,15 +298,10 @@ class LibraryTools:
         be read", which callers must not conflate.
         """
         summary = self.summary()
-        if not summary['available']:
-            state = 'unavailable'
-        elif summary['total'] == 0:
-            state = 'empty'
-        else:
-            state = 'ok'
-        return {'state': state, 'source': 'local_catalog', 'read_only': True,
+        return {'state': self._state(summary), 'source': 'local_catalog', 'read_only': True,
                 'available': summary['available'], 'total': summary['total'],
                 'movies': summary['movies'], 'series': summary['series'],
+                'short_dramas': summary['short_dramas'],
                 'unknown_kind': summary['unknown_kind'], 'episodes': summary['episodes'],
                 'metadata_missing': summary['metadata_missing'],
                 'ambiguous_folders': summary['ambiguous_folders'],
@@ -281,9 +342,12 @@ class LibraryTools:
             'entries': summary['total'],
             'index_age_seconds': summary['index_age_seconds'],
             'build_ms': round(self._build_seconds * 1000, 1),
+            'nfo_parses': self._nfo_cache.parses,
             'kind_support': {'movie': summary['movies'], 'series': summary['series'],
+                             'short_drama': summary['short_dramas'],
                              'unknown': summary['unknown_kind']},
             'metadata_coverage': {'with_metadata': summary['with_metadata'],
+                                  'with_plot': summary['with_plot'],
                                   'missing': summary['metadata_missing']},
             'ambiguous': {'folders': summary['ambiguous_folders'],
                           'videos': summary['ambiguous_videos']},
@@ -291,21 +355,26 @@ class LibraryTools:
             'read_only': True,
         }
 
-    def browse(self, kind='any', limit=10, sort='title'):
+    def browse(self, kind='any', limit=10, sort='title', max_episodes=None,
+               exclude_genres=None):
         if kind not in KINDS:
-            raise ValueError('kind must be any/movie/series/unknown')
+            raise ValueError('kind must be any/movie/series/short_drama/unknown')
         if sort not in SORTS:
             raise ValueError('sort must be title/year/episodes/recent')
         limit = max(1, min(MAX_LIMIT, int(limit)))
         self._build()
         rows = [item for item in self._items if self._match_kind(item, kind)]
+        rows = self._filter_rows(rows, max_episodes, exclude_genres)
         rows = self._sort(rows, sort)
         return {'kind': kind, 'sort': sort, 'total': len(rows),
+                'max_episodes': max_episodes,
+                'exclude_genres': list(exclude_genres or []),
                 'items': [self._project(item) for item in rows[:limit]]}
 
-    def search(self, query=None, genre=None, year=None, kind='any', limit=10):
+    def search(self, query=None, genre=None, year=None, kind='any', limit=10,
+               max_episodes=None, exclude_genres=None):
         if kind not in KINDS:
-            raise ValueError('kind must be any/movie/series/unknown')
+            raise ValueError('kind must be any/movie/series/short_drama/unknown')
         limit = max(1, min(MAX_LIMIT, int(limit)))
         self._build()
         rows = [item for item in self._items if self._match_kind(item, kind)]
@@ -319,6 +388,7 @@ class LibraryTools:
             wanted = normalize(genre)
             rows = [item for item in rows
                     if any(wanted and wanted in normalize(g) for g in item['genres'])]
+        rows = self._filter_rows(rows, max_episodes, exclude_genres)
         matched_by = 'filter'
         if query:
             scored = []
@@ -344,46 +414,94 @@ class LibraryTools:
                 'items': [self._project(item) for item in rows[:limit]]}
 
     def recommend(self, preferences=None, exclusions=None, limit=5, kind='any',
-                  max_episodes=None):
-        """Deterministic ranking over real items; never invents a title."""
+                  max_episodes=None, exclude_genres=None, include_seen=False, seen=None):
+        """Deterministic ranking over real items; never invents a title or genre.
+
+        ``reasons`` may only cite observed fields: real genres, real episode
+        counts, real file mtimes and an explicit seen-list. With no metadata the
+        reasons stay structural ("近期新增"/"集数较短"/"未观看") instead of
+        guessing a genre.
+        """
         limit = max(1, min(MAX_LIMIT, int(limit)))
+        if kind not in KINDS:
+            raise ValueError('kind must be any/movie/series/short_drama/unknown')
         self._build()
-        prefs = [normalize(p) for p in (preferences or []) if isinstance(p, str) and p.strip()]
+        prefs = [p.strip() for p in (preferences or []) if isinstance(p, str) and p.strip()]
+        prefs_norm = [normalize(p) for p in prefs]
         banned = {str(x) for x in (exclusions or []) if isinstance(x, str) and x}
-        banned_titles = {normalize(x) for x in banned if not re.fullmatch(r'[0-9a-f]{24}', x)}
+        banned_titles = {normalize(x) for x in banned if not _ITEM_ID.fullmatch(x)}
+        seen_ids = {str(x) for x in (seen or []) if isinstance(x, str) and x} | set(self._seen)
+        seen_titles = {normalize(x) for x in seen_ids if not _ITEM_ID.fullmatch(x)}
         rows = [item for item in self._items
                 if self._match_kind(item, kind)
                 and item['id'] not in banned and normalize(item['title']) not in banned_titles]
-        if max_episodes is not None:
-            if type(max_episodes) is not int or not 1 <= max_episodes <= 10000:
-                raise ValueError('max_episodes must be 1..10000')
-            rows = [item for item in rows if (item['episodes'] or 0) <= max_episodes]
+        if not include_seen:
+            rows = [item for item in rows if item['id'] not in seen_ids
+                    and normalize(item['title']) not in seen_titles]
+        rows = self._filter_rows(rows, max_episodes, exclude_genres)
         scored = []
         for item in rows:
             score = 0.0
             reasons = []
-            haystack = normalize(item['title']) + ' ' + ' '.join(normalize(g) for g in item['genres'])
-            for pref in prefs:
-                if pref and pref in haystack:
+            haystack = normalize(item['title']) + ' ' + ' '.join(
+                normalize(g) for g in item['genres'])
+            for pref, pref_norm in zip(prefs, prefs_norm):
+                if pref_norm and pref_norm in haystack:
                     score += 3.0
-                    reasons.append('符合“' + pref + '”')
+                    reasons.append('符合偏好：' + pref)
             if not prefs:
                 score += 1.0
                 reasons.append('本地已入库')
-            if item['kind'] == 'movie':
-                score += 0.5
+            if item['genres']:
+                score += min(1.0, 0.2 * len(item['genres']))
+                reasons.append('类型：' + '、'.join(item['genres']))
+            if item['studio']:
+                reasons.append('出品：' + item['studio'])
             if item['episodes']:
                 score += min(1.0, item['episodes'] / 200.0)
+                if item['episodes'] <= SHORT_EPISODES:
+                    reasons.append(f'共 {item["episodes"]} 集，集数较短')
+                else:
+                    reasons.append(f'共 {item["episodes"]} 集')
+            if item['kind'] == 'movie':
+                score += 0.5
+                reasons.append('电影')
+            days = item['added_days_ago']
+            if days is not None and days <= RECENT_DAYS:
+                reasons.append('7 天内新增')
+            elif days is not None and days <= RECENT_DAYS_WIDE:
+                reasons.append('30 天内新增')
+            if seen_ids:
+                if item['id'] in seen_ids or normalize(item['title']) in seen_titles:
+                    reasons.append('已看过')
+                else:
+                    reasons.append('未观看')
             scored.append((score, item, reasons))
         scored.sort(key=lambda triple: (-triple[0], -(triple[1]['updated_at'] or 0),
                                         normalize(triple[1]['title'])))
         return {'preferences': preferences or [], 'kind': kind,
-                'max_episodes': max_episodes, 'excluded': len(banned),
+                'max_episodes': max_episodes, 'exclude_genres': list(exclude_genres or []),
+                'include_seen': include_seen, 'excluded': len(banned),
                 'total': len(rows),
                 'items': [dict(self._project(item), reasons=reasons)
                           for _score, item, reasons in scored[:limit]]}
 
+    def all_items(self, limit=None):
+        """Every indexed work as a projection (uncapped internal accessor).
+
+        ``browse`` caps its page at ``MAX_LIMIT`` for the model surface; the
+        voice catalog needs the whole library for search/resolve, and must use
+        exactly the same ids and kinds as the tool surface.
+        """
+        self._build()
+        rows = [self._project(item) for item in self._items]
+        if limit is not None:
+            rows = rows[:max(0, int(limit))]
+        return {'total': len(self._items), 'items': rows}
+
     def recent(self, limit=5, kind='any'):
+        if kind not in KINDS:
+            raise ValueError('kind must be any/movie/series/short_drama/unknown')
         limit = max(1, min(MAX_LIMIT, int(limit)))
         self._build()
         rows = [item for item in self._items
@@ -404,10 +522,14 @@ class LibraryTools:
         return None
 
     def item(self, item_id):
+        """Full path-free detail for one work (None when the id is unknown)."""
         self._build()
         for item in self._items:
             if item['id'] == item_id:
-                return self._project(item)
+                detail = self._project(item)
+                detail['has_metadata'] = item['has_metadata']
+                detail['episode_count_by_season'] = dict(item['episode_count_by_season'])
+                return detail
         return None
 
 
@@ -423,6 +545,8 @@ LibraryTools.catalog_recent = LibraryTools.recent
 LibraryTools.catalog_health = LibraryTools.health
 LibraryTools.catalog_episodes = LibraryTools.episodes
 LibraryTools.catalog_get_episodes = LibraryTools.episodes
+LibraryTools.catalog_overview = LibraryTools.overview
+LibraryTools.catalog_detail = LibraryTools.item
 
 
 def _loose(key, name):

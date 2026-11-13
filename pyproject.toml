@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ai-tv-butler"
-version = "4.3.2"
+version = "4.4.0"
 description = "AI 电视管家（飞牛 NAS）：Agent + adb-tv-mcp + 任务调度，通过 ADB 控制小米电视"
 readme = "README.md"
 requires-python = ">=3.10"
