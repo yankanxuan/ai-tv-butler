@@ -270,3 +270,52 @@ adb -s 192.0.2.20:5555 shell am start-foreground-service -a com.xiaomi.mitv.voic
 # 本地 TTS 试音
 echo '小爱同学，打开飞牛TV' | piper -m zh_CN-huayan-medium.onnx -f test.wav
 ```
+## V4.4 手机语音入口（HTTPS，真人测试用）
+
+手机浏览器只有在**安全上下文**（HTTPS 或 localhost）下才允许使用麦克风，因此生产控制台
+（HTTP，仅局域网）不能直接在手机上用。`scripts/v44_https_gateway.py` 提供一个最小的 TLS
+前置网关：只做 TLS 终结与请求转发，认证、CSRF、限流、载荷校验仍由控制台自己完成。
+
+### 启动
+
+```bash
+cd ~/ai-tv-butler
+python3 scripts/v44_https_gateway.py \
+  --listen 0.0.0.0 --port 8443 \
+  --upstream http://<NAS_LAN_IP>:8771 \
+  --cert deploy/data/v44-portal/certs/cert.pem \
+  --key  deploy/data/v44-portal/certs/key.pem
+```
+
+自签证书生成（SAN 必须包含手机访问用的地址）：
+
+```bash
+cd deploy/data/v44-portal/certs
+openssl req -x509 -newkey rsa:2048 -nodes -keyout key.pem -out cert.pem -days 365 \
+  -subj "/CN=ai-tv-butler-portal" -addext "subjectAltName=IP:<NAS_LAN_IP>"
+chmod 600 key.pem cert.pem
+```
+
+### 手机操作步骤
+
+1. 手机与 NAS 同一局域网，访问 `https://<NAS_LAN_IP>:8443/`。
+2. 首次会提示证书不受信任 → 选择「高级 → 继续前往」（自签证书的正常提示）。
+3. 用控制台令牌登录：令牌在 NAS 上 `deploy/data/runtime/console.token`（0600）。
+4. 页面底部出现麦克风按钮（需要浏览器支持 Web Speech，Chrome for Android 支持中文）。
+5. 点麦克风 → 说话 → 识别文本会填进输入框，**确认文本无误后再发送**。
+6. 发送后请求走 `POST /api/voice` → `VoiceDialogue`（V4.4 自然语言链路），回复里带真实候选。
+7. 后续可用语音/文字继续说「第二个讲什么」「就看刚才那个」「确认」等。
+
+### 安全边界
+
+- 网关不记录请求体，不缓存，不新增任何权限；认证仍由控制台令牌 + CSRF 负责。
+- 仅限局域网使用；不要把它暴露到公网，也不要用它替代正式反向代理。
+- 录音只在按下按钮后开始，松开即停止上传；不做后台常开麦克风。
+- 浏览器 Web Speech 由手机端/浏览器厂商服务识别；若需**完全离线**识别，使用独立 ASR 实验服务
+  （`docker-compose.asr-lab.yml`，当前未与 V4.4 对话链路接线）。
+
+### 与独立 ASR 实验门户的区别
+
+`docker-compose.voice-portal.yml`（8443/8765 实验栈）是 V4.1 的门户，它的提交路径是旧的
+`/api/tool` + `/api/runs`，**不经过 V4.4 的 `VoiceDialogue`**。手机端要验证 V4.4 自然语言能力，
+用本文的 HTTPS 网关 + 控制台页面；要验证「NAS 本地离线 ASR」，用独立 ASR 实验服务。
