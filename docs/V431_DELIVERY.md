@@ -214,31 +214,43 @@ cp "$HOME/ai-tv-butler-backups/pre-v431-<stamp>/config.yaml.private" deploy/data
 
 ---
 
+
+---
+
 ## 9. 追加修复：列表候选后的单词序号回答（网页端截图复现）
 
 **现象**（控制台）：`找一部短剧` → 管家列出"1…8"并问"请选择第几部" → 用户答 `3` →
 返回"大模型响应超时。我可以直接查询本地影视库…"、`status=NEEDS_CLARIFICATION`、`route=clarify`、`intent=unknown`。
 
-**根因**：`handle()` 每回合先 `_observe_context()`，而 `update_observation()` 会清空 `waiting_question`；
-`_context_decision()` 只会把"第3部/第3个"识别为选片，裸 `3` / `第三` 失去挂起问题上下文后落到模型，
-模型超时即回退通用澄清。
+**根因（两层）**：
+1. 每回合 `handle()` 先 `_observe_context()`，其 `update_observation()` 会清空 `waiting_question`；
+2. 网页端每回合经 `SharedSessionStore` 执行 `ConversationManager.hydrate()`，而 `hydrate()` 无条件
+   `waiting_question = None`，把共享快照里携带的挂起问题丢弃。加上 `_context_decision()` 原本只识别
+   "第3部/第3个"，裸 `3`/`第三` 失去上下文后交给模型，模型 4s 超时即回退通用澄清。
 
-**修复**（`adbtv/voice_runtime.py`）：
-- `handle()` 在设备观测**之前**捕获 `waiting_question`，注入 `model_context`，并传给 `_context_decision(pending=...)`。
-- 当挂起问题为 `selection` / `episode` 时，裸阿拉伯/中文数字（可带 `部/个/项/集`）直接解析为"选第 N 部"或"第 N 集"，
-  不依赖模型；越界序号提示重选。
-- 新增 `tests/test_pending_selection_v431.py`（6 项）：裸 `3`、`第三`、`第3个` 选片；选片后裸 `2` 选第 2 集并要求确认；
-  无挂起问题时不把孤立数字当选片；越界序号要求重选。
-- 回归：全套单测 **981 通过 / 0 失败**（原 975 + 新增 6）；22 项模拟电视集成通过。
+**修复**：
+- `adbtv/voice_runtime.py`：`handle()` 在设备观测**之前**捕获 `waiting_question`，注入 `model_context`，
+  并传给 `_context_decision(pending=...)`；挂起问题为 `selection`/`episode` 时，裸阿拉伯/中文数字
+  （可带 `部/个/项/集`）直接解析为"选第 N 部"或"第 N 集"，不依赖模型；越界序号提示重选。
+- `adbtv/conversation.py`：`hydrate()` 在**严格校验**（`kind` 白名单 + 整数 `details`）后恢复
+  `waiting_question` 并重建问题 TTL，使跨进程共享快照保留挂起问题；缺失/非法值仍清空（不复活旧问题）。
+
+**测试**：`tests/test_pending_selection_v431.py`（8 项）
+- 裸 `3` / `第三` / `第3个` 选片；选片后裸 `2` 选第 2 集并要求确认；无挂起问题时不把孤立数字当选片；越界序号要求重选；
+- 共享存储（`SharedSessionStore` + `VoiceInputRegistry`）跨回合往返后，裸 `3` 与裸 `2` 仍正确解析（复现生产路径）。
+
+**回归**：全套单元测试 **983 通过 / 0 失败**（原 975 + 8；14 跳过为可选依赖）；模拟电视集成 **22 通过 / 0 失败**。
 
 ### 9.1 本轮发布与部署（2026-11-13）
 
-- 已用包含 §9 修复的**最终源码**重建镜像并滚动更新四容器：镜像 ID `8a8f6254e32d`，
-  `console/media/scheduler/voice` 均为 `ai-tv-butler:4.3.1`，`health=healthy`。
-- 容器内 `ai-tv --version` → `ai-tv 4.3.1`；`adbtv.voice_runtime` 含 `pending_selection` 分支；
-  `TOOL_SCHEMAS` 含 `catalog_get_playback_progress`。
-- `media_key` sha256 部署前后一致：`6300f53d881fd990b8672d751df78a729dee5e5f4d28ce7788b104e3ce6cb9e1`。
-- 回归实测（本机）：单元测试 **981 通过 / 0 失败（skipped=14）**；模拟电视集成 **22 通过 / 0 失败**。
-- 公开发布包：`ai-tv-butler-v4.3.1-20261113-public.tar.gz`（内容审计通过，无配置/状态/密钥）。
-- 回滚镜像 tag：`ai-tv-butler:pre-v431-fix-20261113T090402`（回 08:28 版 4.3.1）；
-  更早基线 `ai-tv-butler:pre-v431-20261113T082435`（4.3.0）。
+- 已用**最终源码**（含 §9 两层修复）重建镜像：`ai-tv-butler:4.3.1`，镜像 ID `68821e86c9f2`。
+- 四容器 `console/media/scheduler/voice` 均为 `ai-tv-butler:4.3.1`，`health=healthy`；
+  容器内 `ai-tv --version` → `ai-tv 4.3.1`；`media_key` sha256 `6300f53d…` 不变。
+- 控制台真实复现（修复后，连续两次一致）：
+  - `找一部短剧` → "找到这些实际入库内容：1…8…请选择第几部。"
+  - `3` → `intent=select`，`已选择《从小兵开始》。你想从第几集开始？`
+  - `2` → `NEEDS_CONFIRMATION`，`确认执行 播放《从小兵开始》第4季第2集 吗？`
+- 回滚镜像：
+  - `ai-tv-butler:pre-v431-hydrate-20261113T091148`（回退到仅含 §9 单向修复的 4.3.1，`8a8f6254`）；
+  - `ai-tv-butler:pre-v431-20261113T082435`（4.3.0 基线）。
+- 公开发布包：`~/ai-tv-butler-backups/ai-tv-butler-v4.3.1-20261113-public.tar.gz`（内容审计通过）。

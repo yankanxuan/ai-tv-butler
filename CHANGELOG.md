@@ -38,8 +38,8 @@
 
 **测试**
 
-- 新增 `tests/test_assistant_v431.py`（20 项对抗测试，见 `docs/V431_DELIVERY.md`）。
-- 全套单元测试 **975 通过 / 0 失败**（原 955 + 新增 20）；22 项模拟电视集成通过。
+- 新增 `tests/test_assistant_v431.py`（20 项对抗测试）与 `tests/test_pending_selection_v431.py`（8 项，含共享存储往返），见 `docs/V431_DELIVERY.md`。
+- 全套单元测试 **983 通过 / 0 失败**（原 955 + 新增 28）；22 项模拟电视集成通过。
 - 真实飞牛 NAS 媒体库 + 真实 LLM 复验，脱敏记录见 `docs/evidence/V431_REAL_LLM_VERIFICATION.json`。
 
 ## 4.3.0（2026-11-12）自然语言助理可靠性

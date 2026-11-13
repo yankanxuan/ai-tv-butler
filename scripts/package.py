@@ -36,6 +36,9 @@ PUBLIC_EXCLUDE = (
     "state/*", "logs/*", "deploy/data/*", "*.bak", "*.premigration-*",
     ".git/*", "__pycache__/*", "*/__pycache__/*", "*.pyc", "build/*",
     "*.egg-info/*", "dist/*", ".venv/*", "*~", "*.swp", ".DS_Store",
+    # Agent working notes contain operator home paths / private instructions and
+    # are never part of a public source package.
+    "AGENTS.md", "CLAUDE.md", ".agents/*",
 )
 PRIVATE_EXCLUDE = tuple(x for x in PUBLIC_EXCLUDE if x != "config.yaml")
 # 只保留目录占位文件

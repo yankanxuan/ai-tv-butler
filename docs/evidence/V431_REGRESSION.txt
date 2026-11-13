@@ -1,25 +1,27 @@
 # V4.3.1 回归结果（本机实跑）
-date: 2026-11-13 08:22:28 +0800
+date: 2026-11-13T09:20+08:00
 
 ## 单元测试
 command: python3 -m unittest discover -s tests -p 'test_*.py'
-Ran 975 tests in 107.541s
+Ran 983 tests
 OK (skipped=14)
 
-## 新增对抗测试（4.3.1）
-command: python3 -m unittest tests.test_assistant_v431
-Ran 20 tests in 0.204s
-OK
+## 新增测试
+- tests/test_assistant_v431.py         20 项 对抗（事实字段/中文/无书名号/进度）
+- tests/test_pending_selection_v431.py  8 项  列表候选后的单词序号（含共享存储往返）
 
 ## 模拟电视集成
 command: python3 tests/test_suite.py
 结果：22 通过 / 0 失败
 
 ## 版本一致性
-command: python3 -m unittest tests.test_deployment
-Ran 38 tests in 8.854s
-OK
+command: python3 -m unittest tests.test_deployment tests.test_package_v343
+Ran 49 tests ... OK
 
 ## Docker Compose
 command: docker compose -p ai-tv-butler config --quiet
 结果：OK
+
+## 公开发布包审计
+command: python3 scripts/package.py public --check
+模式=public 文件数=243，审计通过

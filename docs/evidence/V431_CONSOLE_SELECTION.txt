@@ -1,0 +1,20 @@
+# V4.3.1 网页控制台复现：列表候选后的单词序号（部署后实测）
+date: 2026-11-13T09:15+08:00
+镜像: ai-tv-butler:4.3.1 (68821e86c9f2)，四容器 healthy
+接口: POST /api/voice  (X-Auth-Token, source=web_microphone, 同一会话)
+
+复现（修复前，用户截图）：找一部短剧 -> 3  => "大模型响应超时" NEEDS_CLARIFICATION clarify/unknown
+
+修复后实测（连续两次一致）：
+turn1 找一部短剧
+  -> 找到这些实际入库内容：1.《一身腱子肉，乱世做谋臣》；2.《万妖图录传》；3.《从小兵开始》；4.《从布衣开始成圣》；…
+     请选择第几部。
+turn2 3
+  -> status=NEEDS_CLARIFICATION  intent=select
+     "已选择《从小兵开始》。你想从第几集开始？"
+turn3 2
+  -> status=NEEDS_CONFIRMATION  intent=play
+     "确认执行 播放《从小兵开始》第4季第2集 吗？…"
+
+说明：裸 3 由挂起 selection 问题直接解析（不依赖模型，模型 4s 超时也不影响）；
+裸 2 由挂起 episode 问题解析为第 2 集并要求确认。共享会话（/data/runtime/voice_sessions）跨回合往返后仍生效。
