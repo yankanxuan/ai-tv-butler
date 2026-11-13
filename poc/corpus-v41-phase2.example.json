@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "phase2": {
+    "speakers": 1,
+    "conditions": ["clean", "far-field", "noise"],
+    "note": "Example metadata only. Paths, hashes, permission evidence and real recordings belong in the private authorized manifest; this file grants no audio rights."
+  },
+  "samples": [
+    {"id": "example-01", "path": "REPLACE_WITH_AUTHORIZED_WAV", "condition": "clean",
+     "reference": "打开飞牛", "expected_intent": "open", "kind": "control", "context_required": false},
+    {"id": "example-02", "path": "REPLACE_WITH_AUTHORIZED_WAV", "condition": "clean",
+     "reference": "搜索穿成野神我靠香火斩诸神", "expected_intent": "search",
+     "expected_title": "穿成野神我靠香火斩诸神", "kind": "title", "context_required": false},
+    {"id": "example-03", "path": "REPLACE_WITH_AUTHORIZED_WAV", "condition": "far-field",
+     "reference": "暂停播放", "expected_intent": "pause", "kind": "control", "context_required": false},
+    {"id": "example-04", "path": "REPLACE_WITH_AUTHORIZED_WAV", "condition": "noise",
+     "reference": "把音量调到十五", "expected_intent": "volume_set", "kind": "control", "context_required": false},
+    {"id": "example-05", "path": "REPLACE_WITH_AUTHORIZED_WAV", "condition": "clean",
+     "reference": "先播放短剧然后暂停", "expected_intent": "sequence", "kind": "long", "context_required": false}
+  ]
+}

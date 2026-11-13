@@ -1,0 +1,4 @@
+# Standard runtime used by the Docker image, including structured validation.
+# Hash-locked direct and transitive versions; source-only minimal installs may
+# still use the built-in validator by installing the project's base dependency.
+-r requirements-runtime.lock

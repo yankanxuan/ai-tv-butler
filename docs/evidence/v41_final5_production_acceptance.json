@@ -1,0 +1,108 @@
+{
+  "status": "v41_final5_production_deployment_and_fault_injection_verified",
+  "date": "2026-11-12",
+  "backup": {
+    "id": "pre-final5-20261112T192004",
+    "bytes": 58591546,
+    "sha256": "43ba6da4d71997bbfd05c5a744f05cd911148b5970601362d8404532ce346a04",
+    "includes": "deploy/data, config.yaml, docker-compose.yml, .env"
+  },
+  "images": {
+    "old": "sha256:0fcb7301cf2bd1d4484a8be9cc8f0586c81017d41af7891335e9d5d8ca5f0341",
+    "new": "sha256:eb0c8c1a7423078793f6b7e0b40aef29cd3a87661a22aee2241ec33037405b2f",
+    "rollback_tag": "ai-tv-butler:pre-final5-20261112T192004"
+  },
+  "services": {
+    "console": "healthy",
+    "scheduler": "healthy",
+    "media": "healthy",
+    "voice": "healthy",
+    "version": "ai-tv 4.0.0b8"
+  },
+  "media_key_sha256_before": "6300f53d881fd990b8672d751df78a729dee5e5f4d28ce7788b104e3ce6cb9e1",
+  "media_key_sha256_after": "6300f53d881fd990b8672d751df78a729dee5e5f4d28ce7788b104e3ce6cb9e1",
+  "task_history": {
+    "before": 225,
+    "after_cleanup": 226,
+    "idempotency_records": 1,
+    "note": "225 original task records preserved; one idempotency verification task retained."
+  },
+  "idempotency": {
+    "concurrent": {
+      "first": [
+        202,
+        {
+          "task_id": "4758095e51e8432390db68efcf5319c7",
+          "idempotent": false
+        }
+      ],
+      "second": [
+        202,
+        {
+          "task_id": "4758095e51e8432390db68efcf5319c7",
+          "idempotent": true
+        }
+      ],
+      "record": {
+        "record": {
+          "task_id": "4758095e51e8432390db68efcf5319c7",
+          "state": "committed",
+          "created": 1794482520.3440442,
+          "updated": 1794482520.348138,
+          "task_state": "UNKNOWN"
+        }
+      }
+    },
+    "after_restart": {
+      "status": 202,
+      "body": {
+        "task_id": "4758095e51e8432390db68efcf5319c7",
+        "idempotent": true
+      }
+    }
+  },
+  "fault_injection": {
+    "prodnewqueued01": {
+      "state": "UNKNOWN",
+      "status": "UNKNOWN",
+      "migration": null
+    },
+    "prodlegacyq02": {
+      "state": "INTERRUPTED",
+      "status": "UNKNOWN",
+      "migration": {
+        "from": "recovery_owner_pid",
+        "original_recovery_owner_pid": 1,
+        "migrated_at": 1794482664.478273,
+        "reason": "legacy_recovery_without_instance_lease"
+      }
+    },
+    "prodlegacyr03": {
+      "state": "INTERRUPTED",
+      "status": "UNKNOWN",
+      "migration": {
+        "from": "recovery_owner_pid",
+        "original_recovery_owner_pid": 1,
+        "migrated_at": 1794482664.5411382,
+        "reason": "legacy_recovery_without_instance_lease"
+      }
+    }
+  },
+  "fault_injection_cleanup": {
+    "removed_test_tasks": [
+      "prodnewqueued01",
+      "prodlegacyq02",
+      "prodlegacyr03"
+    ]
+  },
+  "phone_tests": {
+    "android_chrome_real_microphone": false,
+    "iphone_safari": false,
+    "reason": "No mobile device accessible; not marked passed."
+  },
+  "production_deployed": true,
+  "limits": [
+    "Phone microphone acceptance not executed.",
+    "No new model, always-on mic or wake word added."
+  ]
+}

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI 电视管家 · 按键语音</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+  <h1>AI 电视管家 <span>V4.1 按键语音</span></h1>
+  <p class="hint">先录音、再识别；只有你明确确认后，才会提交给电视。不会常开麦克风，不会自动唤醒。</p>
+</header>
+
+<main>
+  <section id="login" class="card">
+    <h2>登录</h2>
+    <p class="hint">使用现有控制台令牌。令牌只保存在本网关内存中，不写入磁盘；请通过 HTTPS 访问。</p>
+    <form id="login-form">
+      <label for="token">控制台令牌</label>
+      <input id="token" type="password" autocomplete="current-password" required>
+      <button type="submit">登录</button>
+      <p id="login-error" class="error" role="alert"></p>
+    </form>
+  </section>
+
+  <section id="app" class="hidden">
+    <div class="card">
+      <div class="row">
+        <h2>1. 按键说片名</h2>
+        <button id="logout" class="link" type="button">退出</button>
+      </div>
+      <p class="hint">点击开始录音，再点停止；录音结束后在浏览器内转成 16 kHz WAV，再上传识别。</p>
+      <label class="consent"><input id="consent" type="checkbox"> 我确认本次录音/导入已获得说话人授权，并同意在本机实验服务中识别。</label>
+      <div class="row wrap">
+        <button id="record" class="primary" type="button">开始录音</button>
+        <button id="stop" type="button" disabled>停止并识别</button>
+        <span id="timer" class="timer">00:00</span>
+      </div>
+      <p class="hint">或者导入已有 WAV（会明确标记为文件回放，不冒充麦克风）：</p>
+      <input id="file" type="file" accept="audio/wav,audio/*">
+      <p id="status" class="status" role="status">等待录音</p>
+      <p id="error" class="error" role="alert"></p>
+      <div id="retry-box" class="hidden"><button id="retry" type="button">重试上一步</button></div>
+      <div class="row" style="margin-top:12px">
+        <button id="history" type="button">查看可访问的历史任务</button>
+      </div>
+      <pre id="history-list" class="hidden"></pre>
+    </div>
+
+    <div id="result" class="card hidden">
+      <h2>2. 检查识别文字</h2>
+      <p class="hint">原始识别证据不会被修改。你可以在下面手动修正后再匹配；纠错结果单独记录。</p>
+      <label for="original">原始识别</label>
+      <output id="original" class="readonly"></output>
+      <label for="edited">手动修正（可编辑）</label>
+      <textarea id="edited" rows="2" maxlength="256"></textarea>
+      <button id="rematch" type="button">用修正文字重新匹配</button>
+
+      <h2>3. 选择作品</h2>
+      <p id="title-status" class="hint"></p>
+      <div id="works" class="choices"></div>
+
+      <div id="season-box" class="hidden">
+        <h2>4. 选择季</h2>
+        <div id="seasons" class="choices"></div>
+      </div>
+
+      <div id="episode-box" class="hidden">
+        <h2>5. 选择集</h2>
+        <div id="episodes" class="choices"></div>
+        <div class="row">
+          <label for="episode-number">直接输入集数</label>
+          <input id="episode-number" type="number" min="1" max="99999" inputmode="numeric">
+          <button id="pick-episode" type="button">选择该集</button>
+        </div>
+      </div>
+
+      <div id="confirm-box" class="hidden confirm">
+        <h2>6. 确认后执行</h2>
+        <p id="selection"></p>
+        <p class="hint">确认按钮是唯一执行入口；选择季/集不会执行。取消后，旧候选和执行请求都会失效。</p>
+        <div class="row wrap">
+          <button id="confirm" class="primary" type="button">确认并在电视播放</button>
+          <button id="cancel" type="button">取消</button>
+        </div>
+      </div>
+
+      <div id="task-box" class="hidden">
+        <h2>执行状态</h2>
+        <p id="task-state" class="status"></p>
+        <pre id="task-result"></pre>
+        <button id="cancel-task" type="button">取消当前任务</button>
+      </div>
+    </div>
+  </section>
+</main>
+<footer>
+  <p>ASR 与候选建议来自独立实验服务；小爱仍是生产默认。服务端不保存音频或识别文本日志。</p>
+</footer>
+<script src="/app.js"></script>
+</body>
+</html>

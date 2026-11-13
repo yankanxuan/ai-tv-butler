@@ -1,0 +1,401 @@
+{
+  "generated_at": "2026-11-13T08:18:35+0800",
+  "summary": {
+    "available": true,
+    "total": 35,
+    "movies": 0,
+    "series": 35,
+    "unknown_kind": 0,
+    "episodes": 8483,
+    "metadata_missing": 35
+  },
+  "runs": [
+    {
+      "utterance": "现在资源库里有什么？",
+      "elapsed_s": 3.41,
+      "rejected_model_answers": [],
+      "observations": [
+        {
+          "tool": "library_summary",
+          "arguments": {},
+          "result": {
+            "available": true,
+            "total": 35,
+            "movies": 0,
+            "series": 35,
+            "unknown_kind": 0,
+            "episodes": 8483,
+            "with_metadata": 0,
+            "metadata_missing": 35,
+            "ambiguous_folders": 0,
+            "ambiguous_videos": 0,
+            "roots": [
+              "<MEDIA_ROOT>"
+            ],
+            "index_age_seconds": 149760.9985499382,
+            "errors": []
+          }
+        }
+      ],
+      "result": {
+        "status": "SUCCESS",
+        "reply": "本地影视库目前共有 35 部作品，全部是剧集，合计 8483 集；暂时没有电影。需要注意的是，这 35 部作品的元数据都缺失，片名、年份、类型等信息尚不完整，因此暂时无法按片名准确检索或分类推荐。",
+        "candidates": [],
+        "tool_trace": [
+          {
+            "tool": "library_summary",
+            "status": "ok",
+            "arguments": {}
+          }
+        ],
+        "answer_source": "local_catalog",
+        "diagnostics": {
+          "model_name": "cn:deepseek-v4.1-flash",
+          "decision_source": "llm",
+          "tool_name": "library_summary",
+          "tool_status": "ok",
+          "llm_latency_ms": 3411.409387997992,
+          "tool_latency_ms": 0.13360800221562386,
+          "total_latency_ms": 3412.706328999775,
+          "fallback_reason": null,
+          "steps": 2,
+          "budget_seconds": 45.0,
+          "failed_stage": null,
+          "answer_source": "local_catalog"
+        }
+      }
+    },
+    {
+      "utterance": "一共有多少部电影？",
+      "elapsed_s": 2.83,
+      "rejected_model_answers": [],
+      "observations": [
+        {
+          "tool": "library_summary",
+          "arguments": {},
+          "result": {
+            "available": true,
+            "total": 35,
+            "movies": 0,
+            "series": 35,
+            "unknown_kind": 0,
+            "episodes": 8483,
+            "with_metadata": 0,
+            "metadata_missing": 35,
+            "ambiguous_folders": 0,
+            "ambiguous_videos": 0,
+            "roots": [
+              "<MEDIA_ROOT>"
+            ],
+            "index_age_seconds": 149764.17818760872,
+            "errors": []
+          }
+        }
+      ],
+      "result": {
+        "status": "SUCCESS",
+        "reply": "本地影视库里目前有 0 部电影，也就是说，没有已入库的电影；库中全部 35 部都是剧集，共 8483 集。",
+        "candidates": [],
+        "tool_trace": [
+          {
+            "tool": "library_summary",
+            "status": "ok",
+            "arguments": {}
+          }
+        ],
+        "answer_source": "local_catalog",
+        "diagnostics": {
+          "model_name": "cn:deepseek-v4.1-flash",
+          "decision_source": "llm",
+          "tool_name": "library_summary",
+          "tool_status": "ok",
+          "llm_latency_ms": 2824.562062996847,
+          "tool_latency_ms": 0.11942700075451285,
+          "total_latency_ms": 2825.660501999664,
+          "fallback_reason": null,
+          "steps": 2,
+          "budget_seconds": 45.0,
+          "failed_stage": null,
+          "answer_source": "local_catalog"
+        }
+      }
+    },
+    {
+      "utterance": "有多少部电视剧？",
+      "elapsed_s": 2.61,
+      "rejected_model_answers": [],
+      "observations": [
+        {
+          "tool": "library_summary",
+          "arguments": {},
+          "result": {
+            "available": true,
+            "total": 35,
+            "movies": 0,
+            "series": 35,
+            "unknown_kind": 0,
+            "episodes": 8483,
+            "with_metadata": 0,
+            "metadata_missing": 35,
+            "ambiguous_folders": 0,
+            "ambiguous_videos": 0,
+            "roots": [
+              "<MEDIA_ROOT>"
+            ],
+            "index_age_seconds": 149767.0267393589,
+            "errors": []
+          }
+        }
+      ],
+      "result": {
+        "status": "SUCCESS",
+        "reply": "本地影视库共有 35 部电视剧，合计 8483 集。库里目前没有电影。另外，这 35 部作品的元数据全部缺失，因此暂时无法按类型或年份细分。",
+        "candidates": [],
+        "tool_trace": [
+          {
+            "tool": "library_summary",
+            "status": "ok",
+            "arguments": {}
+          }
+        ],
+        "answer_source": "local_catalog",
+        "diagnostics": {
+          "model_name": "cn:deepseek-v4.1-flash",
+          "decision_source": "llm",
+          "tool_name": "library_summary",
+          "tool_status": "ok",
+          "llm_latency_ms": 2611.042999989877,
+          "tool_latency_ms": 0.14179899881128222,
+          "total_latency_ms": 2611.942714996985,
+          "fallback_reason": null,
+          "steps": 2,
+          "budget_seconds": 45.0,
+          "failed_stage": null,
+          "answer_source": "local_catalog"
+        }
+      }
+    },
+    {
+      "utterance": "给我推荐三部。",
+      "elapsed_s": 3.36,
+      "rejected_model_answers": [],
+      "observations": [
+        {
+          "tool": "library_recommend",
+          "arguments": {
+            "limit": 3
+          },
+          "result": {
+            "preferences": [],
+            "kind": "any",
+            "max_episodes": null,
+            "excluded": 0,
+            "total": 35,
+            "items": [
+              {
+                "id": "7a52615b3bbdba3beb2670d5",
+                "title": "穿成野神我靠香火斩诸神",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 1305,
+                "seasons": [
+                  1,
+                  5,
+                  6,
+                  8,
+                  9,
+                  10,
+                  11
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1794284626.81589,
+                "season": null,
+                "episode": null,
+                "reasons": [
+                  "本地已入库"
+                ]
+              },
+              {
+                "id": "3700e476cf08265cf7ca85b2",
+                "title": "作品4",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 257,
+                "seasons": [
+                  1
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1794271247.1754944,
+                "season": null,
+                "episode": null,
+                "reasons": [
+                  "本地已入库"
+                ]
+              },
+              {
+                "id": "ca5d0a8554a1a9fab4132a47",
+                "title": "作品18",
+                "year": 2026,
+                "kind": "series",
+                "genres": [],
+                "region": null,
+                "episodes": 351,
+                "seasons": [
+                  1
+                ],
+                "runtime_minutes": null,
+                "updated_at": 1794220618.837664,
+                "season": null,
+                "episode": null,
+                "reasons": [
+                  "本地已入库"
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "result": {
+        "status": "SUCCESS",
+        "reply": "给你推荐本地影视库里的这三部剧集：\n1.《作品21》（2026，1305集）\n2.《作品4》（2026，257集）\n3.《作品18》（2026，351集）\n这几部暂时没有类型标签，我只能按入库信息推荐。想先看哪一部？",
+        "candidates": [],
+        "tool_trace": [
+          {
+            "tool": "library_recommend",
+            "status": "ok",
+            "arguments": {
+              "limit": 3
+            }
+          }
+        ],
+        "answer_source": "local_catalog",
+        "diagnostics": {
+          "model_name": "cn:deepseek-v4.1-flash",
+          "decision_source": "llm",
+          "tool_name": "library_recommend",
+          "tool_status": "ok",
+          "llm_latency_ms": 3357.591616004356,
+          "tool_latency_ms": 0.970982997387182,
+          "total_latency_ms": 3362.9026519993204,
+          "fallback_reason": null,
+          "steps": 2,
+          "budget_seconds": 45.0,
+          "failed_stage": null,
+          "answer_source": "local_catalog"
+        }
+      }
+    },
+    {
+      "utterance": "我上次看到哪一集？",
+      "elapsed_s": 2.68,
+      "rejected_model_answers": [
+        "没有查到你的播放记录，所以暂时不知道上次看到哪一集。你可以告诉我片名，我帮你看看它的季集结构。"
+      ],
+      "observations": [
+        {
+          "tool": "catalog_get_playback_progress",
+          "arguments": {},
+          "result": {
+            "source": "none",
+            "available": false,
+            "reason": "no_playback_record",
+            "playing": false
+          }
+        }
+      ],
+      "result": {
+        "status": "SUCCESS",
+        "reply": "我还没有记录到你上次播放到哪一集。可以说片名让我查，或说“随便推荐一部”。",
+        "candidates": [],
+        "tool_trace": [
+          {
+            "tool": "catalog_get_playback_progress",
+            "status": "ok",
+            "arguments": {}
+          }
+        ],
+        "answer_source": "device_status",
+        "diagnostics": {
+          "model_name": "cn:deepseek-v4.1-flash",
+          "decision_source": "deterministic",
+          "tool_name": "catalog_get_playback_progress",
+          "tool_status": "ok",
+          "llm_latency_ms": 2673.9087300011306,
+          "tool_latency_ms": 0.012978998711332679,
+          "total_latency_ms": 2677.1671199967386,
+          "fallback_reason": "ungrounded_answer",
+          "steps": 2,
+          "budget_seconds": 45.0,
+          "failed_stage": null,
+          "answer_source": "device_status"
+        }
+      }
+    },
+    {
+      "utterance": "我上次看到哪一集？（注入真实作品的设备观测）",
+      "elapsed_s": 3.45,
+      "rejected_model_answers": [],
+      "observations": [
+        {
+          "tool": "catalog_get_playback_progress",
+          "arguments": {},
+          "result": {
+            "source": "device_status",
+            "available": true,
+            "evidence": "device_observation",
+            "title": "作品1",
+            "season": 3,
+            "episode": 1,
+            "state": "PLAYING",
+            "playing": true,
+            "updated_at": null
+          }
+        }
+      ],
+      "result": {
+        "status": "SUCCESS",
+        "reply": "你上次看到的是《作品1》第3季第1集，当前设备观测显示仍在播放中。",
+        "candidates": [],
+        "tool_trace": [
+          {
+            "tool": "catalog_get_playback_progress",
+            "status": "ok",
+            "arguments": {}
+          }
+        ],
+        "answer_source": "device_status",
+        "diagnostics": {
+          "model_name": "cn:deepseek-v4.1-flash",
+          "decision_source": "llm",
+          "tool_name": "catalog_get_playback_progress",
+          "tool_status": "ok",
+          "llm_latency_ms": 3447.2709910041885,
+          "tool_latency_ms": 0.014370001736097038,
+          "total_latency_ms": 3448.1345559979673,
+          "fallback_reason": null,
+          "steps": 2,
+          "budget_seconds": 45.0,
+          "failed_stage": null,
+          "answer_source": "device_status"
+        }
+      },
+      "injected_state": {
+        "title": "作品1",
+        "season": 3,
+        "episode": 1,
+        "state": "PLAYING"
+      }
+    }
+  ],
+  "redaction": {
+    "titles": "all library titles -> stable pseudonyms 作品N",
+    "paths": "media roots -> <MEDIA_ROOT>",
+    "network": "IPs -> <IP>",
+    "secrets": "masked",
+    "note": "observations are the raw tool results behind each answer; each run lists the tools actually called"
+  }
+}

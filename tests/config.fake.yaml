@@ -1,0 +1,51 @@
+adb:
+  host: 192.0.2.20
+  port: 5555
+  serial: fake-tv:5555
+  binary: python3 tests/fake_adb.py
+  auto_connect: true
+  connect_timeout: 15
+  command_timeout: 20
+  fake_state: state/fake_tv_state_llm.json
+llm:
+  provider: anthropic
+  base_url: http://127.0.0.1:7866
+  api_key: ''
+  model: cn:deepseek-v4.1-flash
+  vision_model: ''
+  max_tokens: 1200
+  temperature: 0.2
+  timeout: 90
+agent:
+  max_steps: 18
+  use_llm: true
+  log_dir: logs
+ui:
+  wait_timeout: 20
+  poll_interval: 1.2
+scheduler:
+  store: state/tasks.json
+  poll_seconds: 20
+server:
+  host: 0.0.0.0
+  port: 8770
+  token: ''
+apps:
+  bilibili:
+    package: com.xiaodianshi.tv.yst
+    label: 哔哩哔哩TV/云视听小电视
+  iqiyi:
+    package: com.gitvdemo.video
+    label: 银河奇异果(爱奇艺TV)
+  tencent:
+    package: com.ktcp.video
+    label: 云视听极光(腾讯视频TV)
+  youku:
+    package: com.tudou.tvshadow
+    label: CIBN酷喵(优酷TV)
+  mgtv:
+    package: com.hunantv.market
+    label: 芒果TV
+  douyin_tv:
+    package: com.ss.android.ugc.aweme.tv
+    label: 抖音TV(鲜时光)

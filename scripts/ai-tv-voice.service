@@ -1,0 +1,19 @@
+[Unit]
+Description=AI TV Butler - TV voice listener (Xiaomi ASR over adb logcat)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/ai-tv-butler
+ExecStart=/usr/bin/python3 %h/ai-tv-butler/bin/ai-tv voice listen
+# 需要 config.yaml 中 voice.listener.enabled: true；未启用时进程以 2 退出（不静默空转）。
+# 电视休眠或 ADB 抖动时由进程自身做指数退避重连，这里只需在崩溃后重启。
+Restart=on-failure
+RestartSec=10
+# 语音原文只用于本次执行，不写入 stdout 之外的持久日志。
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target

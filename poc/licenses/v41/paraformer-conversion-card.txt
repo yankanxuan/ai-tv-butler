@@ -1,0 +1,8 @@
+---
+license: apache-2.0
+---
+
+# Introduction
+
+`*.onnx` models are converted from
+https://www.modelscope.cn/models/damo/speech_paraformer_asr_nat-zh-cn-16k-common-vocab8404-online/summary

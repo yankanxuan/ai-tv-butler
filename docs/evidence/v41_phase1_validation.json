@@ -1,0 +1,171 @@
+{
+  "recorded_at": "2026-11-12",
+  "status": "v41_phase1_offline_poc_completed",
+  "unit_tests": {
+    "command": "/tmp/osfv/bin/python -m unittest discover -s tests -p 'test_*.py' -v",
+    "total": 768,
+    "passed": 768,
+    "skipped": 0,
+    "failures": 0,
+    "seconds": 71.223,
+    "exit_code": 0,
+    "log_sha256": "2d9537e90f9bb7106f06dbadabdb0fa71f59c302cf1fb09d8ed6498bf0e42864"
+  },
+  "simulated_integration": {
+    "command": "/tmp/osfv/bin/python tests/test_suite.py",
+    "passed": 22,
+    "failed": 0,
+    "exit_code": 0
+  },
+  "models_registry_sha256": "bed64660fdb1c1bd1b12a21f972f41780dbeb28a0d4f4877a29740229f27291d",
+  "dependency_lock_sha256": "c56c59bee0f2c5da10ac6255bb9f5084360fcd3cbadd3cf9b5816f812454f81f",
+  "model_profiles": {
+    "ctc": {
+      "repo": "csukuangfj/sherpa-onnx-streaming-zipformer-small-ctc-zh-int8-2025-04-01",
+      "revision": "a5f60fe00dcfbaf68fcc1c6b5cf53061e144d6da",
+      "license": "Apache-2.0",
+      "artifact_bytes": 26355706
+    },
+    "transducer": {
+      "repo": "csukuangfj/sherpa-onnx-streaming-zipformer-bilingual-zh-en-2023-02-20",
+      "revision": "98590b7ed6443e77b714204da2757d75e1a642f4",
+      "license": "Apache-2.0",
+      "artifact_bytes": 198270793
+    },
+    "paraformer": {
+      "repo": "csukuangfj/sherpa-onnx-streaming-paraformer-bilingual-zh-en",
+      "revision": "8e40c43232a1c5c66c82111efc5820d3accca11b",
+      "license": "Apache-2.0",
+      "artifact_bytes": 237202501
+    }
+  },
+  "vad": {
+    "repo": "snakers4/silero-vad",
+    "revision": "6478567951ae5c9979ad7b234185b5515f4be7a1",
+    "license": "MIT",
+    "sha256": "2623a2953f6ff3d2c1e61740c6cdb7168133479b267dfef114a4a3cc5bdd788f"
+  },
+  "asr_runs": {
+    "no_vad": {
+      "ctc_cer": 0.28,
+      "transducer_cer": 0.5866666666666667,
+      "paraformer_cer": 0.28
+    },
+    "silero_vad": {
+      "ctc_cer": 0.32,
+      "transducer_cer": 0.76,
+      "paraformer_cer": 0.26666666666666666
+    },
+    "source": "docs/evidence/v41_phase1_asr.json"
+  },
+  "docker": {
+    "status": "docker_asr_and_real_title_candidates_passed",
+    "date": "2026-11-12",
+    "capture_kind": "offline_authorized_recording",
+    "live_microphone_tested": false,
+    "microphone_block_reason": "No ALSA capture device (/dev/snd has playback/control/seq only); arecord not installed.",
+    "container": {
+      "image_id": "sha256:321647206ad1b39067715c16c37445a2873a55427e994cb28d82bbea02ed0835",
+      "health": "healthy",
+      "read_only_root": true,
+      "nano_cpus": 2000000000,
+      "memory_bytes": 805306368,
+      "mounts_read_only": true,
+      "privileged": false
+    },
+    "image": {
+      "size_bytes": 182869388,
+      "architecture": "amd64",
+      "tag": "ai-tv-asr-lab:v4.1-experiment"
+    },
+    "health": {
+      "service": "asr-lab",
+      "ready": true,
+      "capture_kind": "offline_file_transcription"
+    },
+    "authorized_status": 200,
+    "unauthorized_status": 401,
+    "traversal_status": 400,
+    "production_dispatch_performed": false,
+    "lab_containers_remaining": false,
+    "offline_authorized_human_recording": {
+      "model_profile": "ctc",
+      "sample": "human-02 (authorized; 6.2293 s)",
+      "hypothesis_sha256": "a23a157b8a74bd204a84cf0f72f916fa4f8194da78de878b997661360bd5b9a6",
+      "hypothesis_chars": 13,
+      "wall_seconds": 2.1712,
+      "rtf": 0.3485,
+      "first_partial_seconds": 0.3872,
+      "candidate_status": "needs_clarification",
+      "candidate_reason": "ambiguous_seasons",
+      "requires_confirmation": true,
+      "index_fingerprint": "54df3c9da6ad87e033bed18d606de80304f421fdcb2612dd83664bd6c97afc33",
+      "candidates": [
+        {
+          "title": "穿成野神我靠香火斩诸神",
+          "year": "2026",
+          "season": 1,
+          "episode_count": 105,
+          "score": 90.9091,
+          "requires_confirmation": true
+        },
+        {
+          "title": "穿成野神我靠香火斩诸神",
+          "year": "2026",
+          "season": 5,
+          "episode_count": 118,
+          "score": 90.9091,
+          "requires_confirmation": true
+        },
+        {
+          "title": "穿成野神我靠香火斩诸神",
+          "year": "2026",
+          "season": 6,
+          "episode_count": 103,
+          "score": 90.9091,
+          "requires_confirmation": true
+        },
+        {
+          "title": "穿成野神我靠香火斩诸神",
+          "year": "2026",
+          "season": 8,
+          "episode_count": 102,
+          "score": 90.9091,
+          "requires_confirmation": true
+        },
+        {
+          "title": "穿成野神我靠香火斩诸神",
+          "year": "2026",
+          "season": 9,
+          "episode_count": 107,
+          "score": 90.9091,
+          "requires_confirmation": true
+        }
+      ]
+    },
+    "push_to_talk_offline_import": {
+      "capture_kind": "offline_wav_input",
+      "wav": "authorized-audio/imported-human-02.wav",
+      "manifest": "authorized-audio/imported-human-02.samples.json",
+      "audio_seconds": 6.2293125,
+      "streaming": false
+    },
+    "privacy": "No audio, raw hypothesis, host paths, token, or user IDs in this evidence."
+  },
+  "production": {
+    "source_changed": false,
+    "images_unchanged": true,
+    "four_containers_healthy": true,
+    "image_id": "sha256:0fcb7301cf2bd1d4484a8be9cc8f0586c81017d41af7891335e9d5d8ca5f0341",
+    "lab_containers_remaining": false
+  },
+  "not_verified": [
+    "real push-to-talk microphone capture: no ALSA capture PCM and arecord absent",
+    "transducer hotwords / modified_beam_search",
+    "live microphone endpoint latency",
+    "ARM64",
+    "large multi-speaker corpus",
+    "production ASR switch"
+  ],
+  "rollback": "docker compose -p ai-tv-asr-lab -f docker-compose.asr-lab.yml --profile asr-lab down; remove ai-tv-asr-lab image. Production untouched."
+}

@@ -1,0 +1,72 @@
+x-common: &common
+  build:
+    context: .
+    args:
+      BUTLER_UID: ${BUTLER_UID:-10001}
+      BUTLER_GID: ${BUTLER_GID:-10001}
+      INSTALL_PIPER: ${INSTALL_PIPER:-0} # optional; standard image excludes unused TTS packages
+  image: ai-tv-butler:4.3.1
+  restart: unless-stopped
+  network_mode: host
+  user: "${BUTLER_UID:-10001}:${BUTLER_GID:-10001}"
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  tmpfs:
+    - /tmp:size=64m,noexec,nosuid
+  environment:
+    AI_TV_CONFIG: /data/config.yaml
+    AI_TV_DATA_DIR: /data
+    HOME: /data
+    PYTHONDONTWRITEBYTECODE: "1"
+    PYTHONUNBUFFERED: "1"
+  volumes:
+    - ${BUTLER_DATA_DIR:-./deploy/data}:/data:rw
+    # 媒体库必须只读挂进**所有**服务：console/scheduler/voice 会建索引与解析路径，
+    # 只有 media 需要读字节；少了这条，Agent 会看到空索引而退化到 UI 搜索。
+    - ${MEDIA_ROOT:-/vol1/1000/影视}:/media:ro
+
+services:
+  console:
+    <<: *common
+    command: [serve]
+    healthcheck:
+      test: [CMD, python3, /app/healthcheck.py]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+  scheduler:
+    <<: *common
+    command: [schedule, run]
+    # Same /data/runtime/locks as console: device operations serialize.
+    healthcheck:
+      # Fresh sidecar timestamps work across container PID namespaces.
+      test: [CMD, python3, /app/healthcheck.py, scheduler]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+  media:
+    <<: *common
+    command: [media, serve]
+    # 唯一持有媒体端口的进程。console/scheduler/voice 只签发签名链接，不再抢 8899。
+    # 共享 /data 中的 media_key 与会话文件，因此各 worker 生成的 URL 都被接受。
+    healthcheck:
+      test: [CMD, python3, /app/healthcheck.py, media]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+  voice:
+    <<: *common
+    # --force：由"启动该容器"本身表示启用语音监听，不依赖配置文件开关。
+    command: [voice, listen, --force]
+    # 与 console/scheduler 共享 /data（config、ADB 授权 .android、设备锁、去重状态）。
+    # ADB 授权与语音服务同时存在：三者对同一台电视的操作用同一把 flock 串行。
+    # 语音监听依赖电视侧在 logcat 中输出的 ASR 结果，因此需要持续的 ADB 连接。
+    healthcheck:
+      # 基于心跳新鲜度，不依赖容器间 PID 可见性。
+      test: [CMD, python3, /app/healthcheck.py, voice]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s

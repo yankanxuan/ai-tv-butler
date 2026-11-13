@@ -1,0 +1,54 @@
+# Standalone experiment only. Never merge this file with the production compose.
+# docker compose -p ai-tv-asr-lab -f docker-compose.asr-lab.yml --profile asr-lab up -d --build
+services:
+  asr-lab:
+    profiles: [asr-lab]
+    image: ai-tv-asr-lab:v4.1-phase2
+    build:
+      context: .
+      dockerfile: deploy/asr-lab/Dockerfile
+      args:
+        BASE_IMAGE: ${ASR_LAB_BASE_IMAGE:-python:3.11-slim@sha256:07d4824036af339fa1b6ef769cc99d9c10a141769538b52b3b597c84f7a7b535}
+    user: "${ASR_LAB_UID:-10001}:${ASR_LAB_GID:-10001}"
+    restart: "no"
+    read_only: true
+    init: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    cpus: "2.0"
+    mem_limit: 768m
+    pids_limit: 64
+    tmpfs:
+      - /tmp:size=32m,mode=1777,noexec,nosuid,nodev
+    ports:
+      - "127.0.0.1:${ASR_LAB_PORT:-8765}:8765"
+    environment:
+      ASR_LAB_TOKEN: ${ASR_LAB_TOKEN:?Set an independent experiment token of at least 32 characters}
+      HOME: /tmp
+      OMP_NUM_THREADS: "2"
+      OPENBLAS_NUM_THREADS: "2"
+    volumes:
+      - type: bind
+        source: ${ASR_LAB_MODEL_DIR:?Set the independent experiment model directory}
+        target: /models
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${ASR_LAB_AUDIO_DIR:?Set the explicitly authorized experiment WAV directory}
+        target: /audio
+        read_only: true
+        bind:
+          create_host_path: false
+    networks: [asr-lab]
+    logging:
+      driver: local
+      options:
+        max-size: "2m"
+        max-file: "2"
+networks:
+  asr-lab:
+    # Loopback publish on Linux needs normal bridge masquerading for return
+    # traffic. Do not claim network egress isolation: runtime never downloads
+    # models, and only host-loopback access is published.
+    driver: bridge

@@ -1,0 +1,215 @@
+{
+  "status": "v42_deployed_with_partial_real_device_acceptance",
+  "date": "2026-11-12",
+  "unit_tests": {
+    "total": 925,
+    "passed": 925,
+    "skipped": 0,
+    "failures": 0
+  },
+  "new_tests": {
+    "assistant_v42": 47
+  },
+  "library": {
+    "source": "real MediaIndex over /media",
+    "entries": 35,
+    "movies": 0,
+    "series": 35,
+    "episodes": 8483,
+    "with_metadata": 0,
+    "note": "no NFO files in this library; genres honestly unavailable"
+  },
+  "read_only_acceptance": [
+    {
+      "utterance": "现在有哪些资源？",
+      "status": "SUCCESS",
+      "reply_chars": 161,
+      "decision_source": null,
+      "tool": null,
+      "fallback": null,
+      "candidates": [
+        "一身腱子肉，乱世做谋臣",
+        "万妖图录传",
+        "从小兵开始"
+      ],
+      "tv_action": false
+    },
+    {
+      "utterance": "资源库里边有什么？",
+      "status": "SUCCESS",
+      "reply_chars": 161,
+      "decision_source": null,
+      "tool": null,
+      "fallback": null,
+      "candidates": [
+        "一身腱子肉，乱世做谋臣",
+        "万妖图录传",
+        "从小兵开始"
+      ],
+      "tv_action": false
+    },
+    {
+      "utterance": "一共有多少部电影？",
+      "status": "SUCCESS",
+      "reply_chars": 46,
+      "decision_source": null,
+      "tool": null,
+      "fallback": null,
+      "candidates": [],
+      "tv_action": false
+    },
+    {
+      "utterance": "最近新加了什么？",
+      "status": "SUCCESS",
+      "reply_chars": 296,
+      "decision_source": "llm",
+      "tool": "library_recent",
+      "fallback": null,
+      "candidates": [],
+      "tv_action": false
+    },
+    {
+      "utterance": "随便推荐一部电影。",
+      "status": "SUCCESS",
+      "reply_chars": 52,
+      "decision_source": "llm",
+      "tool": "library_browse",
+      "fallback": null,
+      "candidates": [],
+      "tv_action": false
+    },
+    {
+      "utterance": "找一部悬疑的。",
+      "status": "SUCCESS",
+      "reply_chars": 85,
+      "decision_source": "llm",
+      "tool": "library_recommend",
+      "fallback": null,
+      "candidates": [],
+      "tv_action": false
+    },
+    {
+      "utterance": "不要太长的。",
+      "status": "SUCCESS",
+      "reply_chars": 96,
+      "decision_source": "llm",
+      "tool": "library_recommend",
+      "fallback": null,
+      "candidates": [],
+      "tv_action": false
+    },
+    {
+      "utterance": "第二个是什么？",
+      "status": "SUCCESS",
+      "reply_chars": 27,
+      "decision_source": null,
+      "tool": null,
+      "fallback": null,
+      "candidates": [
+        "一身腱子肉，乱世做谋臣",
+        "万妖图录传",
+        "从小兵开始"
+      ],
+      "tv_action": false
+    },
+    {
+      "utterance": "换一部类似的。",
+      "status": "SUCCESS",
+      "reply_chars": 74,
+      "decision_source": "deterministic",
+      "tool": "library_recommend",
+      "fallback": "ungrounded_answer",
+      "candidates": [
+        "师兄太稳健",
+        "我不是大师"
+      ],
+      "tv_action": false
+    },
+    {
+      "utterance": "我上次看到了哪里？",
+      "status": "NEEDS_CLARIFICATION",
+      "reply_chars": 37,
+      "decision_source": null,
+      "tool": null,
+      "fallback": null,
+      "candidates": [],
+      "tv_action": false
+    },
+    {
+      "utterance": "播放这部的第一集。",
+      "status": "NEEDS_CLARIFICATION",
+      "reply_chars": 25,
+      "decision_source": null,
+      "tool": null,
+      "fallback": null,
+      "candidates": [],
+      "tv_action": false
+    },
+    {
+      "utterance": "确认播放。",
+      "status": "NEEDS_CLARIFICATION",
+      "reply_chars": 33,
+      "decision_source": null,
+      "tool": null,
+      "fallback": null,
+      "candidates": [],
+      "tv_action": false
+    },
+    {
+      "utterance": "取消刚才的操作。",
+      "status": "NEEDS_CLARIFICATION",
+      "reply_chars": 23,
+      "decision_source": null,
+      "tool": null,
+      "fallback": null,
+      "candidates": [],
+      "tv_action": false
+    },
+    {
+      "utterance": "电视现在正在放什么？",
+      "status": "SUCCESS",
+      "reply_chars": 9,
+      "decision_source": null,
+      "tool": null,
+      "fallback": null,
+      "candidates": [],
+      "tv_action": false
+    },
+    {
+      "utterance": "资源库不可用时还能做什么？",
+      "status": "SUCCESS",
+      "reply_chars": 110,
+      "decision_source": "deterministic",
+      "tool": "library_health",
+      "fallback": "LLMError",
+      "candidates": [],
+      "tv_action": false
+    }
+  ],
+  "playback_chain": {
+    "proposal": [
+      "SUCCESS",
+      "NEEDS_CLARIFICATION",
+      "NEEDS_CONFIRMATION"
+    ],
+    "confirmation": [
+      "SUCCESS",
+      "NEEDS_CLARIFICATION",
+      "NEEDS_CONFIRMATION",
+      "PARTIAL"
+    ],
+    "executed": true,
+    "verification": "PARTIAL: player opened, audio not confirmed",
+    "reason": "TV panel was in standby and ADB dumpsys later timed out; no success claimed"
+  },
+  "blocked": {
+    "real_playback_success": true,
+    "phone_microphone": true,
+    "reason": "TV ADB shell unresponsive at acceptance time; no mobile device available"
+  },
+  "images": {
+    "deployed": "sha256:a24b4c22bcad65a6bd5a78b3eca9d38634781fcf6215dcf1152842b5b8370ec9"
+  },
+  "rollback_tag": "ai-tv-butler:pre-v42-20261112T212532",
+  "privacy": "No tokens, audio, or private paths."
+}

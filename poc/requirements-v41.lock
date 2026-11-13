@@ -1,0 +1,7 @@
+# V4.1 experiment only; CPython 3.11, Linux x86_64/glibc >=2.28.
+# No production runtime dependency changes. Use --only-binary=:all: --require-hashes.
+click==8.1.8 --hash=sha256:63c132bbbed01578a06712a2d1f497bb62d9c1c0d329b7903a866228027263b2
+jiwer==4.0.0 --hash=sha256:7efaf0bd336b095d99ddef9dd67e1ee829d75d58aa2a81d9639870b01d6d95ea
+RapidFuzz==3.14.3 --hash=sha256:cfe8df315ab4e6db4e1be72c5170f8e66021acde22cd2f9d04d2058a9fd8162e
+sherpa_onnx==2.0.1 --hash=sha256:59a5ad65739f8c3a972950011887bdd16877a73a9070edef33b5417338db0cfa
+sherpa-onnx-core==2.0.1 --hash=sha256:f4ee0ab91c4ae596e0e49d7de32522a946295e038a652f1c1884d89014ee4ec2

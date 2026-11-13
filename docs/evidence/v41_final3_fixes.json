@@ -1,0 +1,85 @@
+{
+  "status": "v41_final3_incremental_fixes_verified",
+  "date": "2026-11-12",
+  "unit_tests": {
+    "total": 828,
+    "passed": 828,
+    "skipped": 0,
+    "failures": 0,
+    "seconds": 91.745,
+    "exit_code": 0,
+    "log_sha256": "3bacde9104cedced204ddd0e749c9fcb444dad36ec1153d657716c804ddad074"
+  },
+  "simulated_integration": {
+    "passed": 22,
+    "failed": 0,
+    "exit_code": 0
+  },
+  "new_regressions": {
+    "title_session": 27,
+    "voice_portal": 23,
+    "asr_lab_service": 33,
+    "extended_metrics": 6
+  },
+  "real_logout": {
+    "login": 200,
+    "logout_status": 200,
+    "logout_body": {
+      "status": "logged_out"
+    },
+    "clears_cookie": true,
+    "old_cookie_session_status": 401,
+    "old_cookie_body": {
+      "error": "登录已过期，请重新登录"
+    }
+  },
+  "real_overlimit_upload": {
+    "overlimit_status": 413,
+    "overlimit_body": {
+      "error": "请求体超出限制"
+    },
+    "server_still_alive_status": 200
+  },
+  "real_cancel": {
+    "task_id": "9920c58d2e9d4fd395fbe3d97c2a033c",
+    "status": "cancelled",
+    "final_state": "CANCELLED",
+    "task_id_cleared_on_verified": true,
+    "final_state_after_wait": "CANCELLED",
+    "final_summary": "任务已取消",
+    "tv_package": "com.mitv.mivideoplayer",
+    "tv_playing": false
+  },
+  "phone_tests": {
+    "android_chrome": {
+      "tested": false,
+      "reason": "No phone/ADB mobile device; only MiTV_ASTP0 TV is visible."
+    },
+    "iphone_safari": {
+      "tested": false,
+      "reason": "No iPhone or Safari device available."
+    },
+    "real_microphone": {
+      "tested": false,
+      "reason": "No capture PCM/arecord on host; Chromium fake device is not a phone."
+    }
+  },
+  "production": {
+    "four_containers_healthy": true,
+    "xiaomi_default_unchanged": true,
+    "images_unchanged": true
+  },
+  "experimental_services_running": false,
+  "new_third_party_dependencies": [],
+  "privacy": "No token, audio, raw transcript, host path or signed URL in this evidence.",
+  "images": {
+    "ai-tv-asr-lab:v4.1-phase2": {
+      "id": "sha256:7f8acf7b349ee166200fc26bc4abbedf9ab6cbdbf6c9dad0f7b5756013b3d5c3",
+      "size_bytes": 182998254
+    },
+    "ai-tv-voice-portal:v4.1-phase2": {
+      "id": "sha256:cf54912d3e94c95a99ac473a536b4be09650b2082f504e94931188b282ae9b24",
+      "size_bytes": 137627077
+    }
+  }
+}

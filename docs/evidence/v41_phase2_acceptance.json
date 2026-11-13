@@ -1,0 +1,225 @@
+{
+  "status": "phase2_closed_loop_validated_with_file_replay_and_real_tv",
+  "date": "2026-11-12",
+  "capture_evidence": {
+    "file_replay_to_real_tv": {
+      "hypothesis_sha256": "a23a157b8a74bd204a84cf0f72f916fa4f8194da78de878b997661360bd5b9a6",
+      "hypothesis_chars": 13,
+      "asr_seconds": 6.2293125,
+      "asr_wall_seconds": 1.3522435780032538,
+      "work": {
+        "title": "穿成野神我靠香火斩诸神",
+        "year": "2026",
+        "work_id": "work-c1fd5bbbef9429610a37cc8e",
+        "season_count": 11,
+        "episode_count": 1305
+      },
+      "season": 1,
+      "episode": 1,
+      "command": "播放《穿成野神我靠香火斩诸神》第1季第1集",
+      "task_id": "ca9c738046ca4a5f86107ae8d1d591ae",
+      "task_states": [
+        "QUEUED",
+        "RUNNING",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED",
+        "SUCCEEDED"
+      ],
+      "task_final_state": "SUCCEEDED",
+      "task_result_status": "SUCCESS",
+      "task_elapsed_seconds": 3.623,
+      "verified_media_path_basename": "穿成野神我靠香火斩诸神 S01E001.mp4",
+      "player_package": "com.mitv.mivideoplayer",
+      "playing_after": true,
+      "playback_state": "PLAYING"
+    },
+    "simulated_browser_microphone": {
+      "device": "Chromium fake audio device, not a real phone",
+      "original_sha256": "a0a2d40a4f59008775791858654d0190a564cba2d20766a2de7613ba910dace3",
+      "original_chars": 14,
+      "work_candidates": 1,
+      "seasons": 11,
+      "episodes_rendered": 80,
+      "confirmation_preview": "播放《穿成野神我靠香火斩诸神》第1季第1集。确认后才会提交给电视。",
+      "executed": false,
+      "manual_correction_work_candidates": 1,
+      "manual_correction_first": "穿成野神我靠香火斩诸神（2026）11 季 · 1305 集 · 相似度 53.3",
+      "stale_confirmation_hidden_after_rematch": true,
+      "explicit_consent_checkbox_required": true
+    },
+    "phone_microphone": {
+      "tested": false,
+      "reason": "No phone/real microphone accessible to this worker; browser run used Chromium fake device."
+    }
+  },
+  "performance": {
+    "sequential_100": {
+      "count": 100,
+      "success": 100,
+      "p50_wall_seconds": 1.0835744029900525,
+      "p95_wall_seconds": 2.185815050994279,
+      "max_wall_seconds": 3.5875943249993725,
+      "p50_asr_seconds": 1.0212759490095777,
+      "p95_asr_seconds": 2.104389974992955,
+      "p50_first_partial_seconds": 0.3993966869893484,
+      "p95_first_partial_seconds": 0.9396643919899361,
+      "mean_cpu_seconds": 1.9029179033299986
+    },
+    "during_video_playback": {
+      "playing_before": true,
+      "playing_after_100": true,
+      "state_after": "PLAYING",
+      "package_after": "com.mitv.mivideoplayer"
+    },
+    "concurrent_8": {
+      "statuses": [
+        200,
+        409,
+        409,
+        409,
+        409,
+        409,
+        409,
+        409
+      ],
+      "success": 1,
+      "busy_409": 7
+    },
+    "container_stats_after": {
+      "CPUPerc": "0.03%",
+      "MemUsage": "93.41MiB / 768MiB",
+      "MemPerc": "12.16%",
+      "PIDs": "3"
+    },
+    "cpu_memory_second_100": {
+      "count": 100,
+      "wall_seconds": 132.68685616699804,
+      "cpu_usage_usec_delta": 206708405,
+      "cpu_seconds_delta": 206.708405,
+      "cpu_percent_of_two_cores": 77.89332378929808,
+      "memory_peak_bytes": 139436032,
+      "memory_limit_bytes": 805306368,
+      "mean_asr_cpu_seconds": 1.9296808168500008,
+      "p50_asr_seconds": 1.0278056539973477,
+      "p95_asr_seconds": 2.6310591110086534
+    }
+  },
+  "service_outage": {
+    "lab_down": {
+      "portal_health": 200,
+      "lab_down_upload_status": 504,
+      "console_voice_status": 200,
+      "voice_beta": true,
+      "lab_down": true
+    },
+    "lab_restart": {
+      "lab_restart_upload_status": 200,
+      "lab_restart_hypothesis": "打开飞牛"
+    }
+  },
+  "cancel_actual": {
+    "task": "4d1e07fd4deb4671bbb447994cc93189",
+    "final_state": "CANCELLED",
+    "final_summary": "任务已取消",
+    "tv_package_after_wait": "com.mitv.mivideoplayer",
+    "tv_playing": false
+  },
+  "final_tv_state": {
+    "playing": false,
+    "state": "PAUSED",
+    "package": "com.mitv.mivideoplayer"
+  },
+  "containers": {
+    "asr_lab": {
+      "image": "ai-tv-asr-lab:v4.1-phase2",
+      "image_id": "sha256:2d75aa0012bfb9682d3386fa1d1246f2c453c84072a52d9a948749845b926de0",
+      "size_bytes": 182962042
+    },
+    "voice_portal": {
+      "status": "portal_container_started_healthy",
+      "image": "sha256:5fcd319f83034935c37d10f390fa065a26843d78d4ebe19df86698aa8d899bf2",
+      "user": "1000:1001",
+      "read_only_root": true,
+      "memory": 268435456,
+      "nano_cpus": 1000000000,
+      "privileged": false,
+      "network_mode": "host",
+      "health": "healthy",
+      "mounts_read_only": true,
+      "full_flow": {
+        "container": "ai-tv-voice-portal:v4.1-phase2",
+        "login_status": 200,
+        "hypothesis_sha256": "a23a157b8a74bd204a84cf0f72f916fa4f8194da78de878b997661360bd5b9a6",
+        "work": "穿成野神我靠香火斩诸神",
+        "season_count": 11,
+        "episode_count": 1305,
+        "requires_confirmation": true,
+        "executed": false
+      },
+      "image_id": "sha256:7ef9fe73e5520a61866a5cd24b03de3cf1257ff7817b4db35b8f42a6edf8b841",
+      "size_bytes": 137608947,
+      "final_health": "healthy on default port 8443",
+      "full_flow_note": "API full flow executed on the same code before the final static consent-checkbox change; final image health verified."
+    }
+  },
+  "production": {
+    "four_containers_preserved": true,
+    "xiaomi_default_unchanged": true
+  },
+  "privacy": "No audio, token, raw full hypothesis, host path, signed URL or personal username in this evidence."
+}

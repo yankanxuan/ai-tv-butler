@@ -1,0 +1,84 @@
+{
+  "status": "v41_final4_concurrency_and_reliability_verified",
+  "date": "2026-11-12",
+  "unit_tests": {
+    "total": 836,
+    "passed": 836,
+    "skipped": 0,
+    "failures": 0,
+    "seconds": 95.729,
+    "exit_code": 0,
+    "log_sha256": "d38f8a25ff2216b71de0330a98292d9060477240cf73f8786713f77cdf04c696"
+  },
+  "simulated_integration": {
+    "passed": 22,
+    "failed": 0,
+    "exit_code": 0
+  },
+  "concurrency": {
+    "two_simultaneous_http_confirms": "one console submission; both return same task_id",
+    "confirm_cancel": "one submission; cancel result is cancelled or explicit not_effective",
+    "confirm_logout": "one submission; logout exposes active_task_id and revokes cookie",
+    "confirm_expiry_cleanup": "one submission; active task session retained",
+    "unknown_submission_repeat": "second confirm does not submit; same idempotency key",
+    "store_direct_confirm": "exactly one success, one already-confirmed",
+    "stress_100_rounds": {
+      "rounds": 100,
+      "threads_per_round": 2,
+      "seconds": 1.012,
+      "result": "pass",
+      "source": "test_confirm_is_atomic_over_100_rounds"
+    }
+  },
+  "real_cancel": {
+    "task_id": "20ada584935648c586e26000045015af",
+    "cancel_status": "cancelled",
+    "final_state": "CANCELLED",
+    "task_id_cleared_on_verified": true,
+    "server_final_state": "CANCELLED",
+    "tv_package": "com.mitv.mivideoplayer",
+    "tv_playing": false
+  },
+  "real_logout": {
+    "revoked": true,
+    "active_task_id": null,
+    "submission": "cancelled"
+  },
+  "phone_tests": {
+    "android_chrome": false,
+    "iphone_safari": false,
+    "reason": "No mobile device or capture PCM available; not marked passed."
+  },
+  "media_key_test": {
+    "original_repeats_seconds": [
+      21.96,
+      21.41,
+      21.52,
+      22.29,
+      22.08
+    ],
+    "fixed_repeats_seconds": [
+      22.75,
+      21.16,
+      22.19
+    ],
+    "conclusion": "No lock deadlock observed. Per-child 30 s timeout and missing child cleanup made CPU/import contention cascade; test now uses a shared 45 s deadline and finally kill/reap."
+  },
+  "images": {
+    "ai-tv-asr-lab:v4.1-phase2": {
+      "id": "sha256:7da9627c8fee7ea6fdbd79ad74d4ca3b6c95870413757c0e9c8ce9669c77c1da",
+      "size_bytes": 183018768
+    },
+    "ai-tv-voice-portal:v4.1-phase2": {
+      "id": "sha256:f0bf0585c46c298a8f4209521e43f334951d31bb059d57d5b119ff4296153fb0",
+      "size_bytes": 137648711
+    }
+  },
+  "production": {
+    "four_containers_healthy": true,
+    "xiaomi_default_unchanged": true,
+    "experimental_services_stopped": true
+  },
+  "new_third_party_dependencies": [],
+  "privacy": "No token, audio, raw transcript, host path or signed URL in this evidence."
+}

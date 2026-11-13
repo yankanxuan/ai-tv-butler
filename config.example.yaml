@@ -1,0 +1,158 @@
+# AI 电视管家 配置示例。复制为 config.yaml 后按需修改。
+
+adb:
+  # 目标电视/盒子的地址。标准 ADB 一般是 host:5555。
+  # 当前实测小米 MiTV-ASTP0 地址是 192.0.2.20:5555。
+  # 首次连接需在电视设置中开启调试，并允许 NAS 的调试授权。
+  host: "192.0.2.20"
+  port: 5555
+  serial: ""            # 留空则由 host:port 自动拼；也可直接填如 "192.0.2.10:5555"
+  binary: "adb"         # 真机用 adb；离线演示可指向 tests/fake_adb.py
+  auto_connect: true
+  connect_timeout: 15
+  command_timeout: 20
+
+llm:
+  # provider: anthropic | openai | none
+  provider: "anthropic"
+  # 本机 7866 是飞牛本地模型网关（Anthropic /v1/messages 协议，纯文本）。
+  base_url: "http://127.0.0.1:7866"
+  api_key: ""
+  model: "cn:deepseek-v4.1-flash"
+  vision_model: ""      # 若要“看截图”，填一个支持视觉的 OpenAI 兼容模型 + 配 openai provider
+  max_tokens: 1200
+  temperature: 0.2
+  timeout: 90
+
+agent:
+  max_steps: 18
+  use_llm: true
+  fast_path: true          # 暂停/继续/飞牛常用指令直接执行，无模型往返
+  smart_navigation: true  # tv_run_flow 的飞牛内置流程按当前页面导航
+  log_dir: "logs"
+
+ui:
+  wait_timeout: 20
+  poll_interval: 1.2
+  fast_poll_interval: 0.2
+  navigation_timeout: 60
+  max_search_pages: 12
+
+scheduler:
+  store: "state/tasks.json"
+  poll_seconds: 20
+
+# V2.1 任务管理与感知/恢复
+execution:
+  enabled: true
+  timeout: 180
+  max_actions: 100
+  detect_manual_control: true
+  verify_progress: false
+perception:
+  cache_ttl: 0.3
+  vision_cache_size: 16
+recovery:
+  max_attempts: 4
+  per_failure: 2
+
+# V2.2 脱敏 SQLite 记忆；path 留空使用 state/memory.sqlite3
+memory:
+  enabled: false
+  path: ""
+  record_history: true           # V4 voice can disable history writes while retaining approved Skills
+
+# 本机飞牛影视库：片名/季/集 -> 真实文件，并可由电视直连播放（Range）
+media:
+  enabled: false                   # 需要本机存在媒体库时才开启
+  roots: ["/vol1/1000/影视"]        # 只读扫描的目录
+  cache: ""                        # 留空 -> <data>/media_index.json
+  serve: false                     # true 时启用直连播放（起只读媒体服务）
+  serve_host: ""                   # 留空 = 只监听电视可达的网卡地址（不是 0.0.0.0）
+  serve_port: 8899
+  serve_token: ""                  # 可选长期令牌，仅供 API/调试
+  link_ttl: 300                    # 播放链接有效期（秒），按文件签名，避免暴露长期令牌
+  private_only: true               # 仅允许回环/私有网段访问
+  advertise_host: ""               # 电视访问 NAS 的地址；留空自动探测
+
+# 语音：enabled = 浏览器 Web Speech；listener = 旁听电视自身 ASR（推荐）
+voice:
+  enabled: false
+  # V4.2 自然语言助理：只读媒体工具 + 多步工具调用 + 事实对齐。
+  # enabled=false 时完全回退到 V4.1 的确定性路由。
+  assistant:
+    enabled: true
+    max_steps: 4
+    budget_seconds: 14
+    # 长期偏好默认不落盘；显式设为 true 才保存（仅类型/集数偏好，不含对话原文）
+    remember_preferences: false
+    preferences_path: ''
+  # Phase 1/2 Beta: enable explicitly after rebuilding the voice container.
+  intelligence:
+    enabled: false
+    llm_timeout_seconds: 4
+    confidence_threshold: 0.8
+    native_settle_seconds: 0.25
+  conversation:
+    ttl_seconds: 180
+    max_turns: 8
+    print_replies: false          # 可显式输出生成的追问文字（不是电视播报）
+    persist_agent_history: false # 不把完整语音写入 SQLite
+    shared_dir: ""                 # 多容器共享会话时设为 /data/runtime/voice_sessions
+  # 第三阶段：回执语音。电视端音频通道实测不可用（tinyplay 打不开 PCM、
+  # 通用 WAV 意图只到蓝牙），因此出声走已认证控制台的浏览器/手机；电视保持文字。
+  tts:
+    enabled: false                 # true 才合成并返回 audio_url
+    reply_tts: false               # 兼容旧开关；enabled=false 时不发声
+    binary: ""                     # 留空自动探测 ~/.local/bin/piper
+    model: "~/.piper/models/zh_CN-huayan-medium.onnx"
+    cache_dir: ""                  # 留空 -> <data>/voice_tts（0600、有界）
+    timeout_seconds: 15
+    cache_files: 64
+    ack_on_start: false            # 任务开始时是否播报
+    speak_during_playback: false   # 视频播放中默认不打扰（失败仍会播报）
+    include_url: true
+    audio_base_url: ""             # 例：http://192.0.2.10:8770
+    async: true                    # 后台合成，避免约 9s 的首次合成拖慢对话
+  listener:
+    enabled: false                 # true 时 `ai-tv voice listen` 接管白名单内的电视语音
+    dedup_seconds: 8               # 同一句话的重复帧去重窗口（跨重启持久化）
+    stale_seconds: 10              # 更旧的结果视为过期，同时忽略 logcat 历史重放
+    queue_size: 4                  # 有界执行队列；满时丢弃最旧指令
+    state_file: ""                 # 去重状态文件；留空 -> runtime/voice_state.json（只存哈希）
+    backoff_min: 2
+    backoff_max: 30
+    log_full_text: false           # 默认不把语音原文写进终端/日志
+    allow: []                      # 留空用内置组合规则；填写则改为列表模式
+    deny: []
+    prefix_only: []                # 非空时只接受这些前缀
+    reply_tts: false               # 预留：执行结果语音回执（未实现）
+
+server:
+  # 对外提供控制台时改为局域网地址并保留token。默认仅本机访问。
+  host: "127.0.0.1"
+  port: 8770
+  # 空token启动时生成并写入 state/runtime/console.token，不会匿名放行。
+  token: ""
+
+apps:
+  bilibili:     { package: "com.xiaodianshi.tv.yst", label: "哔哩哔哩TV/云视听小电视" }
+  iqiyi:        { package: "com.gitvdemo.video", label: "银河奇异果(爱奇艺TV)" }
+  tencent:      { package: "com.ktcp.video", label: "云视听极光(腾讯视频TV)" }
+  youku:        { package: "com.tudou.tvshadow", label: "CIBN酷喵(优酷TV)" }
+  mgtv:         { package: "com.hunantv.market", label: "芒果TV" }
+  douyin_tv:    { package: "com.ss.android.ugc.aweme.tv", label: "抖音TV(鲜时光)" }
+  feiniu_tv:    { package: "com.trim.tv", label: "飞牛TV",
+                  # 口语简称 -> 实际片名，让“野神”这类说法能匹配媒体库标题
+                  title_aliases: { 野神: "穿成野神我靠香火斩诸神", 穿成野神: "穿成野神我靠香火斩诸神" },
+                  # smart_navigation=true 时按当前页面导航，flow 仅作旧版兜底
+                  flow: [ {action: launch}, {action: sleep, seconds: 5},
+                          {action: key, key: down}, {action: key, key: center},
+                          {action: wait_play, timeout: 18} ] }
+  feiniu_drama: { package: "com.trim.tv", label: "飞牛TV短剧",
+                  flow: [ {action: launch}, {action: sleep, seconds: 5},
+                          {action: key, key: right}, {action: key, key: center},
+                          {action: sleep, seconds: 4}, {action: key, key: center},
+                          {action: sleep, seconds: 4}, {action: key, key: center},
+                          {action: wait_play, timeout: 18} ] }
+  hongguo:      { package: "cn.hongguo.tv", label: "红果免费短剧" }

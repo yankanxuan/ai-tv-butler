@@ -1,0 +1,50 @@
+{
+  "status": "phase2_performance_measured",
+  "hardware": "Intel Celeron 847, 2 cores/2 threads, x86_64",
+  "model_profile": "ctc",
+  "video_playing_during_test": true,
+  "sequential_100": {
+    "count": 100,
+    "success": 100,
+    "p50_wall_seconds": 1.0835744029900525,
+    "p95_wall_seconds": 2.185815050994279,
+    "max_wall_seconds": 3.5875943249993725,
+    "p50_asr_seconds": 1.0212759490095777,
+    "p95_asr_seconds": 2.104389974992955,
+    "p50_first_partial_seconds": 0.3993966869893484,
+    "p95_first_partial_seconds": 0.9396643919899361,
+    "mean_cpu_seconds": 1.9029179033299986
+  },
+  "concurrent_8": {
+    "statuses": [
+      200,
+      409,
+      409,
+      409,
+      409,
+      409,
+      409,
+      409
+    ],
+    "success": 1,
+    "busy_409": 7
+  },
+  "cpu_memory_second_100": {
+    "count": 100,
+    "wall_seconds": 132.68685616699804,
+    "cpu_usage_usec_delta": 206708405,
+    "cpu_seconds_delta": 206.708405,
+    "cpu_percent_of_two_cores": 77.89332378929808,
+    "memory_peak_bytes": 139436032,
+    "memory_limit_bytes": 805306368,
+    "mean_asr_cpu_seconds": 1.9296808168500008,
+    "p50_asr_seconds": 1.0278056539973477,
+    "p95_asr_seconds": 2.6310591110086534
+  },
+  "limits": {
+    "container_cpus": "2.0",
+    "container_memory_bytes": 805306368,
+    "pids": 64
+  },
+  "timing_note": "File replay, 2 CPU threads; latency excludes browser recording/upload and TV execution."
+}

@@ -1,0 +1,402 @@
+[
+ {
+  "text": "帮我找一部悬疑剧",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部悬疑电视剧",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部悬疑电影",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部科幻剧",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部科幻电视剧",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部科幻电影",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部喜剧剧",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部喜剧电视剧",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部喜剧电影",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部爱情剧",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部爱情电视剧",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部爱情电影",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部犯罪剧",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部犯罪电视剧",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部犯罪电影",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部古装剧",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部古装电视剧",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部古装电影",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部家庭剧",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部家庭电视剧",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部家庭电影",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部冒险剧",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部冒险电视剧",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部冒险电影",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部职场剧",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部职场电视剧",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部职场电影",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部年代剧",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部年代电视剧",
+  "expected_intent": "search"
+ },
+ {
+  "text": "帮我找一部年代电影",
+  "expected_intent": "search"
+ },
+ {
+  "text": "刚才那部再放一遍",
+  "expected_intent": "play"
+ },
+ {
+  "text": "刚才那部接着播下一集",
+  "expected_intent": "play"
+ },
+ {
+  "text": "刚才那部从第一集开始",
+  "expected_intent": "play"
+ },
+ {
+  "text": "刚才那部换个季看",
+  "expected_intent": "play"
+ },
+ {
+  "text": "上一部再放一遍",
+  "expected_intent": "play"
+ },
+ {
+  "text": "上一部接着播下一集",
+  "expected_intent": "play"
+ },
+ {
+  "text": "上一部从第一集开始",
+  "expected_intent": "play"
+ },
+ {
+  "text": "上一部换个季看",
+  "expected_intent": "play"
+ },
+ {
+  "text": "之前看的那个再放一遍",
+  "expected_intent": "play"
+ },
+ {
+  "text": "之前看的那个接着播下一集",
+  "expected_intent": "play"
+ },
+ {
+  "text": "之前看的那个从第一集开始",
+  "expected_intent": "play"
+ },
+ {
+  "text": "之前看的那个换个季看",
+  "expected_intent": "play"
+ },
+ {
+  "text": "刚看的那集再放一遍",
+  "expected_intent": "play"
+ },
+ {
+  "text": "刚看的那集接着播下一集",
+  "expected_intent": "play"
+ },
+ {
+  "text": "刚看的那集从第一集开始",
+  "expected_intent": "play"
+ },
+ {
+  "text": "刚看的那集换个季看",
+  "expected_intent": "play"
+ },
+ {
+  "text": "刚才那个剧再放一遍",
+  "expected_intent": "play"
+ },
+ {
+  "text": "刚才那个剧接着播下一集",
+  "expected_intent": "play"
+ },
+ {
+  "text": "刚才那个剧从第一集开始",
+  "expected_intent": "play"
+ },
+ {
+  "text": "刚才那个剧换个季看",
+  "expected_intent": "play"
+ },
+ {
+  "text": "不要这个换一个，来点轻松的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "不要这个换一个，找评分高的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "不要这个换一个，换个国家的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "不要这个换一个，换一部新一点的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "不要这个换一个，看点短的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "不是这部再看别的，来点轻松的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "不是这部再看别的，找评分高的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "不是这部再看别的，换个国家的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "不是这部再看别的，换一部新一点的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "不是这部再看别的，看点短的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "换一个类型，来点轻松的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "换一个类型，找评分高的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "换一个类型，换个国家的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "换一个类型，换一部新一点的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "换一个类型，看点短的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "这个不好看换掉，来点轻松的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "这个不好看换掉，找评分高的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "这个不好看换掉，换个国家的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "这个不好看换掉，换一部新一点的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "这个不好看换掉，看点短的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "别放这个，来点轻松的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "别放这个，找评分高的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "别放这个，换个国家的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "别放这个，换一部新一点的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "别放这个，看点短的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "这部不行，来点轻松的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "这部不行，找评分高的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "这部不行，换个国家的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "这部不行，换一部新一点的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "这部不行，看点短的",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "打开B站，把音量调到8",
+  "expected_intent": "sequence"
+ },
+ {
+  "text": "打开B站，把声音调小一点",
+  "expected_intent": "sequence"
+ },
+ {
+  "text": "打开B站，暂停一下",
+  "expected_intent": "sequence"
+ },
+ {
+  "text": "打开B站，音量调到15",
+  "expected_intent": "sequence"
+ },
+ {
+  "text": "打开飞牛，把音量调到8",
+  "expected_intent": "sequence"
+ },
+ {
+  "text": "打开飞牛，把声音调小一点",
+  "expected_intent": "sequence"
+ },
+ {
+  "text": "打开飞牛，暂停一下",
+  "expected_intent": "sequence"
+ },
+ {
+  "text": "打开飞牛，音量调到15",
+  "expected_intent": "sequence"
+ },
+ {
+  "text": "打开爱奇艺，把音量调到8",
+  "expected_intent": "sequence"
+ },
+ {
+  "text": "打开爱奇艺，把声音调小一点",
+  "expected_intent": "sequence"
+ },
+ {
+  "text": "打开爱奇艺，暂停一下",
+  "expected_intent": "sequence"
+ },
+ {
+  "text": "打开爱奇艺，音量调到15",
+  "expected_intent": "sequence"
+ },
+ {
+  "text": "打开腾讯视频，把音量调到8",
+  "expected_intent": "sequence"
+ },
+ {
+  "text": "打开腾讯视频，把声音调小一点",
+  "expected_intent": "sequence"
+ },
+ {
+  "text": "打开腾讯视频，暂停一下",
+  "expected_intent": "sequence"
+ },
+ {
+  "text": "打开腾讯视频，音量调到15",
+  "expected_intent": "sequence"
+ },
+ {
+  "text": "关掉客厅的灯再播放新闻",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "关掉客厅的灯再放点音乐",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "关掉客厅的灯再开个电影",
+  "expected_intent": "clarify"
+ },
+ {
+  "text": "把空调打开再播放新闻",
+  "expected_intent": "clarify"
+ }
+]

@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-12",
+  "profiles": {
+    "ctc": {
+      "kind": "ctc",
+      "repo": "csukuangfj/sherpa-onnx-streaming-zipformer-small-ctc-zh-int8-2025-04-01",
+      "revision": "a5f60fe00dcfbaf68fcc1c6b5cf53061e144d6da",
+      "license": "Apache-2.0",
+      "license_scope": "source checkpoint declaration; ONNX card has no independent declaration",
+      "files": {
+        "model": {
+          "name": "model.int8.onnx",
+          "sha256": "68c9c943840f7d9cf3e8a4970ba50f404feb5277f611fa82b7e72267786fa84a",
+          "size_bytes": 26342340,
+          "url": "https://huggingface.co/csukuangfj/sherpa-onnx-streaming-zipformer-small-ctc-zh-int8-2025-04-01/resolve/a5f60fe00dcfbaf68fcc1c6b5cf53061e144d6da/model.int8.onnx"
+        },
+        "tokens": {
+          "name": "tokens.txt",
+          "sha256": "6fed8c6c248516f38e7faa19404b57413e8ce259f1cbc1fa4aebc86eac32fdfd",
+          "size_bytes": 13366,
+          "url": "https://huggingface.co/csukuangfj/sherpa-onnx-streaming-zipformer-small-ctc-zh-int8-2025-04-01/resolve/a5f60fe00dcfbaf68fcc1c6b5cf53061e144d6da/tokens.txt"
+        }
+      },
+      "evidence": [
+        {
+          "path": "licenses/v41/ctc-source-card.txt",
+          "url": "https://huggingface.co/csukuangfj/icefall-streaming-zipformer-small-ctc-zh-2025-04-01/raw/6768aa8b65bc68e128af2ee08a7142dd0abe4be4/README.md",
+          "sha256": "240651fdda045593503276eb413260e867a2df86e586155a2ec5f7112e52840f"
+        },
+        {
+          "path": "licenses/v41/ctc-onnx-card.txt",
+          "url": "https://huggingface.co/csukuangfj/sherpa-onnx-streaming-zipformer-small-ctc-zh-int8-2025-04-01/raw/a5f60fe00dcfbaf68fcc1c6b5cf53061e144d6da/README.md",
+          "sha256": "07ccc659e8d02c2c7ecc05cfb3bc5c9f023ff39a6e62ed4dabe6ca6c492252ef"
+        }
+      ]
+    },
+    "transducer": {
+      "kind": "transducer",
+      "repo": "csukuangfj/sherpa-onnx-streaming-zipformer-bilingual-zh-en-2023-02-20",
+      "revision": "98590b7ed6443e77b714204da2757d75e1a642f4",
+      "license": "Apache-2.0",
+      "license_scope": "ONNX model card",
+      "files": {
+        "encoder": {
+          "name": "encoder-epoch-99-avg-1.int8.onnx",
+          "sha256": "8fa764187a261844f859d7143ebaa563af5d10adfece4c18a8f414c88cba2a9b",
+          "size_bytes": 181895032,
+          "url": "https://huggingface.co/csukuangfj/sherpa-onnx-streaming-zipformer-bilingual-zh-en-2023-02-20/resolve/98590b7ed6443e77b714204da2757d75e1a642f4/encoder-epoch-99-avg-1.int8.onnx"
+        },
+        "decoder": {
+          "name": "decoder-epoch-99-avg-1.int8.onnx",
+          "sha256": "1a70c593d71e53f023f5f55b0b4cfff5055abb786ee3992e5f63dc2e273cc4fa",
+          "size_bytes": 13091040,
+          "url": "https://huggingface.co/csukuangfj/sherpa-onnx-streaming-zipformer-bilingual-zh-en-2023-02-20/resolve/98590b7ed6443e77b714204da2757d75e1a642f4/decoder-epoch-99-avg-1.int8.onnx"
+        },
+        "joiner": {
+          "name": "joiner-epoch-99-avg-1.int8.onnx",
+          "sha256": "1ed689c5ed19dbaa725d9d191bb4822b5f4855a39e1ffd28cbc1f340d25b2ee0",
+          "size_bytes": 3228404,
+          "url": "https://huggingface.co/csukuangfj/sherpa-onnx-streaming-zipformer-bilingual-zh-en-2023-02-20/resolve/98590b7ed6443e77b714204da2757d75e1a642f4/joiner-epoch-99-avg-1.int8.onnx"
+        },
+        "tokens": {
+          "name": "tokens.txt",
+          "sha256": "a8e0e4ec53810e433789b54a5c0134a7eaa2ffca595a6334d54c00da858841d3",
+          "size_bytes": 56317,
+          "url": "https://huggingface.co/csukuangfj/sherpa-onnx-streaming-zipformer-bilingual-zh-en-2023-02-20/resolve/98590b7ed6443e77b714204da2757d75e1a642f4/tokens.txt"
+        }
+      },
+      "evidence": [
+        {
+          "path": "licenses/v41/transducer-card.txt",
+          "url": "https://huggingface.co/csukuangfj/sherpa-onnx-streaming-zipformer-bilingual-zh-en-2023-02-20/raw/98590b7ed6443e77b714204da2757d75e1a642f4/README.md",
+          "sha256": "b6f9458f4208ae821beaaf11dc983486916a4089a2f3677b40f9ff06ec4e6440"
+        }
+      ]
+    },
+    "paraformer": {
+      "kind": "paraformer",
+      "repo": "csukuangfj/sherpa-onnx-streaming-paraformer-bilingual-zh-en",
+      "revision": "8e40c43232a1c5c66c82111efc5820d3accca11b",
+      "license": "Apache-2.0",
+      "license_scope": "pinned ONNX card declaration; converted FunASR online Paraformer, sherpa-onnx CPU backend",
+      "source_model": "damo/speech_paraformer_asr_nat-zh-cn-16k-common-vocab8404-online",
+      "files": {
+        "decoder": {
+          "name": "decoder.int8.onnx",
+          "sha256": "f3cca9f77bb9d93c8fcbfb63ae617b6b1ee96818df3aa3b151c40658fe38594f",
+          "size_bytes": 71664561,
+          "url": "https://huggingface.co/csukuangfj/sherpa-onnx-streaming-paraformer-bilingual-zh-en/resolve/8e40c43232a1c5c66c82111efc5820d3accca11b/decoder.int8.onnx"
+        },
+        "encoder": {
+          "name": "encoder.int8.onnx",
+          "sha256": "81a70226a8934e6ed92aa1d4fc486b428b5398e2f2619ed4897b7294cab90e9a",
+          "size_bytes": 165462184,
+          "url": "https://huggingface.co/csukuangfj/sherpa-onnx-streaming-paraformer-bilingual-zh-en/resolve/8e40c43232a1c5c66c82111efc5820d3accca11b/encoder.int8.onnx"
+        },
+        "tokens": {
+          "name": "tokens.txt",
+          "sha256": "59aba8873a2ed1e122c25fee421e25f283b63290efbde85c1f01a853d83cb6e6",
+          "size_bytes": 75756,
+          "url": "https://huggingface.co/csukuangfj/sherpa-onnx-streaming-paraformer-bilingual-zh-en/resolve/8e40c43232a1c5c66c82111efc5820d3accca11b/tokens.txt"
+        }
+      },
+      "evidence": [
+        {
+          "path": "licenses/v41/paraformer-card.txt",
+          "url": "https://huggingface.co/csukuangfj/sherpa-onnx-streaming-paraformer-bilingual-zh-en/raw/8e40c43232a1c5c66c82111efc5820d3accca11b/README.md",
+          "sha256": "16b56210f03531d00f5580b060ff6843461e618e5642c070a58df6f0a5c98875"
+        },
+        {
+          "path": "licenses/v41/paraformer-conversion-card.txt",
+          "url": "https://huggingface.co/csukuangfj/streaming-paraformer-zh/raw/2db94bce7ce81909a08fb3142c71086f489e7e16/README.md",
+          "sha256": "1ef67f0cb23618fd34d184f0be884884706e68bfc27f374bbbdd0448378a8a61"
+        }
+      ]
+    }
+  },
+  "vad": {
+    "name": "Silero VAD v5.1.2",
+    "repo": "snakers4/silero-vad",
+    "revision": "6478567951ae5c9979ad7b234185b5515f4be7a1",
+    "license": "MIT",
+    "files": {
+      "model": {
+        "name": "silero_vad.onnx",
+        "sha256": "2623a2953f6ff3d2c1e61740c6cdb7168133479b267dfef114a4a3cc5bdd788f",
+        "size_bytes": 2327524,
+        "url": "https://raw.githubusercontent.com/snakers4/silero-vad/6478567951ae5c9979ad7b234185b5515f4be7a1/src/silero_vad/data/silero_vad.onnx"
+      }
+    },
+    "evidence": [
+      {
+        "path": "licenses/v41/silero-LICENSE.txt",
+        "url": "https://raw.githubusercontent.com/snakers4/silero-vad/6478567951ae5c9979ad7b234185b5515f4be7a1/LICENSE",
+        "sha256": "2e63e9a38b6e8fc0c7bc37ce174caca1862870856c6daf5697cfb785e925520b"
+      }
+    ]
+  },
+  "runtime_lock": "requirements-v41.lock",
+  "runtime_platform": "CPython 3.11 Linux x86_64 glibc >=2.28",
+  "rollback": "Stop/remove the separate ai-tv-asr-lab project. Production compose/image/data are untouched."
+}

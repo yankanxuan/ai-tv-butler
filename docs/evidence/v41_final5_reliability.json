@@ -1,0 +1,119 @@
+{
+  "status": "v41_final5_session_and_idempotency_verified",
+  "date": "2026-11-12",
+  "unit_tests": {
+    "total": 869,
+    "passed": 869,
+    "skipped": 0,
+    "failures": 0,
+    "seconds": 104.391,
+    "exit_code": 0,
+    "log_sha256": "ce61ef49d732b74af6abeb56258658e6a6a896b57173c82541e627b91b699e4f"
+  },
+  "simulated_integration": {
+    "passed": 22,
+    "failed": 0,
+    "exit_code": 0
+  },
+  "new_tests": {
+    "idempotency_store": 7,
+    "idempotency_http": 8,
+    "portal_session_history": 6,
+    "title_session_locking": 1,
+    "startup_recovery": 13
+  },
+  "stress_100_rounds": {
+    "rounds": 100,
+    "threads_per_round": 2,
+    "seconds": 1.012,
+    "result": "pass"
+  },
+  "session_ttl": {
+    "idle_seconds": 1800,
+    "absolute_seconds": 28800,
+    "completed_task_extends": false,
+    "running_task_cancelled_on_expiry": false,
+    "relogin_history": true,
+    "cookie_sliding": "authenticated responses refresh Max-Age to server remaining TTL",
+    "absolute_max_seconds": 28800
+  },
+  "idempotency": {
+    "database": "runtime/idempotency.sqlite3",
+    "primary_key": "owner,key",
+    "owner": "sha256(console token)",
+    "retention_seconds": 604800,
+    "transaction": "SQLite BEGIN IMMEDIATE + task JSON + queue",
+    "restart_replay_tested": true,
+    "old_client_compatible": true
+  },
+  "media_key_test": {
+    "runs_seconds": [
+      22.75,
+      21.16,
+      22.19
+    ],
+    "deadlock_observed": false,
+    "fix": "shared 45 s deadline + finally kill/reap; no infinite timeout"
+  },
+  "images": {
+    "ai-tv-asr-lab:v4.1-phase2": {
+      "id": "sha256:7da9627c8fee7ea6fdbd79ad74d4ca3b6c95870413757c0e9c8ce9669c77c1da",
+      "size_bytes": 183018768
+    },
+    "ai-tv-voice-portal:v4.1-phase2": {
+      "id": "sha256:0b95f11edef8c1a4c474c69bff03c6b4d6cd4eba62aeb4cb52fa81f9de065627",
+      "size_bytes": 137654349
+    },
+    "ai-tv-butler:4.0.0b8": {
+      "id": "sha256:eb0c8c1a7423078793f6b7e0b40aef29cd3a87661a22aee2241ec33037405b2f",
+      "size_bytes": 172265492
+    }
+  },
+  "production": {
+    "deployed_this_session": true,
+    "four_containers_healthy": true,
+    "xiaomi_default_unchanged": true,
+    "console_rebuild_required_for_final5": false
+  },
+  "phone_tests": {
+    "android_chrome": false,
+    "iphone_safari": false,
+    "real_microphone": false,
+    "reason": "No mobile device or capture PCM available; not marked passed."
+  },
+  "new_third_party_dependencies": [],
+  "privacy": "No token, audio, raw transcript, host path or signed URL in this evidence.",
+  "startup_recovery": {
+    "queued_replayed_once": true,
+    "running_marked_interrupted_unknown": true,
+    "paused_marked_interrupted_unknown": true,
+    "terminal_not_replayed": true,
+    "missing_task_state": "UNKNOWN",
+    "duplicate_recovery_guard": "recovery_owner_pid",
+    "instance_lease": "per-instance flock held for lifetime",
+    "recovery_leader": "single non-blocking flock leader",
+    "pid_1_reuse_tested": true,
+    "live_instance_lease_respected": true,
+    "abnormal_exit_takeover_tested": true,
+    "legacy_recovery_without_instance_migrated_interrupted": true,
+    "legacy_pid_1_not_used_for_liveness": true,
+    "legacy_audit_preserved": true,
+    "repeated_startup_stable": true,
+    "idempotency_preserved": true
+  },
+  "docker_acceptance": {
+    "main_check_image": "ai-tv-butler:4.0.0b8-final5-check",
+    "main_check_image_id": "sha256:5aa2bf6ccfa728a6d9d223e1427ce3f568bcf3859677cb797eaac5400533c7a1",
+    "concurrent_same_key_one_task": true,
+    "restart_same_key_same_task_id": true,
+    "queued_dead_owner_replayed_once": true,
+    "running_dead_owner_marked_interrupted_unknown": true,
+    "production_deployed": false,
+    "pid_1_queued_recovered": true,
+    "pid_1_running_marked_interrupted": true,
+    "legacy_pid_1_queued_migrated_interrupted": true,
+    "legacy_pid_1_running_migrated_interrupted": true,
+    "legacy_replay_count": 0
+  },
+  "production_acceptance": "docs/evidence/v41_final5_production_acceptance.json"
+}

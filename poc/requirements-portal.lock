@@ -1,0 +1,3 @@
+# Phase 2 portal only: the title resolver reuses RapidFuzz (MIT).
+# CPython 3.11 / Linux x86_64 wheel; install with --only-binary=:all: --require-hashes.
+RapidFuzz==3.14.3 --hash=sha256:cfe8df315ab4e6db4e1be72c5170f8e66021acde22cd2f9d04d2058a9fd8162e

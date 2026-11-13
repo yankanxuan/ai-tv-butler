@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools==75.8.0", "wheel==0.45.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ai-tv-butler"
+version = "4.3.1"
+description = "AI 电视管家（飞牛 NAS）：Agent + adb-tv-mcp + 任务调度，通过 ADB 控制小米电视"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["PyYAML==6.0.3"]
+# 可选：结构化校验后端。缺失时功能不受影响（内置等价校验）。
+[project.optional-dependencies]
+schemas = ["pydantic==2.14.3"]
+e2e = ["playwright==1.65.0"]
+
+[project.scripts]
+ai-tv = "adbtv.cli:main"
+ai-tv-simulator = "adbtv.simulator:main"
+
+[tool.setuptools]
+packages = ["adbtv"]
+
+[tool.setuptools.package-data]
+adbtv = ["web/*.html", "web/*.js", "web/vendor/*"]

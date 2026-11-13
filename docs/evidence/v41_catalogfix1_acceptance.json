@@ -1,0 +1,78 @@
+{
+  "status": "v41_catalogfix1_deployed_and_live_verified",
+  "date": "2026-11-12",
+  "unit_tests": {
+    "total": 878,
+    "passed": 878,
+    "skipped": 0,
+    "failures": 0,
+    "seconds": 131.273,
+    "exit_code": 0
+  },
+  "simulated_integration": {
+    "passed": 22,
+    "failed": 0,
+    "exit_code": 0
+  },
+  "new_patch_tests": 9,
+  "backup": {
+    "id": "catalogfix-20261112T204103",
+    "source_archive_bytes": 18879,
+    "source_sha256": "e8dc1857614300fcd6810fe68228b479ba813d55e935fb922a1d0f3e4083b3e7",
+    "image_rollback_tag": "ai-tv-butler:pre-catalogfix-20261112T204103"
+  },
+  "images": {
+    "deployed": "sha256:6e2a11d5184d0feee689a8c7e2adf617ee61a9a3f49460658bb4f70a7bf13c4d",
+    "rolled_back_from": "sha256:eb0c8c1a7423078793f6b7e0b40aef29cd3a87661a22aee2241ec33037405b2f"
+  },
+  "services": {
+    "console": "healthy",
+    "scheduler": "healthy",
+    "media": "healthy",
+    "voice": "healthy",
+    "version": "ai-tv 4.0.0b8"
+  },
+  "media_key_sha256": "6300f53d881fd990b8672d751df78a729dee5e5f4d28ce7788b104e3ce6cb9e1",
+  "task_files": 227,
+  "idempotency_records": 1,
+  "live_queries": {
+    "现在有哪些资源": {
+      "status": 200,
+      "route": "agent",
+      "intent": "browse_library",
+      "status_v": "SUCCESS",
+      "reply": "已查询 NAS 本地影视库：共 35 部影视作品，其中电影 0 部、剧集 35 部。例如：1.《一身腱子肉，乱世做谋臣》；2.《万妖图录传》；3.《从小兵开始》；4.《从布衣开始成圣》；5.《光之巨人：原初之光》；6.《光之战神奥帝伽》；7.《全民机械飞升》；8.《大夏之始》。以上只是部分条目，可以继续按片名或类型搜索。",
+      "candidates": 8
+    },
+    "在线片源有哪些": {
+      "status": 200,
+      "route": "agent",
+      "intent": "browse_library",
+      "status_v": "UNSUPPORTED",
+      "reply": "在线片源扩展目前没有接入 AI 管家的资源清单查询工具，所以我不能核实它有哪些影片。你可以查询 NAS 本地影视库。",
+      "candidates": 0
+    },
+    "现在播放的是什么": {
+      "status": 200,
+      "route": "agent",
+      "intent": "query_media",
+      "status_v": "SUCCESS",
+      "reply": "已完成。",
+      "candidates": 0
+    }
+  },
+  "idempotency_after_console_restart": [
+    202,
+    {
+      "task_id": "4758095e51e8432390db68efcf5319c7",
+      "idempotent": true
+    }
+  ],
+  "phone_tests": {
+    "android_chrome_real_microphone": false,
+    "iphone_safari": false,
+    "reason": "No mobile device available; not marked passed."
+  },
+  "rollback": "docker image tag ai-tv-butler:pre-catalogfix-20261112T204103 ai-tv-butler:4.0.0b8 && docker compose -p ai-tv-butler up -d --no-build",
+  "privacy": "No token, audio, raw transcript, host path or signed URL in this evidence."
+}

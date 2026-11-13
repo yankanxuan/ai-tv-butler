@@ -1,0 +1,25 @@
+# V4.3.1 部署后容器内真实 LLM 复验（console 容器，镜像 ai-tv-butler:4.3.1）
+date: 2026-11-13T08:26+08:00
+镜像: ai-tv-butler:4.3.1 (sha256 156348835340..., 173MB)
+容器: console/media/scheduler/voice 均 ai-tv-butler:4.3.1，health=healthy
+media_key sha256: 6300f53d...（与部署前一致）
+
+version: 4.3.1
+OBS summary: available=True total=35 movies=0 series=35 episodes=8483
+
+Q: 一共有多少部电影？
+   tools=['library_summary'] status=SUCCESS source=local_catalog fallback=None
+   A: 本地影视库里目前没有电影（电影数为 0）。库里共有 35 部作品，全部是剧集，合计 8483 集；…
+   -> 事实核对：movies=0，未把 35 部作品当电影，正确。
+
+Q: 有多少部电视剧？
+   tools=['library_summary'] status=SUCCESS source=local_catalog fallback=None
+   A: 本地影视库中有 35 部电视剧，共 8483 集。…
+   -> 事实核对：series=35、episodes=8483，正确。
+
+Q: 我上次看到哪一集？
+   tools=['catalog_get_playback_progress'] status=SUCCESS source=device_status fallback=ungrounded_answer
+   A: 我还没有记录到你上次播放到哪一集。…
+   -> 事实核对：工具可用但 available=false；模型原答被判不可信，回退为如实的确定性回答，未编造进度。
+
+说明：判定依据是工具实际观测与最终回答的逐条比对，不依赖模型自报 SUCCESS。

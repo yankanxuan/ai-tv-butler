@@ -1,0 +1,13 @@
+#!/usr/bin/env python3
+"""ai-tv 命令入口（免安装，直接把 bin 加进 PATH 或建软链即可）。"""
+import os
+import sys
+
+ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+if ROOT not in sys.path:
+    sys.path.insert(0, ROOT)
+
+from adbtv.cli import main  # noqa: E402
+
+if __name__ == "__main__":
+    raise SystemExit(main())

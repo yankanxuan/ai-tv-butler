@@ -1,0 +1,45 @@
+# 运行时缓存
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+
+# 运行期状态与日志（保留目录占位；发布包不含运行数据）
+state/*
+!state/.gitkeep
+logs/*
+!logs/.gitkeep
+
+# 本机个人配置（含真实电视 IP / 令牌，默认不提交）
+config.yaml
+config.local.yaml
+deploy/data/
+*.token
+
+# 备份与迁移产物
+*.bak
+*.premigration-*
+ai-tv-butler-backups/
+
+# 其它
+.DS_Store
+*.swp
+
+# 环境变量与凭据（含 UID/GID、数据目录、令牌）——绝不入库
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.token
+*.sqlite3
+*.db
+.netrc
+credentials.json
+
+# 运行数据与缓存
+state/
+logs/
+poc/__pycache__/

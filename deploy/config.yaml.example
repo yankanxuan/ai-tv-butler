@@ -1,0 +1,20 @@
+# Safe deployment template: no device connection until explicitly configured.
+paths:
+  data_dir: /data
+adb:
+  host: ""
+  serial: ""
+  key_home: /data/.android
+llm:
+  provider: none
+  api_key: ""
+agent:
+  use_llm: false
+memory:
+  enabled: true
+server:
+  host: 127.0.0.1
+  port: 8770
+  token: ""
+# state_dir, log_dir, scheduler.store, memory.path and token_file are derived
+# from AI_TV_DATA_DIR. Set per-feature paths only when intentionally overriding.

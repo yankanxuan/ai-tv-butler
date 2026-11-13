@@ -1,0 +1,50 @@
+# Optional Phase 2 portal. Separate project/profile; never merged with production.
+# It uses host networking only to reach the localhost-only production console and
+# the loopback-published ASR lab. It does not expose or modify production data.
+services:
+  voice-portal:
+    profiles: [voice-portal]
+    image: ai-tv-voice-portal:v4.1-phase2
+    build:
+      context: .
+      dockerfile: deploy/voice-portal/Dockerfile
+      args:
+        BASE_IMAGE: ${VOICE_PORTAL_BASE_IMAGE:-python:3.11-slim@sha256:07d4824036af339fa1b6ef769cc99d9c10a141769538b52b3b597c84f7a7b535}
+    network_mode: host
+    user: "${VOICE_PORTAL_UID:-10001}:${VOICE_PORTAL_GID:-10001}"
+    read_only: true
+    restart: "no"
+    init: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 64
+    mem_limit: 256m
+    cpus: "1.0"
+    tmpfs:
+      - /tmp:size=16m,mode=1777,noexec,nosuid,nodev
+    environment:
+      ASR_LAB_TOKEN: ${ASR_LAB_TOKEN:?Set the independent ASR lab token}
+      ASR_LAB_URL: ${ASR_LAB_URL:-http://127.0.0.1:8765}
+      CONSOLE_URL: ${CONSOLE_URL:-http://127.0.0.1:8770}
+      HOME: /tmp
+    volumes:
+      - type: bind
+        source: ${VOICE_PORTAL_INDEX:?Set the real read-only media index JSON}
+        target: /index/media-index.json
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${VOICE_PORTAL_MEDIA_ROOT:?Set the real read-only media root}
+        target: /media
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${VOICE_PORTAL_CERT_DIR:?Set the directory containing cert.pem/key.pem}
+        target: /certs
+        read_only: true
+        bind: {create_host_path: false}
+    logging:
+      driver: local
+      options:
+        max-size: "2m"
+        max-file: "2"

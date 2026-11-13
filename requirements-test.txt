@@ -1,0 +1,3 @@
+# Test-only browser dependencies; Dockerfile never installs this file.
+# Includes the exact standard runtime lock and all test transitive wheel hashes.
+-r requirements-test.lock

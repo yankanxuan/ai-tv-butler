@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>AI TV Butler 控制台</title>
+  <style>
+    :root{--ink:#17201c;--muted:#65736b;--line:#dce3de;--accent:#19734c;--danger:#a83232;--bg:#f4f6f3}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Noto Sans CJK SC",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}header{background:#fff;border-bottom:1px solid var(--line);padding:18px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px}h1{font-size:22px;margin:0}h2{font-size:17px;margin:0 0 14px}.sub{color:var(--muted);font-size:13px}main{max-width:1400px;margin:24px auto;padding:0 20px}.grid{display:grid;grid-template-columns:1.1fr 1fr;gap:18px}.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:18px}.wide{grid-column:1/-1}.stack{display:flex;flex-direction:column;gap:10px}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}input,textarea,select{border:1px solid #b8c5bc;border-radius:6px;padding:10px;background:#fff;min-width:0}input:focus,textarea:focus{outline:2px solid #acd1bc}textarea{width:100%;resize:vertical;min-height:72px}.primary{background:var(--accent);color:#fff;border:0;border-radius:6px;padding:10px 18px}.secondary{background:#edf2ee;border:1px solid #c6d2c9;border-radius:6px;padding:8px 12px}.danger{color:var(--danger)}#status{font-weight:600}#preview{max-width:100%;max-height:360px;background:#111;border-radius:6px;display:block;margin:auto}#preview[hidden]{display:none}#events{height:320px;overflow:auto;background:#111b17;color:#c6e5d1;padding:14px;border-radius:6px;font:12px/1.6 ui-monospace,monospace;white-space:pre-wrap}.event{margin-bottom:6px}.empty{color:var(--muted)}table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;border-bottom:1px solid var(--line);padding:9px 6px;vertical-align:top}th{color:var(--muted);font-weight:500}td button{padding:3px 6px}.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}.tabs button{border:0;background:none;padding:8px 12px;border-bottom:2px solid transparent}.tabs button.active{border-color:var(--accent);color:var(--accent)}.badge{display:inline-block;background:#e8efeb;padding:2px 7px;border-radius:4px;font-size:12px}.hint{font-size:13px;color:var(--muted)}.skill-definition{font:12px ui-monospace,monospace;max-height:180px;overflow:auto;white-space:pre-wrap}#login{max-width:440px;margin:15vh auto}.hidden{display:none!important}.actions{display:flex;gap:6px;flex-wrap:wrap}dialog{border:1px solid var(--line);border-radius:10px;max-width:600px;padding:22px}dialog::backdrop{background:#17201c66}#task-result{white-space:pre-wrap;max-height:240px;overflow:auto;background:#f5f7f5;padding:10px;font-size:13px}@media(max-width:850px){.grid{grid-template-columns:1fr}header{padding:14px;align-items:flex-start}main{padding:0 12px;margin:16px auto}.card{padding:15px}h1{font-size:19px}.table-wrap{overflow:auto}}
+  </style>
+</head>
+<body>
+<script defer src="/static/console.js"></script>
+<script defer src="/vendor/alpine-csp-3.14.9.min.js"></script>
+  <section id="login" class="card">
+    <h1>AI TV Butler</h1><p class="hint">请输入控制台访问令牌，未认证请求不会执行电视操作。凭证仅在当前标签页内存中保存；刷新或新标签页需重新登录，退出只清除此标签页凭证。</p>
+    <form id="login-form" class="stack"><input id="token" type="password" autocomplete="current-password" placeholder="访问令牌" required minlength="8"><button class="primary" type="submit">登录控制台</button><p id="login-error" class="danger"></p></form>
+  </section>
+  <div id="console" class="hidden">
+  <header><div><h1>AI TV Butler <span class="sub">V3</span></h1><span id="connection" class="hint">读取设备状态中…</span></div><button id="logout" class="secondary">退出</button></header>
+  <main>
+    <div class="grid">
+      <section class="card"><h2>发送任务</h2>
+        <form id="command-form" class="stack"><textarea id="command" maxlength="2000" required placeholder="例如：打开飞牛，播放穿成野神我靠香火斩诸神第一部第一集"></textarea>
+          <div class="row"><button class="primary" type="submit">执行任务</button><button id="mic" type="button" class="secondary">语音输入</button><span id="voice-status" class="hint"></span></div>
+        </form><div id="active" class="stack hidden"><p>任务 <code id="active-id"></code></p><div class="actions"><button data-control="pause" class="secondary">暂停</button><button data-control="resume" class="secondary">继续</button><button data-control="cancel" class="secondary">取消</button><button id="reconnect" class="secondary">恢复实时连接</button></div></div><pre id="task-result" class="hidden"></pre>
+      </section>
+      <section class="card"><h2>电视画面 <button id="refresh-screen" class="secondary">刷新</button></h2><p class="hint">视频 DRM 层可能为黑屏；以系统状态和 UI 证据为准。此接口不会把任意路径写入 NAS。</p><img id="preview" hidden alt="电视当前截图"><p id="screen-note" class="hint"></p></section>
+      <section id="voice-panel" class="card wide" x-data="voicePanel">
+        <h2>语音对话 <span class="hint" x-text="headline"></span></h2>
+        <p class="hint">浏览器完成识别，文本发往 <code>/api/voice</code>；普通任务输入仍走 <code>/api/runs</code>。NAS 无麦克风，电视语音每轮仍需唤醒或遥控器语音键。</p>
+        <template x-if="empty"><p class="hint">还没有对话，试着说“找部悬疑剧”或“打开飞牛”。</p></template>
+        <p id="voice-reply" class="hint" x-text="lastReply"></p>
+        <div id="voice-messages" class="stack">
+          <template x-for="(m, index) in messages" :key="index">
+            <div class="row">
+              <span class="secondary" style="padding:6px 10px;border-radius:8px" x-text="m.label"></span>
+            </div>
+          </template>
+        </div>
+        <form id="voice-form" class="stack">
+          <textarea id="voice-text" maxlength="500" placeholder="例如：找部悬疑剧 / 第二部 / 确认 / 打开飞牛"></textarea>
+          <div class="row">
+            <button class="primary" type="submit" x-text="sendLabel"></button>
+            <button id="voice-mic" type="button" class="secondary">网页麦克风</button>
+            <span id="voice-state" class="hint" x-text="stateText"></span>
+          </div>
+        </form>
+        <div id="voice-candidates" class="stack">
+          <template x-for="(c, index) in candidates" :key="c.id">
+            <div class="row"><span x-text="c.label"></span>
+              <button class="secondary" type="button" x-bind:data-pick="c.pick">选择</button></div>
+          </template>
+        </div>
+        <div id="voice-actions" class="row" x-show="pending">
+          <button data-voice="确认" class="primary" type="button">确认</button>
+          <button data-voice="取消" class="secondary" type="button">取消</button>
+        </div>
+        <p id="voice-session" class="hint" x-text="sessionLine"></p>
+        <p id="voice-tts" class="hint" x-text="ttsLine"></p>
+        <pre id="voice-result" class="hidden" x-ref="result"></pre>
+      </section>
+      <section class="card wide"><h2>实时执行与恢复</h2><div id="events"><span class="empty">任务开始后显示观察、规划、操作和恢复事件。</span></div></section>
+      <section class="card wide"><div class="tabs"><button class="active" data-tab="history">任务历史</button><button data-tab="skills">Skills 与经验</button><button data-tab="schedule">调度任务</button><button data-tab="model">模型配置</button></div>
+        <div id="tab-history" class="tab"><div class="row"><h2>历史任务</h2><button id="refresh-history" class="secondary">刷新</button></div><div id="stats" class="hint"></div><div class="table-wrap"><table><thead><tr><th>目标</th><th>状态</th><th>耗时</th><th>模型/恢复</th><th>时间</th></tr></thead><tbody id="history-body"></tbody></table></div></div>
+        <div id="tab-skills" class="tab hidden"><h2>Skills 与经验</h2><p class="hint">候选定义只保存 JSON 白名单步骤。先验证，再明确审批，才可自动执行；修改步骤将撤销审批。不会修改生产源码。</p><div class="table-wrap"><table><thead><tr><th>名称与完整定义 / 验证报告</th><th>状态</th><th>操作</th></tr></thead><tbody id="skills-body"></tbody></table></div></div>
+        <div id="tab-schedule" class="tab hidden"><h2>调度任务</h2><form id="schedule-form" class="row"><input name="command" required placeholder="执行指令"><select name="kind"><option value="once">一次</option><option value="interval">间隔</option><option value="cron">Cron</option></select><input name="when" placeholder="2026-12-01 08:00 或间隔秒数 / Cron"><button class="primary">添加</button></form><p class="hint">once 填日期时间；interval 填秒数；cron 填五段表达式。调度配置由独立服务执行，控制台不启动调度器。</p><p id="scheduler-status" class="hint">独立调度服务在线状态未验证。</p><div class="table-wrap"><table><thead><tr><th>指令</th><th>类型/下次</th><th>状态</th><th>操作</th></tr></thead><tbody id="schedule-body"></tbody></table></div></div>
+        <div id="tab-model" class="tab hidden"><h2>模型配置</h2><form id="model-form" class="stack"><label>接口类型 <select name="provider"><option value="anthropic">Anthropic</option><option value="openai">OpenAI</option><option value="none">不使用模型</option></select></label><label>接口地址 <input name="base_url" required></label><label>模型名 <input name="model" required></label><label>视觉模型（可选） <input name="vision_model"></label><label>API Key <input name="api_key" type="password" autocomplete="off" placeholder="留空保持原凭证"></label><label><input name="use_llm" type="checkbox"> 启用复杂任务模型规划</label><button class="primary">保存模型配置</button><p class="hint">凭证只以 0600 权限写入受保护的配置文件，不进入记忆库或网页。电视 IP、ADB 和 Skills 不会在此被修改。</p></form><div id="model-result" class="hint"></div></div>
+      </section>
+    </div>
+  </main>
+  </div>
+
+</body></html>

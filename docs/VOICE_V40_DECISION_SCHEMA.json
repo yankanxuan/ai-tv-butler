@@ -1,0 +1,322 @@
+{
+  "$comment": "Generated from adbtv/voice_intelligence.py; strict validation adds intent-specific parameter rules.",
+  "schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "route",
+      "intent",
+      "target",
+      "parameters",
+      "confidence",
+      "reply",
+      "risk"
+    ],
+    "properties": {
+      "route": {
+        "type": "string",
+        "enum": [
+          "agent",
+          "native",
+          "clarify",
+          "ignore"
+        ]
+      },
+      "intent": {
+        "type": "string",
+        "enum": [
+          "open",
+          "play",
+          "pause",
+          "resume",
+          "volume_set",
+          "volume_up",
+          "volume_down",
+          "home",
+          "back",
+          "query_app",
+          "query_media",
+          "search",
+          "select",
+          "refine",
+          "reject",
+          "confirm",
+          "deny",
+          "unknown",
+          "sequence"
+        ]
+      },
+      "target": {
+        "type": "string",
+        "maxLength": 200
+      },
+      "parameters": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "candidate_id": {
+            "type": "string",
+            "maxLength": 160
+          },
+          "app": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "query": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "genre": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "region": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "movie",
+              "series",
+              "any"
+            ]
+          },
+          "season": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000
+          },
+          "episode": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10000
+          },
+          "level": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "delta": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10
+          },
+          "index": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 32
+          },
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 4,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "intent",
+                "target",
+                "parameters"
+              ],
+              "properties": {
+                "intent": {
+                  "type": "string",
+                  "enum": [
+                    "open",
+                    "play",
+                    "pause",
+                    "resume",
+                    "volume_set",
+                    "volume_up",
+                    "volume_down",
+                    "home",
+                    "back",
+                    "query_app",
+                    "query_media",
+                    "search",
+                    "select",
+                    "refine",
+                    "reject",
+                    "confirm",
+                    "deny",
+                    "unknown"
+                  ]
+                },
+                "target": {
+                  "type": "string",
+                  "maxLength": 200
+                },
+                "parameters": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "maxLength": 200
+                    },
+                    "candidate_id": {
+                      "type": "string",
+                      "maxLength": 160
+                    },
+                    "app": {
+                      "type": "string",
+                      "maxLength": 200
+                    },
+                    "query": {
+                      "type": "string",
+                      "maxLength": 200
+                    },
+                    "genre": {
+                      "type": "string",
+                      "maxLength": 80
+                    },
+                    "region": {
+                      "type": "string",
+                      "maxLength": 80
+                    },
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "movie",
+                        "series",
+                        "any"
+                      ]
+                    },
+                    "season": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 1000
+                    },
+                    "episode": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 10000
+                    },
+                    "level": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 100
+                    },
+                    "delta": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 10
+                    },
+                    "index": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 32
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "confidence": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1
+      },
+      "reply": {
+        "type": "string",
+        "maxLength": 1000
+      },
+      "risk": {
+        "type": "string",
+        "enum": [
+          "none",
+          "low",
+          "medium",
+          "high"
+        ]
+      }
+    }
+  },
+  "routes": [
+    "agent",
+    "native",
+    "clarify",
+    "ignore"
+  ],
+  "intents": [
+    "open",
+    "play",
+    "pause",
+    "resume",
+    "volume_set",
+    "volume_up",
+    "volume_down",
+    "home",
+    "back",
+    "query_app",
+    "query_media",
+    "search",
+    "select",
+    "refine",
+    "reject",
+    "confirm",
+    "deny",
+    "unknown",
+    "sequence"
+  ],
+  "risks": [
+    "none",
+    "low",
+    "medium",
+    "high"
+  ],
+  "intent_parameters": {
+    "open": [],
+    "play": [
+      "app",
+      "candidate_id",
+      "episode",
+      "season",
+      "title"
+    ],
+    "pause": [],
+    "resume": [],
+    "home": [],
+    "back": [],
+    "query_app": [],
+    "query_media": [],
+    "volume_set": [
+      "level"
+    ],
+    "volume_up": [
+      "delta"
+    ],
+    "volume_down": [
+      "delta"
+    ],
+    "search": [
+      "genre",
+      "kind",
+      "query",
+      "region"
+    ],
+    "refine": [
+      "genre",
+      "kind",
+      "region"
+    ],
+    "select": [
+      "candidate_id",
+      "index"
+    ],
+    "reject": [],
+    "confirm": [],
+    "deny": [],
+    "unknown": [],
+    "sequence": [
+      "steps"
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+# Isolated ASR evaluation only; never included in production Docker/runtime locks.
+# JiWER Apache-2.0; RapidFuzz MIT; Click BSD-3-Clause.
+jiwer==4.0.0
+rapidfuzz==3.14.3
+click==8.1.8

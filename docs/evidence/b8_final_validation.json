@@ -1,0 +1,91 @@
+{
+  "recorded_at": "2026-11-12T04:36:50.448763+00:00",
+  "unit_tests": {
+    "command": "/tmp/osfv/bin/python -m unittest discover -s tests -p 'test_*.py' -v",
+    "total": 669,
+    "passed": 669,
+    "skipped": 0,
+    "failures": 0,
+    "seconds": 75.918,
+    "exit_code": 0,
+    "original_tests": 630,
+    "new_tests": 39,
+    "log_sha256": "63e1ffcfe7ce3d20beaa7a5ac47e0b248e6dda33e9c3769f2729417e4a1c509f"
+  },
+  "simulated_integration": {
+    "command": "/tmp/osfv/bin/python tests/test_suite.py",
+    "passed": 22,
+    "failed": 0,
+    "exit_code": 0
+  },
+  "restore_dry_run": {
+    "backup_id": "pre-b8-20261112T110705",
+    "archive_bytes": 58604747,
+    "required_files_found": [
+      "config.yaml"
+    ],
+    "config_restorable": true,
+    "media_key_restorable": true,
+    "sqlite_files_in_backup": [
+      "memory.sqlite3"
+    ],
+    "sqlite_integrity_check": "ok",
+    "exit_code": 0,
+    "apply": false,
+    "production_data_written": false
+  },
+  "docker_observation": {
+    "exit_code": 0,
+    "internal_healthchecks_passed": true,
+    "health": {
+      "console": "healthy",
+      "scheduler": "healthy",
+      "media": "healthy",
+      "voice": "healthy"
+    },
+    "running": {
+      "console": true,
+      "scheduler": true,
+      "media": true,
+      "voice": true
+    },
+    "versions": {
+      "console": "ai-tv 4.0.0b8",
+      "scheduler": "ai-tv 4.0.0b8",
+      "media": "ai-tv 4.0.0b8",
+      "voice": "ai-tv 4.0.0b8"
+    },
+    "image_ids": {
+      "console": "sha256:0fcb7301cf2bd1d4484a8be9cc8f0586c81017d41af7891335e9d5d8ca5f0341",
+      "scheduler": "sha256:0fcb7301cf2bd1d4484a8be9cc8f0586c81017d41af7891335e9d5d8ca5f0341",
+      "media": "sha256:0fcb7301cf2bd1d4484a8be9cc8f0586c81017d41af7891335e9d5d8ca5f0341",
+      "voice": "sha256:0fcb7301cf2bd1d4484a8be9cc8f0586c81017d41af7891335e9d5d8ca5f0341"
+    },
+    "checked_at": 1794457740.6048791
+  },
+  "historical_rollback": {
+    "status": "ROLLBACK_VERIFIED",
+    "checked_at": 1794453138.8441613,
+    "versions": {
+      "console": "ai-tv 4.0.0b8",
+      "scheduler": "ai-tv 4.0.0b8",
+      "media": "ai-tv 4.0.0b8",
+      "voice": "ai-tv 4.0.0b8"
+    },
+    "image_ids": {
+      "console": "sha256:d2682f9304eae7f095e08b98ba2a773c0c86f278c040dcb5a6baf044c76fd61b",
+      "scheduler": "sha256:d2682f9304eae7f095e08b98ba2a773c0c86f278c040dcb5a6baf044c76fd61b",
+      "media": "sha256:d2682f9304eae7f095e08b98ba2a773c0c86f278c040dcb5a6baf044c76fd61b",
+      "voice": "sha256:d2682f9304eae7f095e08b98ba2a773c0c86f278c040dcb5a6baf044c76fd61b"
+    },
+    "source_record_sha256": "0ade9dc78a6ce87ef02e092356a9bf3139138e58746f397eb576cd48345e04e6",
+    "executed_this_final_round": false
+  },
+  "production_image_rebuilt_this_round": false,
+  "limits": [
+    "No new V4.1 functionality implemented.",
+    "No real microphone or TV interaction acceptance repeated.",
+    "Browser E2E not rerun; UI unchanged.",
+    "Isolated test venv uses system-site-packages; no new clean runtime lock install claim."
+  ]
+}

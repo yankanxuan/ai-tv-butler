@@ -1,0 +1,20 @@
+[Unit]
+Description=AI TV Butler scheduler
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/ai-tv-butler
+Environment=AI_TV_DATA_DIR=%h/.local/share/ai-tv-butler
+Environment=AI_TV_CONFIG=%h/.local/share/ai-tv-butler/config.yaml
+Environment=HOME=%h/.local/share/ai-tv-butler
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/usr/bin/python3 %h/ai-tv-butler/bin/ai-tv schedule run
+Restart=on-failure
+RestartSec=10
+UMask=0077
+NoNewPrivileges=true
+
+[Install]
+WantedBy=default.target

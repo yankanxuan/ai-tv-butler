@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "model": {
+    "repo": "csukuangfj/sherpa-onnx-streaming-zipformer-small-ctc-zh-int8-2025-04-01",
+    "revision": "a5f60fe00dcfbaf68fcc1c6b5cf53061e144d6da",
+    "license": "apache-2.0",
+    "license_evidence": "https://huggingface.co/csukuangfj/icefall-streaming-zipformer-small-ctc-zh-2025-04-01/blob/6768aa8b65bc68e128af2ee08a7142dd0abe4be4/README.md",
+    "provenance_evidence": "https://huggingface.co/csukuangfj/sherpa-onnx-streaming-zipformer-small-ctc-zh-int8-2025-04-01/blob/a5f60fe00dcfbaf68fcc1c6b5cf53061e144d6da/README.md",
+    "files": {
+      "model": {
+        "path": "models/zipformer-small-ctc/model.int8.onnx",
+        "sha256": "68c9c943840f7d9cf3e8a4970ba50f404feb5277f611fa82b7e72267786fa84a",
+        "size_bytes": 26342340,
+        "source_url": "https://huggingface.co/csukuangfj/sherpa-onnx-streaming-zipformer-small-ctc-zh-int8-2025-04-01/resolve/a5f60fe00dcfbaf68fcc1c6b5cf53061e144d6da/model.int8.onnx"
+      },
+      "tokens": {
+        "path": "models/zipformer-small-ctc/tokens.txt",
+        "sha256": "6fed8c6c248516f38e7faa19404b57413e8ce259f1cbc1fa4aebc86eac32fdfd",
+        "size_bytes": 13366,
+        "source_url": "https://huggingface.co/csukuangfj/sherpa-onnx-streaming-zipformer-small-ctc-zh-int8-2025-04-01/resolve/a5f60fe00dcfbaf68fcc1c6b5cf53061e144d6da/tokens.txt"
+      }
+    }
+  },
+  "architecture_metadata": {
+    "provider": "cpu",
+    "published_linux_wheel_architectures": ["x86_64", "aarch64", "armv7l"],
+    "evidence": "https://pypi.org/pypi/sherpa-onnx/2.0.1/json",
+    "runtime_api_inspected_on": "Linux x86_64, CPython 3.11, sherpa_onnx 2.0.1",
+    "arm_inference_tested": false,
+    "note": "Published wheel availability is not a model benchmark or confirmation of target-device compatibility."
+  }
+}

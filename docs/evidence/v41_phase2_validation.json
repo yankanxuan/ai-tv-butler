@@ -1,0 +1,75 @@
+{
+  "status": "v41_phase2_completed",
+  "date": "2026-11-12",
+  "unit_tests": {
+    "command": "/tmp/osfv/bin/python -m unittest discover -s tests -p 'test_*.py' -v",
+    "total": 815,
+    "passed": 815,
+    "skipped": 0,
+    "failures": 0,
+    "seconds": 111.283,
+    "exit_code": 0,
+    "log_sha256": "dc6a4712df7f30ddd927e30be52582be7fd7d9d0615d6cba932f99072739bba2"
+  },
+  "simulated_integration": {
+    "command": "/tmp/osfv/bin/python tests/test_suite.py",
+    "passed": 22,
+    "failed": 0,
+    "exit_code": 0
+  },
+  "new_tests": {
+    "title_session": 23,
+    "voice_portal": 15,
+    "extended_metrics": 6,
+    "asr_lab_service_total": 32
+  },
+  "public_package": {
+    "path": "ai-tv-butler-v4.1-phase2-final2-20261112-public.tar.gz",
+    "audit_files": 211,
+    "audit_passed": true
+  },
+  "images": {
+    "ai-tv-asr-lab:v4.1-phase2": {
+      "id": "sha256:2d75aa0012bfb9682d3386fa1d1246f2c453c84072a52d9a948749845b926de0",
+      "size_bytes": 182962042
+    },
+    "ai-tv-voice-portal:v4.1-phase2": {
+      "id": "sha256:7ef9fe73e5520a61866a5cd24b03de3cf1257ff7817b4db35b8f42a6edf8b841",
+      "size_bytes": 137608947
+    }
+  },
+  "production_containers": {
+    "console": {
+      "running": true,
+      "health": "healthy",
+      "image": "sha256:0fcb7301cf2bd1d4484a8be9cc8f0586c81017d41af7891335e9d5d8ca5f0341"
+    },
+    "scheduler": {
+      "running": true,
+      "health": "healthy",
+      "image": "sha256:0fcb7301cf2bd1d4484a8be9cc8f0586c81017d41af7891335e9d5d8ca5f0341"
+    },
+    "media": {
+      "running": true,
+      "health": "healthy",
+      "image": "sha256:0fcb7301cf2bd1d4484a8be9cc8f0586c81017d41af7891335e9d5d8ca5f0341"
+    },
+    "voice": {
+      "running": true,
+      "health": "healthy",
+      "image": "sha256:0fcb7301cf2bd1d4484a8be9cc8f0586c81017d41af7891335e9d5d8ca5f0341"
+    }
+  },
+  "experimental_services_running": false,
+  "portal_port_8443_listening": false,
+  "asr_lab_port_8765_listening": false,
+  "closed_loop_evidence": "docs/evidence/v41_phase2_acceptance.json",
+  "phone_microphone_tested": false,
+  "multi_speaker_corpus_completed": false,
+  "limitations": [
+    "Real phone microphone not available; browser path used Chromium fake device.",
+    "Current ASR corpus has one speaker and 12 samples; multi-speaker target not met.",
+    "Self-signed TLS requires phone trust/exception; production should use trusted cert/reverse proxy.",
+    "No 24h soak, ARM64, real network loss or Xiaomi same-audio A/B."
+  ]
+}

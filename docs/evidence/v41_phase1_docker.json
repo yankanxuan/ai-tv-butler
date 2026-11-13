@@ -1,0 +1,94 @@
+{
+  "status": "docker_asr_and_real_title_candidates_passed",
+  "date": "2026-11-12",
+  "capture_kind": "offline_authorized_recording",
+  "live_microphone_tested": false,
+  "microphone_block_reason": "No ALSA capture device (/dev/snd has playback/control/seq only); arecord not installed.",
+  "container": {
+    "image_id": "sha256:321647206ad1b39067715c16c37445a2873a55427e994cb28d82bbea02ed0835",
+    "health": "healthy",
+    "read_only_root": true,
+    "nano_cpus": 2000000000,
+    "memory_bytes": 805306368,
+    "mounts_read_only": true,
+    "privileged": false
+  },
+  "image": {
+    "size_bytes": 182869388,
+    "architecture": "amd64",
+    "tag": "ai-tv-asr-lab:v4.1-experiment"
+  },
+  "health": {
+    "service": "asr-lab",
+    "ready": true,
+    "capture_kind": "offline_file_transcription"
+  },
+  "authorized_status": 200,
+  "unauthorized_status": 401,
+  "traversal_status": 400,
+  "production_dispatch_performed": false,
+  "lab_containers_remaining": false,
+  "offline_authorized_human_recording": {
+    "model_profile": "ctc",
+    "sample": "human-02 (authorized; 6.2293 s)",
+    "hypothesis_sha256": "a23a157b8a74bd204a84cf0f72f916fa4f8194da78de878b997661360bd5b9a6",
+    "hypothesis_chars": 13,
+    "wall_seconds": 2.1712,
+    "rtf": 0.3485,
+    "first_partial_seconds": 0.3872,
+    "candidate_status": "needs_clarification",
+    "candidate_reason": "ambiguous_seasons",
+    "requires_confirmation": true,
+    "index_fingerprint": "54df3c9da6ad87e033bed18d606de80304f421fdcb2612dd83664bd6c97afc33",
+    "candidates": [
+      {
+        "title": "穿成野神我靠香火斩诸神",
+        "year": "2026",
+        "season": 1,
+        "episode_count": 105,
+        "score": 90.9091,
+        "requires_confirmation": true
+      },
+      {
+        "title": "穿成野神我靠香火斩诸神",
+        "year": "2026",
+        "season": 5,
+        "episode_count": 118,
+        "score": 90.9091,
+        "requires_confirmation": true
+      },
+      {
+        "title": "穿成野神我靠香火斩诸神",
+        "year": "2026",
+        "season": 6,
+        "episode_count": 103,
+        "score": 90.9091,
+        "requires_confirmation": true
+      },
+      {
+        "title": "穿成野神我靠香火斩诸神",
+        "year": "2026",
+        "season": 8,
+        "episode_count": 102,
+        "score": 90.9091,
+        "requires_confirmation": true
+      },
+      {
+        "title": "穿成野神我靠香火斩诸神",
+        "year": "2026",
+        "season": 9,
+        "episode_count": 107,
+        "score": 90.9091,
+        "requires_confirmation": true
+      }
+    ]
+  },
+  "push_to_talk_offline_import": {
+    "capture_kind": "offline_wav_input",
+    "wav": "authorized-audio/imported-human-02.wav",
+    "manifest": "authorized-audio/imported-human-02.samples.json",
+    "audio_seconds": 6.2293125,
+    "streaming": false
+  },
+  "privacy": "No audio, raw hypothesis, host paths, token, or user IDs in this evidence."
+}

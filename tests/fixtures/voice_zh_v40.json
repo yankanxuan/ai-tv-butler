@@ -1,0 +1,2097 @@
+[
+  {
+    "id": "zh_v40_001",
+    "text": "暂停",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "pause"
+  },
+  {
+    "id": "zh_v40_002",
+    "text": "暂停播放",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "pause"
+  },
+  {
+    "id": "zh_v40_003",
+    "text": "请暂停",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "pause"
+  },
+  {
+    "id": "zh_v40_004",
+    "text": "帮我暂停播放",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "pause"
+  },
+  {
+    "id": "zh_v40_005",
+    "text": "暂停吧",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "pause"
+  },
+  {
+    "id": "zh_v40_006",
+    "text": "继续",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "resume"
+  },
+  {
+    "id": "zh_v40_007",
+    "text": "继续播放",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "resume"
+  },
+  {
+    "id": "zh_v40_008",
+    "text": "恢复播放",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "resume"
+  },
+  {
+    "id": "zh_v40_009",
+    "text": "继续观看",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "resume"
+  },
+  {
+    "id": "zh_v40_010",
+    "text": "续播",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "resume"
+  },
+  {
+    "id": "zh_v40_011",
+    "text": "继续刚才那部",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "resume"
+  },
+  {
+    "id": "zh_v40_012",
+    "text": "返回",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "back"
+  },
+  {
+    "id": "zh_v40_013",
+    "text": "返回上一级",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "back"
+  },
+  {
+    "id": "zh_v40_014",
+    "text": "返回上一页",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "back"
+  },
+  {
+    "id": "zh_v40_015",
+    "text": "回到桌面",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "home"
+  },
+  {
+    "id": "zh_v40_016",
+    "text": "返回桌面",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "home"
+  },
+  {
+    "id": "zh_v40_017",
+    "text": "回首页",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "home"
+  },
+  {
+    "id": "zh_v40_018",
+    "text": "返回首页",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "home"
+  },
+  {
+    "id": "zh_v40_019",
+    "text": "音量调到8",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "volume_set"
+  },
+  {
+    "id": "zh_v40_020",
+    "text": "把音量调到二十",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "volume_set"
+  },
+  {
+    "id": "zh_v40_021",
+    "text": "声音设为十五",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "volume_set"
+  },
+  {
+    "id": "zh_v40_022",
+    "text": "将声音调整至30档",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "volume_set"
+  },
+  {
+    "id": "zh_v40_023",
+    "text": "调大音量",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "volume_up"
+  },
+  {
+    "id": "zh_v40_024",
+    "text": "声音大一点",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "volume_up"
+  },
+  {
+    "id": "zh_v40_025",
+    "text": "音量增加三格",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "volume_up"
+  },
+  {
+    "id": "zh_v40_026",
+    "text": "调大一点声音",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "volume_up"
+  },
+  {
+    "id": "zh_v40_027",
+    "text": "调小音量",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "volume_down"
+  },
+  {
+    "id": "zh_v40_028",
+    "text": "声音小一点",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "volume_down"
+  },
+  {
+    "id": "zh_v40_029",
+    "text": "音量减少两格",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "volume_down"
+  },
+  {
+    "id": "zh_v40_030",
+    "text": "调小一点音量",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "volume_down"
+  },
+  {
+    "id": "zh_v40_031",
+    "text": "当前应用是什么",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "query_app"
+  },
+  {
+    "id": "zh_v40_032",
+    "text": "现在在哪个应用",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "query_app"
+  },
+  {
+    "id": "zh_v40_033",
+    "text": "现在打开的是什么应用",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "query_app"
+  },
+  {
+    "id": "zh_v40_034",
+    "text": "现在播放的是什么",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "query_media"
+  },
+  {
+    "id": "zh_v40_035",
+    "text": "正在播放什么",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "query_media"
+  },
+  {
+    "id": "zh_v40_036",
+    "text": "查询当前播放",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "query_media"
+  },
+  {
+    "id": "zh_v40_037",
+    "text": "打开飞牛",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "open"
+  },
+  {
+    "id": "zh_v40_038",
+    "text": "启动B站",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "open"
+  },
+  {
+    "id": "zh_v40_039",
+    "text": "进入爱奇艺",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "open"
+  },
+  {
+    "id": "zh_v40_040",
+    "text": "请打开腾讯视频",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "open"
+  },
+  {
+    "id": "zh_v40_041",
+    "text": "播放《三体》",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "play"
+  },
+  {
+    "id": "zh_v40_042",
+    "text": "飞牛播放《琅琊榜》",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "play"
+  },
+  {
+    "id": "zh_v40_043",
+    "text": "播放《灯塔》",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "play"
+  },
+  {
+    "id": "zh_v40_044",
+    "text": "播放《天气之子》",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "play"
+  },
+  {
+    "id": "zh_v40_045",
+    "text": "播放《漫长的季节》第三集",
+    "category": "simple_control",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "play"
+  },
+  {
+    "id": "zh_v40_046",
+    "text": "关闭客厅的灯",
+    "category": "native_home",
+    "expected_route": "native",
+    "mode": "rule"
+  },
+  {
+    "id": "zh_v40_047",
+    "text": "打开卧室台灯",
+    "category": "native_home",
+    "expected_route": "native",
+    "mode": "rule"
+  },
+  {
+    "id": "zh_v40_048",
+    "text": "把空调调到二十六度",
+    "category": "native_home",
+    "expected_route": "native",
+    "mode": "rule"
+  },
+  {
+    "id": "zh_v40_049",
+    "text": "请打开窗帘",
+    "category": "native_home",
+    "expected_route": "native",
+    "mode": "rule"
+  },
+  {
+    "id": "zh_v40_050",
+    "text": "帮我关掉风扇",
+    "category": "native_home",
+    "expected_route": "native",
+    "mode": "rule"
+  },
+  {
+    "id": "zh_v40_051",
+    "text": "将加湿器打开",
+    "category": "native_home",
+    "expected_route": "native",
+    "mode": "rule"
+  },
+  {
+    "id": "zh_v40_052",
+    "text": "打开扫地机器人",
+    "category": "native_home",
+    "expected_route": "native",
+    "mode": "rule"
+  },
+  {
+    "id": "zh_v40_053",
+    "text": "关掉热水器",
+    "category": "native_home",
+    "expected_route": "native",
+    "mode": "rule"
+  },
+  {
+    "id": "zh_v40_054",
+    "text": "把插座关了",
+    "category": "native_home",
+    "expected_route": "native",
+    "mode": "rule"
+  },
+  {
+    "id": "zh_v40_055",
+    "text": "打开空气净化器",
+    "category": "native_home",
+    "expected_route": "native",
+    "mode": "rule"
+  },
+  {
+    "id": "zh_v40_056",
+    "text": "今天天气怎么样",
+    "category": "native_information",
+    "expected_route": "native",
+    "mode": "rule"
+  },
+  {
+    "id": "zh_v40_057",
+    "text": "明天气温多少",
+    "category": "native_information",
+    "expected_route": "native",
+    "mode": "rule"
+  },
+  {
+    "id": "zh_v40_058",
+    "text": "现在几点了",
+    "category": "native_information",
+    "expected_route": "native",
+    "mode": "rule"
+  },
+  {
+    "id": "zh_v40_059",
+    "text": "今天星期几",
+    "category": "native_information",
+    "expected_route": "native",
+    "mode": "rule"
+  },
+  {
+    "id": "zh_v40_060",
+    "text": "今天的日期",
+    "category": "native_information",
+    "expected_route": "native",
+    "mode": "rule"
+  },
+  {
+    "id": "zh_v40_061",
+    "text": "讲个笑话",
+    "category": "native_information",
+    "expected_route": "native",
+    "mode": "rule"
+  },
+  {
+    "id": "zh_v40_062",
+    "text": "设一个七点的闹钟",
+    "category": "native_information",
+    "expected_route": "native",
+    "mode": "rule"
+  },
+  {
+    "id": "zh_v40_063",
+    "text": "美元汇率多少",
+    "category": "native_information",
+    "expected_route": "native",
+    "mode": "rule"
+  },
+  {
+    "id": "zh_v40_064",
+    "text": "查一下股票",
+    "category": "native_information",
+    "expected_route": "native",
+    "mode": "rule"
+  },
+  {
+    "id": "zh_v40_065",
+    "text": "我的快递到哪了",
+    "category": "native_information",
+    "expected_route": "native",
+    "mode": "rule"
+  },
+  {
+    "id": "zh_v40_066",
+    "text": "谢谢",
+    "category": "pleasantry",
+    "expected_route": "ignore",
+    "mode": "rule"
+  },
+  {
+    "id": "zh_v40_067",
+    "text": "谢谢你",
+    "category": "pleasantry",
+    "expected_route": "ignore",
+    "mode": "rule"
+  },
+  {
+    "id": "zh_v40_068",
+    "text": "好的",
+    "category": "pleasantry",
+    "expected_route": "ignore",
+    "mode": "rule"
+  },
+  {
+    "id": "zh_v40_069",
+    "text": "嗯",
+    "category": "pleasantry",
+    "expected_route": "ignore",
+    "mode": "rule"
+  },
+  {
+    "id": "zh_v40_070",
+    "text": "嗯嗯",
+    "category": "pleasantry",
+    "expected_route": "ignore",
+    "mode": "rule"
+  },
+  {
+    "id": "zh_v40_071",
+    "text": "没事了",
+    "category": "pleasantry",
+    "expected_route": "ignore",
+    "mode": "rule"
+  },
+  {
+    "id": "zh_v40_072",
+    "text": "不用了",
+    "category": "pleasantry",
+    "expected_route": "ignore",
+    "mode": "rule"
+  },
+  {
+    "id": "zh_v40_073",
+    "text": "确认",
+    "category": "pending_confirm",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "confirm",
+    "context_profile": "pending_question"
+  },
+  {
+    "id": "zh_v40_074",
+    "text": "确定",
+    "category": "pending_confirm",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "confirm",
+    "context_profile": "pending_question"
+  },
+  {
+    "id": "zh_v40_075",
+    "text": "是的",
+    "category": "pending_confirm",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "confirm",
+    "context_profile": "pending_question"
+  },
+  {
+    "id": "zh_v40_076",
+    "text": "对",
+    "category": "pending_confirm",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "confirm",
+    "context_profile": "pending_question"
+  },
+  {
+    "id": "zh_v40_077",
+    "text": "好",
+    "category": "pending_confirm",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "confirm",
+    "context_profile": "pending_question"
+  },
+  {
+    "id": "zh_v40_078",
+    "text": "播放吧",
+    "category": "pending_confirm",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "confirm",
+    "context_profile": "pending_question"
+  },
+  {
+    "id": "zh_v40_079",
+    "text": "就这个",
+    "category": "pending_confirm",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "confirm",
+    "context_profile": "pending_question"
+  },
+  {
+    "id": "zh_v40_080",
+    "text": "不是",
+    "category": "pending_deny",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "deny",
+    "context_profile": "pending_question"
+  },
+  {
+    "id": "zh_v40_081",
+    "text": "不对",
+    "category": "pending_deny",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "deny",
+    "context_profile": "pending_question"
+  },
+  {
+    "id": "zh_v40_082",
+    "text": "不确认",
+    "category": "pending_deny",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "deny",
+    "context_profile": "pending_question"
+  },
+  {
+    "id": "zh_v40_083",
+    "text": "算了",
+    "category": "pending_deny",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "deny",
+    "context_profile": "pending_question"
+  },
+  {
+    "id": "zh_v40_084",
+    "text": "不要",
+    "category": "pending_deny",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "deny",
+    "context_profile": "pending_question"
+  },
+  {
+    "id": "zh_v40_085",
+    "text": "取消确认",
+    "category": "pending_deny",
+    "expected_route": "agent",
+    "mode": "rule",
+    "expected_intent": "deny",
+    "context_profile": "pending_question"
+  },
+  {
+    "id": "zh_v40_086",
+    "text": "先打开飞牛再播放三体",
+    "category": "complex_combination",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "sequence",
+    "model_result": {
+      "route": "agent",
+      "intent": "sequence",
+      "target": "",
+      "parameters": {
+        "steps": [
+          {
+            "intent": "open",
+            "target": "fixture.feiniu",
+            "parameters": {}
+          },
+          {
+            "intent": "play",
+            "target": "三体",
+            "parameters": {
+              "title": "三体"
+            }
+          }
+        ]
+      },
+      "confidence": 0.94,
+      "reply": "复合操作需要确认。",
+      "risk": "low"
+    },
+    "expected_confirmation": true
+  },
+  {
+    "id": "zh_v40_087",
+    "text": "打开B站然后播放科技视频",
+    "category": "complex_combination",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "sequence",
+    "model_result": {
+      "route": "agent",
+      "intent": "sequence",
+      "target": "",
+      "parameters": {
+        "steps": [
+          {
+            "intent": "open",
+            "target": "fixture.bilibili",
+            "parameters": {}
+          },
+          {
+            "intent": "search",
+            "target": "",
+            "parameters": {
+              "query": "科技视频"
+            }
+          }
+        ]
+      },
+      "confidence": 0.94,
+      "reply": "复合操作需要确认。",
+      "risk": "low"
+    },
+    "expected_confirmation": true
+  },
+  {
+    "id": "zh_v40_088",
+    "text": "暂停并且返回桌面",
+    "category": "complex_combination",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "sequence",
+    "model_result": {
+      "route": "agent",
+      "intent": "sequence",
+      "target": "",
+      "parameters": {
+        "steps": [
+          {
+            "intent": "pause",
+            "target": "",
+            "parameters": {}
+          },
+          {
+            "intent": "home",
+            "target": "",
+            "parameters": {}
+          }
+        ]
+      },
+      "confidence": 0.94,
+      "reply": "复合操作需要确认。",
+      "risk": "low"
+    },
+    "expected_confirmation": true
+  },
+  {
+    "id": "zh_v40_089",
+    "text": "音量调低同时继续播放",
+    "category": "complex_combination",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "sequence",
+    "model_result": {
+      "route": "agent",
+      "intent": "sequence",
+      "target": "",
+      "parameters": {
+        "steps": [
+          {
+            "intent": "volume_down",
+            "target": "",
+            "parameters": {
+              "delta": 1
+            }
+          },
+          {
+            "intent": "resume",
+            "target": "",
+            "parameters": {}
+          }
+        ]
+      },
+      "confidence": 0.94,
+      "reply": "复合操作需要确认。",
+      "risk": "low"
+    },
+    "expected_confirmation": true
+  },
+  {
+    "id": "zh_v40_090",
+    "text": "先回首页再打开爱奇艺",
+    "category": "complex_combination",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "sequence",
+    "model_result": {
+      "route": "agent",
+      "intent": "sequence",
+      "target": "",
+      "parameters": {
+        "steps": [
+          {
+            "intent": "home",
+            "target": "",
+            "parameters": {}
+          },
+          {
+            "intent": "open",
+            "target": "fixture.iqiyi",
+            "parameters": {}
+          }
+        ]
+      },
+      "confidence": 0.94,
+      "reply": "复合操作需要确认。",
+      "risk": "low"
+    },
+    "expected_confirmation": true
+  },
+  {
+    "id": "zh_v40_091",
+    "text": "播放琅琊榜然后调小音量",
+    "category": "complex_combination",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "sequence",
+    "model_result": {
+      "route": "agent",
+      "intent": "sequence",
+      "target": "",
+      "parameters": {
+        "steps": [
+          {
+            "intent": "play",
+            "target": "琅琊榜",
+            "parameters": {
+              "title": "琅琊榜"
+            }
+          },
+          {
+            "intent": "volume_down",
+            "target": "",
+            "parameters": {
+              "delta": 1
+            }
+          }
+        ]
+      },
+      "confidence": 0.94,
+      "reply": "复合操作需要确认。",
+      "risk": "low"
+    },
+    "expected_confirmation": true
+  },
+  {
+    "id": "zh_v40_092",
+    "text": "放三体十分钟后暂停",
+    "category": "unsupported_combination",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "当前不能执行这项组合或定时要求。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_093",
+    "text": "每天晚上八点打开电视",
+    "category": "unsupported_combination",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "当前不能执行这项组合或定时要求。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_094",
+    "text": "明天替我继续播放",
+    "category": "unsupported_combination",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "当前不能执行这项组合或定时要求。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_095",
+    "text": "播完这一集自动关机",
+    "category": "unsupported_combination",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "当前不能执行这项组合或定时要求。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_096",
+    "text": "先播放五分钟再提醒我",
+    "category": "unsupported_combination",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "当前不能执行这项组合或定时要求。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_097",
+    "text": "下载这部剧并保存到桌面",
+    "category": "unsupported_combination",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "当前不能执行这项组合或定时要求。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_098",
+    "text": "找部悬疑剧",
+    "category": "fuzzy_search",
+    "expected_route": "agent",
+    "mode": "semantic",
+    "expected_intent": "search",
+    "model_result": {
+      "route": "agent",
+      "intent": "search",
+      "target": "",
+      "parameters": {
+        "genre": "悬疑",
+        "kind": "series"
+      },
+      "confidence": 0.94,
+      "reply": "先按条件搜索。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_099",
+    "text": "随便找个好看的电影",
+    "category": "fuzzy_search",
+    "expected_route": "agent",
+    "mode": "semantic",
+    "expected_intent": "search",
+    "model_result": {
+      "route": "agent",
+      "intent": "search",
+      "target": "",
+      "parameters": {
+        "kind": "movie"
+      },
+      "confidence": 0.94,
+      "reply": "先按条件搜索。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_100",
+    "text": "找一部国产喜剧",
+    "category": "fuzzy_search",
+    "expected_route": "agent",
+    "mode": "semantic",
+    "expected_intent": "search",
+    "model_result": {
+      "route": "agent",
+      "intent": "search",
+      "target": "",
+      "parameters": {
+        "region": "中国大陆",
+        "genre": "喜剧"
+      },
+      "confidence": 0.94,
+      "reply": "先按条件搜索。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_101",
+    "text": "搜索适合孩子看的动画",
+    "category": "fuzzy_search",
+    "expected_route": "agent",
+    "mode": "semantic",
+    "expected_intent": "search",
+    "model_result": {
+      "route": "agent",
+      "intent": "search",
+      "target": "",
+      "parameters": {
+        "query": "适合孩子看的动画"
+      },
+      "confidence": 0.94,
+      "reply": "先按条件搜索。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_102",
+    "text": "推荐一点科技视频",
+    "category": "fuzzy_search",
+    "expected_route": "agent",
+    "mode": "semantic",
+    "expected_intent": "search",
+    "model_result": {
+      "route": "agent",
+      "intent": "search",
+      "target": "",
+      "parameters": {
+        "query": "科技视频"
+      },
+      "confidence": 0.94,
+      "reply": "先按条件搜索。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_103",
+    "text": "想看节奏慢一点的纪录片",
+    "category": "fuzzy_search",
+    "expected_route": "agent",
+    "mode": "semantic",
+    "expected_intent": "search",
+    "model_result": {
+      "route": "agent",
+      "intent": "search",
+      "target": "",
+      "parameters": {
+        "query": "节奏慢的纪录片"
+      },
+      "confidence": 0.94,
+      "reply": "先按条件搜索。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_104",
+    "text": "搜一下太空题材电影",
+    "category": "fuzzy_search",
+    "expected_route": "agent",
+    "mode": "semantic",
+    "expected_intent": "search",
+    "model_result": {
+      "route": "agent",
+      "intent": "search",
+      "target": "",
+      "parameters": {
+        "query": "太空题材",
+        "kind": "movie"
+      },
+      "confidence": 0.94,
+      "reply": "先按条件搜索。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_105",
+    "text": "有没有轻松的下饭剧",
+    "category": "fuzzy_search",
+    "expected_route": "agent",
+    "mode": "semantic",
+    "expected_intent": "search",
+    "model_result": {
+      "route": "agent",
+      "intent": "search",
+      "target": "",
+      "parameters": {
+        "query": "轻松的下饭剧"
+      },
+      "confidence": 0.94,
+      "reply": "先按条件搜索。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_106",
+    "text": "找部不要太吓人的悬疑片",
+    "category": "fuzzy_search",
+    "expected_route": "agent",
+    "mode": "semantic",
+    "expected_intent": "search",
+    "model_result": {
+      "route": "agent",
+      "intent": "search",
+      "target": "",
+      "parameters": {
+        "query": "不要太吓人的悬疑片"
+      },
+      "confidence": 0.94,
+      "reply": "先按条件搜索。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_107",
+    "text": "我想看看讲历史的节目",
+    "category": "fuzzy_search",
+    "expected_route": "agent",
+    "mode": "semantic",
+    "expected_intent": "search",
+    "model_result": {
+      "route": "agent",
+      "intent": "search",
+      "target": "",
+      "parameters": {
+        "query": "历史节目"
+      },
+      "confidence": 0.94,
+      "reply": "先按条件搜索。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_108",
+    "text": "找点九十年代的港片",
+    "category": "fuzzy_search",
+    "expected_route": "agent",
+    "mode": "semantic",
+    "expected_intent": "search",
+    "model_result": {
+      "route": "agent",
+      "intent": "search",
+      "target": "",
+      "parameters": {
+        "query": "九十年代港片"
+      },
+      "confidence": 0.94,
+      "reply": "先按条件搜索。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_109",
+    "text": "搜索不需要会员的电影",
+    "category": "fuzzy_search",
+    "expected_route": "agent",
+    "mode": "semantic",
+    "expected_intent": "search",
+    "model_result": {
+      "route": "agent",
+      "intent": "search",
+      "target": "",
+      "parameters": {
+        "query": "不需要会员的电影"
+      },
+      "confidence": 0.94,
+      "reply": "先按条件搜索。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_110",
+    "text": "第二部",
+    "category": "missing_reference",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "缺少可核对的上下文，请说明片名或候选项。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_111",
+    "text": "不要这个",
+    "category": "missing_reference",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "缺少可核对的上下文，请说明片名或候选项。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_112",
+    "text": "换一个",
+    "category": "missing_reference",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "缺少可核对的上下文，请说明片名或候选项。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_113",
+    "text": "国产的",
+    "category": "missing_reference",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "缺少可核对的上下文，请说明片名或候选项。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_114",
+    "text": "就刚才那部",
+    "category": "missing_reference",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "缺少可核对的上下文，请说明片名或候选项。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_115",
+    "text": "选第二个",
+    "category": "missing_reference",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "缺少可核对的上下文，请说明片名或候选项。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_116",
+    "text": "下一页那个",
+    "category": "missing_reference",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "缺少可核对的上下文，请说明片名或候选项。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_117",
+    "text": "从第一集开始",
+    "category": "missing_reference",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "缺少可核对的上下文，请说明片名或候选项。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_118",
+    "text": "继续上一台看的",
+    "category": "missing_reference",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "缺少可核对的上下文，请说明片名或候选项。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_119",
+    "text": "播他演的那部",
+    "category": "missing_reference",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "缺少可核对的上下文，请说明片名或候选项。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_120",
+    "text": "还是刚刚那个版本",
+    "category": "missing_reference",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "缺少可核对的上下文，请说明片名或候选项。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_121",
+    "text": "换成中文版",
+    "category": "missing_reference",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "缺少可核对的上下文，请说明片名或候选项。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_122",
+    "text": "最后一个",
+    "category": "missing_reference",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "缺少可核对的上下文，请说明片名或候选项。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_123",
+    "text": "这一部有第二季吗",
+    "category": "missing_reference",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "缺少可核对的上下文，请说明片名或候选项。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_124",
+    "text": "刚才说的那个导演",
+    "category": "missing_reference",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "缺少可核对的上下文，请说明片名或候选项。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_125",
+    "text": "不要刚才那种类型",
+    "category": "missing_reference",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "缺少可核对的上下文，请说明片名或候选项。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_126",
+    "text": "打开肥牛",
+    "category": "asr_homophone_safe",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "识别可能有误，请确认应用或片名。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_127",
+    "text": "飞纽放个片",
+    "category": "asr_homophone_safe",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "识别可能有误，请确认应用或片名。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_128",
+    "text": "爱奇异里找电影",
+    "category": "asr_homophone_safe",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "识别可能有误，请确认应用或片名。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_129",
+    "text": "比站搜科技",
+    "category": "asr_homophone_safe",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "识别可能有误，请确认应用或片名。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_130",
+    "text": "把声应调小",
+    "category": "asr_homophone_safe",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "识别可能有误，请确认应用或片名。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_131",
+    "text": "赞停一下",
+    "category": "asr_homophone_safe",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "识别可能有误，请确认应用或片名。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_132",
+    "text": "继叙刚刚的",
+    "category": "asr_homophone_safe",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "识别可能有误，请确认应用或片名。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_133",
+    "text": "回到首夜",
+    "category": "asr_homophone_safe",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "识别可能有误，请确认应用或片名。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_134",
+    "text": "山体还是三体，我没说清",
+    "category": "asr_homophone_safe",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "识别可能有误，请确认应用或片名。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_135",
+    "text": "开一下滕讯视屏",
+    "category": "asr_homophone_safe",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "识别可能有误，请确认应用或片名。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_136",
+    "text": "取消",
+    "category": "cancellation_phase4_negative",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "当前不支持取消任务，请明确接下来要做的操作。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_137",
+    "text": "取消刚才的任务",
+    "category": "cancellation_phase4_negative",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "当前不支持取消任务，请明确接下来要做的操作。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_138",
+    "text": "停止所有排队操作",
+    "category": "cancellation_phase4_negative",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "当前不支持取消任务，请明确接下来要做的操作。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_139",
+    "text": "撤销刚刚那条指令",
+    "category": "cancellation_phase4_negative",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "当前不支持取消任务，请明确接下来要做的操作。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_140",
+    "text": "别执行了",
+    "category": "cancellation_phase4_negative",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "当前不支持取消任务，请明确接下来要做的操作。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_141",
+    "text": "把预约播放取消掉",
+    "category": "cancellation_phase4_negative",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "当前不支持取消任务，请明确接下来要做的操作。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_142",
+    "text": "取消正在下载的内容",
+    "category": "cancellation_phase4_negative",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "当前不支持取消任务，请明确接下来要做的操作。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_143",
+    "text": "停止刚才的组合任务",
+    "category": "cancellation_phase4_negative",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "当前不支持取消任务，请明确接下来要做的操作。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_144",
+    "text": "不用继续帮忙了",
+    "category": "cancellation_phase4_negative",
+    "expected_route": "ignore",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "ignore",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "好的。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_145",
+    "text": "先这样，不麻烦了",
+    "category": "cancellation_phase4_negative",
+    "expected_route": "ignore",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "ignore",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "好的。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_146",
+    "text": "把刚才的回复念出来",
+    "category": "tts_unavailable_negative",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "当前没有可用的语音播报能力。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_147",
+    "text": "用电视扬声器回答我",
+    "category": "tts_unavailable_negative",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "当前没有可用的语音播报能力。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_148",
+    "text": "再大声读一遍搜索结果",
+    "category": "tts_unavailable_negative",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "当前没有可用的语音播报能力。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_149",
+    "text": "切换成男声播报",
+    "category": "tts_unavailable_negative",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "当前没有可用的语音播报能力。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_150",
+    "text": "请用方言念这段话",
+    "category": "tts_unavailable_negative",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "当前没有可用的语音播报能力。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_151",
+    "text": "你能直接说出来吗",
+    "category": "tts_unavailable_negative",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "当前没有可用的语音播报能力。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_152",
+    "text": "一边播放电影一边打开客厅灯",
+    "category": "native_conflict_mixed",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "这包含家居和电视操作，请分开说明。",
+      "risk": "none"
+    },
+    "expected_conflict": true
+  },
+  {
+    "id": "zh_v40_153",
+    "text": "把空调关了然后播放三体",
+    "category": "native_conflict_mixed",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "这包含家居和电视操作，请分开说明。",
+      "risk": "none"
+    },
+    "expected_conflict": true
+  },
+  {
+    "id": "zh_v40_154",
+    "text": "打开窗帘并且暂停视频",
+    "category": "native_conflict_mixed",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "expected_conflict": true,
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "这包含家居和电视操作，请分开说明。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_155",
+    "text": "调低音量同时关闭台灯",
+    "category": "native_conflict_mixed",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "unknown",
+    "expected_conflict": true,
+    "model_result": {
+      "route": "clarify",
+      "intent": "unknown",
+      "target": "",
+      "parameters": {},
+      "confidence": 0.94,
+      "reply": "这包含家居和电视操作，请分开说明。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_156",
+    "text": "打开B站搜索天气预报",
+    "category": "native_conflict_media",
+    "expected_route": "agent",
+    "mode": "semantic",
+    "expected_intent": "search",
+    "model_result": {
+      "route": "agent",
+      "intent": "search",
+      "target": "",
+      "parameters": {
+        "query": "天气预报"
+      },
+      "confidence": 0.94,
+      "reply": "请补充具体内容。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_157",
+    "text": "搜索股票入门视频",
+    "category": "native_conflict_media",
+    "expected_route": "agent",
+    "mode": "semantic",
+    "expected_intent": "search",
+    "model_result": {
+      "route": "agent",
+      "intent": "search",
+      "target": "",
+      "parameters": {
+        "query": "股票入门视频"
+      },
+      "confidence": 0.94,
+      "reply": "请补充具体内容。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_158",
+    "text": "找一部关于闹钟的电影",
+    "category": "native_conflict_media",
+    "expected_route": "agent",
+    "mode": "semantic",
+    "expected_intent": "search",
+    "model_result": {
+      "route": "agent",
+      "intent": "search",
+      "target": "",
+      "parameters": {
+        "query": "关于闹钟的电影"
+      },
+      "confidence": 0.94,
+      "reply": "请补充具体内容。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_159",
+    "text": "随便来点好看的",
+    "category": "semantic_low_confidence",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "search",
+    "model_result": {
+      "route": "agent",
+      "intent": "search",
+      "target": "",
+      "parameters": {
+        "query": "随便来点好看的"
+      },
+      "confidence": 0.3,
+      "reply": "请补充具体内容。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_160",
+    "text": "找一个名字记不清的电影",
+    "category": "semantic_low_confidence",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "search",
+    "model_result": {
+      "route": "agent",
+      "intent": "search",
+      "target": "",
+      "parameters": {
+        "query": "找一个名字记不清的电影"
+      },
+      "confidence": 0.3,
+      "reply": "请补充具体内容。",
+      "risk": "none"
+    }
+  },
+  {
+    "id": "zh_v40_161",
+    "text": "像上次那样就行",
+    "category": "semantic_low_confidence",
+    "expected_route": "clarify",
+    "mode": "semantic",
+    "expected_intent": "search",
+    "model_result": {
+      "route": "agent",
+      "intent": "search",
+      "target": "",
+      "parameters": {
+        "query": "像上次那样就行"
+      },
+      "confidence": 0.3,
+      "reply": "请补充具体内容。",
+      "risk": "none"
+    }
+  }
+]
