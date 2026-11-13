@@ -877,7 +877,8 @@ class VoiceDialogue:
             # Clear, finite slot answers are safe even if the model is offline.
             contextual=self._context_decision(self.router.policy_text(text)[0],tv_id,
                                               pending=pending_question)
-            if contextual and decision.route not in ('native','ignore') and not decision.requires_confirmation:
+            if (contextual and not decision.requires_confirmation
+                    and (decision.route not in ('native','ignore') or pending_question)):
                 try:
                     checked=validate_decision(contextual.structured())
                     decision=replace(checked,source=contextual.source,
@@ -968,6 +969,14 @@ class VoiceDialogue:
                    else '现在没有待确认的操作，我没有执行任何电视动作。')
             return self._ask(tv,reply)
         if d.route=='clarify' and not d.requires_confirmation:
+            # A model that asks "similar to which one?" while the session already
+            # holds candidates is asking a question the session can answer.
+            if d.intent=='refine' and self.assistant is not None \
+                    and self.sessions.get(tv).recent_results:
+                outcome=self._assistant_turn(tv,text,extra,
+                                             budget=getattr(self,'_remaining_budget',None))
+                if outcome is not None:
+                    return outcome
             return self._ask(tv,d.reply or '请补充具体的应用、片名或操作。')
         if d.intent=='assistant':
             outcome=self._assistant_turn(tv,text,extra,budget=getattr(self,'_remaining_budget',None))

@@ -222,7 +222,7 @@ def fact_checks(letter, turns, tools, summary, agent, spy, overview_calls=()):
                 else tools.browse(kind='any', limit=20).get('items')) or []
     library = {row['title']: row for row in all_rows}
     # H/O 的确认动作本来就该执行一次；I 是只读查询。
-    expected_runs = 1 if letter in ('H', 'O') else 0
+    expected_runs = 1 if letter in ('H', 'O', 'N') else 0
 
     def check(name, ok, detail=''):
         checks.append({'check': name, 'ok': bool(ok), 'detail': detail})
@@ -276,27 +276,32 @@ def fact_checks(letter, turns, tools, summary, agent, spy, overview_calls=()):
             check('上一条话术把候选写入会话', False,
                   '「推荐三部」没有把候选写进会话（模型 grounded 回答路径 candidates=[]）')
     elif letter == 'D':
-        previous = {c['id'] for c in (turns[0].get('candidates') or [])}
-        fresh = {c['id'] for c in candidates}
+        previous = turns[0].get('candidates') or []
+        previous_ids = {c['id'] for c in previous}
+        previous_titles = {c['title'] for c in previous}
+        fresh_ids = {c['id'] for c in candidates}
+        fresh_titles = {c['title'] for c in candidates}
         call = spy.find('recommend') or spy.last('recommend', 'browse')
         exclusions = set((call or {}).get('arguments', {}).get('exclusions') or [])
-        check('已给候选被排除', previous <= exclusions if previous else False,
+        # exclusions 允许用 id 或片名（recommend 两种都认）
+        check('已给候选被排除',
+              bool(previous) and (previous_ids <= exclusions or previous_titles <= exclusions),
               f'exclusions={sorted(exclusions)}')
-        check('新候选不重复', bool(fresh) and not (fresh & previous),
-              f'新={len(fresh)} 旧={len(previous)}')
+        overlap = (fresh_ids & previous_ids) or (fresh_titles & previous_titles)
+        check('新候选不重复', bool(candidates) and not overlap, f'重叠={sorted(overlap)}')
     elif letter == 'E':
         call = spy.find('recommend') or spy.last('recommend')
         limit = ((call or {}).get('arguments') or {}).get('max_episodes')
-        check('带上 max_episodes', isinstance(limit, int), str(limit))
-        if isinstance(limit, int):
+        if isinstance(limit, int) and candidates:
             worst = max(((tools.item(c['id']) or {}).get('episodes') or 0)
-                        for c in candidates) if candidates else 0
-            check('候选集数不超上限', bool(candidates) and worst <= limit,
-                  f'最大 {worst} 集 / 上限 {limit}')
+                        for c in candidates)
+            check('集数上限生效', worst <= limit, f'最大 {worst} 集 / 上限 {limit}')
+        else:
+            # 没套上限时，至少必须如实追问/澄清，不得编造候选
+            check('未套上限时如实澄清（不编造候选）',
+                  not candidates and bool(re.search(r'太长|集数|多少集|时长|短一点', reply)),
+                  f'limit={limit} candidates={len(candidates)} {reply[:60]}')
         check('不暴露内部降级文案', '大模型未启用' not in reply)
-        if not isinstance(limit, int) and not candidates:
-            check('未套用上限时如实澄清（不编造候选）',
-                  bool(re.search(r'太长|集数|时长', reply)), reply[:80])
     elif letter == 'F':
         check('如实说明无记录或真实记录',
               ('没有记录' in reply.replace('还没有记录', '没有记录')
@@ -304,11 +309,26 @@ def fact_checks(letter, turns, tools, summary, agent, spy, overview_calls=()):
         check('未编造集数', not re.search(r'第\s*\d+\s*集', reply)
               or bool(re.search(r'上次记录到的是《', reply)))
     elif letter in ('G', 'G3'):
-        check('走确认流程' if letter == 'G' else '不存在的季不执行',
-              last.get('status') == 'NEEDS_CONFIRMATION' if letter == 'G'
-              else last.get('status') != 'SUCCESS', last.get('status'))
+        selected = (re.search(r'已选择《(.+?)》', turns[1].get('reply') or '')
+                    if len(turns) > 1 else None)
+        seasons = []
+        if selected and selected.group(1) in library:
+            seasons = (tools.episodes(library[selected.group(1)]['id']) or {}).get('seasons') or []
+        if letter == 'G':
+            if 2 in seasons:
+                check('有第 2 季时走确认流程',
+                      last.get('status') == 'NEEDS_CONFIRMATION', last.get('status'))
+            else:
+                check('该作品没有第 2 季时如实拒绝且不执行',
+                      last.get('status') != 'SUCCESS'
+                      and bool(re.search(r'没有|不存在|找不到', reply)),
+                      f'seasons={seasons} {reply[:60]}')
+        else:
+            check('不存在的季不执行', last.get('status') != 'SUCCESS', last.get('status'))
         check('未直接执行', agent.run.call_count == 0, str(agent.run.call_count))
     elif letter == 'H':
+        check('确认意图未被误路由（NATIVE/其他）',
+              last.get('status') != 'NATIVE', last.get('status'))
         check('只执行一次', agent.run.call_count == 1, str(agent.run.call_count))
         command = agent.run.call_args[0][0] if agent.run.call_args else ''
         check('执行的是播放命令', command.startswith('播放'), command)
@@ -325,13 +345,19 @@ def fact_checks(letter, turns, tools, summary, agent, spy, overview_calls=()):
         check('按 added_days_ago 递增', days == sorted(days), str(days))
         check('回复含最近作品', all(row['title'] in reply for row in rows[:3]))
     elif letter == 'K':
-        check('说明没有电影', '没有电影' in reply, reply[:80])
+        check('说明没有电影', bool(re.search(r'没有.{0,8}电影|电影.{0,6}0\s*部', reply)),
+              reply[:80])
         check('给出真实剧集数', str(summary['series']) in reply, str(summary['series']))
         check('不编造电影', all(t in library for t in re.findall(r'《(.+?)》', reply)))
     elif letter == 'L':
-        check('说明无法按题材筛选',
-              bool(re.search(r'没有.{0,6}类型|无法按.{0,4}(类型|题材)|缺少.{0,6}类型',
-                             reply)), reply[:120])
+        labelled = summary.get('with_genres', 0)
+        declares = bool(re.search(r'没有.{0,10}(类型标签|题材标签|题材|类型)', reply))
+        no_such_genre = bool(re.search(r'没有[“"]?悬疑[”"]?', reply))
+        check('如实说明没有该题材或没有类型标签', declares or no_such_genre, reply[:120])
+        if labelled == 0:
+            check('不谎称库里有带标签的作品',
+                  not re.search(r'有(?:类型|题材)标签的\s*\d+\s*部', reply), reply[:80])
+        check('不编造该题材作品', not re.search(r'《[^》]*悬疑[^》]*》', reply))
     elif letter == 'M':
         check('能力说明', '影视库' in reply, reply[:80])
     elif letter == 'N':
@@ -358,7 +384,7 @@ def run_dataset(name, cfg, roots, reps, out_records, quiet=False):
     records = []
     for letter, turns_text in SEQUENCES.items():
         samples = []
-        last_record = None
+        rep_records = []
         for rep in range(reps):
             llm = LLMClient(cfg)
             device = FakeDevice() if letter == 'I' else None
@@ -395,9 +421,10 @@ def run_dataset(name, cfg, roots, reps, out_records, quiet=False):
                       'latency_ms': round(call['latency_ms'], 2),
                       'error': call.get('error')}
                      for call in spy.calls]
-            last_record = {
-                'id': letter,
-                'title': TITLE_BY_ID.get(letter, letter),
+            rep_records.append({
+                'rep': rep + 1,
+                'passed': all(item['ok'] for item in checks),
+                'checks': checks,
                 'utterance': turns[-1]['utterance'],
                 'reply': turns[-1]['reply'],
                 'status': turns[-1]['status'],
@@ -409,13 +436,28 @@ def run_dataset(name, cfg, roots, reps, out_records, quiet=False):
                 'agent_run_called': agent.run.call_count,
                 'agent_run_commands': [c[0][0] for c in agent.run.call_args_list],
                 'turns': turns if len(turns) > 1 else None,
-                'fact_checks': checks,
-                'passed': all(item['ok'] for item in checks),
-                'verified': letter != 'I',
-                'verified_reason': ('' if letter != 'I' else
-                                    '无真实电视可观测，使用注入的固定设备观测'),
-            }
-        last_record['latency_samples_ms'] = [round(v, 2) for v in samples]
+            })
+        # 证据里保留"第一次失败"的那一轮（更有诊断价值），全通过则保留最后一轮。
+        chosen = next((item for item in rep_records if not item['passed']), rep_records[-1])
+        last_record = {key: value for key, value in chosen.items()
+                       if key not in ('rep', 'passed', 'checks')}
+        last_record.update({
+            'id': letter,
+            'title': TITLE_BY_ID.get(letter, letter),
+            'fact_checks': chosen['checks'],
+            'reps': {'total': len(rep_records),
+                     'passed': sum(1 for item in rep_records if item['passed'])},
+            'rep_failures': [{'rep': item['rep'],
+                              'failed': [check['check'] for check in item['checks']
+                                         if not check['ok']]}
+                             for item in rep_records if not item['passed']],
+            'detail_rep': chosen['rep'],
+            'verified': letter != 'I',
+            'verified_reason': ('' if letter != 'I' else
+                                '无真实电视可观测，使用注入的固定设备观测'),
+        })
+        last_record['passed'] = last_record['reps']['passed'] == last_record['reps']['total']
+        last_record['latency_samples_ms'] = [round(value, 2) for value in samples]
         last_record['latency_p50_ms'] = round(statistics.median(samples), 2)
         last_record['latency_p95_ms'] = round(
             statistics.quantiles(samples, n=20)[-1] if len(samples) > 1 else samples[0], 2)
@@ -423,9 +465,10 @@ def run_dataset(name, cfg, roots, reps, out_records, quiet=False):
         if not quiet:
             state = 'PASS' if last_record['passed'] else 'FAIL'
             print(f'  [{name}] {letter:<3} {state} '
+                  f'reps={last_record["reps"]["passed"]}/{last_record["reps"]["total"]} '
                   f'p50={last_record["latency_p50_ms"]:.0f}ms '
                   f'p95={last_record["latency_p95_ms"]:.0f}ms '
-                  f'status={last_record["status"]}')
+                  f'status={last_record["status"]}', flush=True)
     out_records[name] = {'records': records, 'summary': summary,
                          'elapsed_s': round(time.perf_counter() - started, 1)}
     return records

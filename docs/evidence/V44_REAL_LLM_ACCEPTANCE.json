@@ -1,0 +1,5428 @@
+{
+  "generated_at": "2026-11-13T11:21:41+0800",
+  "contract": "docs/V44_CONTRACT.md",
+  "model": {
+    "provider": "anthropic",
+    "model": "cn:deepseek-v4.1-flash",
+    "base_url": "http://127.0.0.1:7866"
+  },
+  "note": "真实 LLM + 真实对话链路；不写 API key、不写绝对路径、不写完整 UI 文本。每轮 agent.run 次数即\"是否误执行电视动作\"的证据。",
+  "datasets": {
+    "fixture": {
+      "records": [
+        {
+          "id": "A",
+          "title": "A 资源库总览",
+          "utterance": "现在资源库有什么？",
+          "reply": "已查询 NAS 本地影视库：共 5 部影视作品，其中电影 0 部、剧集 3 部、短剧 2 部。例如：1.《三体》；2.《大明王朝》；3.《师兄太稳健》；4.《我不是大师》；5.《漫长的季节》。可以说“第几部”来选择。",
+          "status": "SUCCESS",
+          "intent": "browse_library",
+          "answer_source": "local_catalog",
+          "diagnostics": {
+            "model_name": null,
+            "decision_source": null,
+            "tool_name": null,
+            "tool_status": null,
+            "llm_latency_ms": null,
+            "tool_latency_ms": null,
+            "total_latency_ms": null,
+            "fallback_reason": null,
+            "failed_stage": null,
+            "route_ms": 0.6296289939200506,
+            "llm_ms": 0.0,
+            "total_ms": 85.3764690036769,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [],
+          "candidates": [
+            {
+              "id": "9f4c311a5cba9b3d0360cb35",
+              "title": "三体",
+              "episodes": 10
+            },
+            {
+              "id": "3cbbb776b16e83edd76803ec",
+              "title": "大明王朝",
+              "episodes": 46
+            },
+            {
+              "id": "19a87d781516fa11f2db2bb4",
+              "title": "师兄太稳健",
+              "episodes": 200
+            },
+            {
+              "id": "cadc97ff222cb08035d68cf0",
+              "title": "我不是大师",
+              "episodes": 30
+            },
+            {
+              "id": "f9772e3f5653ac8a0b68da4a",
+              "title": "漫长的季节",
+              "episodes": 12
+            }
+          ],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": null,
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "已查询 NAS 本地影视库：共 5 部影视作品，其中电影 0 部、剧集 3 部、短剧 2 部。例如：1.《三体》；2.《大明王朝》；3.《师兄太稳健》；4.《我"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=0 期望=0"
+            },
+            {
+              "check": "走 overview 类读取",
+              "ok": true,
+              "detail": "tools=- adapter_overview=1"
+            },
+            {
+              "check": "总数一致",
+              "ok": true,
+              "detail": "回复=5 真实=5"
+            },
+            {
+              "check": "电影数一致",
+              "ok": true,
+              "detail": "回复=0 真实=0"
+            },
+            {
+              "check": "剧集数一致",
+              "ok": true,
+              "detail": "回复=3 真实=3"
+            },
+            {
+              "check": "短剧单列",
+              "ok": true,
+              "detail": "回复=2 真实=2"
+            },
+            {
+              "check": "候选全部真实",
+              "ok": true,
+              "detail": ""
+            }
+          ],
+          "passed": true,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            660.37,
+            89.74,
+            86.32
+          ],
+          "latency_p50_ms": 89.74,
+          "latency_p95_ms": 1116.87
+        },
+        {
+          "id": "B",
+          "title": "B 推荐三部",
+          "utterance": "推荐三部好看的。",
+          "reply": "本地影视库里为你挑了 3 部作品：1.《师兄太稳健》（2026 年，短剧，共 200 集）——穿越者在宗门里稳健修行；2.《大明王朝》（2007 年，电视剧，共 46 集）——嘉靖年间朝廷与海瑞的博弈；3.《我不是大师》（2026 年，短剧，共 30 集）——外卖员误入武林成为大师。这三部作品的题材标签在库中目前都缺失，所以暂时无法按具体类型进一步判断。",
+          "status": "SUCCESS",
+          "intent": "assistant",
+          "answer_source": "local_catalog",
+          "diagnostics": {
+            "model_name": "cn:deepseek-v4.1-flash",
+            "decision_source": "llm",
+            "tool_name": "catalog_recommend",
+            "tool_status": "ok",
+            "llm_latency_ms": 3089.3810839988873,
+            "tool_latency_ms": 110.49247699702391,
+            "total_latency_ms": 3205.8619059971534,
+            "fallback_reason": null,
+            "failed_stage": null,
+            "route_ms": 3845.627400005469,
+            "llm_ms": 3834.1971640038537,
+            "total_ms": 7059.184448997257,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [
+            {
+              "tool": "recommend",
+              "ok": true,
+              "arguments": {
+                "limit": 3
+              },
+              "latency_ms": 110.38,
+              "error": null
+            }
+          ],
+          "candidates": [
+            {
+              "id": "19a87d781516fa11f2db2bb4",
+              "title": "师兄太稳健",
+              "episodes": 200
+            },
+            {
+              "id": "3cbbb776b16e83edd76803ec",
+              "title": "大明王朝",
+              "episodes": 46
+            },
+            {
+              "id": "cadc97ff222cb08035d68cf0",
+              "title": "我不是大师",
+              "episodes": 30
+            }
+          ],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": null,
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "本地影视库里为你挑了 3 部作品：1.《师兄太稳健》（2026 年，短剧，共 200 集）——穿越者在宗门里稳健修行；2.《大明王朝》（2007 年，电视剧，共"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=0 期望=0"
+            },
+            {
+              "check": "回复含 3 部真实作品",
+              "ok": true,
+              "detail": "回复片名=['师兄太稳健', '大明王朝', '我不是大师']"
+            },
+            {
+              "check": "候选写入会话（供\"第二个\"使用）",
+              "ok": true,
+              "detail": "candidates=3（模型直接 grounded 回答时会话可能拿不到候选）"
+            },
+            {
+              "check": "候选 id 可在库里查到",
+              "ok": true,
+              "detail": ""
+            },
+            {
+              "check": "回复含全部候选片名",
+              "ok": true,
+              "detail": ""
+            }
+          ],
+          "passed": true,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            6970.07,
+            6860.98,
+            7060.17
+          ],
+          "latency_p50_ms": 6970.07,
+          "latency_p95_ms": 7132.25
+        },
+        {
+          "id": "C",
+          "title": "C 第二个讲什么",
+          "utterance": "第二个讲什么？",
+          "reply": "《大明王朝》（电视剧，2007 年，46 集，出品：湖南广播电视台）讲的是：嘉靖年间朝廷与海瑞的博弈。",
+          "status": "SUCCESS",
+          "intent": "assistant",
+          "answer_source": "local_catalog",
+          "diagnostics": {
+            "model_name": "cn:deepseek-v4.1-flash",
+            "decision_source": "deterministic",
+            "tool_name": "catalog_detail",
+            "tool_status": "ok",
+            "llm_latency_ms": 3138.9227230029064,
+            "tool_latency_ms": 0.20403399685164914,
+            "total_latency_ms": 3169.037373998435,
+            "fallback_reason": "ungrounded_answer",
+            "failed_stage": null,
+            "route_ms": 0.0,
+            "llm_ms": 0.0,
+            "total_ms": 7252.082300998154,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [
+            {
+              "tool": "recommend",
+              "ok": true,
+              "arguments": {
+                "limit": 3
+              },
+              "latency_ms": 656.59,
+              "error": null
+            },
+            {
+              "tool": "item",
+              "ok": true,
+              "arguments": {
+                "item_id": "3cbbb776b16e83edd76803ec"
+              },
+              "latency_ms": 0.07,
+              "error": null
+            }
+          ],
+          "candidates": [],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": [
+            {
+              "utterance": "推荐三部好看的。",
+              "status": "SUCCESS",
+              "intent": "assistant",
+              "route": "agent",
+              "decision_source": "llm",
+              "reply": "为你挑选了本地库里的 3 部：1）《师兄太稳健》（2026，短剧，共 200 集，1 天前入库）；2）《大明王朝》（2007，电视剧，共 46 集，出品方为湖南广播电视台）；3）《我不是大师》（2026，短剧，共 30 集，5 天前入库）。库中这 3 部都没有题材标签，所以暂时无法按题材细分推荐。需要我播放其中某一部吗？",
+              "candidates": [
+                {
+                  "id": "19a87d781516fa11f2db2bb4",
+                  "title": "师兄太稳健",
+                  "episodes": 200
+                },
+                {
+                  "id": "3cbbb776b16e83edd76803ec",
+                  "title": "大明王朝",
+                  "episodes": 46
+                },
+                {
+                  "id": "cadc97ff222cb08035d68cf0",
+                  "title": "我不是大师",
+                  "episodes": 30
+                }
+              ],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": "cn:deepseek-v4.1-flash",
+                "decision_source": "llm",
+                "tool_name": "catalog_recommend",
+                "tool_status": "ok",
+                "llm_latency_ms": 3597.187415994995,
+                "tool_latency_ms": 656.712479001726,
+                "total_latency_ms": 4279.640895998455,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 3759.78825600032,
+                "llm_ms": 3756.755139998859,
+                "total_ms": 8084.099050996883,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 8085.06
+            },
+            {
+              "utterance": "第二个讲什么？",
+              "status": "SUCCESS",
+              "intent": "assistant",
+              "route": "agent",
+              "decision_source": "assistant_fallback",
+              "reply": "《大明王朝》（电视剧，2007 年，46 集，出品：湖南广播电视台）讲的是：嘉靖年间朝廷与海瑞的博弈。",
+              "candidates": [],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": "cn:deepseek-v4.1-flash",
+                "decision_source": "deterministic",
+                "tool_name": "catalog_detail",
+                "tool_status": "ok",
+                "llm_latency_ms": 3138.9227230029064,
+                "tool_latency_ms": 0.20403399685164914,
+                "total_latency_ms": 3169.037373998435,
+                "fallback_reason": "ungrounded_answer",
+                "failed_stage": null,
+                "route_ms": 0.0,
+                "llm_ms": 0.0,
+                "total_ms": 7252.082300998154,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 7253.3
+            }
+          ],
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "《大明王朝》（电视剧，2007 年，46 集，出品：湖南广播电视台）讲的是：嘉靖年间朝廷与海瑞的博弈。"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=0 期望=0"
+            },
+            {
+              "check": "命中第 2 个候选",
+              "ok": true,
+              "detail": "大明王朝"
+            },
+            {
+              "check": "复述真实 plot 片段",
+              "ok": true,
+              "detail": "嘉靖年间朝廷与海瑞的博弈"
+            },
+            {
+              "check": "未串到第 1 个",
+              "ok": true,
+              "detail": "师兄太稳健"
+            }
+          ],
+          "passed": true,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            6620.04,
+            8311.85,
+            7253.3
+          ],
+          "latency_p50_ms": 7253.3,
+          "latency_p95_ms": 9158.69
+        },
+        {
+          "id": "D",
+          "title": "D 换一个类似的",
+          "utterance": "换一个类似的。",
+          "reply": "你想换成和哪一部类似的？请先告诉我参考的是哪部。",
+          "status": "NEEDS_CLARIFICATION",
+          "intent": "refine",
+          "answer_source": null,
+          "diagnostics": {
+            "model_name": null,
+            "decision_source": null,
+            "tool_name": null,
+            "tool_status": null,
+            "llm_latency_ms": null,
+            "tool_latency_ms": null,
+            "total_latency_ms": null,
+            "fallback_reason": null,
+            "failed_stage": null,
+            "route_ms": 3060.0964090044727,
+            "llm_ms": 3058.319132993347,
+            "total_ms": 3069.1719629976433,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [
+            {
+              "tool": "recommend",
+              "ok": true,
+              "arguments": {
+                "limit": 3
+              },
+              "latency_ms": 86.13,
+              "error": null
+            }
+          ],
+          "candidates": [],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": [
+            {
+              "utterance": "推荐三部好看的。",
+              "status": "SUCCESS",
+              "intent": "assistant",
+              "route": "agent",
+              "decision_source": "llm",
+              "reply": "给你挑了 3 部本地已入库的作品： 1.《师兄太稳健》（2026，短剧，共 200 集，1 天前新增）——穿越者苟在宗门里稳健修行。 2.《大明王朝》（2007，电视剧，共 46 集，出品：湖南广播电视台）——嘉靖年间朝廷与海瑞的博弈。 3.《我不是大师》（2026，短剧，共 30 集，5 天前新增）——外卖员误入武林成为大师。 说明：这三部的题材标签在库里都缺失，所以没法按类型给你过滤。想先看哪一部？说一声我就帮你起播。",
+              "candidates": [
+                {
+                  "id": "19a87d781516fa11f2db2bb4",
+                  "title": "师兄太稳健",
+                  "episodes": 200
+                },
+                {
+                  "id": "3cbbb776b16e83edd76803ec",
+                  "title": "大明王朝",
+                  "episodes": 46
+                },
+                {
+                  "id": "cadc97ff222cb08035d68cf0",
+                  "title": "我不是大师",
+                  "episodes": 30
+                }
+              ],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": "cn:deepseek-v4.1-flash",
+                "decision_source": "llm",
+                "tool_name": "catalog_recommend",
+                "tool_status": "ok",
+                "llm_latency_ms": 4651.660942006856,
+                "tool_latency_ms": 86.23413700115634,
+                "total_latency_ms": 4742.534925004293,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 3345.556434993341,
+                "llm_ms": 3343.6425189938745,
+                "total_ms": 8095.33182400628,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 8096.28
+            },
+            {
+              "utterance": "换一个类似的。",
+              "status": "NEEDS_CLARIFICATION",
+              "intent": "refine",
+              "route": "clarify",
+              "decision_source": "llm",
+              "reply": "你想换成和哪一部类似的？请先告诉我参考的是哪部。",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 3060.0964090044727,
+                "llm_ms": 3058.319132993347,
+                "total_ms": 3069.1719629976433,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 3070.19
+            }
+          ],
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "你想换成和哪一部类似的？请先告诉我参考的是哪部。"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=0 期望=0"
+            },
+            {
+              "check": "已给候选被排除",
+              "ok": false,
+              "detail": "exclusions=[]"
+            },
+            {
+              "check": "新候选不重复",
+              "ok": false,
+              "detail": "新=0 旧=3"
+            }
+          ],
+          "passed": false,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            10436.88,
+            4541.29,
+            3070.19
+          ],
+          "latency_p50_ms": 4541.29,
+          "latency_p95_ms": 15153.35
+        },
+        {
+          "id": "E",
+          "title": "E 不要太长",
+          "utterance": "不要那么长的。",
+          "reply": "从本地已入库内容里给你挑了这几部：1.《大明王朝》（2007） · 46 集；2.《我不是大师》（2026） · 30 集；3.《漫长的季节》（2023） · 12 集；4.《三体》（2023） · 10 集。可以说“第几部”继续选择。",
+          "status": "SUCCESS",
+          "intent": "assistant",
+          "answer_source": "local_catalog",
+          "diagnostics": {
+            "model_name": "cn:deepseek-v4.1-flash",
+            "decision_source": "deterministic",
+            "tool_name": "library_recommend",
+            "tool_status": "ok",
+            "llm_latency_ms": 4010.4329949972453,
+            "tool_latency_ms": 2.674043003935367,
+            "total_latency_ms": 4014.477356002317,
+            "fallback_reason": "timeout",
+            "failed_stage": "model",
+            "route_ms": 0.0,
+            "llm_ms": 0.0,
+            "total_ms": 8041.852039001242,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [
+            {
+              "tool": "recommend",
+              "ok": true,
+              "arguments": {
+                "limit": 3
+              },
+              "latency_ms": 82.75,
+              "error": null
+            },
+            {
+              "tool": "recommend",
+              "ok": true,
+              "arguments": {
+                "limit": 5,
+                "max_episodes": 120
+              },
+              "latency_ms": 1.25,
+              "error": null
+            }
+          ],
+          "candidates": [
+            {
+              "id": "3cbbb776b16e83edd76803ec",
+              "title": "大明王朝",
+              "episodes": 46
+            },
+            {
+              "id": "cadc97ff222cb08035d68cf0",
+              "title": "我不是大师",
+              "episodes": 30
+            },
+            {
+              "id": "f9772e3f5653ac8a0b68da4a",
+              "title": "漫长的季节",
+              "episodes": 12
+            },
+            {
+              "id": "9f4c311a5cba9b3d0360cb35",
+              "title": "三体",
+              "episodes": 10
+            }
+          ],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": [
+            {
+              "utterance": "推荐三部好看的。",
+              "status": "SUCCESS",
+              "intent": "assistant",
+              "route": "agent",
+              "decision_source": "llm",
+              "reply": "给你挑了本地库里的三部作品： 1. 《师兄太稳健》（2026，短剧，共 200 集）——穿越者苟在宗门里稳健修行，7 天内新增。 2. 《大明王朝》（2007，电视剧，共 46 集，湖南广播电视台出品）——嘉靖年间朝廷与海瑞的博弈。 3. 《我不是大师》（2026，短剧，共 30 集）——外卖员误入武林成为大师，7 天内新增。 这三部的类型标签在库里都是空的，所以没法按题材给你更细的筛选；想先看哪一部的话告诉我，我帮你发起播放。",
+              "candidates": [
+                {
+                  "id": "19a87d781516fa11f2db2bb4",
+                  "title": "师兄太稳健",
+                  "episodes": 200
+                },
+                {
+                  "id": "3cbbb776b16e83edd76803ec",
+                  "title": "大明王朝",
+                  "episodes": 46
+                },
+                {
+                  "id": "cadc97ff222cb08035d68cf0",
+                  "title": "我不是大师",
+                  "episodes": 30
+                }
+              ],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": "cn:deepseek-v4.1-flash",
+                "decision_source": "llm",
+                "tool_name": "catalog_recommend",
+                "tool_status": "ok",
+                "llm_latency_ms": 4060.1136240002234,
+                "tool_latency_ms": 82.88638700469164,
+                "total_latency_ms": 4153.098399998271,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 1832.5647460005712,
+                "llm_ms": 1830.9329070034437,
+                "total_ms": 5992.604398001276,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 5993.52
+            },
+            {
+              "utterance": "不要那么长的。",
+              "status": "SUCCESS",
+              "intent": "assistant",
+              "route": "agent",
+              "decision_source": "assistant_fallback",
+              "reply": "从本地已入库内容里给你挑了这几部：1.《大明王朝》（2007） · 46 集；2.《我不是大师》（2026） · 30 集；3.《漫长的季节》（2023） · 12 集；4.《三体》（2023） · 10 集。可以说“第几部”继续选择。",
+              "candidates": [
+                {
+                  "id": "3cbbb776b16e83edd76803ec",
+                  "title": "大明王朝",
+                  "episodes": 46
+                },
+                {
+                  "id": "cadc97ff222cb08035d68cf0",
+                  "title": "我不是大师",
+                  "episodes": 30
+                },
+                {
+                  "id": "f9772e3f5653ac8a0b68da4a",
+                  "title": "漫长的季节",
+                  "episodes": 12
+                },
+                {
+                  "id": "9f4c311a5cba9b3d0360cb35",
+                  "title": "三体",
+                  "episodes": 10
+                }
+              ],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": "cn:deepseek-v4.1-flash",
+                "decision_source": "deterministic",
+                "tool_name": "library_recommend",
+                "tool_status": "ok",
+                "llm_latency_ms": 4010.4329949972453,
+                "tool_latency_ms": 2.674043003935367,
+                "total_latency_ms": 4014.477356002317,
+                "fallback_reason": "timeout",
+                "failed_stage": "model",
+                "route_ms": 0.0,
+                "llm_ms": 0.0,
+                "total_ms": 8041.852039001242,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 8043.0
+            }
+          ],
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "从本地已入库内容里给你挑了这几部：1.《大明王朝》（2007） · 46 集；2.《我不是大师》（2026） · 30 集；3.《漫长的季节》（2023） · "
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=0 期望=0"
+            },
+            {
+              "check": "带上 max_episodes",
+              "ok": true,
+              "detail": "120"
+            },
+            {
+              "check": "候选集数不超上限",
+              "ok": true,
+              "detail": "最大 46 集 / 上限 120"
+            },
+            {
+              "check": "不暴露内部降级文案",
+              "ok": true,
+              "detail": ""
+            }
+          ],
+          "passed": true,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            8845.64,
+            3492.98,
+            8043.0
+          ],
+          "latency_p50_ms": 8043.0,
+          "latency_p95_ms": 9487.75
+        },
+        {
+          "id": "F",
+          "title": "F 上次看到哪里",
+          "utterance": "我上次看到哪里了？",
+          "reply": "我还没有记录到你上次播放到哪一集。可以说片名让我查，或说“随便推荐一部”。",
+          "status": "NEEDS_CLARIFICATION",
+          "intent": "recall",
+          "answer_source": null,
+          "diagnostics": {
+            "model_name": null,
+            "decision_source": null,
+            "tool_name": null,
+            "tool_status": null,
+            "llm_latency_ms": null,
+            "tool_latency_ms": null,
+            "total_latency_ms": null,
+            "fallback_reason": null,
+            "failed_stage": null,
+            "route_ms": 2483.775651999167,
+            "llm_ms": 2479.981972996029,
+            "total_ms": 2490.593048001756,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [],
+          "candidates": [],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": null,
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "我还没有记录到你上次播放到哪一集。可以说片名让我查，或说“随便推荐一部”。"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=0 期望=0"
+            },
+            {
+              "check": "如实说明无记录或真实记录",
+              "ok": true,
+              "detail": "我还没有记录到你上次播放到哪一集。可以说片名让我查，或说“随便推荐一部”。"
+            },
+            {
+              "check": "未编造集数",
+              "ok": true,
+              "detail": ""
+            }
+          ],
+          "passed": true,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            4026.42,
+            2610.52,
+            2491.1
+          ],
+          "latency_p50_ms": 2610.52,
+          "latency_p95_ms": 5159.14
+        },
+        {
+          "id": "G",
+          "title": "G 打开第N季（确认）",
+          "utterance": "打开这部剧第二季。",
+          "reply": "确认执行 播放《三体》第2季第一集 吗？小爱可能也响应同一句话；请明确说“确认”或“不确认”。",
+          "status": "NEEDS_CONFIRMATION",
+          "intent": "play",
+          "answer_source": null,
+          "diagnostics": {
+            "model_name": null,
+            "decision_source": null,
+            "tool_name": null,
+            "tool_status": null,
+            "llm_latency_ms": null,
+            "tool_latency_ms": null,
+            "total_latency_ms": null,
+            "fallback_reason": null,
+            "failed_stage": null,
+            "route_ms": 0.0,
+            "llm_ms": 0.0,
+            "total_ms": 4077.3655450029764,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [],
+          "candidates": [],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": [
+            {
+              "utterance": "现在资源库有什么？",
+              "status": "SUCCESS",
+              "intent": "browse_library",
+              "route": "agent",
+              "decision_source": "rule",
+              "reply": "已查询 NAS 本地影视库：共 5 部影视作品，其中电影 0 部、剧集 3 部、短剧 2 部。例如：1.《三体》；2.《大明王朝》；3.《师兄太稳健》；4.《我不是大师》；5.《漫长的季节》。可以说“第几部”来选择。",
+              "candidates": [
+                {
+                  "id": "9f4c311a5cba9b3d0360cb35",
+                  "title": "三体",
+                  "episodes": 10
+                },
+                {
+                  "id": "3cbbb776b16e83edd76803ec",
+                  "title": "大明王朝",
+                  "episodes": 46
+                },
+                {
+                  "id": "19a87d781516fa11f2db2bb4",
+                  "title": "师兄太稳健",
+                  "episodes": 200
+                },
+                {
+                  "id": "cadc97ff222cb08035d68cf0",
+                  "title": "我不是大师",
+                  "episodes": 30
+                },
+                {
+                  "id": "f9772e3f5653ac8a0b68da4a",
+                  "title": "漫长的季节",
+                  "episodes": 12
+                }
+              ],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 0.4661630009650253,
+                "llm_ms": 0.0,
+                "total_ms": 113.50674299319508,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 114.51
+            },
+            {
+              "utterance": "第一部。",
+              "status": "NEEDS_CLARIFICATION",
+              "intent": "select",
+              "route": "clarify",
+              "decision_source": "context_rule",
+              "reply": "已选择《三体》。你想从第几集开始？",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 3427.7127039968036,
+                "llm_ms": 3424.1528599959565,
+                "total_ms": 3440.220880002016,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 3441.58
+            },
+            {
+              "utterance": "打开这部剧第二季。",
+              "status": "NEEDS_CONFIRMATION",
+              "intent": "play",
+              "route": "clarify",
+              "decision_source": "context_rule",
+              "reply": "确认执行 播放《三体》第2季第一集 吗？小爱可能也响应同一句话；请明确说“确认”或“不确认”。",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 0.0,
+                "llm_ms": 0.0,
+                "total_ms": 4077.3655450029764,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 4080.25
+            }
+          ],
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "确认执行 播放《三体》第2季第一集 吗？小爱可能也响应同一句话；请明确说“确认”或“不确认”。"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=0 期望=0"
+            },
+            {
+              "check": "走确认流程",
+              "ok": true,
+              "detail": "NEEDS_CONFIRMATION"
+            },
+            {
+              "check": "未直接执行",
+              "ok": true,
+              "detail": "0"
+            }
+          ],
+          "passed": true,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            4252.78,
+            4041.88,
+            4080.25
+          ],
+          "latency_p50_ms": 4080.25,
+          "latency_p95_ms": 4390.8
+        },
+        {
+          "id": "G3",
+          "title": "G3 不存在的季",
+          "utterance": "打开这部剧第三季。",
+          "reply": "这部作品没有你指定的那一集，我没有执行播放。",
+          "status": "NEEDS_CLARIFICATION",
+          "intent": "play",
+          "answer_source": null,
+          "diagnostics": {
+            "model_name": null,
+            "decision_source": null,
+            "tool_name": null,
+            "tool_status": null,
+            "llm_latency_ms": null,
+            "tool_latency_ms": null,
+            "total_latency_ms": null,
+            "fallback_reason": null,
+            "failed_stage": null,
+            "route_ms": 0.0,
+            "llm_ms": 0.0,
+            "total_ms": 3974.049869000737,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [],
+          "candidates": [],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": [
+            {
+              "utterance": "现在资源库有什么？",
+              "status": "SUCCESS",
+              "intent": "browse_library",
+              "route": "agent",
+              "decision_source": "rule",
+              "reply": "已查询 NAS 本地影视库：共 5 部影视作品，其中电影 0 部、剧集 3 部、短剧 2 部。例如：1.《三体》；2.《大明王朝》；3.《师兄太稳健》；4.《我不是大师》；5.《漫长的季节》。可以说“第几部”来选择。",
+              "candidates": [
+                {
+                  "id": "9f4c311a5cba9b3d0360cb35",
+                  "title": "三体",
+                  "episodes": 10
+                },
+                {
+                  "id": "3cbbb776b16e83edd76803ec",
+                  "title": "大明王朝",
+                  "episodes": 46
+                },
+                {
+                  "id": "19a87d781516fa11f2db2bb4",
+                  "title": "师兄太稳健",
+                  "episodes": 200
+                },
+                {
+                  "id": "cadc97ff222cb08035d68cf0",
+                  "title": "我不是大师",
+                  "episodes": 30
+                },
+                {
+                  "id": "f9772e3f5653ac8a0b68da4a",
+                  "title": "漫长的季节",
+                  "episodes": 12
+                }
+              ],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 0.48134999815374613,
+                "llm_ms": 0.0,
+                "total_ms": 86.34842299943557,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 87.24
+            },
+            {
+              "utterance": "第一部。",
+              "status": "NEEDS_CLARIFICATION",
+              "intent": "select",
+              "route": "clarify",
+              "decision_source": "context_rule",
+              "reply": "已选择《三体》。你想从第几集开始？",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 3018.1225940032164,
+                "llm_ms": 3014.3932110004243,
+                "total_ms": 3030.343959995662,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 3031.52
+            },
+            {
+              "utterance": "打开这部剧第三季。",
+              "status": "NEEDS_CLARIFICATION",
+              "intent": "play",
+              "route": "clarify",
+              "decision_source": "context_rule",
+              "reply": "这部作品没有你指定的那一集，我没有执行播放。",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 0.0,
+                "llm_ms": 0.0,
+                "total_ms": 3974.049869000737,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 3976.29
+            }
+          ],
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "这部作品没有你指定的那一集，我没有执行播放。"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=0 期望=0"
+            },
+            {
+              "check": "不存在的季不执行",
+              "ok": true,
+              "detail": "NEEDS_CLARIFICATION"
+            },
+            {
+              "check": "未直接执行",
+              "ok": true,
+              "detail": "0"
+            }
+          ],
+          "passed": true,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            4034.39,
+            4037.7,
+            3976.29
+          ],
+          "latency_p50_ms": 4034.39,
+          "latency_p95_ms": 4040.35
+        },
+        {
+          "id": "H",
+          "title": "H 确认播放",
+          "utterance": "确认播放。",
+          "reply": "已完成。",
+          "status": "SUCCESS",
+          "intent": "confirm",
+          "answer_source": "local_catalog",
+          "diagnostics": {
+            "model_name": null,
+            "decision_source": null,
+            "tool_name": null,
+            "tool_status": null,
+            "llm_latency_ms": null,
+            "tool_latency_ms": null,
+            "total_latency_ms": null,
+            "fallback_reason": null,
+            "failed_stage": null,
+            "route_ms": 3437.4785339969094,
+            "llm_ms": 3433.77366400091,
+            "total_ms": 3467.037722002715,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [],
+          "candidates": [],
+          "agent_run_called": 1,
+          "agent_run_commands": [
+            "播放《三体》第1季第一集"
+          ],
+          "turns": [
+            {
+              "utterance": "现在资源库有什么？",
+              "status": "SUCCESS",
+              "intent": "browse_library",
+              "route": "agent",
+              "decision_source": "rule",
+              "reply": "已查询 NAS 本地影视库：共 5 部影视作品，其中电影 0 部、剧集 3 部、短剧 2 部。例如：1.《三体》；2.《大明王朝》；3.《师兄太稳健》；4.《我不是大师》；5.《漫长的季节》。可以说“第几部”来选择。",
+              "candidates": [
+                {
+                  "id": "9f4c311a5cba9b3d0360cb35",
+                  "title": "三体",
+                  "episodes": 10
+                },
+                {
+                  "id": "3cbbb776b16e83edd76803ec",
+                  "title": "大明王朝",
+                  "episodes": 46
+                },
+                {
+                  "id": "19a87d781516fa11f2db2bb4",
+                  "title": "师兄太稳健",
+                  "episodes": 200
+                },
+                {
+                  "id": "cadc97ff222cb08035d68cf0",
+                  "title": "我不是大师",
+                  "episodes": 30
+                },
+                {
+                  "id": "f9772e3f5653ac8a0b68da4a",
+                  "title": "漫长的季节",
+                  "episodes": 12
+                }
+              ],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 0.4664739972213283,
+                "llm_ms": 0.0,
+                "total_ms": 86.65728499909164,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 87.54
+            },
+            {
+              "utterance": "第一部。",
+              "status": "NEEDS_CLARIFICATION",
+              "intent": "select",
+              "route": "clarify",
+              "decision_source": "context_rule",
+              "reply": "已选择《三体》。你想从第几集开始？",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 3598.103677999461,
+                "llm_ms": 3593.9189399941824,
+                "total_ms": 3610.2313439987483,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 3611.39
+            },
+            {
+              "utterance": "播放第一集。",
+              "status": "NEEDS_CONFIRMATION",
+              "intent": "play",
+              "route": "clarify",
+              "decision_source": "context_rule",
+              "reply": "确认执行 播放《三体》第1季第一集 吗？小爱可能也响应同一句话；请明确说“确认”或“不确认”。",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 4009.6432490026928,
+                "llm_ms": 4006.5627779986244,
+                "total_ms": 4031.667725997977,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 4032.94
+            },
+            {
+              "utterance": "确认播放。",
+              "status": "SUCCESS",
+              "intent": "confirm",
+              "route": "agent",
+              "decision_source": "context_rule",
+              "reply": "已完成。",
+              "candidates": [],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 3437.4785339969094,
+                "llm_ms": 3433.77366400091,
+                "total_ms": 3467.037722002715,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 3468.87
+            }
+          ],
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "已完成。"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=1 期望=1"
+            },
+            {
+              "check": "只执行一次",
+              "ok": true,
+              "detail": "1"
+            },
+            {
+              "check": "执行的是播放命令",
+              "ok": true,
+              "detail": "播放《三体》第1季第一集"
+            }
+          ],
+          "passed": true,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            4046.3,
+            3901.89,
+            3468.87
+          ],
+          "latency_p50_ms": 3901.89,
+          "latency_p95_ms": 4161.83
+        },
+        {
+          "id": "H2",
+          "title": "H2 取消播放",
+          "utterance": "取消播放。",
+          "reply": "已取消刚才的待确认操作，没有执行任何电视动作。",
+          "status": "NEEDS_CLARIFICATION",
+          "intent": "deny",
+          "answer_source": null,
+          "diagnostics": {
+            "model_name": null,
+            "decision_source": null,
+            "tool_name": null,
+            "tool_status": null,
+            "llm_latency_ms": null,
+            "tool_latency_ms": null,
+            "total_latency_ms": null,
+            "fallback_reason": null,
+            "failed_stage": null,
+            "route_ms": 4009.1144329999224,
+            "llm_ms": 4005.9857980013476,
+            "total_ms": 4026.9455350062344,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [],
+          "candidates": [],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": [
+            {
+              "utterance": "现在资源库有什么？",
+              "status": "SUCCESS",
+              "intent": "browse_library",
+              "route": "agent",
+              "decision_source": "rule",
+              "reply": "已查询 NAS 本地影视库：共 5 部影视作品，其中电影 0 部、剧集 3 部、短剧 2 部。例如：1.《三体》；2.《大明王朝》；3.《师兄太稳健》；4.《我不是大师》；5.《漫长的季节》。可以说“第几部”来选择。",
+              "candidates": [
+                {
+                  "id": "9f4c311a5cba9b3d0360cb35",
+                  "title": "三体",
+                  "episodes": 10
+                },
+                {
+                  "id": "3cbbb776b16e83edd76803ec",
+                  "title": "大明王朝",
+                  "episodes": 46
+                },
+                {
+                  "id": "19a87d781516fa11f2db2bb4",
+                  "title": "师兄太稳健",
+                  "episodes": 200
+                },
+                {
+                  "id": "cadc97ff222cb08035d68cf0",
+                  "title": "我不是大师",
+                  "episodes": 30
+                },
+                {
+                  "id": "f9772e3f5653ac8a0b68da4a",
+                  "title": "漫长的季节",
+                  "episodes": 12
+                }
+              ],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 0.47753500257385895,
+                "llm_ms": 0.0,
+                "total_ms": 94.96283900080016,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 95.86
+            },
+            {
+              "utterance": "第一部。",
+              "status": "NEEDS_CLARIFICATION",
+              "intent": "select",
+              "route": "clarify",
+              "decision_source": "context_rule",
+              "reply": "已选择《三体》。你想从第几集开始？",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 4009.5067380025284,
+                "llm_ms": 4006.5017100059777,
+                "total_ms": 4022.2446249972563,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 4023.42
+            },
+            {
+              "utterance": "播放第一集。",
+              "status": "NEEDS_CONFIRMATION",
+              "intent": "play",
+              "route": "clarify",
+              "decision_source": "context_rule",
+              "reply": "确认执行 播放《三体》第1季第一集 吗？小爱可能也响应同一句话；请明确说“确认”或“不确认”。",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 4013.7639160020626,
+                "llm_ms": 4006.4259020000463,
+                "total_ms": 4036.129713000264,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 4037.57
+            },
+            {
+              "utterance": "取消播放。",
+              "status": "NEEDS_CLARIFICATION",
+              "intent": "deny",
+              "route": "clarify",
+              "decision_source": "context_rule",
+              "reply": "已取消刚才的待确认操作，没有执行任何电视动作。",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 4009.1144329999224,
+                "llm_ms": 4005.9857980013476,
+                "total_ms": 4026.9455350062344,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 4028.37
+            }
+          ],
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "已取消刚才的待确认操作，没有执行任何电视动作。"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=0 期望=0"
+            },
+            {
+              "check": "取消后不执行",
+              "ok": true,
+              "detail": "0"
+            },
+            {
+              "check": "回复确认取消",
+              "ok": true,
+              "detail": "已取消刚才的待确认操作，没有执行任何电视动作。"
+            }
+          ],
+          "passed": true,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            3308.04,
+            4034.68,
+            4028.37
+          ],
+          "latency_p50_ms": 4028.37,
+          "latency_p95_ms": 4039.73
+        },
+        {
+          "id": "I",
+          "title": "I 电视在放什么",
+          "utterance": "电视现在在放什么？",
+          "reply": "正在播放《漫长的季节》 第1季 第5集",
+          "status": "SUCCESS",
+          "intent": "query_media",
+          "answer_source": "device_status",
+          "diagnostics": {
+            "model_name": null,
+            "decision_source": null,
+            "tool_name": null,
+            "tool_status": null,
+            "llm_latency_ms": null,
+            "tool_latency_ms": null,
+            "total_latency_ms": null,
+            "fallback_reason": null,
+            "failed_stage": null,
+            "route_ms": 0.40992299909703434,
+            "llm_ms": 0.0,
+            "total_ms": 8.08098100242205,
+            "observe_ms": 0.1260759963770397
+          },
+          "tool_trace": [],
+          "candidates": [],
+          "agent_run_called": 1,
+          "agent_run_commands": [
+            "现在播放的是什么"
+          ],
+          "turns": null,
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "正在播放《漫长的季节》 第1季 第5集"
+            },
+            {
+              "check": "只读提问只发查询命令",
+              "ok": true,
+              "detail": "['现在播放的是什么']"
+            },
+            {
+              "check": "回复与设备观测一致",
+              "ok": true,
+              "detail": "正在播放《漫长的季节》 第1季 第5集"
+            },
+            {
+              "check": "只读提问",
+              "ok": true,
+              "detail": ""
+            }
+          ],
+          "passed": true,
+          "verified": false,
+          "verified_reason": "无真实电视可观测，使用注入的固定设备观测",
+          "latency_samples_ms": [
+            22.52,
+            8.56,
+            8.58
+          ],
+          "latency_p50_ms": 8.58,
+          "latency_p95_ms": 33.67
+        },
+        {
+          "id": "J",
+          "title": "J 最近新增",
+          "utterance": "最近新增了哪些资源？",
+          "reply": "最近加入/更新的本地作品是：1.《师兄太稳健》（2026） · 200 集；2.《三体》（2023） · 10 集；3.《我不是大师》（2026） · 30 集；4.《漫长的季节》（2023） · 12 集；5.《大明王朝》（2007） · 46 集。可以说“第几部”继续选择。",
+          "status": "SUCCESS",
+          "intent": "browse_library",
+          "answer_source": "local_catalog",
+          "diagnostics": {
+            "model_name": "cn:deepseek-v4.1-flash",
+            "decision_source": "deterministic",
+            "tool_name": "catalog_recent",
+            "tool_status": "ok",
+            "llm_latency_ms": 4351.238306000596,
+            "tool_latency_ms": 82.06920699740294,
+            "total_latency_ms": 4436.507091006206,
+            "fallback_reason": "ungrounded_answer",
+            "failed_stage": null,
+            "route_ms": 2929.2005070019513,
+            "llm_ms": 2925.0474920045235,
+            "total_ms": 7374.639135996404,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [
+            {
+              "tool": "recent",
+              "ok": true,
+              "arguments": {
+                "limit": 10
+              },
+              "latency_ms": 81.94,
+              "error": null
+            }
+          ],
+          "candidates": [
+            {
+              "id": "19a87d781516fa11f2db2bb4",
+              "title": "师兄太稳健",
+              "episodes": 200
+            },
+            {
+              "id": "9f4c311a5cba9b3d0360cb35",
+              "title": "三体",
+              "episodes": 10
+            },
+            {
+              "id": "cadc97ff222cb08035d68cf0",
+              "title": "我不是大师",
+              "episodes": 30
+            },
+            {
+              "id": "f9772e3f5653ac8a0b68da4a",
+              "title": "漫长的季节",
+              "episodes": 12
+            },
+            {
+              "id": "3cbbb776b16e83edd76803ec",
+              "title": "大明王朝",
+              "episodes": 46
+            }
+          ],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": null,
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "最近加入/更新的本地作品是：1.《师兄太稳健》（2026） · 200 集；2.《三体》（2023） · 10 集；3.《我不是大师》（2026） · 30 集"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=0 期望=0"
+            },
+            {
+              "check": "按 added_days_ago 递增",
+              "ok": true,
+              "detail": "[1.0, 2.0, 5.0, 9.0, 40.0]"
+            },
+            {
+              "check": "回复含最近作品",
+              "ok": true,
+              "detail": ""
+            }
+          ],
+          "passed": true,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            6618.01,
+            7385.09,
+            7375.74
+          ],
+          "latency_p50_ms": 7375.74,
+          "latency_p95_ms": 7392.57
+        },
+        {
+          "id": "K",
+          "title": "K 我想看电影",
+          "utterance": "我想看电影。",
+          "reply": "我查了一下本地影视库，目前电影是 0 部，所以暂时没有可播放的电影。库里现有 5 部作品：3 部剧集、2 部短剧，共 298 集。如果你想看，我可以帮你从剧集或短剧里推荐几部。",
+          "status": "SUCCESS",
+          "intent": "search",
+          "answer_source": "local_catalog",
+          "diagnostics": {
+            "model_name": "cn:deepseek-v4.1-flash",
+            "decision_source": "llm",
+            "tool_name": "library_summary",
+            "tool_status": "ok",
+            "llm_latency_ms": 4933.5649800050305,
+            "tool_latency_ms": 82.01616200676654,
+            "total_latency_ms": 5020.385919000546,
+            "fallback_reason": null,
+            "failed_stage": null,
+            "route_ms": 3214.077828997688,
+            "llm_ms": 3210.6709919971763,
+            "total_ms": 8324.742999997397,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [
+            {
+              "tool": "browse",
+              "ok": true,
+              "arguments": {
+                "kind": "movie",
+                "limit": 10,
+                "sort": "recent"
+              },
+              "latency_ms": 81.49,
+              "error": null
+            },
+            {
+              "tool": "summary",
+              "ok": true,
+              "arguments": {},
+              "latency_ms": 0.35,
+              "error": null
+            }
+          ],
+          "candidates": [],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": null,
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "我查了一下本地影视库，目前电影是 0 部，所以暂时没有可播放的电影。库里现有 5 部作品：3 部剧集、2 部短剧，共 298 集。如果你想看，我可以帮你从剧集或"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=0 期望=0"
+            },
+            {
+              "check": "说明没有电影",
+              "ok": false,
+              "detail": "我查了一下本地影视库，目前电影是 0 部，所以暂时没有可播放的电影。库里现有 5 部作品：3 部剧集、2 部短剧，共 298 集。如果你想看，我可以帮你从剧集或"
+            },
+            {
+              "check": "给出真实剧集数",
+              "ok": true,
+              "detail": "3"
+            },
+            {
+              "check": "不编造电影",
+              "ok": true,
+              "detail": ""
+            }
+          ],
+          "passed": false,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            6487.15,
+            8615.12,
+            8325.46
+          ],
+          "latency_p50_ms": 8325.46,
+          "latency_p95_ms": 8846.85
+        },
+        {
+          "id": "L",
+          "title": "L 悬疑剧",
+          "utterance": "推荐一部悬疑剧。",
+          "reply": "从本地已入库内容里给你挑了这几部：1.《大明王朝》（2007） · 46 集；2.《漫长的季节》（2023） · 12 集；3.《三体》（2023） · 10 集。可以说“第几部”继续选择。",
+          "status": "SUCCESS",
+          "intent": "search",
+          "answer_source": "local_catalog",
+          "diagnostics": {
+            "model_name": "cn:deepseek-v4.1-flash",
+            "decision_source": "deterministic",
+            "tool_name": "catalog_recommend",
+            "tool_status": "ok",
+            "llm_latency_ms": 5287.538823991781,
+            "tool_latency_ms": 83.43866000359412,
+            "total_latency_ms": 5375.612468997133,
+            "fallback_reason": "ungrounded_answer",
+            "failed_stage": null,
+            "route_ms": 2430.9525989956455,
+            "llm_ms": 2426.37717800244,
+            "total_ms": 7898.3293769997545,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [
+            {
+              "tool": "recommend",
+              "ok": true,
+              "arguments": {
+                "kind": "series",
+                "preferences": [
+                  "悬疑"
+                ],
+                "limit": 5
+              },
+              "latency_ms": 83.33,
+              "error": null
+            }
+          ],
+          "candidates": [
+            {
+              "id": "3cbbb776b16e83edd76803ec",
+              "title": "大明王朝",
+              "episodes": 46
+            },
+            {
+              "id": "f9772e3f5653ac8a0b68da4a",
+              "title": "漫长的季节",
+              "episodes": 12
+            },
+            {
+              "id": "9f4c311a5cba9b3d0360cb35",
+              "title": "三体",
+              "episodes": 10
+            }
+          ],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": null,
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "从本地已入库内容里给你挑了这几部：1.《大明王朝》（2007） · 46 集；2.《漫长的季节》（2023） · 12 集；3.《三体》（2023） · 10 "
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=0 期望=0"
+            },
+            {
+              "check": "说明无法按题材筛选",
+              "ok": false,
+              "detail": "从本地已入库内容里给你挑了这几部：1.《大明王朝》（2007） · 46 集；2.《漫长的季节》（2023） · 12 集；3.《三体》（2023） · 10 集。可以说“第几部”继续选择。"
+            }
+          ],
+          "passed": false,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            6817.33,
+            5567.44,
+            7899.3
+          ],
+          "latency_p50_ms": 6817.33,
+          "latency_p95_ms": 8764.88
+        },
+        {
+          "id": "M",
+          "title": "M 能力说明",
+          "utterance": "你能帮我做什么？",
+          "reply": "我可以查询本地影视库（总数、按类型浏览、按片名/年份搜索、推荐、最近添加），也可以打开应用、暂停/继续、查当前播放；播放前会先请你确认。",
+          "status": "SUCCESS",
+          "intent": null,
+          "answer_source": null,
+          "diagnostics": {
+            "model_name": null,
+            "decision_source": null,
+            "tool_name": null,
+            "tool_status": null,
+            "llm_latency_ms": null,
+            "tool_latency_ms": null,
+            "total_latency_ms": null,
+            "fallback_reason": null,
+            "failed_stage": null,
+            "route_ms": 0.0,
+            "llm_ms": 0.0,
+            "total_ms": 93.56139900046401,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [
+            {
+              "tool": "status",
+              "ok": true,
+              "arguments": {},
+              "latency_ms": 92.87,
+              "error": null
+            }
+          ],
+          "candidates": [],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": null,
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "我可以查询本地影视库（总数、按类型浏览、按片名/年份搜索、推荐、最近添加），也可以打开应用、暂停/继续、查当前播放；播放前会先请你确认。"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=0 期望=0"
+            },
+            {
+              "check": "能力说明",
+              "ok": true,
+              "detail": "我可以查询本地影视库（总数、按类型浏览、按片名/年份搜索、推荐、最近添加），也可以打开应用、暂停/继续、查当前播放；播放前会先请你确认。"
+            }
+          ],
+          "passed": true,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            91.58,
+            91.95,
+            93.61
+          ],
+          "latency_p50_ms": 91.95,
+          "latency_p95_ms": 94.94
+        },
+        {
+          "id": "N",
+          "title": "N 多轮组合",
+          "utterance": "确认。",
+          "reply": "已完成。",
+          "status": "SUCCESS",
+          "intent": "confirm",
+          "answer_source": "local_catalog",
+          "diagnostics": {
+            "model_name": null,
+            "decision_source": null,
+            "tool_name": null,
+            "tool_status": null,
+            "llm_latency_ms": null,
+            "tool_latency_ms": null,
+            "total_latency_ms": null,
+            "fallback_reason": null,
+            "failed_stage": null,
+            "route_ms": 4009.022307000123,
+            "llm_ms": 4005.9175549977226,
+            "total_ms": 4031.9918359964504,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [
+            {
+              "tool": "recommend",
+              "ok": true,
+              "arguments": {
+                "limit": 3
+              },
+              "latency_ms": 82.44,
+              "error": null
+            },
+            {
+              "tool": "item",
+              "ok": true,
+              "arguments": {
+                "item_id": "3cbbb776b16e83edd76803ec"
+              },
+              "latency_ms": 0.07,
+              "error": null
+            },
+            {
+              "tool": "recommend",
+              "ok": true,
+              "arguments": {
+                "kind": "series",
+                "exclusions": [
+                  "大明王朝"
+                ],
+                "limit": 5
+              },
+              "latency_ms": 1.26,
+              "error": null
+            },
+            {
+              "tool": "recommend",
+              "ok": true,
+              "arguments": {
+                "kind": "series",
+                "max_episodes": 8,
+                "limit": 5
+              },
+              "latency_ms": 0.4,
+              "error": null
+            },
+            {
+              "tool": "recommend",
+              "ok": true,
+              "arguments": {
+                "kind": "series",
+                "max_episodes": 10,
+                "limit": 5
+              },
+              "latency_ms": 0.66,
+              "error": null
+            }
+          ],
+          "candidates": [],
+          "agent_run_called": 1,
+          "agent_run_commands": [
+            "播放《大明王朝》第1季第一集"
+          ],
+          "turns": [
+            {
+              "utterance": "推荐三部好看的。",
+              "status": "SUCCESS",
+              "intent": "assistant",
+              "route": "agent",
+              "decision_source": "assistant_fallback",
+              "reply": "给你推荐这三部（都来自本地影视库）： 1.《师兄太稳健》（2026，短剧，共 200 集，1 天前入库）：穿越者留在宗门里稳健修行。 2.《大明王朝》（2007，电视剧，共 46 集，湖南广播电视台出品）：讲述嘉靖年间朝廷与海瑞之间的博弈。 3.《我不是大师》（2026，短剧，共 30 集，5 天前入库）：外卖员误入武林后成为大师。 这三部在库里都还没有题材标签，所以没法按类型筛选。想先看哪一部？我可以帮你打开。",
+              "candidates": [
+                {
+                  "id": "19a87d781516fa11f2db2bb4",
+                  "title": "师兄太稳健",
+                  "episodes": 200
+                },
+                {
+                  "id": "3cbbb776b16e83edd76803ec",
+                  "title": "大明王朝",
+                  "episodes": 46
+                },
+                {
+                  "id": "cadc97ff222cb08035d68cf0",
+                  "title": "我不是大师",
+                  "episodes": 30
+                }
+              ],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": "cn:deepseek-v4.1-flash",
+                "decision_source": "llm",
+                "tool_name": "catalog_recommend",
+                "tool_status": "ok",
+                "llm_latency_ms": 4675.964466005098,
+                "tool_latency_ms": 82.55073000327684,
+                "total_latency_ms": 4764.00169399858,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 0.0,
+                "llm_ms": 0.0,
+                "total_ms": 8601.202670994098,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 8602.12
+            },
+            {
+              "utterance": "第二个讲什么？",
+              "status": "SUCCESS",
+              "intent": "assistant",
+              "route": "agent",
+              "decision_source": "assistant_fallback",
+              "reply": "《大明王朝》（电视剧，2007 年，46 集，出品：湖南广播电视台）讲的是：嘉靖年间朝廷与海瑞的博弈。",
+              "candidates": [],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": "cn:deepseek-v4.1-flash",
+                "decision_source": "deterministic",
+                "tool_name": "catalog_detail",
+                "tool_status": "ok",
+                "llm_latency_ms": 3841.181919000519,
+                "tool_latency_ms": 0.2300750056747347,
+                "total_latency_ms": 3844.9636040022597,
+                "fallback_reason": "ungrounded_answer",
+                "failed_stage": null,
+                "route_ms": 0.0,
+                "llm_ms": 0.0,
+                "total_ms": 7425.098466999771,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 7426.29
+            },
+            {
+              "utterance": "换一个类似的。",
+              "status": "SUCCESS",
+              "intent": "assistant",
+              "route": "agent",
+              "decision_source": "assistant_fallback",
+              "reply": "从本地已入库内容里给你挑了这几部：1.《漫长的季节》（2023） · 12 集；2.《三体》（2023） · 10 集。可以说“第几部”继续选择。",
+              "candidates": [
+                {
+                  "id": "f9772e3f5653ac8a0b68da4a",
+                  "title": "漫长的季节",
+                  "episodes": 12
+                },
+                {
+                  "id": "9f4c311a5cba9b3d0360cb35",
+                  "title": "三体",
+                  "episodes": 10
+                }
+              ],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": "cn:deepseek-v4.1-flash",
+                "decision_source": "deterministic",
+                "tool_name": "catalog_recommend",
+                "tool_status": "ok",
+                "llm_latency_ms": 5371.9891180007835,
+                "tool_latency_ms": 1.4029289959580638,
+                "total_latency_ms": 5377.5664909990155,
+                "fallback_reason": "ungrounded_answer",
+                "failed_stage": null,
+                "route_ms": 0.0,
+                "llm_ms": 0.0,
+                "total_ms": 9403.392995001923,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 9404.83
+            },
+            {
+              "utterance": "不要那么长的。",
+              "status": "SUCCESS",
+              "intent": "assistant",
+              "route": "agent",
+              "decision_source": "assistant_fallback",
+              "reply": "那可以看《三体》，共 10 集，2023 年，出品方是腾讯视频，是本地刚入库的。要的话我可以帮你打开。",
+              "candidates": [
+                {
+                  "id": "9f4c311a5cba9b3d0360cb35",
+                  "title": "三体",
+                  "episodes": 10
+                }
+              ],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": "cn:deepseek-v4.1-flash",
+                "decision_source": "llm",
+                "tool_name": "catalog_recommend",
+                "tool_status": "ok",
+                "llm_latency_ms": 6644.02790999884,
+                "tool_latency_ms": 1.2675860052695498,
+                "total_latency_ms": 6649.912049004342,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 0.0,
+                "llm_ms": 0.0,
+                "total_ms": 10680.88431200158,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 10681.9
+            },
+            {
+              "utterance": "就看刚才那个。",
+              "status": "NEEDS_CONFIRMATION",
+              "intent": "play",
+              "route": "clarify",
+              "decision_source": "context_rule",
+              "reply": "确认执行 播放《大明王朝》第1季第一集 吗？小爱可能也响应同一句话；请明确说“确认”或“不确认”。",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 0.0,
+                "llm_ms": 0.0,
+                "total_ms": 4114.583032001974,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 4115.81
+            },
+            {
+              "utterance": "确认。",
+              "status": "SUCCESS",
+              "intent": "confirm",
+              "route": "agent",
+              "decision_source": "context_rule",
+              "reply": "已完成。",
+              "candidates": [],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 4009.022307000123,
+                "llm_ms": 4005.9175549977226,
+                "total_ms": 4031.9918359964504,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 4033.25
+            }
+          ],
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "已完成。"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": false,
+              "detail": "agent.run=1 期望=0"
+            },
+            {
+              "check": "「就看刚才那个」命中第 2 个候选",
+              "ok": true,
+              "detail": ""
+            },
+            {
+              "check": "确认后执行一次",
+              "ok": true,
+              "detail": "1"
+            }
+          ],
+          "passed": false,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            4037.36,
+            4033.65,
+            4033.25
+          ],
+          "latency_p50_ms": 4033.65,
+          "latency_p95_ms": 4040.33
+        },
+        {
+          "id": "O",
+          "title": "O 重复确认",
+          "utterance": "确认播放。",
+          "reply": "没有可确认的操作（可能已过期或在另一入口执行过），请重新说明要求。",
+          "status": "NEEDS_CLARIFICATION",
+          "intent": "confirm",
+          "answer_source": null,
+          "diagnostics": {
+            "model_name": null,
+            "decision_source": null,
+            "tool_name": null,
+            "tool_status": null,
+            "llm_latency_ms": null,
+            "tool_latency_ms": null,
+            "total_latency_ms": null,
+            "fallback_reason": null,
+            "failed_stage": null,
+            "route_ms": 3437.565528001869,
+            "llm_ms": 3433.2517119983095,
+            "total_ms": 3458.8676359999226,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [],
+          "candidates": [],
+          "agent_run_called": 1,
+          "agent_run_commands": [
+            "播放《三体》第1季第一集"
+          ],
+          "turns": [
+            {
+              "utterance": "现在资源库有什么？",
+              "status": "SUCCESS",
+              "intent": "browse_library",
+              "route": "agent",
+              "decision_source": "rule",
+              "reply": "已查询 NAS 本地影视库：共 5 部影视作品，其中电影 0 部、剧集 3 部、短剧 2 部。例如：1.《三体》；2.《大明王朝》；3.《师兄太稳健》；4.《我不是大师》；5.《漫长的季节》。可以说“第几部”来选择。",
+              "candidates": [
+                {
+                  "id": "9f4c311a5cba9b3d0360cb35",
+                  "title": "三体",
+                  "episodes": 10
+                },
+                {
+                  "id": "3cbbb776b16e83edd76803ec",
+                  "title": "大明王朝",
+                  "episodes": 46
+                },
+                {
+                  "id": "19a87d781516fa11f2db2bb4",
+                  "title": "师兄太稳健",
+                  "episodes": 200
+                },
+                {
+                  "id": "cadc97ff222cb08035d68cf0",
+                  "title": "我不是大师",
+                  "episodes": 30
+                },
+                {
+                  "id": "f9772e3f5653ac8a0b68da4a",
+                  "title": "漫长的季节",
+                  "episodes": 12
+                }
+              ],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 0.47222099965438247,
+                "llm_ms": 0.0,
+                "total_ms": 99.5528089988511,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 100.44
+            },
+            {
+              "utterance": "第一部。",
+              "status": "NEEDS_CLARIFICATION",
+              "intent": "select",
+              "route": "clarify",
+              "decision_source": "context_rule",
+              "reply": "已选择《三体》。你想从第几集开始？",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 4008.6612260056427,
+                "llm_ms": 4005.625311001495,
+                "total_ms": 4021.941405997495,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 4023.26
+            },
+            {
+              "utterance": "播放第一集。",
+              "status": "NEEDS_CONFIRMATION",
+              "intent": "play",
+              "route": "clarify",
+              "decision_source": "context_rule",
+              "reply": "确认执行 播放《三体》第1季第一集 吗？小爱可能也响应同一句话；请明确说“确认”或“不确认”。",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 4017.7557349961717,
+                "llm_ms": 4007.5948550002067,
+                "total_ms": 4047.094946996367,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 4048.34
+            },
+            {
+              "utterance": "确认播放。",
+              "status": "SUCCESS",
+              "intent": "confirm",
+              "route": "agent",
+              "decision_source": "context_rule",
+              "reply": "已完成。",
+              "candidates": [],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 4009.6750790035003,
+                "llm_ms": 4006.1834459993406,
+                "total_ms": 4040.8451659968705,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 4042.67
+            },
+            {
+              "utterance": "确认播放。",
+              "status": "NEEDS_CLARIFICATION",
+              "intent": "confirm",
+              "route": "clarify",
+              "decision_source": "context_rule",
+              "reply": "没有可确认的操作（可能已过期或在另一入口执行过），请重新说明要求。",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 3437.565528001869,
+                "llm_ms": 3433.2517119983095,
+                "total_ms": 3458.8676359999226,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 3460.29
+            }
+          ],
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "没有可确认的操作（可能已过期或在另一入口执行过），请重新说明要求。"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=1 期望=1"
+            },
+            {
+              "check": "重复确认只执行一次",
+              "ok": true,
+              "detail": "1"
+            },
+            {
+              "check": "第二次确认被拒绝",
+              "ok": true,
+              "detail": "没有可确认的操作（可能已过期或在另一入口执行过），请重新说明要求。"
+            }
+          ],
+          "passed": true,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            2734.45,
+            4033.04,
+            3460.29
+          ],
+          "latency_p50_ms": 3460.29,
+          "latency_p95_ms": 4491.24
+        }
+      ],
+      "summary": {
+        "available": true,
+        "total": 5,
+        "movies": 0,
+        "series": 3,
+        "unknown_kind": 0,
+        "episodes": 298,
+        "with_metadata": 5,
+        "metadata_missing": 0,
+        "ambiguous_folders": 0,
+        "ambiguous_videos": 0,
+        "roots": [
+          "<library>"
+        ],
+        "index_age_seconds": 0.07831931114196777,
+        "errors": [],
+        "short_dramas": 2,
+        "seasons": 6,
+        "with_plot": 5,
+        "with_genres": 0,
+        "recent_added_7d": 3,
+        "recent_added_30d": 4
+      },
+      "elapsed_s": 498.5
+    },
+    "production": {
+      "records": [
+        {
+          "id": "A",
+          "title": "A 资源库总览",
+          "utterance": "现在资源库有什么？",
+          "reply": "已查询 NAS 本地影视库：共 35 部影视作品，其中电影 0 部、剧集 2 部、短剧 33 部。例如：1.《一身腱子肉，乱世做谋臣》；2.《万妖图录传》；3.《从小兵开始》；4.《从布衣开始成圣》；5.《光之巨人：原初之光》；6.《光之战神奥帝伽》；7.《全民机械飞升》；8.《大夏之始》。以上只是部分条目，可以继续按片名或类型搜索。",
+          "status": "SUCCESS",
+          "intent": "browse_library",
+          "answer_source": "local_catalog",
+          "diagnostics": {
+            "model_name": null,
+            "decision_source": null,
+            "tool_name": null,
+            "tool_status": null,
+            "llm_latency_ms": null,
+            "tool_latency_ms": null,
+            "total_latency_ms": null,
+            "fallback_reason": null,
+            "failed_stage": null,
+            "route_ms": 0.5024050042266026,
+            "llm_ms": 0.0,
+            "total_ms": 1278.0684309982462,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [],
+          "candidates": [
+            {
+              "id": "3a6c4d7029ba3aa71e851c1b",
+              "title": "一身腱子肉，乱世做谋臣",
+              "episodes": 107
+            },
+            {
+              "id": "07f4dd129959ad2594a94013",
+              "title": "万妖图录传",
+              "episodes": 202
+            },
+            {
+              "id": "c68f2f337ac96e70cc70f4aa",
+              "title": "从小兵开始",
+              "episodes": 226
+            },
+            {
+              "id": "3700e476cf08265cf7ca85b2",
+              "title": "从布衣开始成圣",
+              "episodes": 257
+            },
+            {
+              "id": "9b9db5294cfe9b7d92f2fa96",
+              "title": "光之巨人：原初之光",
+              "episodes": 73
+            },
+            {
+              "id": "f4c868189de03cee0490cf67",
+              "title": "光之战神奥帝伽",
+              "episodes": 18
+            },
+            {
+              "id": "aa11654c5d453e7eda22932a",
+              "title": "全民机械飞升",
+              "episodes": 151
+            },
+            {
+              "id": "ed66b1d214d3f9b7e855a7f8",
+              "title": "大夏之始",
+              "episodes": 308
+            }
+          ],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": null,
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "已查询 NAS 本地影视库：共 35 部影视作品，其中电影 0 部、剧集 2 部、短剧 33 部。例如：1.《一身腱子肉，乱世做谋臣》；2.《万妖图录传》；3."
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=0 期望=0"
+            },
+            {
+              "check": "走 overview 类读取",
+              "ok": true,
+              "detail": "tools=- adapter_overview=1"
+            },
+            {
+              "check": "总数一致",
+              "ok": true,
+              "detail": "回复=35 真实=35"
+            },
+            {
+              "check": "电影数一致",
+              "ok": true,
+              "detail": "回复=0 真实=0"
+            },
+            {
+              "check": "剧集数一致",
+              "ok": true,
+              "detail": "回复=2 真实=2"
+            },
+            {
+              "check": "短剧单列",
+              "ok": true,
+              "detail": "回复=33 真实=33"
+            },
+            {
+              "check": "候选全部真实",
+              "ok": true,
+              "detail": ""
+            }
+          ],
+          "passed": true,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            1238.61,
+            1245.39,
+            1279.33
+          ],
+          "latency_p50_ms": 1245.39,
+          "latency_p95_ms": 1306.48
+        },
+        {
+          "id": "B",
+          "title": "B 推荐三部",
+          "utterance": "推荐三部好看的。",
+          "reply": "从本地已入库内容里给你挑了这几部：1.《穿成野神我靠香火斩诸神》（2026） · 1305 集；2.《从布衣开始成圣》（2026） · 257 集；3.《我合成了全世界啊》（2026） · 351 集。可以说“第几部”继续选择。",
+          "status": "SUCCESS",
+          "intent": "assistant",
+          "answer_source": "local_catalog",
+          "diagnostics": {
+            "model_name": "cn:deepseek-v4.1-flash",
+            "decision_source": "deterministic",
+            "tool_name": "catalog_recommend",
+            "tool_status": "ok",
+            "llm_latency_ms": 4728.374136000639,
+            "tool_latency_ms": 1344.8071450038697,
+            "total_latency_ms": 6077.592050998646,
+            "fallback_reason": "ungrounded_answer",
+            "failed_stage": null,
+            "route_ms": 2449.4630940025672,
+            "llm_ms": 2447.5728799952776,
+            "total_ms": 8548.893428996962,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [
+            {
+              "tool": "recommend",
+              "ok": true,
+              "arguments": {
+                "limit": 3
+              },
+              "latency_ms": 1344.69,
+              "error": null
+            }
+          ],
+          "candidates": [
+            {
+              "id": "7a52615b3bbdba3beb2670d5",
+              "title": "穿成野神我靠香火斩诸神",
+              "episodes": 1305
+            },
+            {
+              "id": "3700e476cf08265cf7ca85b2",
+              "title": "从布衣开始成圣",
+              "episodes": 257
+            },
+            {
+              "id": "ca5d0a8554a1a9fab4132a47",
+              "title": "我合成了全世界啊",
+              "episodes": 351
+            }
+          ],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": null,
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "从本地已入库内容里给你挑了这几部：1.《穿成野神我靠香火斩诸神》（2026） · 1305 集；2.《从布衣开始成圣》（2026） · 257 集；3.《我合成"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=0 期望=0"
+            },
+            {
+              "check": "回复含 3 部真实作品",
+              "ok": true,
+              "detail": "回复片名=['穿成野神我靠香火斩诸神', '从布衣开始成圣', '我合成了全世界啊']"
+            },
+            {
+              "check": "候选写入会话（供\"第二个\"使用）",
+              "ok": true,
+              "detail": "candidates=3（模型直接 grounded 回答时会话可能拿不到候选）"
+            },
+            {
+              "check": "候选 id 可在库里查到",
+              "ok": true,
+              "detail": ""
+            },
+            {
+              "check": "回复含全部候选片名",
+              "ok": true,
+              "detail": ""
+            }
+          ],
+          "passed": true,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            8174.61,
+            9495.64,
+            8550.4
+          ],
+          "latency_p50_ms": 8550.4,
+          "latency_p95_ms": 10251.83
+        },
+        {
+          "id": "C",
+          "title": "C 第二个讲什么",
+          "utterance": "第二个讲什么？",
+          "reply": "《从布衣开始成圣》（短剧，2026 年，257 集，出品：红果短剧）讲的是：陈实本是靖安侯府骑奴，因卷入顾承泽与萧凤箫的后宅阴谋，被迫夹缝求生。为挣脱奴籍救下翠浓，他毅然踏上武道之路。凭借绝佳天赋与坚韧心性，他修成神力象胎，周旋于权贵与江湖帮派之间。随着实力攀升，他卷入扶风会养蛊与叛军平定等惊天风暴，最终打破阶层桎梏迎娶侯门千金，逆袭掌控自身命运，登顶大乾武道巅峰。",
+          "status": "SUCCESS",
+          "intent": "assistant",
+          "answer_source": "local_catalog",
+          "diagnostics": {
+            "model_name": "cn:deepseek-v4.1-flash",
+            "decision_source": "deterministic",
+            "tool_name": "catalog_detail",
+            "tool_status": "ok",
+            "llm_latency_ms": 3220.804185999441,
+            "tool_latency_ms": 0.20779199985554442,
+            "total_latency_ms": 3224.133243995311,
+            "fallback_reason": "ungrounded_answer",
+            "failed_stage": null,
+            "route_ms": 0.0,
+            "llm_ms": 0.0,
+            "total_ms": 7456.969096005196,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [
+            {
+              "tool": "recommend",
+              "ok": true,
+              "arguments": {
+                "limit": 3
+              },
+              "latency_ms": 1289.8,
+              "error": null
+            },
+            {
+              "tool": "item",
+              "ok": true,
+              "arguments": {
+                "item_id": "3700e476cf08265cf7ca85b2"
+              },
+              "latency_ms": 0.07,
+              "error": null
+            }
+          ],
+          "candidates": [],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": [
+            {
+              "utterance": "推荐三部好看的。",
+              "status": "SUCCESS",
+              "intent": "assistant",
+              "route": "agent",
+              "decision_source": "llm",
+              "reply": "给你挑了本地库里最近入库的三部短剧： 1.《穿成野神我靠香火斩诸神》（2026，红果短剧，共 1305 集）——穿越成无人问津的泥塑野神，从一盏香火起步，收妖邪、斩正神。 2.《从布衣开始成圣》（2026，红果短剧，共 257 集）——骑奴陈实踏上武道之路，逆袭掌控命运。 3.《我合成了全世界啊》（2026，红果短剧，共 351 集）——地球沦为星际科技垃圾场，主角靠万物合成能力升级装备。 这三部的类型标签暂时缺失，只能如实按“短剧”推荐；另外集数都不少，想先看哪部可以告诉我，我帮你起播。",
+              "candidates": [
+                {
+                  "id": "7a52615b3bbdba3beb2670d5",
+                  "title": "穿成野神我靠香火斩诸神",
+                  "episodes": 1305
+                },
+                {
+                  "id": "3700e476cf08265cf7ca85b2",
+                  "title": "从布衣开始成圣",
+                  "episodes": 257
+                },
+                {
+                  "id": "ca5d0a8554a1a9fab4132a47",
+                  "title": "我合成了全世界啊",
+                  "episodes": 351
+                }
+              ],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": "cn:deepseek-v4.1-flash",
+                "decision_source": "llm",
+                "tool_name": "library_recommend",
+                "tool_status": "ok",
+                "llm_latency_ms": 4936.661118008487,
+                "tool_latency_ms": 1289.9281989957672,
+                "total_latency_ms": 6231.377607000468,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 2517.2168069984764,
+                "llm_ms": 2515.409310995892,
+                "total_ms": 8755.829175002873,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 8756.78
+            },
+            {
+              "utterance": "第二个讲什么？",
+              "status": "SUCCESS",
+              "intent": "assistant",
+              "route": "agent",
+              "decision_source": "assistant_fallback",
+              "reply": "《从布衣开始成圣》（短剧，2026 年，257 集，出品：红果短剧）讲的是：陈实本是靖安侯府骑奴，因卷入顾承泽与萧凤箫的后宅阴谋，被迫夹缝求生。为挣脱奴籍救下翠浓，他毅然踏上武道之路。凭借绝佳天赋与坚韧心性，他修成神力象胎，周旋于权贵与江湖帮派之间。随着实力攀升，他卷入扶风会养蛊与叛军平定等惊天风暴，最终打破阶层桎梏迎娶侯门千金，逆袭掌控自身命运，登顶大乾武道巅峰。",
+              "candidates": [],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": "cn:deepseek-v4.1-flash",
+                "decision_source": "deterministic",
+                "tool_name": "catalog_detail",
+                "tool_status": "ok",
+                "llm_latency_ms": 3220.804185999441,
+                "tool_latency_ms": 0.20779199985554442,
+                "total_latency_ms": 3224.133243995311,
+                "fallback_reason": "ungrounded_answer",
+                "failed_stage": null,
+                "route_ms": 0.0,
+                "llm_ms": 0.0,
+                "total_ms": 7456.969096005196,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 7458.1
+            }
+          ],
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "《从布衣开始成圣》（短剧，2026 年，257 集，出品：红果短剧）讲的是：陈实本是靖安侯府骑奴，因卷入顾承泽与萧凤箫的后宅阴谋，被迫夹缝求生。为挣脱奴籍救下翠"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=0 期望=0"
+            },
+            {
+              "check": "命中第 2 个候选",
+              "ok": true,
+              "detail": "从布衣开始成圣"
+            },
+            {
+              "check": "复述真实 plot 片段",
+              "ok": true,
+              "detail": "陈实本是靖安侯府骑奴，因"
+            },
+            {
+              "check": "未串到第 1 个",
+              "ok": true,
+              "detail": "穿成野神我靠香火斩诸神"
+            }
+          ],
+          "passed": true,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            7152.2,
+            7932.8,
+            7458.1
+          ],
+          "latency_p50_ms": 7458.1,
+          "latency_p95_ms": 8312.56
+        },
+        {
+          "id": "D",
+          "title": "D 换一个类似的",
+          "utterance": "换一个类似的。",
+          "reply": "给你换个口味，这几部都是本地已入库的玄幻修仙类短剧： 1.《万妖图录传》（202 集）——少女以妖谱斩妖夺神通，镇压万古妖魔。 2.《虾无邪修仙记》（1000 集）——凡人林凡靠神秘铜瓶一步步修仙。 3.《末世轮回：我以尸躯化神明》（310 集）——末世觉醒，化丧尸之王逆命成神。 4.《大夏之始》（308 集）——废土穿越，御兽开荒重建文明。 想看哪部跟我说，我帮你打开。",
+          "status": "SUCCESS",
+          "intent": "assistant",
+          "answer_source": "local_catalog",
+          "diagnostics": {
+            "model_name": "cn:deepseek-v4.1-flash",
+            "decision_source": "llm",
+            "tool_name": "catalog_recommend",
+            "tool_status": "ok",
+            "llm_latency_ms": 6222.461381003086,
+            "tool_latency_ms": 14.201974001480266,
+            "total_latency_ms": 6242.838942998787,
+            "fallback_reason": null,
+            "failed_stage": null,
+            "route_ms": 3134.9985279957764,
+            "llm_ms": 3133.084613000392,
+            "total_ms": 9392.11858100316,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [
+            {
+              "tool": "recommend",
+              "ok": true,
+              "arguments": {
+                "limit": 3
+              },
+              "latency_ms": 1287.66,
+              "error": null
+            },
+            {
+              "tool": "recommend",
+              "ok": true,
+              "arguments": {
+                "kind": "short_drama",
+                "exclusions": [
+                  "穿成野神我靠香火斩诸神",
+                  "从布衣开始成圣",
+                  "我合成了全世界啊"
+                ],
+                "limit": 5
+              },
+              "latency_ms": 14.09,
+              "error": null
+            }
+          ],
+          "candidates": [
+            {
+              "id": "adc161a17581ba1a5ccceef0",
+              "title": "星际长生：活得够久就能称霸宇宙",
+              "episodes": 272
+            },
+            {
+              "id": "07f4dd129959ad2594a94013",
+              "title": "万妖图录传",
+              "episodes": 202
+            },
+            {
+              "id": "5bea79d9435f23c6554dc696",
+              "title": "末世轮回：我以尸躯化神明",
+              "episodes": 310
+            },
+            {
+              "id": "cdfbf500bd017c24e39834bd",
+              "title": "虾无邪修仙记",
+              "episodes": 1000
+            },
+            {
+              "id": "ed66b1d214d3f9b7e855a7f8",
+              "title": "大夏之始",
+              "episodes": 308
+            }
+          ],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": [
+            {
+              "utterance": "推荐三部好看的。",
+              "status": "SUCCESS",
+              "intent": "assistant",
+              "route": "agent",
+              "decision_source": "llm",
+              "reply": "从本地已入库内容里给你挑了这几部：1.《穿成野神我靠香火斩诸神》（2026） · 1305 集；2.《从布衣开始成圣》（2026） · 257 集；3.《我合成了全世界啊》（2026） · 351 集。可以说“第几部”继续选择。",
+              "candidates": [
+                {
+                  "id": "7a52615b3bbdba3beb2670d5",
+                  "title": "穿成野神我靠香火斩诸神",
+                  "episodes": 1305
+                },
+                {
+                  "id": "3700e476cf08265cf7ca85b2",
+                  "title": "从布衣开始成圣",
+                  "episodes": 257
+                },
+                {
+                  "id": "ca5d0a8554a1a9fab4132a47",
+                  "title": "我合成了全世界啊",
+                  "episodes": 351
+                }
+              ],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": "cn:deepseek-v4.1-flash",
+                "decision_source": "deterministic",
+                "tool_name": "catalog_recommend",
+                "tool_status": "ok",
+                "llm_latency_ms": 4079.845560998365,
+                "tool_latency_ms": 1287.7640209990204,
+                "total_latency_ms": 5372.166734996426,
+                "fallback_reason": "ungrounded_answer",
+                "failed_stage": null,
+                "route_ms": 2926.0709320005844,
+                "llm_ms": 2924.238350999076,
+                "total_ms": 8305.552067999088,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 8306.62
+            },
+            {
+              "utterance": "换一个类似的。",
+              "status": "SUCCESS",
+              "intent": "assistant",
+              "route": "agent",
+              "decision_source": "llm",
+              "reply": "给你换个口味，这几部都是本地已入库的玄幻修仙类短剧： 1.《万妖图录传》（202 集）——少女以妖谱斩妖夺神通，镇压万古妖魔。 2.《虾无邪修仙记》（1000 集）——凡人林凡靠神秘铜瓶一步步修仙。 3.《末世轮回：我以尸躯化神明》（310 集）——末世觉醒，化丧尸之王逆命成神。 4.《大夏之始》（308 集）——废土穿越，御兽开荒重建文明。 想看哪部跟我说，我帮你打开。",
+              "candidates": [
+                {
+                  "id": "adc161a17581ba1a5ccceef0",
+                  "title": "星际长生：活得够久就能称霸宇宙",
+                  "episodes": 272
+                },
+                {
+                  "id": "07f4dd129959ad2594a94013",
+                  "title": "万妖图录传",
+                  "episodes": 202
+                },
+                {
+                  "id": "5bea79d9435f23c6554dc696",
+                  "title": "末世轮回：我以尸躯化神明",
+                  "episodes": 310
+                },
+                {
+                  "id": "cdfbf500bd017c24e39834bd",
+                  "title": "虾无邪修仙记",
+                  "episodes": 1000
+                },
+                {
+                  "id": "ed66b1d214d3f9b7e855a7f8",
+                  "title": "大夏之始",
+                  "episodes": 308
+                }
+              ],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": "cn:deepseek-v4.1-flash",
+                "decision_source": "llm",
+                "tool_name": "catalog_recommend",
+                "tool_status": "ok",
+                "llm_latency_ms": 6222.461381003086,
+                "tool_latency_ms": 14.201974001480266,
+                "total_latency_ms": 6242.838942998787,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 3134.9985279957764,
+                "llm_ms": 3133.084613000392,
+                "total_ms": 9392.11858100316,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 9393.43
+            }
+          ],
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "给你换个口味，这几部都是本地已入库的玄幻修仙类短剧： 1.《万妖图录传》（202 集）——少女以妖谱斩妖夺神通，镇压万古妖魔。 2.《虾无邪修仙记》（1000 "
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=0 期望=0"
+            },
+            {
+              "check": "已给候选被排除",
+              "ok": false,
+              "detail": "exclusions=['从布衣开始成圣', '我合成了全世界啊', '穿成野神我靠香火斩诸神']"
+            },
+            {
+              "check": "新候选不重复",
+              "ok": true,
+              "detail": "新=5 旧=3"
+            }
+          ],
+          "passed": false,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            8691.73,
+            11687.34,
+            9393.43
+          ],
+          "latency_p50_ms": 9393.43,
+          "latency_p95_ms": 13522.47
+        },
+        {
+          "id": "E",
+          "title": "E 不要太长",
+          "utterance": "不要那么长的。",
+          "reply": "你是想找集数少一些的短剧吧？大概多少集以内？",
+          "status": "NEEDS_CLARIFICATION",
+          "intent": "refine",
+          "answer_source": null,
+          "diagnostics": {
+            "model_name": null,
+            "decision_source": null,
+            "tool_name": null,
+            "tool_status": null,
+            "llm_latency_ms": null,
+            "tool_latency_ms": null,
+            "total_latency_ms": null,
+            "fallback_reason": null,
+            "failed_stage": null,
+            "route_ms": 5333.59806399676,
+            "llm_ms": 5329.3920240030275,
+            "total_ms": 5346.278072000132,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [
+            {
+              "tool": "recommend",
+              "ok": true,
+              "arguments": {
+                "limit": 3
+              },
+              "latency_ms": 1334.99,
+              "error": null
+            }
+          ],
+          "candidates": [],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": [
+            {
+              "utterance": "推荐三部好看的。",
+              "status": "SUCCESS",
+              "intent": "assistant",
+              "route": "agent",
+              "decision_source": "llm",
+              "reply": "给你挑了三部本地已入库的短剧（都来自红果短剧，且是近 7 天新增的）： 1. 《穿成野神我靠香火斩诸神》——共 1305 集。主角穿越成一位无人问津的泥塑野神，从河西村的一盏香火起步，收妖邪、斩正神，想为被神明遗弃的世界立起属于凡尘的神明。 2. 《从布衣开始成圣》——共 257 集。靖安侯府骑奴陈实卷入后宅阴谋，为挣脱奴籍踏上武道之路，一路逆袭登上武道巅峰。 3. 《我合成了全世界啊》——共 351 集。文明覆灭后，地球成了星际科技垃圾场；孤儿程乞带着有万物合成能力的 STC，靠融合科技残骸不断升级装备。 这三部的类型标签在库里都是空的，所以只能确认它们是短剧，没法给出更细的题材分类。想先看哪部，我可以直接帮你起播。",
+              "candidates": [
+                {
+                  "id": "7a52615b3bbdba3beb2670d5",
+                  "title": "穿成野神我靠香火斩诸神",
+                  "episodes": 1305
+                },
+                {
+                  "id": "3700e476cf08265cf7ca85b2",
+                  "title": "从布衣开始成圣",
+                  "episodes": 257
+                },
+                {
+                  "id": "ca5d0a8554a1a9fab4132a47",
+                  "title": "我合成了全世界啊",
+                  "episodes": 351
+                }
+              ],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": "cn:deepseek-v4.1-flash",
+                "decision_source": "llm",
+                "tool_name": "catalog_recommend",
+                "tool_status": "ok",
+                "llm_latency_ms": 4953.382459003478,
+                "tool_latency_ms": 1335.1025329975528,
+                "total_latency_ms": 6293.5161989953485,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 2208.5438089998206,
+                "llm_ms": 2206.6681510041235,
+                "total_ms": 8510.893609003688,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 8511.92
+            },
+            {
+              "utterance": "不要那么长的。",
+              "status": "NEEDS_CLARIFICATION",
+              "intent": "refine",
+              "route": "clarify",
+              "decision_source": "llm",
+              "reply": "你是想找集数少一些的短剧吧？大概多少集以内？",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 5333.59806399676,
+                "llm_ms": 5329.3920240030275,
+                "total_ms": 5346.278072000132,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 5347.3
+            }
+          ],
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "你是想找集数少一些的短剧吧？大概多少集以内？"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=0 期望=0"
+            },
+            {
+              "check": "带上 max_episodes",
+              "ok": false,
+              "detail": "None"
+            },
+            {
+              "check": "不暴露内部降级文案",
+              "ok": true,
+              "detail": ""
+            },
+            {
+              "check": "未套用上限时如实澄清（不编造候选）",
+              "ok": true,
+              "detail": "你是想找集数少一些的短剧吧？大概多少集以内？"
+            }
+          ],
+          "passed": false,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            11699.53,
+            13514.57,
+            5347.3
+          ],
+          "latency_p50_ms": 11699.53,
+          "latency_p95_ms": 14966.6
+        },
+        {
+          "id": "F",
+          "title": "F 上次看到哪里",
+          "utterance": "我上次看到哪里了？",
+          "reply": "我还没有记录到你上次播放到哪一集。可以说片名让我查，或说“随便推荐一部”。",
+          "status": "NEEDS_CLARIFICATION",
+          "intent": "recall",
+          "answer_source": null,
+          "diagnostics": {
+            "model_name": null,
+            "decision_source": null,
+            "tool_name": null,
+            "tool_status": null,
+            "llm_latency_ms": null,
+            "tool_latency_ms": null,
+            "total_latency_ms": null,
+            "fallback_reason": null,
+            "failed_stage": null,
+            "route_ms": 3052.2084390031523,
+            "llm_ms": 3048.2067609991645,
+            "total_ms": 3059.084877000714,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [],
+          "candidates": [],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": null,
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "我还没有记录到你上次播放到哪一集。可以说片名让我查，或说“随便推荐一部”。"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=0 期望=0"
+            },
+            {
+              "check": "如实说明无记录或真实记录",
+              "ok": true,
+              "detail": "我还没有记录到你上次播放到哪一集。可以说片名让我查，或说“随便推荐一部”。"
+            },
+            {
+              "check": "未编造集数",
+              "ok": true,
+              "detail": ""
+            }
+          ],
+          "passed": true,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            2631.73,
+            5332.08,
+            3059.61
+          ],
+          "latency_p50_ms": 3059.61,
+          "latency_p95_ms": 7150.06
+        },
+        {
+          "id": "G",
+          "title": "G 打开第N季（确认）",
+          "utterance": "打开这部剧第二季。",
+          "reply": "这部作品没有你指定的那一集，我没有执行播放。",
+          "status": "NEEDS_CLARIFICATION",
+          "intent": "play",
+          "answer_source": null,
+          "diagnostics": {
+            "model_name": null,
+            "decision_source": null,
+            "tool_name": null,
+            "tool_status": null,
+            "llm_latency_ms": null,
+            "tool_latency_ms": null,
+            "total_latency_ms": null,
+            "fallback_reason": null,
+            "failed_stage": null,
+            "route_ms": 0.0,
+            "llm_ms": 0.0,
+            "total_ms": 3569.162082996627,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [],
+          "candidates": [],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": [
+            {
+              "utterance": "现在资源库有什么？",
+              "status": "SUCCESS",
+              "intent": "browse_library",
+              "route": "agent",
+              "decision_source": "rule",
+              "reply": "已查询 NAS 本地影视库：共 35 部影视作品，其中电影 0 部、剧集 2 部、短剧 33 部。例如：1.《一身腱子肉，乱世做谋臣》；2.《万妖图录传》；3.《从小兵开始》；4.《从布衣开始成圣》；5.《光之巨人：原初之光》；6.《光之战神奥帝伽》；7.《全民机械飞升》；8.《大夏之始》。以上只是部分条目，可以继续按片名或类型搜索。",
+              "candidates": [
+                {
+                  "id": "3a6c4d7029ba3aa71e851c1b",
+                  "title": "一身腱子肉，乱世做谋臣",
+                  "episodes": 107
+                },
+                {
+                  "id": "07f4dd129959ad2594a94013",
+                  "title": "万妖图录传",
+                  "episodes": 202
+                },
+                {
+                  "id": "c68f2f337ac96e70cc70f4aa",
+                  "title": "从小兵开始",
+                  "episodes": 226
+                },
+                {
+                  "id": "3700e476cf08265cf7ca85b2",
+                  "title": "从布衣开始成圣",
+                  "episodes": 257
+                },
+                {
+                  "id": "9b9db5294cfe9b7d92f2fa96",
+                  "title": "光之巨人：原初之光",
+                  "episodes": 73
+                },
+                {
+                  "id": "f4c868189de03cee0490cf67",
+                  "title": "光之战神奥帝伽",
+                  "episodes": 18
+                },
+                {
+                  "id": "aa11654c5d453e7eda22932a",
+                  "title": "全民机械飞升",
+                  "episodes": 151
+                },
+                {
+                  "id": "ed66b1d214d3f9b7e855a7f8",
+                  "title": "大夏之始",
+                  "episodes": 308
+                }
+              ],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 0.5239820020506158,
+                "llm_ms": 0.0,
+                "total_ms": 1567.8547200004687,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 1569.32
+            },
+            {
+              "utterance": "第一部。",
+              "status": "NEEDS_CLARIFICATION",
+              "intent": "select",
+              "route": "clarify",
+              "decision_source": "context_rule",
+              "reply": "已选择《一身腱子肉，乱世做谋臣》。你想从第几集开始？",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 8614.335884005413,
+                "llm_ms": 8609.911015999387,
+                "total_ms": 8631.833819003077,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 8633.79
+            },
+            {
+              "utterance": "打开这部剧第二季。",
+              "status": "NEEDS_CLARIFICATION",
+              "intent": "play",
+              "route": "clarify",
+              "decision_source": "context_rule",
+              "reply": "这部作品没有你指定的那一集，我没有执行播放。",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 0.0,
+                "llm_ms": 0.0,
+                "total_ms": 3569.162082996627,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 3570.79
+            }
+          ],
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "这部作品没有你指定的那一集，我没有执行播放。"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=0 期望=0"
+            },
+            {
+              "check": "走确认流程",
+              "ok": false,
+              "detail": "NEEDS_CLARIFICATION"
+            },
+            {
+              "check": "未直接执行",
+              "ok": true,
+              "detail": "0"
+            }
+          ],
+          "passed": false,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            3615.11,
+            6878.97,
+            3570.79
+          ],
+          "latency_p50_ms": 3615.11,
+          "latency_p95_ms": 9490.06
+        },
+        {
+          "id": "G3",
+          "title": "G3 不存在的季",
+          "utterance": "打开这部剧第三季。",
+          "reply": "确认执行 播放《一身腱子肉，乱世做谋臣》第3季第一集 吗？小爱可能也响应同一句话；请明确说“确认”或“不确认”。",
+          "status": "NEEDS_CONFIRMATION",
+          "intent": "play",
+          "answer_source": null,
+          "diagnostics": {
+            "model_name": null,
+            "decision_source": null,
+            "tool_name": null,
+            "tool_status": null,
+            "llm_latency_ms": null,
+            "tool_latency_ms": null,
+            "total_latency_ms": null,
+            "fallback_reason": null,
+            "failed_stage": null,
+            "route_ms": 0.0,
+            "llm_ms": 0.0,
+            "total_ms": 2854.779000997951,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [],
+          "candidates": [],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": [
+            {
+              "utterance": "现在资源库有什么？",
+              "status": "SUCCESS",
+              "intent": "browse_library",
+              "route": "agent",
+              "decision_source": "rule",
+              "reply": "已查询 NAS 本地影视库：共 35 部影视作品，其中电影 0 部、剧集 2 部、短剧 33 部。例如：1.《一身腱子肉，乱世做谋臣》；2.《万妖图录传》；3.《从小兵开始》；4.《从布衣开始成圣》；5.《光之巨人：原初之光》；6.《光之战神奥帝伽》；7.《全民机械飞升》；8.《大夏之始》。以上只是部分条目，可以继续按片名或类型搜索。",
+              "candidates": [
+                {
+                  "id": "3a6c4d7029ba3aa71e851c1b",
+                  "title": "一身腱子肉，乱世做谋臣",
+                  "episodes": 107
+                },
+                {
+                  "id": "07f4dd129959ad2594a94013",
+                  "title": "万妖图录传",
+                  "episodes": 202
+                },
+                {
+                  "id": "c68f2f337ac96e70cc70f4aa",
+                  "title": "从小兵开始",
+                  "episodes": 226
+                },
+                {
+                  "id": "3700e476cf08265cf7ca85b2",
+                  "title": "从布衣开始成圣",
+                  "episodes": 257
+                },
+                {
+                  "id": "9b9db5294cfe9b7d92f2fa96",
+                  "title": "光之巨人：原初之光",
+                  "episodes": 73
+                },
+                {
+                  "id": "f4c868189de03cee0490cf67",
+                  "title": "光之战神奥帝伽",
+                  "episodes": 18
+                },
+                {
+                  "id": "aa11654c5d453e7eda22932a",
+                  "title": "全民机械飞升",
+                  "episodes": 151
+                },
+                {
+                  "id": "ed66b1d214d3f9b7e855a7f8",
+                  "title": "大夏之始",
+                  "episodes": 308
+                }
+              ],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 0.5952310020802543,
+                "llm_ms": 0.0,
+                "total_ms": 1532.8581009962363,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 1534.49
+            },
+            {
+              "utterance": "第一部。",
+              "status": "NEEDS_CLARIFICATION",
+              "intent": "select",
+              "route": "clarify",
+              "decision_source": "context_rule",
+              "reply": "已选择《一身腱子肉，乱世做谋臣》。你想从第几集开始？",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 3984.63167900627,
+                "llm_ms": 3980.5478179987404,
+                "total_ms": 4002.2589079962927,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 4003.7
+            },
+            {
+              "utterance": "打开这部剧第三季。",
+              "status": "NEEDS_CONFIRMATION",
+              "intent": "play",
+              "route": "clarify",
+              "decision_source": "context_rule",
+              "reply": "确认执行 播放《一身腱子肉，乱世做谋臣》第3季第一集 吗？小爱可能也响应同一句话；请明确说“确认”或“不确认”。",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 0.0,
+                "llm_ms": 0.0,
+                "total_ms": 2854.779000997951,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 2856.83
+            }
+          ],
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "确认执行 播放《一身腱子肉，乱世做谋臣》第3季第一集 吗？小爱可能也响应同一句话；请明确说“确认”或“不确认”。"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=0 期望=0"
+            },
+            {
+              "check": "不存在的季不执行",
+              "ok": true,
+              "detail": "NEEDS_CONFIRMATION"
+            },
+            {
+              "check": "未直接执行",
+              "ok": true,
+              "detail": "0"
+            }
+          ],
+          "passed": true,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            8445.73,
+            3575.18,
+            2856.83
+          ],
+          "latency_p50_ms": 3575.18,
+          "latency_p95_ms": 12342.17
+        },
+        {
+          "id": "H",
+          "title": "H 确认播放",
+          "utterance": "确认播放。",
+          "reply": "没有可确认的操作（可能已过期或在另一入口执行过），请重新说明要求。",
+          "status": "NEEDS_CLARIFICATION",
+          "intent": "confirm",
+          "answer_source": null,
+          "diagnostics": {
+            "model_name": null,
+            "decision_source": null,
+            "tool_name": null,
+            "tool_status": null,
+            "llm_latency_ms": null,
+            "tool_latency_ms": null,
+            "total_latency_ms": null,
+            "fallback_reason": null,
+            "failed_stage": null,
+            "route_ms": 8669.4295480047,
+            "llm_ms": 8665.530525999202,
+            "total_ms": 8691.64825399639,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [],
+          "candidates": [],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": [
+            {
+              "utterance": "现在资源库有什么？",
+              "status": "SUCCESS",
+              "intent": "browse_library",
+              "route": "agent",
+              "decision_source": "rule",
+              "reply": "已查询 NAS 本地影视库：共 35 部影视作品，其中电影 0 部、剧集 2 部、短剧 33 部。例如：1.《一身腱子肉，乱世做谋臣》；2.《万妖图录传》；3.《从小兵开始》；4.《从布衣开始成圣》；5.《光之巨人：原初之光》；6.《光之战神奥帝伽》；7.《全民机械飞升》；8.《大夏之始》。以上只是部分条目，可以继续按片名或类型搜索。",
+              "candidates": [
+                {
+                  "id": "3a6c4d7029ba3aa71e851c1b",
+                  "title": "一身腱子肉，乱世做谋臣",
+                  "episodes": 107
+                },
+                {
+                  "id": "07f4dd129959ad2594a94013",
+                  "title": "万妖图录传",
+                  "episodes": 202
+                },
+                {
+                  "id": "c68f2f337ac96e70cc70f4aa",
+                  "title": "从小兵开始",
+                  "episodes": 226
+                },
+                {
+                  "id": "3700e476cf08265cf7ca85b2",
+                  "title": "从布衣开始成圣",
+                  "episodes": 257
+                },
+                {
+                  "id": "9b9db5294cfe9b7d92f2fa96",
+                  "title": "光之巨人：原初之光",
+                  "episodes": 73
+                },
+                {
+                  "id": "f4c868189de03cee0490cf67",
+                  "title": "光之战神奥帝伽",
+                  "episodes": 18
+                },
+                {
+                  "id": "aa11654c5d453e7eda22932a",
+                  "title": "全民机械飞升",
+                  "episodes": 151
+                },
+                {
+                  "id": "ed66b1d214d3f9b7e855a7f8",
+                  "title": "大夏之始",
+                  "episodes": 308
+                }
+              ],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 0.47660499694757164,
+                "llm_ms": 0.0,
+                "total_ms": 1343.919063998328,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 1345.13
+            },
+            {
+              "utterance": "第一部。",
+              "status": "NEEDS_CLARIFICATION",
+              "intent": "select",
+              "route": "clarify",
+              "decision_source": "context_rule",
+              "reply": "已选择《一身腱子肉，乱世做谋臣》。你想从第几集开始？",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 3554.9419230010244,
+                "llm_ms": 3551.00566100009,
+                "total_ms": 3570.847392002179,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 3572.42
+            },
+            {
+              "utterance": "播放第一集。",
+              "status": "NATIVE",
+              "intent": "play",
+              "route": "native",
+              "decision_source": "llm",
+              "reply": "交由电视原生助手处理。",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 7872.468052999466,
+                "llm_ms": 7867.500724998536,
+                "total_ms": 7891.388834999816,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 7893.26
+            },
+            {
+              "utterance": "确认播放。",
+              "status": "NEEDS_CLARIFICATION",
+              "intent": "confirm",
+              "route": "clarify",
+              "decision_source": "context_rule",
+              "reply": "没有可确认的操作（可能已过期或在另一入口执行过），请重新说明要求。",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 8669.4295480047,
+                "llm_ms": 8665.530525999202,
+                "total_ms": 8691.64825399639,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 8693.66
+            }
+          ],
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "没有可确认的操作（可能已过期或在另一入口执行过），请重新说明要求。"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": false,
+              "detail": "agent.run=0 期望=1"
+            },
+            {
+              "check": "只执行一次",
+              "ok": false,
+              "detail": "0"
+            },
+            {
+              "check": "执行的是播放命令",
+              "ok": false,
+              "detail": ""
+            }
+          ],
+          "passed": false,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            9245.04,
+            4293.06,
+            8693.66
+          ],
+          "latency_p50_ms": 8693.66,
+          "latency_p95_ms": 9686.14
+        },
+        {
+          "id": "H2",
+          "title": "H2 取消播放",
+          "utterance": "取消播放。",
+          "reply": "已取消刚才的待确认操作，没有执行任何电视动作。",
+          "status": "NEEDS_CLARIFICATION",
+          "intent": "deny",
+          "answer_source": null,
+          "diagnostics": {
+            "model_name": null,
+            "decision_source": null,
+            "tool_name": null,
+            "tool_status": null,
+            "llm_latency_ms": null,
+            "tool_latency_ms": null,
+            "total_latency_ms": null,
+            "fallback_reason": null,
+            "failed_stage": null,
+            "route_ms": 8794.411953000235,
+            "llm_ms": 8790.93919099978,
+            "total_ms": 8814.934151996567,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [],
+          "candidates": [],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": [
+            {
+              "utterance": "现在资源库有什么？",
+              "status": "SUCCESS",
+              "intent": "browse_library",
+              "route": "agent",
+              "decision_source": "rule",
+              "reply": "已查询 NAS 本地影视库：共 35 部影视作品，其中电影 0 部、剧集 2 部、短剧 33 部。例如：1.《一身腱子肉，乱世做谋臣》；2.《万妖图录传》；3.《从小兵开始》；4.《从布衣开始成圣》；5.《光之巨人：原初之光》；6.《光之战神奥帝伽》；7.《全民机械飞升》；8.《大夏之始》。以上只是部分条目，可以继续按片名或类型搜索。",
+              "candidates": [
+                {
+                  "id": "3a6c4d7029ba3aa71e851c1b",
+                  "title": "一身腱子肉，乱世做谋臣",
+                  "episodes": 107
+                },
+                {
+                  "id": "07f4dd129959ad2594a94013",
+                  "title": "万妖图录传",
+                  "episodes": 202
+                },
+                {
+                  "id": "c68f2f337ac96e70cc70f4aa",
+                  "title": "从小兵开始",
+                  "episodes": 226
+                },
+                {
+                  "id": "3700e476cf08265cf7ca85b2",
+                  "title": "从布衣开始成圣",
+                  "episodes": 257
+                },
+                {
+                  "id": "9b9db5294cfe9b7d92f2fa96",
+                  "title": "光之巨人：原初之光",
+                  "episodes": 73
+                },
+                {
+                  "id": "f4c868189de03cee0490cf67",
+                  "title": "光之战神奥帝伽",
+                  "episodes": 18
+                },
+                {
+                  "id": "aa11654c5d453e7eda22932a",
+                  "title": "全民机械飞升",
+                  "episodes": 151
+                },
+                {
+                  "id": "ed66b1d214d3f9b7e855a7f8",
+                  "title": "大夏之始",
+                  "episodes": 308
+                }
+              ],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 0.5440599998109974,
+                "llm_ms": 0.0,
+                "total_ms": 1578.18430000043,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 1579.48
+            },
+            {
+              "utterance": "第一部。",
+              "status": "NEEDS_CLARIFICATION",
+              "intent": "select",
+              "route": "clarify",
+              "decision_source": "context_rule",
+              "reply": "已选择《一身腱子肉，乱世做谋臣》。你想从第几集开始？",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 5007.392199004244,
+                "llm_ms": 5003.854908994981,
+                "total_ms": 5026.083377000759,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 5027.56
+            },
+            {
+              "utterance": "播放第一集。",
+              "status": "NEEDS_CONFIRMATION",
+              "intent": "play",
+              "route": "clarify",
+              "decision_source": "context_rule",
+              "reply": "确认执行 播放《一身腱子肉，乱世做谋臣》第3季第一集 吗？小爱可能也响应同一句话；请明确说“确认”或“不确认”。",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 8980.904233998444,
+                "llm_ms": 8977.484604001802,
+                "total_ms": 9011.40585700341,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 9012.93
+            },
+            {
+              "utterance": "取消播放。",
+              "status": "NEEDS_CLARIFICATION",
+              "intent": "deny",
+              "route": "clarify",
+              "decision_source": "context_rule",
+              "reply": "已取消刚才的待确认操作，没有执行任何电视动作。",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 8794.411953000235,
+                "llm_ms": 8790.93919099978,
+                "total_ms": 8814.934151996567,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 8816.44
+            }
+          ],
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "已取消刚才的待确认操作，没有执行任何电视动作。"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=0 期望=0"
+            },
+            {
+              "check": "取消后不执行",
+              "ok": true,
+              "detail": "0"
+            },
+            {
+              "check": "回复确认取消",
+              "ok": true,
+              "detail": "已取消刚才的待确认操作，没有执行任何电视动作。"
+            }
+          ],
+          "passed": true,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            5884.31,
+            3854.26,
+            8816.44
+          ],
+          "latency_p50_ms": 5884.31,
+          "latency_p95_ms": 11162.14
+        },
+        {
+          "id": "I",
+          "title": "I 电视在放什么",
+          "utterance": "电视现在在放什么？",
+          "reply": "正在播放《漫长的季节》 第1季 第5集",
+          "status": "SUCCESS",
+          "intent": "query_media",
+          "answer_source": "device_status",
+          "diagnostics": {
+            "model_name": null,
+            "decision_source": null,
+            "tool_name": null,
+            "tool_status": null,
+            "llm_latency_ms": null,
+            "tool_latency_ms": null,
+            "total_latency_ms": null,
+            "fallback_reason": null,
+            "failed_stage": null,
+            "route_ms": 0.40212299791164696,
+            "llm_ms": 0.0,
+            "total_ms": 7.932957996672485,
+            "observe_ms": 0.1266149993170984
+          },
+          "tool_trace": [],
+          "candidates": [],
+          "agent_run_called": 1,
+          "agent_run_commands": [
+            "现在播放的是什么"
+          ],
+          "turns": null,
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "正在播放《漫长的季节》 第1季 第5集"
+            },
+            {
+              "check": "只读提问只发查询命令",
+              "ok": true,
+              "detail": "['现在播放的是什么']"
+            },
+            {
+              "check": "回复与设备观测一致",
+              "ok": true,
+              "detail": "正在播放《漫长的季节》 第1季 第5集"
+            },
+            {
+              "check": "只读提问",
+              "ok": true,
+              "detail": ""
+            }
+          ],
+          "passed": true,
+          "verified": false,
+          "verified_reason": "无真实电视可观测，使用注入的固定设备观测",
+          "latency_samples_ms": [
+            8.72,
+            9.13,
+            8.44
+          ],
+          "latency_p50_ms": 8.72,
+          "latency_p95_ms": 9.46
+        },
+        {
+          "id": "J",
+          "title": "J 最近新增",
+          "utterance": "最近新增了哪些资源？",
+          "reply": "最近加入/更新的本地作品是：1.《我，史前霸王龙》（2026） · 99 集；2.《巨人纪元》（2026） · 60 集；3.《我的巨人》（2026） · 70 集；4.《光之战神奥帝伽》（2026） · 18 集；5.《光之巨人：原初之光》（2026） · 73 集；6.《穿成野神我靠香火斩诸神》（2026） · 1305 集；7.《西游：圣僧的自我修养》（2026） · 128 集；8.《从布衣开始成圣》（2026） · 257 集；9.《我合成了全世界啊》（2026） · 351 集；10.《洪荒我十凶天角蚁，睡觉就变强》（2026） · 95 集。可以说“第几部”继续选择。",
+          "status": "SUCCESS",
+          "intent": "browse_library",
+          "answer_source": "local_catalog",
+          "diagnostics": {
+            "model_name": "cn:deepseek-v4.1-flash",
+            "decision_source": "deterministic",
+            "tool_name": "catalog_recent",
+            "tool_status": "ok",
+            "llm_latency_ms": 5443.889110996679,
+            "tool_latency_ms": 1313.7660939974012,
+            "total_latency_ms": 6762.222837998706,
+            "fallback_reason": "ungrounded_answer",
+            "failed_stage": null,
+            "route_ms": 3197.894324999652,
+            "llm_ms": 3193.470347003313,
+            "total_ms": 9970.831498001644,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [
+            {
+              "tool": "recent",
+              "ok": true,
+              "arguments": {
+                "limit": 10
+              },
+              "latency_ms": 1313.62,
+              "error": null
+            }
+          ],
+          "candidates": [
+            {
+              "id": "ce92dd5d999c1b86065624ad",
+              "title": "我，史前霸王龙",
+              "episodes": 99
+            },
+            {
+              "id": "889b3447c19769f727fa4811",
+              "title": "巨人纪元",
+              "episodes": 60
+            },
+            {
+              "id": "b2e57a3f75fc197cd99c7796",
+              "title": "我的巨人",
+              "episodes": 70
+            },
+            {
+              "id": "f4c868189de03cee0490cf67",
+              "title": "光之战神奥帝伽",
+              "episodes": 18
+            },
+            {
+              "id": "9b9db5294cfe9b7d92f2fa96",
+              "title": "光之巨人：原初之光",
+              "episodes": 73
+            },
+            {
+              "id": "7a52615b3bbdba3beb2670d5",
+              "title": "穿成野神我靠香火斩诸神",
+              "episodes": 1305
+            },
+            {
+              "id": "f34388681e54b8f549f890bc",
+              "title": "西游：圣僧的自我修养",
+              "episodes": 128
+            },
+            {
+              "id": "3700e476cf08265cf7ca85b2",
+              "title": "从布衣开始成圣",
+              "episodes": 257
+            },
+            {
+              "id": "ca5d0a8554a1a9fab4132a47",
+              "title": "我合成了全世界啊",
+              "episodes": 351
+            },
+            {
+              "id": "83026dbde0d1d057cf66c538",
+              "title": "洪荒我十凶天角蚁，睡觉就变强",
+              "episodes": 95
+            }
+          ],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": null,
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "最近加入/更新的本地作品是：1.《我，史前霸王龙》（2026） · 99 集；2.《巨人纪元》（2026） · 60 集；3.《我的巨人》（2026） · 70"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=0 期望=0"
+            },
+            {
+              "check": "按 added_days_ago 递增",
+              "ok": true,
+              "detail": "[2.9, 2.91, 2.91, 2.91, 2.92]"
+            },
+            {
+              "check": "回复含最近作品",
+              "ok": true,
+              "detail": ""
+            }
+          ],
+          "passed": true,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            11966.61,
+            10770.64,
+            9972.41
+          ],
+          "latency_p50_ms": 10770.64,
+          "latency_p95_ms": 12923.39
+        },
+        {
+          "id": "K",
+          "title": "K 我想看电影",
+          "utterance": "我想看电影。",
+          "reply": "本地库里目前没有电影，有 2 部剧集（共 8483 集）。要我列几部剧集，或者按片名找吗？",
+          "status": "SUCCESS",
+          "intent": "search",
+          "answer_source": "local_catalog",
+          "diagnostics": {
+            "model_name": "cn:deepseek-v4.1-flash",
+            "decision_source": "deterministic",
+            "tool_name": "catalog_recommend",
+            "tool_status": "ok",
+            "llm_latency_ms": 3313.5022909991676,
+            "tool_latency_ms": 1521.2486829987029,
+            "total_latency_ms": 4838.98825700453,
+            "fallback_reason": "ungrounded_answer",
+            "failed_stage": null,
+            "route_ms": 2584.2909249986405,
+            "llm_ms": 2580.261937000614,
+            "total_ms": 8926.588544003607,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [
+            {
+              "tool": "recommend",
+              "ok": true,
+              "arguments": {
+                "kind": "movie",
+                "limit": 10
+              },
+              "latency_ms": 1521.13,
+              "error": null
+            },
+            {
+              "tool": "summary",
+              "ok": true,
+              "arguments": {},
+              "latency_ms": 0.47,
+              "error": null
+            }
+          ],
+          "candidates": [],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": null,
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "本地库里目前没有电影，有 2 部剧集（共 8483 集）。要我列几部剧集，或者按片名找吗？"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=0 期望=0"
+            },
+            {
+              "check": "说明没有电影",
+              "ok": true,
+              "detail": "本地库里目前没有电影，有 2 部剧集（共 8483 集）。要我列几部剧集，或者按片名找吗？"
+            },
+            {
+              "check": "给出真实剧集数",
+              "ok": true,
+              "detail": "2"
+            },
+            {
+              "check": "不编造电影",
+              "ok": true,
+              "detail": ""
+            }
+          ],
+          "passed": true,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            17079.88,
+            10471.25,
+            8927.3
+          ],
+          "latency_p50_ms": 10471.25,
+          "latency_p95_ms": 22366.78
+        },
+        {
+          "id": "L",
+          "title": "L 悬疑剧",
+          "utterance": "推荐一部悬疑剧。",
+          "reply": "本地库里有题材标签的 2 部作品中没有“悬疑”。可以按片名搜索，或让我列几部带题材标签的作品。",
+          "status": "SUCCESS",
+          "intent": "search",
+          "answer_source": "local_catalog",
+          "diagnostics": {
+            "model_name": "cn:deepseek-v4.1-flash",
+            "decision_source": "deterministic",
+            "tool_name": "catalog_search",
+            "tool_status": "ok",
+            "llm_latency_ms": 7884.518053993816,
+            "tool_latency_ms": 1325.3365470009157,
+            "total_latency_ms": 9214.998868003022,
+            "fallback_reason": "ungrounded_answer",
+            "failed_stage": null,
+            "route_ms": 3172.962696000468,
+            "llm_ms": 3168.95489700255,
+            "total_ms": 13644.493576997775,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [
+            {
+              "tool": "recommend",
+              "ok": true,
+              "arguments": {
+                "kind": "series",
+                "preferences": [
+                  "悬疑"
+                ],
+                "limit": 5
+              },
+              "latency_ms": 1324.87,
+              "error": null
+            },
+            {
+              "tool": "search",
+              "ok": true,
+              "arguments": {
+                "genre": "悬疑",
+                "kind": "series",
+                "limit": 10
+              },
+              "latency_ms": 0.26,
+              "error": null
+            },
+            {
+              "tool": "summary",
+              "ok": true,
+              "arguments": {},
+              "latency_ms": 0.64,
+              "error": null
+            }
+          ],
+          "candidates": [
+            {
+              "id": "19a87d781516fa11f2db2bb4",
+              "title": "师兄太稳健",
+              "episodes": 2
+            },
+            {
+              "id": "cadc97ff222cb08035d68cf0",
+              "title": "我不是大师",
+              "episodes": 2
+            }
+          ],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": null,
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "本地库里有题材标签的 2 部作品中没有“悬疑”。可以按片名搜索，或让我列几部带题材标签的作品。"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=0 期望=0"
+            },
+            {
+              "check": "说明无法按题材筛选",
+              "ok": false,
+              "detail": "本地库里有题材标签的 2 部作品中没有“悬疑”。可以按片名搜索，或让我列几部带题材标签的作品。"
+            }
+          ],
+          "passed": false,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            11873.96,
+            12713.67,
+            13645.67
+          ],
+          "latency_p50_ms": 12713.67,
+          "latency_p95_ms": 14391.27
+        },
+        {
+          "id": "M",
+          "title": "M 能力说明",
+          "utterance": "你能帮我做什么？",
+          "reply": "我可以查询本地影视库（总数、按类型浏览、按片名/年份搜索、推荐、最近添加），也可以打开应用、暂停/继续、查当前播放；播放前会先请你确认。",
+          "status": "SUCCESS",
+          "intent": null,
+          "answer_source": null,
+          "diagnostics": {
+            "model_name": null,
+            "decision_source": null,
+            "tool_name": null,
+            "tool_status": null,
+            "llm_latency_ms": null,
+            "tool_latency_ms": null,
+            "total_latency_ms": null,
+            "fallback_reason": null,
+            "failed_stage": null,
+            "route_ms": 0.0,
+            "llm_ms": 0.0,
+            "total_ms": 1246.3727940048557,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [
+            {
+              "tool": "status",
+              "ok": true,
+              "arguments": {},
+              "latency_ms": 1244.98,
+              "error": null
+            }
+          ],
+          "candidates": [],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": null,
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "我可以查询本地影视库（总数、按类型浏览、按片名/年份搜索、推荐、最近添加），也可以打开应用、暂停/继续、查当前播放；播放前会先请你确认。"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=0 期望=0"
+            },
+            {
+              "check": "能力说明",
+              "ok": true,
+              "detail": "我可以查询本地影视库（总数、按类型浏览、按片名/年份搜索、推荐、最近添加），也可以打开应用、暂停/继续、查当前播放；播放前会先请你确认。"
+            }
+          ],
+          "passed": true,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            1258.98,
+            1240.24,
+            1246.43
+          ],
+          "latency_p50_ms": 1246.43,
+          "latency_p95_ms": 1269.02
+        },
+        {
+          "id": "N",
+          "title": "N 多轮组合",
+          "utterance": "确认。",
+          "reply": "已完成。",
+          "status": "SUCCESS",
+          "intent": "confirm",
+          "answer_source": "local_catalog",
+          "diagnostics": {
+            "model_name": null,
+            "decision_source": null,
+            "tool_name": null,
+            "tool_status": null,
+            "llm_latency_ms": null,
+            "tool_latency_ms": null,
+            "total_latency_ms": null,
+            "fallback_reason": null,
+            "failed_stage": null,
+            "route_ms": 5675.717193997116,
+            "llm_ms": 5671.798120994936,
+            "total_ms": 5791.69303499657,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [
+            {
+              "tool": "recommend",
+              "ok": true,
+              "arguments": {
+                "limit": 3
+              },
+              "latency_ms": 1419.1,
+              "error": null
+            },
+            {
+              "tool": "item",
+              "ok": true,
+              "arguments": {
+                "item_id": "3700e476cf08265cf7ca85b2"
+              },
+              "latency_ms": 0.07,
+              "error": null
+            },
+            {
+              "tool": "recommend",
+              "ok": true,
+              "arguments": {
+                "kind": "short_drama",
+                "exclusions": [
+                  "从布衣开始成圣"
+                ],
+                "limit": 5
+              },
+              "latency_ms": 7.45,
+              "error": null
+            },
+            {
+              "tool": "recommend",
+              "ok": true,
+              "arguments": {
+                "kind": "short_drama",
+                "max_episodes": 200,
+                "exclusions": [
+                  "穿成野神我靠香火斩诸神",
+                  "我合成了全世界啊",
+                  "星际长生：活得够久就能称霸宇宙",
+                  "万妖图录传",
+                  "末世轮回：我以尸躯化神明",
+                  "3700e476cf08265cf7ca85b2"
+                ],
+                "limit": 8
+              },
+              "latency_ms": 6.32,
+              "error": null
+            },
+            {
+              "tool": "recommend",
+              "ok": true,
+              "arguments": {
+                "kind": "short_drama",
+                "max_episodes": 60,
+                "exclusions": [
+                  "穿成野神我靠香火斩诸神",
+                  "我合成了全世界啊",
+                  "星际长生：活得够久就能称霸宇宙",
+                  "万妖图录传",
+                  "末世轮回：我以尸躯化神明",
+                  "3700e476cf08265cf7ca85b2"
+                ],
+                "limit": 8
+              },
+              "latency_ms": 2.49,
+              "error": null
+            }
+          ],
+          "candidates": [],
+          "agent_run_called": 1,
+          "agent_run_commands": [
+            "播放《从布衣开始成圣》第1季第一集"
+          ],
+          "turns": [
+            {
+              "utterance": "推荐三部好看的。",
+              "status": "SUCCESS",
+              "intent": "assistant",
+              "route": "agent",
+              "decision_source": "llm",
+              "reply": "给你挑了三部本地已入库的短剧（题材标签暂无元数据，无法按类型筛选）： 1.《穿成野神我靠香火斩诸神》（2026，共 1305 集，红果短剧）——穿越成无人问津的野神，从一盏香火起步，收妖邪、斩正神。 2.《从布衣开始成圣》（2026，共 257 集，红果短剧）——骑奴陈实踏上武道之路，打破阶层逆袭。 3.《我合成了全世界啊》（2026，共 351 集，红果短剧）——垃圾山弃儿靠万物合成能力迭代升级装备。 想播哪一部可以直接说，我来帮你起播。",
+              "candidates": [
+                {
+                  "id": "7a52615b3bbdba3beb2670d5",
+                  "title": "穿成野神我靠香火斩诸神",
+                  "episodes": 1305
+                },
+                {
+                  "id": "3700e476cf08265cf7ca85b2",
+                  "title": "从布衣开始成圣",
+                  "episodes": 257
+                },
+                {
+                  "id": "ca5d0a8554a1a9fab4132a47",
+                  "title": "我合成了全世界啊",
+                  "episodes": 351
+                }
+              ],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": "cn:deepseek-v4.1-flash",
+                "decision_source": "llm",
+                "tool_name": "catalog_recommend",
+                "tool_status": "ok",
+                "llm_latency_ms": 4343.833874001575,
+                "tool_latency_ms": 1419.2076640028972,
+                "total_latency_ms": 5772.810553993622,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 2328.008780001255,
+                "llm_ms": 2326.1319709999952,
+                "total_ms": 8110.237294997205,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 8111.23
+            },
+            {
+              "utterance": "第二个讲什么？",
+              "status": "SUCCESS",
+              "intent": "assistant",
+              "route": "agent",
+              "decision_source": "assistant_fallback",
+              "reply": "《从布衣开始成圣》（短剧，2026 年，257 集，出品：红果短剧）讲的是：陈实本是靖安侯府骑奴，因卷入顾承泽与萧凤箫的后宅阴谋，被迫夹缝求生。为挣脱奴籍救下翠浓，他毅然踏上武道之路。凭借绝佳天赋与坚韧心性，他修成神力象胎，周旋于权贵与江湖帮派之间。随着实力攀升，他卷入扶风会养蛊与叛军平定等惊天风暴，最终打破阶层桎梏迎娶侯门千金，逆袭掌控自身命运，登顶大乾武道巅峰。",
+              "candidates": [],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": "cn:deepseek-v4.1-flash",
+                "decision_source": "deterministic",
+                "tool_name": "catalog_detail",
+                "tool_status": "ok",
+                "llm_latency_ms": 4155.205691000447,
+                "tool_latency_ms": 0.20471899915719405,
+                "total_latency_ms": 4158.578053000383,
+                "fallback_reason": "ungrounded_answer",
+                "failed_stage": null,
+                "route_ms": 0.0,
+                "llm_ms": 0.0,
+                "total_ms": 6954.140868001559,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 6955.24
+            },
+            {
+              "utterance": "换一个类似的。",
+              "status": "SUCCESS",
+              "intent": "assistant",
+              "route": "agent",
+              "decision_source": "assistant_fallback",
+              "reply": "从本地已入库内容里给你挑了这几部：1.《穿成野神我靠香火斩诸神》（2026） · 1305 集；2.《我合成了全世界啊》（2026） · 351 集；3.《星际长生：活得够久就能称霸宇宙》（2026） · 272 集；4.《万妖图录传》（2026） · 202 集；5.《末世轮回：我以尸躯化神明》（2026） · 310 集。可以说“第几部”继续选择。",
+              "candidates": [
+                {
+                  "id": "7a52615b3bbdba3beb2670d5",
+                  "title": "穿成野神我靠香火斩诸神",
+                  "episodes": 1305
+                },
+                {
+                  "id": "ca5d0a8554a1a9fab4132a47",
+                  "title": "我合成了全世界啊",
+                  "episodes": 351
+                },
+                {
+                  "id": "adc161a17581ba1a5ccceef0",
+                  "title": "星际长生：活得够久就能称霸宇宙",
+                  "episodes": 272
+                },
+                {
+                  "id": "07f4dd129959ad2594a94013",
+                  "title": "万妖图录传",
+                  "episodes": 202
+                },
+                {
+                  "id": "5bea79d9435f23c6554dc696",
+                  "title": "末世轮回：我以尸躯化神明",
+                  "episodes": 310
+                }
+              ],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": "cn:deepseek-v4.1-flash",
+                "decision_source": "deterministic",
+                "tool_name": "catalog_recommend",
+                "tool_status": "ok",
+                "llm_latency_ms": 5802.396655999473,
+                "tool_latency_ms": 7.553609000751749,
+                "total_latency_ms": 5814.8751740009175,
+                "fallback_reason": "ungrounded_answer",
+                "failed_stage": null,
+                "route_ms": 0.0,
+                "llm_ms": 0.0,
+                "total_ms": 11818.784693998168,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 11820.14
+            },
+            {
+              "utterance": "不要那么长的。",
+              "status": "SUCCESS",
+              "intent": "assistant",
+              "route": "agent",
+              "decision_source": "assistant_fallback",
+              "reply": "从本地已入库内容里给你挑了这几部：1.《巨人纪元》（2026） · 60 集；2.《师傅在干嘛！》（2026） · 60 集；3.《光之战神奥帝伽》（2026） · 18 集。可以说“第几部”继续选择。",
+              "candidates": [
+                {
+                  "id": "97828abdd621cc8d43fad655",
+                  "title": "我的同桌兰呦呦",
+                  "episodes": 190
+                },
+                {
+                  "id": "1695546409f7aed9fe54c5e4",
+                  "title": "末世星主：一切从零开始",
+                  "episodes": 189
+                },
+                {
+                  "id": "c4b68494a62e4613f5d804bc",
+                  "title": "蜀山执剑人",
+                  "episodes": 183
+                },
+                {
+                  "id": "8d108492045e64b7d2564a68",
+                  "title": "我的右眼是神级计算机：",
+                  "episodes": 179
+                },
+                {
+                  "id": "cef7df5c9ff10f17dce6107e",
+                  "title": "那妖魔是我老婆！",
+                  "episodes": 153
+                },
+                {
+                  "id": "aa11654c5d453e7eda22932a",
+                  "title": "全民机械飞升",
+                  "episodes": 151
+                },
+                {
+                  "id": "d419e04178658c9b3e95c82e",
+                  "title": "摊牌了我真的有系统",
+                  "episodes": 145
+                },
+                {
+                  "id": "eeed1516963ef82726441bd4",
+                  "title": "天与咒缚：无咒力的我肉身成圣",
+                  "episodes": 142
+                },
+                {
+                  "id": "889b3447c19769f727fa4811",
+                  "title": "巨人纪元",
+                  "episodes": 60
+                },
+                {
+                  "id": "18345b99124249cb4b295888",
+                  "title": "师傅在干嘛！",
+                  "episodes": 60
+                },
+                {
+                  "id": "f4c868189de03cee0490cf67",
+                  "title": "光之战神奥帝伽",
+                  "episodes": 18
+                }
+              ],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": "cn:deepseek-v4.1-flash",
+                "decision_source": "deterministic",
+                "tool_name": "catalog_recommend",
+                "tool_status": "ok",
+                "llm_latency_ms": 7354.1256450043875,
+                "tool_latency_ms": 9.029726999870036,
+                "total_latency_ms": 7372.560019000957,
+                "fallback_reason": "ungrounded_answer",
+                "failed_stage": null,
+                "route_ms": 0.0,
+                "llm_ms": 0.0,
+                "total_ms": 12296.129037997162,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 12298.18
+            },
+            {
+              "utterance": "就看刚才那个。",
+              "status": "NEEDS_CONFIRMATION",
+              "intent": "play",
+              "route": "clarify",
+              "decision_source": "context_rule",
+              "reply": "确认执行 播放《从布衣开始成圣》第1季第一集 吗？小爱可能也响应同一句话；请明确说“确认”或“不确认”。",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 0.0,
+                "llm_ms": 0.0,
+                "total_ms": 9152.181245997781,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 9154.35
+            },
+            {
+              "utterance": "确认。",
+              "status": "SUCCESS",
+              "intent": "confirm",
+              "route": "agent",
+              "decision_source": "context_rule",
+              "reply": "已完成。",
+              "candidates": [],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 5675.717193997116,
+                "llm_ms": 5671.798120994936,
+                "total_ms": 5791.69303499657,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 5793.99
+            }
+          ],
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "已完成。"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": false,
+              "detail": "agent.run=1 期望=0"
+            },
+            {
+              "check": "「就看刚才那个」命中第 2 个候选",
+              "ok": true,
+              "detail": ""
+            },
+            {
+              "check": "确认后执行一次",
+              "ok": true,
+              "detail": "1"
+            }
+          ],
+          "passed": false,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            4941.25,
+            4951.83,
+            5793.99
+          ],
+          "latency_p50_ms": 4951.83,
+          "latency_p95_ms": 6467.72
+        },
+        {
+          "id": "O",
+          "title": "O 重复确认",
+          "utterance": "确认播放。",
+          "reply": "交由电视原生助手处理。",
+          "status": "NATIVE",
+          "intent": "play",
+          "answer_source": null,
+          "diagnostics": {
+            "model_name": null,
+            "decision_source": null,
+            "tool_name": null,
+            "tool_status": null,
+            "llm_latency_ms": null,
+            "tool_latency_ms": null,
+            "total_latency_ms": null,
+            "fallback_reason": null,
+            "failed_stage": null,
+            "route_ms": 5758.228015998611,
+            "llm_ms": 5753.019388001121,
+            "total_ms": 5780.737793000299,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [],
+          "candidates": [],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": [
+            {
+              "utterance": "现在资源库有什么？",
+              "status": "SUCCESS",
+              "intent": "browse_library",
+              "route": "agent",
+              "decision_source": "rule",
+              "reply": "已查询 NAS 本地影视库：共 35 部影视作品，其中电影 0 部、剧集 2 部、短剧 33 部。例如：1.《一身腱子肉，乱世做谋臣》；2.《万妖图录传》；3.《从小兵开始》；4.《从布衣开始成圣》；5.《光之巨人：原初之光》；6.《光之战神奥帝伽》；7.《全民机械飞升》；8.《大夏之始》。以上只是部分条目，可以继续按片名或类型搜索。",
+              "candidates": [
+                {
+                  "id": "3a6c4d7029ba3aa71e851c1b",
+                  "title": "一身腱子肉，乱世做谋臣",
+                  "episodes": 107
+                },
+                {
+                  "id": "07f4dd129959ad2594a94013",
+                  "title": "万妖图录传",
+                  "episodes": 202
+                },
+                {
+                  "id": "c68f2f337ac96e70cc70f4aa",
+                  "title": "从小兵开始",
+                  "episodes": 226
+                },
+                {
+                  "id": "3700e476cf08265cf7ca85b2",
+                  "title": "从布衣开始成圣",
+                  "episodes": 257
+                },
+                {
+                  "id": "9b9db5294cfe9b7d92f2fa96",
+                  "title": "光之巨人：原初之光",
+                  "episodes": 73
+                },
+                {
+                  "id": "f4c868189de03cee0490cf67",
+                  "title": "光之战神奥帝伽",
+                  "episodes": 18
+                },
+                {
+                  "id": "aa11654c5d453e7eda22932a",
+                  "title": "全民机械飞升",
+                  "episodes": 151
+                },
+                {
+                  "id": "ed66b1d214d3f9b7e855a7f8",
+                  "title": "大夏之始",
+                  "episodes": 308
+                }
+              ],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 0.4875679951510392,
+                "llm_ms": 0.0,
+                "total_ms": 1249.2424860029132,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 1250.4
+            },
+            {
+              "utterance": "第一部。",
+              "status": "NEEDS_CLARIFICATION",
+              "intent": "select",
+              "route": "clarify",
+              "decision_source": "context_rule",
+              "reply": "已选择《一身腱子肉，乱世做谋臣》。你想从第几集开始？",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 4537.034002998553,
+                "llm_ms": 4533.361560002959,
+                "total_ms": 4553.001831001893,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 4554.43
+            },
+            {
+              "utterance": "播放第一集。",
+              "status": "NATIVE",
+              "intent": "play",
+              "route": "native",
+              "decision_source": "llm",
+              "reply": "交由电视原生助手处理。",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 7469.153971003834,
+                "llm_ms": 7464.881619998778,
+                "total_ms": 7486.823151004501,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 7489.54
+            },
+            {
+              "utterance": "确认播放。",
+              "status": "NATIVE",
+              "intent": "play",
+              "route": "native",
+              "decision_source": "llm",
+              "reply": "交由电视原生助手处理。",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 5548.590254998999,
+                "llm_ms": 5543.145578994881,
+                "total_ms": 5570.850978998351,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 5572.93
+            },
+            {
+              "utterance": "确认播放。",
+              "status": "NATIVE",
+              "intent": "play",
+              "route": "native",
+              "decision_source": "llm",
+              "reply": "交由电视原生助手处理。",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 5758.228015998611,
+                "llm_ms": 5753.019388001121,
+                "total_ms": 5780.737793000299,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 5782.36
+            }
+          ],
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "交由电视原生助手处理。"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": false,
+              "detail": "agent.run=0 期望=1"
+            },
+            {
+              "check": "重复确认只执行一次",
+              "ok": false,
+              "detail": "0"
+            },
+            {
+              "check": "第二次确认被拒绝",
+              "ok": false,
+              "detail": "交由电视原生助手处理。"
+            }
+          ],
+          "passed": false,
+          "verified": true,
+          "verified_reason": "",
+          "latency_samples_ms": [
+            6315.12,
+            4879.97,
+            5782.36
+          ],
+          "latency_p50_ms": 5782.36,
+          "latency_p95_ms": 6741.33
+        }
+      ],
+      "summary": {
+        "available": true,
+        "total": 35,
+        "movies": 0,
+        "series": 2,
+        "unknown_kind": 0,
+        "episodes": 8483,
+        "with_metadata": 35,
+        "metadata_missing": 0,
+        "ambiguous_folders": 0,
+        "ambiguous_videos": 0,
+        "roots": [
+          "<library>"
+        ],
+        "index_age_seconds": 1.3926119804382324,
+        "errors": [],
+        "short_dramas": 33,
+        "seasons": 42,
+        "with_plot": 33,
+        "with_genres": 2,
+        "recent_added_7d": 21,
+        "recent_added_30d": 33
+      },
+      "elapsed_s": 837.3
+    }
+  },
+  "metrics": {
+    "reps": 3,
+    "elapsed_s": 1339.2,
+    "latency_ms": {
+      "p50": 4879.97,
+      "p95": 11873.96,
+      "max": 17079.88,
+      "samples": 102,
+      "per_utterance": {
+        "fixture": {
+          "A": {
+            "p50": 89.74,
+            "p95": 1116.87,
+            "samples": [
+              660.37,
+              89.74,
+              86.32
+            ]
+          },
+          "B": {
+            "p50": 6970.07,
+            "p95": 7132.25,
+            "samples": [
+              6970.07,
+              6860.98,
+              7060.17
+            ]
+          },
+          "C": {
+            "p50": 7253.3,
+            "p95": 9158.69,
+            "samples": [
+              6620.04,
+              8311.85,
+              7253.3
+            ]
+          },
+          "D": {
+            "p50": 4541.29,
+            "p95": 15153.35,
+            "samples": [
+              10436.88,
+              4541.29,
+              3070.19
+            ]
+          },
+          "E": {
+            "p50": 8043.0,
+            "p95": 9487.75,
+            "samples": [
+              8845.64,
+              3492.98,
+              8043.0
+            ]
+          },
+          "F": {
+            "p50": 2610.52,
+            "p95": 5159.14,
+            "samples": [
+              4026.42,
+              2610.52,
+              2491.1
+            ]
+          },
+          "G": {
+            "p50": 4080.25,
+            "p95": 4390.8,
+            "samples": [
+              4252.78,
+              4041.88,
+              4080.25
+            ]
+          },
+          "G3": {
+            "p50": 4034.39,
+            "p95": 4040.35,
+            "samples": [
+              4034.39,
+              4037.7,
+              3976.29
+            ]
+          },
+          "H": {
+            "p50": 3901.89,
+            "p95": 4161.83,
+            "samples": [
+              4046.3,
+              3901.89,
+              3468.87
+            ]
+          },
+          "H2": {
+            "p50": 4028.37,
+            "p95": 4039.73,
+            "samples": [
+              3308.04,
+              4034.68,
+              4028.37
+            ]
+          },
+          "I": {
+            "p50": 8.58,
+            "p95": 33.67,
+            "samples": [
+              22.52,
+              8.56,
+              8.58
+            ]
+          },
+          "J": {
+            "p50": 7375.74,
+            "p95": 7392.57,
+            "samples": [
+              6618.01,
+              7385.09,
+              7375.74
+            ]
+          },
+          "K": {
+            "p50": 8325.46,
+            "p95": 8846.85,
+            "samples": [
+              6487.15,
+              8615.12,
+              8325.46
+            ]
+          },
+          "L": {
+            "p50": 6817.33,
+            "p95": 8764.88,
+            "samples": [
+              6817.33,
+              5567.44,
+              7899.3
+            ]
+          },
+          "M": {
+            "p50": 91.95,
+            "p95": 94.94,
+            "samples": [
+              91.58,
+              91.95,
+              93.61
+            ]
+          },
+          "N": {
+            "p50": 4033.65,
+            "p95": 4040.33,
+            "samples": [
+              4037.36,
+              4033.65,
+              4033.25
+            ]
+          },
+          "O": {
+            "p50": 3460.29,
+            "p95": 4491.24,
+            "samples": [
+              2734.45,
+              4033.04,
+              3460.29
+            ]
+          }
+        },
+        "production": {
+          "A": {
+            "p50": 1245.39,
+            "p95": 1306.48,
+            "samples": [
+              1238.61,
+              1245.39,
+              1279.33
+            ]
+          },
+          "B": {
+            "p50": 8550.4,
+            "p95": 10251.83,
+            "samples": [
+              8174.61,
+              9495.64,
+              8550.4
+            ]
+          },
+          "C": {
+            "p50": 7458.1,
+            "p95": 8312.56,
+            "samples": [
+              7152.2,
+              7932.8,
+              7458.1
+            ]
+          },
+          "D": {
+            "p50": 9393.43,
+            "p95": 13522.47,
+            "samples": [
+              8691.73,
+              11687.34,
+              9393.43
+            ]
+          },
+          "E": {
+            "p50": 11699.53,
+            "p95": 14966.6,
+            "samples": [
+              11699.53,
+              13514.57,
+              5347.3
+            ]
+          },
+          "F": {
+            "p50": 3059.61,
+            "p95": 7150.06,
+            "samples": [
+              2631.73,
+              5332.08,
+              3059.61
+            ]
+          },
+          "G": {
+            "p50": 3615.11,
+            "p95": 9490.06,
+            "samples": [
+              3615.11,
+              6878.97,
+              3570.79
+            ]
+          },
+          "G3": {
+            "p50": 3575.18,
+            "p95": 12342.17,
+            "samples": [
+              8445.73,
+              3575.18,
+              2856.83
+            ]
+          },
+          "H": {
+            "p50": 8693.66,
+            "p95": 9686.14,
+            "samples": [
+              9245.04,
+              4293.06,
+              8693.66
+            ]
+          },
+          "H2": {
+            "p50": 5884.31,
+            "p95": 11162.14,
+            "samples": [
+              5884.31,
+              3854.26,
+              8816.44
+            ]
+          },
+          "I": {
+            "p50": 8.72,
+            "p95": 9.46,
+            "samples": [
+              8.72,
+              9.13,
+              8.44
+            ]
+          },
+          "J": {
+            "p50": 10770.64,
+            "p95": 12923.39,
+            "samples": [
+              11966.61,
+              10770.64,
+              9972.41
+            ]
+          },
+          "K": {
+            "p50": 10471.25,
+            "p95": 22366.78,
+            "samples": [
+              17079.88,
+              10471.25,
+              8927.3
+            ]
+          },
+          "L": {
+            "p50": 12713.67,
+            "p95": 14391.27,
+            "samples": [
+              11873.96,
+              12713.67,
+              13645.67
+            ]
+          },
+          "M": {
+            "p50": 1246.43,
+            "p95": 1269.02,
+            "samples": [
+              1258.98,
+              1240.24,
+              1246.43
+            ]
+          },
+          "N": {
+            "p50": 4951.83,
+            "p95": 6467.72,
+            "samples": [
+              4941.25,
+              4951.83,
+              5793.99
+            ]
+          },
+          "O": {
+            "p50": 5782.36,
+            "p95": 6741.33,
+            "samples": [
+              6315.12,
+              4879.97,
+              5782.36
+            ]
+          }
+        }
+      }
+    },
+    "memory": {
+      "tracemalloc_peak_mb": 63.09,
+      "tracemalloc_current_mb": 48.45,
+      "ru_maxrss_mb": 145.69
+    }
+  },
+  "unverified": [
+    {
+      "item": "真实电视（小米 TV / 原生助手）上的实际播放与原生助手抑制",
+      "verified": false,
+      "reason": "验收机没有可用的电视/ADB 目标，所有电视动作都只到 agent.run 边界；真机行为需要在现场用遥控器复验。"
+    },
+    {
+      "item": "真人手机（语音入口 / 小爱同学）端到端时延与打断",
+      "verified": false,
+      "reason": "无法自动化真人说话与手机麦克风链路；本跑批使用 source=\"text\" 模拟同一句话。"
+    },
+    {
+      "item": "TTS 播报音质与打断（VoiceResponder）",
+      "verified": false,
+      "reason": "跑批使用无副作用的 responder 桩件（tts_ms=0），不触发真实 TTS。"
+    },
+    {
+      "item": "I 项的设备观测",
+      "verified": false,
+      "reason": "没有真实电视可观测，使用注入的固定设备观测（PLYING/已知片名与集数）替代，仅验证\"回复与观测一致\"这一逻辑。"
+    }
+  ]
+}

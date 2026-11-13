@@ -164,6 +164,11 @@ SYSTEM = '''你是电视语音路由器，只输出一个严格 JSON 对象，�
 '''
 
 
+_CONTROL_INTENTS=('play','open','pause','resume','volume_set','volume_up',
+                  'volume_down','sequence','confirm','deny','select','swap',
+                  'resume_episode','describe')
+
+
 class IntelligentVoiceRouter:
     def __init__(self,cfg,llm=None):
         from .llm import LLMClient
@@ -269,7 +274,7 @@ class IntelligentVoiceRouter:
                 return VoiceDecision('agent','play',parameters={'candidate_id':last['id']},
                                      confidence=1,source='context_rule')
         # Explicit answers to existing questions are finite slot operations, not guesses.
-        if context.get('waiting_question'):
+        if context.get('waiting_question') or context.get('pending_action'):
             if clean in ('确认','确定','是的','对','好','就这个') or text.strip().rstrip('。！？!')=='播放吧':
                 return VoiceDecision('agent','confirm',confidence=1,source='rule',reason='explicit_confirmation')
             if clean in ('不是','不对','不确认','算了','不要','取消确认'):
@@ -414,5 +419,11 @@ class IntelligentVoiceRouter:
         clean,policy=self.policy_text(text)
         decision=policy or self._local(clean,context)
         if decision is None:decision=self._model(clean,context)
+        # A resolved control intent is never handed to the TV's native assistant:
+        # that silently drops deterministic slot answers ("播放第一集") and
+        # explicit confirmations, leaving the pending action unbuilt.
+        if decision.route=='native' and decision.intent in _CONTROL_INTENTS:
+            decision=replace(decision,route='agent',reply='',
+                             reason=(decision.reason or 'native_control_invariant'))
         return replace(decision,conflict_risk=VoiceRouter.conflict_prone(text) or decision.intent in ('play','volume_set','sequence'),
                        route_ms=(time.monotonic()-start)*1000)

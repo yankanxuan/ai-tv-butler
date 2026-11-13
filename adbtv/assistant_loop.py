@@ -1331,6 +1331,21 @@ class AssistantLoop:
         if plan_kind == 'recommend':
             result = self._result_of(observations, 'catalog_recommend', 'library_recommend')
             items = result.get('items') or []
+            # D: a genre request must not lose its "no genre metadata" disclosure
+            # just because the model chose catalog_recommend over catalog_search.
+            wanted_genre = next((g for g in self.GENRE_WORDS if g in (text or '')), None)
+            if wanted_genre:
+                try:
+                    labelled = self.tools.summary().get('with_genres')
+                except (AttributeError, ValueError, TypeError, OSError):
+                    labelled = None
+                if not labelled:
+                    note = (f'本地库里的作品都没有题材标签（NFO 元数据里没有 genre/tag 信息），'
+                            f'所以我无法按“{wanted_genre}”筛选，也不会凭空猜类型。'
+                            '下面只按已入库、集数和新增时间给建议：')
+                    if not items:
+                        return note
+                    return note + self._render_items(items, '')
             if not items:
                 summary = self.tools.summary()
                 wanted = result.get('kind', 'any')
@@ -1447,7 +1462,26 @@ class AssistantLoop:
                        'failed_stage': None, 'answer_source': 'unverified'}
         observations, trace = [], []
         model_failure = None
-        if self._model_available():
+        # A genre request the library cannot verify must not be answered by the
+        # model: it would either drop the "no genre metadata" disclosure or dress
+        # a structural pick up as a genre match. The deterministic planner runs
+        # instead and states the gap explicitly.
+        genre_unverifiable = False
+        for genre in self.GENRE_WORDS:
+            if genre not in (text or ''):
+                continue
+            try:
+                # Ask the catalog itself: a genre nobody in the library carries
+                # (or a library with no genre tags at all) cannot be verified.
+                hits = self.tools.search(genre=genre, limit=1)
+                genre_unverifiable = not (hits.get('total') or 0)
+            except (AttributeError, ValueError, TypeError, OSError):
+                genre_unverifiable = False
+            break
+        if genre_unverifiable:
+            model_failure = 'genre_unverifiable'
+            diagnostics['failed_stage'] = 'grounding'
+        if self._model_available() and not genre_unverifiable:
             context = {'library_scope': state.get('library_scope') or 'local',
                        'last_query': state.get('last_query') or {},
                        'preferences': state.get('preferences') or {},

@@ -35,4 +35,16 @@ agent_calls= 1
 [确认。] SUCCESS | 已完成。
 agent_calls= 1
 
+
+== 真实 LLM 复验 OPEN-A/B/C/D（生产库，各 3 次）==
+A/B rep1: SUCCESS -> NEEDS_CLARIFICATION -> NEEDS_CONFIRMATION | confirm: SUCCESS | agent_calls= 1
+C rep1: SUCCESS | 库里有几部同类的穿越玄幻短剧可换着看： 1.《万妖图录传》2026，202集——一朝变身大唐少女，斩妖夺神通。 2.《虾
+D rep1: SUCCESS | 本地库里有题材标签的 2 部作品中没有“悬疑”。可以按片名搜索，或让我列几部带题材标签的作品。
+A/B rep2: SUCCESS -> NEEDS_CLARIFICATION -> NEEDS_CONFIRMATION | confirm: SUCCESS | agent_calls= 1
+C rep2: SUCCESS | 给你换几部题材相近的本地短剧：1）《星际长生：活得够久就能称霸宇宙》，272集，末世后靠科技和AI重建文明、杀穿星海；2
+D rep2: SUCCESS | 本地库里有题材标签的 2 部作品中没有“悬疑”。可以按片名搜索，或让我列几部带题材标签的作品。
+A/B rep3: SUCCESS -> NEEDS_CLARIFICATION -> NEEDS_CONFIRMATION | confirm: SUCCESS | agent_calls= 1
+C rep3: SUCCESS | 给你换一批同类型的短剧，这几部都是本地库里的玄幻/修仙题材： 1.《虾无邪修仙记》（1000 集）——凡人靠神秘铜瓶一步
+D rep3: SUCCESS | 本地库里有题材标签的 2 部作品中没有“悬疑”。可以按片名搜索，或让我列几部带题材标签的作品。
+
 说明：电视为 stub，未在物理电视执行；真人手机语音链路未验收。
