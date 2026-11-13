@@ -1,0 +1,149 @@
+V4.4 对话验收证据（15 条必备话术 + 6 组对抗）
+==============================================================================
+生成时间      : 2026-11-13T12:08:52+0800
+契约          : docs/V44_CONTRACT.md
+模型          : anthropic / cn:deepseek-v4.1-flash @ http://127.0.0.1:7866
+跑批 JSON     : docs/evidence/V44_REAL_LLM_ACCEPTANCE.json
+单测          : tests/test_v44_dialogue_acceptance.py（31 项，离线，无网络）
+
+口径说明
+------------------------------------------------------------------------------
+* 每条话术都在完整链路里跑：用户说话 → 路由 → 工具调用 → 回复 → 确认 → 执行。
+* 「是否误执行电视动作」的唯一判据是 agent.run 的调用次数（这是唯一能碰电视的出口）。
+* 事实断言全部对照真实工具返回值（LibraryTools.summary/overview/search/recent/item），
+  不对照回复措辞。
+* 每条话术跑 3 次（reps=3）；PASS 表示 3 次全部通过；模型有随机性，FAIL 会标出失败轮次。
+* 表中 agent.run 列：H（确认播放）与 O（重复确认）为 1 是**预期**——用户明确确认后才执行一次；
+  I（电视现在在放什么）为 1 是**只读查询**（命令是「现在播放的是什么」），断言要求该轮所有
+  命令都是只读提问，不得出现播放/暂停等状态变更。其余话术必须为 0。
+
+数据集：fixture
+  真实计数：total=5 movies=0 series=3 short_dramas=2 episodes=298 with_genres=0 with_plot=5 recent_added_7d=3
+  耗时：477.0s
+
+  话术                                结果      次数      状态                         P50      P95  agent.run
+  A 现在资源库有什么？                       PASS    3/3     SUCCESS                     93     1056          0
+  B 推荐三部好看的。                        PASS    3/3     SUCCESS                   6002     6135          0
+  C 第二个讲什么？                         PASS    3/3     SUCCESS                   6367     6882          0
+  D 换一个类似的。                         PASS    3/3     SUCCESS                   7049     8795          0
+  E 不要那么长的。                         FAIL    2/3     NEEDS_CLARIFICATION       8123     9442          0
+      ↳ 第 3 轮失败：未套上限时如实澄清（不编造候选）
+      ↳ 该轮回复：我还不能确定你的意思，请补充具体内容。
+      ↳ 断言「未套上限时如实澄清（不编造候选）」：limit=None candidates=0 我还不能确定你的意思，请补充具体内容。
+  F 我上次看到哪里了？                       PASS    3/3     NEEDS_CLARIFICATION       3554     3981          0
+  G 打开这部剧第二季。                       PASS    3/3     NEEDS_CONFIRMATION        4040     4041          0
+  G3 打开这部剧第三季（不存在）                  PASS    3/3     NEEDS_CLARIFICATION       4032     4033          0
+  H 确认播放。                           PASS    3/3     SUCCESS                   4037     4054          1
+  H2 取消播放。                          PASS    3/3     NEEDS_CLARIFICATION       4034     4035          0
+  I 电视现在在放什么？                       PASS    3/3     SUCCESS                      9       33          1
+  J 最近新增了哪些资源？                      PASS    3/3     SUCCESS                   6670     7522          0
+  K 我想看电影。                          FAIL    2/3     SUCCESS                   8728    10229          0
+      ↳ 第 3 轮失败：说明没有电影、给出真实剧集数
+      ↳ 该轮回复：本地库里没有符合条件的作品。可以换个片名或去掉筛选条件再试。
+      ↳ 断言「说明没有电影」：本地库里没有符合条件的作品。可以换个片名或去掉筛选条件再试。
+      ↳ 断言「给出真实剧集数」：3
+  L 推荐一部悬疑剧。                        PASS    3/3     SUCCESS                   2144     2466          0
+  M 你能帮我做什么？                        PASS    3/3     SUCCESS                     82       87          0
+  N 多轮组合 + 就看刚才那个 + 确认。             PASS    3/3     SUCCESS                   3926     4147          1
+  O 重复确认（幂等）                        PASS    3/3     NEEDS_CLARIFICATION       3679     4333          1
+
+数据集：production
+  真实计数：total=35 movies=0 series=2 short_dramas=33 episodes=8483 with_genres=2 with_plot=33 recent_added_7d=21
+  耗时：767.4s
+
+  话术                                结果      次数      状态                         P50      P95  agent.run
+  A 现在资源库有什么？                       PASS    3/3     SUCCESS                   1342     2221          0
+  B 推荐三部好看的。                        PASS    3/3     SUCCESS                   8593     9100          0
+  C 第二个讲什么？                         PASS    3/3     SUCCESS                   6402     6527          0
+  D 换一个类似的。                         PASS    3/3     SUCCESS                   9370    10529          0
+  E 不要那么长的。                         FAIL    2/3     SUCCESS                  12115    15535          0
+      ↳ 第 2 轮失败：集数上限生效
+      ↳ 该轮回复：从本地已入库内容里给你挑了这几部：1.《光之战神奥帝伽》（2026） · 18 集。可以说“第几部”继续选择。
+      ↳ 断言「集数上限生效」：最大 99 集 / 上限 40
+  F 我上次看到哪里了？                       PASS    3/3     NEEDS_CLARIFICATION       3590     3901          0
+  G 打开这部剧第二季。                       PASS    3/3     NEEDS_CLARIFICATION       8288     9153          0
+  G3 打开这部剧第三季（不存在）                  PASS    3/3     NEEDS_CONFIRMATION        4470     5703          0
+  H 确认播放。                           PASS    3/3     SUCCESS                   8461     8483          1
+  H2 取消播放。                          PASS    3/3     NEEDS_CLARIFICATION       4785    12172          0
+  I 电视现在在放什么？                       PASS    3/3     SUCCESS                      9        9          1
+  J 最近新增了哪些资源？                      PASS    3/3     SUCCESS                   8411    10560          0
+  K 我想看电影。                          FAIL    1/3     SUCCESS                  11346    16485          0
+      ↳ 第 1 轮失败：说明没有电影、给出真实剧集数
+      ↳ 第 3 轮失败：说明没有电影、给出真实剧集数
+      ↳ 该轮回复：本地库里没有符合条件的作品。可以换个片名或去掉筛选条件再试。
+      ↳ 断言「说明没有电影」：本地库里没有符合条件的作品。可以换个片名或去掉筛选条件再试。
+      ↳ 断言「给出真实剧集数」：2
+  L 推荐一部悬疑剧。                        PASS    3/3     SUCCESS                   4928     5942          0
+  M 你能帮我做什么？                        PASS    3/3     SUCCESS                   1344     1373          0
+  N 多轮组合 + 就看刚才那个 + 确认。             PASS    3/3     SUCCESS                   4146     8913          1
+  O 重复确认（幂等）                        PASS    3/3     NEEDS_CLARIFICATION       4316     6598          1
+
+对抗测试（离线单测，tests/test_v44_dialogue_acceptance.py::AdversarialTests）
+------------------------------------------------------------------------------
+  1 模型编造片名/数量            PASS  回复被替换为真实工具渲染，fallback_reason=ungrounded_answer，
+                                        不含《不存在的神剧》《虚构大片》，agent.run=0
+  2 工具抛异常                  PASS  fallback_reason=tool_error / failed_stage=tool /
+                                        answer_source=unverified，回复「读取本地影视库时出错了…」，
+                                        不再说成「库里没有作品」
+  3 库不可用（roots 不存在）      PASS  status=UNAVAILABLE，回复「无法访问…」，不报 0 部冒充正常
+  4 候选生成后删目录 + 重建索引    PASS  revalidate 报「媒体库中已找不到该内容，未执行」，agent.run=0
+  5 重复确认                    PASS  同一 pending 两次确认只执行 1 次（第 2 次「没有可确认的操作」）
+  5b 过期确认                   PASS  会话 TTL 过期后确认被拒绝，agent.run=0
+  6 多用户串话（tv1/tv2）        PASS  候选列表、序号解析、pending、偏好四者互不污染
+
+延迟与内存（两套数据合并，reps=3，每序列独立会话）
+------------------------------------------------------------------------------
+  P50 = 4146 ms      P95 = 10051 ms      max = 14201 ms      样本数 = 102
+  峰值内存：tracemalloc peak = 63.11 MB，RSS peak = 150.63 MB
+  最慢的三条（P95）：
+    K   (production) P95 = 16485 ms
+    E   (production) P95 = 15535 ms
+    H2  (production) P95 = 12172 ms
+
+未验收（真实设备 / 真人手机，一律 verified=false，不伪造）
+------------------------------------------------------------------------------
+  · 真实电视（小米 TV / 原生助手）上的实际播放与原生助手抑制
+    原因：验收机没有可用的电视/ADB 目标，所有电视动作都只到 agent.run 边界；真机行为需要在现场用遥控器复验。
+  · 真人手机（语音入口 / 小爱同学）端到端时延与打断
+    原因：无法自动化真人说话与手机麦克风链路；本跑批使用 source="text" 模拟同一句话。
+  · TTS 播报音质与打断（VoiceResponder）
+    原因：跑批使用无副作用的 responder 桩件（tts_ms=0），不触发真实 TTS。
+  · I 项的设备观测
+    原因：没有真实电视可观测，使用注入的固定设备观测（PLAYING / 已知片名与集数）替代，仅验证"回复与观测一致"这一逻辑。
+
+已上报并修复的缺陷（本轮验收驱动）
+------------------------------------------------------------------------------
+  BUG-1  短剧被算进剧集，总览数字与 summary() 冲突            → 已修（适配器委托 LibraryTools）
+  BUG-2  「不要那么长的」规则路由无决策                       → 已修（_library_question + _plan 正则）
+  BUG-3  「打开这部剧第X季」无决策                            → 已修（_reference_decision）
+  BUG-4  「就看刚才那个」不建立 pending，确认链路断            → 已修（指示代词→play）
+  BUG-5  「换一个类似的」不排除已给候选                       → 已修（candidates 全部进 exclusions）
+  BUG-6  「推荐一部悬疑剧」静默降级 / 谎称"有类型标签的作品"    → 已修（with_genres 同口径）
+  BUG-7  工具异常被说成「库里没有作品」                       → 已修（status=UNKNOWN + 明确失败文案）
+  BUG-8  能力问答暴露「大模型未启用」                         → 已修（_CAPABILITY 直返）
+  BUG-9  grounded answer 丢候选（"第二个讲什么"偶发失效）      → 已修（候选来自 observations）
+  OPEN-A 「播放第一集。」被模型判成 route=native，确认被绕过     → 已修（intent 不变量 + 槽位覆盖）
+  OPEN-B 「确认播放。」只有 pending 时走 LLM，确认被吞         → 已修（waiting_question or pending_action）
+  OPEN-C 「换一个类似的」被模型反问"哪一部"                   → 已修（refine 守卫）
+  OPEN-D 真实 LLM 下题材缺失声明丢失                          → 已修（进入模型循环前预校验题材）
+  OPEN-E 候选列表跨轮污染：max_episodes=40 时仍混入 99 集的条目 → 未修（见下）
+  OPEN-F 「我想看电影。」部分轮次回「没有符合条件的作品」        → 未修（见下）
+
+本轮仍存在的 2 个 P2（真实 LLM 才有，不阻塞交付）
+------------------------------------------------------------------------------
+  OPEN-E  adbtv/assistant_loop.py:1645
+          `candidates.extend(self._items_of(observation))` 把所有 observation 的条目
+          累加进候选。模型一轮里多次调 recommend（limit=3 → max_episodes=100 → max_episodes=40）
+          时，前两次的条目（99/95/85/73/70 集）仍留在候选里，而回复只列了符合上限的那部。
+          复现：production / 「推荐三部好看的。」→「不要那么长的。」（reps=3 里 1 次）
+          影响：随后说「第几部」可能选中违反集数上限的作品。
+          建议：只取最后一次权威 observation 的 items，或按最终约束过滤。
+  OPEN-F  adbtv/assistant_loop.py:1388 + 1579
+          模型选了 catalog_recommend(kind=movie) 时，兜底渲染在 observations 里找不到
+          search/list 结果 → 落到通用文案「本地库里没有符合条件的作品。可以换个片名或
+          去掉筛选条件再试。」，丢掉了「0 部电影 / 有 N 部剧集」这个真实事实。
+          复现：production / 「我想看电影。」（reps=3 里 2 次）、fixture 1 次
+          建议：search 分支在 items 为空且 (kind==movie 或 utterance 含「电影」) 且
+          summary["movies"]==0 时，走既有的「本地库里目前没有电影，有 N 部剧集」文案；
+          并把 catalog_overview/catalog_detail 补进 plan_kind 映射表。
+

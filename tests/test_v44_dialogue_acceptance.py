@@ -16,8 +16,9 @@
 意图、实际调用的工具、工具真实返回值、事实准确性、候选一致性、
 是否误执行电视动作（``agent.run`` 只能由用户明确确认触发）、最终反馈、延迟。
 
-约定：标了 ``@unittest.expectedFailure`` 的用例带 ``KNOWN-V44-BUG-n`` 注释，指向已上报
-给 lead 的源码缺陷；装饰器移除后该断言即为验收标准。
+本文件是**验收标准**，不是快照：断言写的是契约要求的行为。本轮验收期间据此上报并已修复
+9 个缺陷（BUG-1..9）与 4 个真实 LLM 缺陷（OPEN-A..D）；仍未修复的 2 个 P2（OPEN-E 候选跨轮
+污染、OPEN-F「我想看电影」通用文案）记录在 docs/evidence/V44_DIALOGUE_ACCEPTANCE.txt。
 """
 from __future__ import annotations
 
@@ -409,7 +410,7 @@ class RecommendationTests(DialogueHarness):
         self.agent.run.assert_not_called()
 
     def test_l_genre_request_without_genre_metadata_is_declared_unsupported(self):
-        """V4.4 契约 L：题材覆盖必须用 `with_genres` 计数（已修，装饰器已移除）。
+        """契约 L：题材覆盖必须用 `with_genres`（与 search(genre=…) 同一字段）计数。
 
         metadata_missing 的口径是「plot/genres/studio/year 任一存在」，与「有没有
         genre/tag」不同。fixture 5 部都有 plot+studio、0 部有 genre，回复却说

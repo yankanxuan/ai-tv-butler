@@ -553,6 +553,13 @@ class AssistantLoop:
         elif canonical == 'catalog_search':
             data = self.tools.search(**arguments)
         elif canonical == 'catalog_recommend':
+            prefs = (state or {}).get('preferences') or {}
+            if prefs.get('max_episodes') and not arguments.get('max_episodes'):
+                arguments['max_episodes'] = prefs['max_episodes']
+            if prefs.get('exclude_genres') and not arguments.get('exclude_genres'):
+                arguments['exclude_genres'] = list(prefs['exclude_genres'])
+            if prefs.get('kind') and arguments.get('kind') in (None, 'any'):
+                arguments['kind'] = prefs['kind']
             data = self.tools.recommend(**arguments)
         elif canonical == 'catalog_get_episodes':
             data = self.tools.episodes(**arguments)
@@ -1275,7 +1282,8 @@ class AssistantLoop:
         if short:
             previous = state.get('last_query') or {}
             arguments = {'limit': 5,
-                         'max_episodes': previous.get('max_episodes') or 120}
+                         'max_episodes': (prefs.get('max_episodes')
+                                          or previous.get('max_episodes') or 120)}
             if previous.get('kind'):
                 arguments['kind'] = previous['kind']
             return [('library_recommend', arguments)], 'recommend'
@@ -1382,6 +1390,10 @@ class AssistantLoop:
                         '可以按片名搜索，或让我列几部带题材标签的作品。')
             if not items:
                 summary = self.tools.summary()
+                if (kind == 'movie' or '电影' in (text or '')) and not summary.get('movies'):
+                    return (f'本地库里目前没有电影，有 {summary.get("series", 0)} 部剧集'
+                            + (f'、{summary["short_dramas"]} 部短剧' if summary.get('short_dramas') else '')
+                            + f'（共 {summary["episodes"]} 集）。要我列几部剧，或者按片名找吗？')
                 if kind == 'movie' and not summary.get('movies'):
                     return (f'本地库里目前没有电影，有 {summary["series"]} 部剧集（共 {summary["episodes"]} 集）。'
                             '要我列几部剧集，或者按片名找吗？')
@@ -1577,6 +1589,8 @@ class AssistantLoop:
             # Reuse whatever the model already fetched instead of re-running a
             # different tool set for the fallback rendering.
             plan_kind = {'catalog_summary': 'summary', 'catalog_status': 'health',
+                         'catalog_overview': 'overview', 'catalog_recent': 'recent',
+                         'catalog_detail': 'detail',
                          'catalog_list': 'search', 'catalog_search': 'search',
                          'catalog_recommend': 'recommend',
                          'catalog_get_episodes': 'search',
@@ -1641,8 +1655,11 @@ class AssistantLoop:
                            answer_source=self.answer_source(observations, trace))
         diagnostics['total_latency_ms'] = (self.clock() - started) * 1000
         candidates = []
-        for observation in observations:
-            candidates.extend(self._items_of(observation))
+        for observation in reversed(observations):
+            items = self._items_of(observation)
+            if items:
+                candidates = list(items)
+                break
         return {'status': 'SUCCESS' if observations else 'NEEDS_CLARIFICATION',
                 'reply': reply, 'candidates': candidates, 'tool_trace': trace,
                 'answer_source': diagnostics.get('answer_source', 'unverified'),

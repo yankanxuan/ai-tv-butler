@@ -376,13 +376,15 @@ def fact_checks(letter, turns, tools, summary, agent, spy, overview_calls=()):
 # --------------------------------------------------------------------------- #
 # 跑批
 # --------------------------------------------------------------------------- #
-def run_dataset(name, cfg, roots, reps, out_records, quiet=False):
+def run_dataset(name, cfg, roots, reps, out_records, quiet=False, letters=None):
     tools_for_facts = LibraryTools(cfg, index=MediaIndex([str(r) for r in roots]).scan())
     summary = tools_for_facts.summary()
     scrub = sanitizer(roots)
     started = time.perf_counter()
     records = []
     for letter, turns_text in SEQUENCES.items():
+        if letters and letter not in letters:
+            continue
         samples = []
         rep_records = []
         for rep in range(reps):
@@ -488,6 +490,8 @@ def main(argv=None):
     parser.add_argument('--dataset', choices=('both', 'fixture', 'production'),
                         default='both')
     parser.add_argument('--out', default=str(DEFAULT_OUT))
+    parser.add_argument('--letters', default='',
+                        help='只跑指定条目，逗号分隔（如 D,G,H,L,N,O），用于快速复验')
     parser.add_argument('--quiet', action='store_true')
     args = parser.parse_args(argv)
 
@@ -516,7 +520,9 @@ def main(argv=None):
         for name, (dataset_cfg, roots) in datasets.items():
             if not args.quiet:
                 print(f'== dataset {name}: {len(roots)} 个只读根，reps={args.reps}')
-            run_dataset(name, dataset_cfg, roots, max(1, args.reps), records, args.quiet)
+            wanted = {item.strip() for item in args.letters.split(',') if item.strip()}
+            run_dataset(name, dataset_cfg, roots, max(1, args.reps), records, args.quiet,
+                        wanted or None)
         elapsed = time.perf_counter() - started
         current, peak = tracemalloc.get_traced_memory()
         tracemalloc.stop()

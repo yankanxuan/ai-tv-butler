@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-13T11:21:41+0800",
+  "generated_at": "2026-11-13T12:06:01+0800",
   "contract": "docs/V44_CONTRACT.md",
   "model": {
     "provider": "anthropic",
@@ -11,8 +11,6 @@
     "fixture": {
       "records": [
         {
-          "id": "A",
-          "title": "A 资源库总览",
           "utterance": "现在资源库有什么？",
           "reply": "已查询 NAS 本地影视库：共 5 部影视作品，其中电影 0 部、剧集 3 部、短剧 2 部。例如：1.《三体》；2.《大明王朝》；3.《师兄太稳健》；4.《我不是大师》；5.《漫长的季节》。可以说“第几部”来选择。",
           "status": "SUCCESS",
@@ -28,9 +26,9 @@
             "total_latency_ms": null,
             "fallback_reason": null,
             "failed_stage": null,
-            "route_ms": 0.6296289939200506,
+            "route_ms": 0.5420410016085953,
             "llm_ms": 0.0,
-            "total_ms": 85.3764690036769,
+            "total_ms": 91.78958000120474,
             "observe_ms": 0.0
           },
           "tool_trace": [],
@@ -64,6 +62,8 @@
           "agent_run_called": 0,
           "agent_run_commands": [],
           "turns": null,
+          "id": "A",
+          "title": "A 资源库总览",
           "fact_checks": [
             {
               "check": "有回复",
@@ -106,22 +106,26 @@
               "detail": ""
             }
           ],
-          "passed": true,
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
           "verified": true,
           "verified_reason": "",
+          "passed": true,
           "latency_samples_ms": [
-            660.37,
-            89.74,
-            86.32
+            628.06,
+            89.63,
+            92.67
           ],
-          "latency_p50_ms": 89.74,
-          "latency_p95_ms": 1116.87
+          "latency_p50_ms": 92.67,
+          "latency_p95_ms": 1056.37
         },
         {
-          "id": "B",
-          "title": "B 推荐三部",
           "utterance": "推荐三部好看的。",
-          "reply": "本地影视库里为你挑了 3 部作品：1.《师兄太稳健》（2026 年，短剧，共 200 集）——穿越者在宗门里稳健修行；2.《大明王朝》（2007 年，电视剧，共 46 集）——嘉靖年间朝廷与海瑞的博弈；3.《我不是大师》（2026 年，短剧，共 30 集）——外卖员误入武林成为大师。这三部作品的题材标签在库中目前都缺失，所以暂时无法按具体类型进一步判断。",
+          "reply": "给你推荐这三部（都来自本地影视库）：1）《师兄太稳健》，2026 年短剧，共 200 集，讲述穿越者在宗门里稳健修行；2）《大明王朝》，2007 年电视剧，共 46 集，由湖南广播电视台出品，讲述嘉靖年间朝廷与海瑞的博弈；3）《我不是大师》，2026 年短剧，共 30 集，讲述外卖员误入武林并成为大师。这三部目前都没有题材标签元数据，所以没法按类型再细说。想先看哪一部，我可以帮你播。",
           "status": "SUCCESS",
           "intent": "assistant",
           "answer_source": "local_catalog",
@@ -130,14 +134,14 @@
             "decision_source": "llm",
             "tool_name": "catalog_recommend",
             "tool_status": "ok",
-            "llm_latency_ms": 3089.3810839988873,
-            "tool_latency_ms": 110.49247699702391,
-            "total_latency_ms": 3205.8619059971534,
+            "llm_latency_ms": 3359.406913004932,
+            "tool_latency_ms": 90.39569600281538,
+            "total_latency_ms": 3583.6495170005946,
             "fallback_reason": null,
             "failed_stage": null,
-            "route_ms": 3845.627400005469,
-            "llm_ms": 3834.1971640038537,
-            "total_ms": 7059.184448997257,
+            "route_ms": 1596.2869499999215,
+            "llm_ms": 1594.3020769991563,
+            "total_ms": 5187.120333001076,
             "observe_ms": 0.0
           },
           "tool_trace": [
@@ -147,7 +151,7 @@
               "arguments": {
                 "limit": 3
               },
-              "latency_ms": 110.38,
+              "latency_ms": 90.27,
               "error": null
             }
           ],
@@ -171,11 +175,13 @@
           "agent_run_called": 0,
           "agent_run_commands": [],
           "turns": null,
+          "id": "B",
+          "title": "B 推荐三部",
           "fact_checks": [
             {
               "check": "有回复",
               "ok": true,
-              "detail": "本地影视库里为你挑了 3 部作品：1.《师兄太稳健》（2026 年，短剧，共 200 集）——穿越者在宗门里稳健修行；2.《大明王朝》（2007 年，电视剧，共"
+              "detail": "给你推荐这三部（都来自本地影视库）：1）《师兄太稳健》，2026 年短剧，共 200 集，讲述穿越者在宗门里稳健修行；2）《大明王朝》，2007 年电视剧，共 "
             },
             {
               "check": "电视动作次数",
@@ -203,20 +209,24 @@
               "detail": ""
             }
           ],
-          "passed": true,
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
           "verified": true,
           "verified_reason": "",
+          "passed": true,
           "latency_samples_ms": [
-            6970.07,
-            6860.98,
-            7060.17
+            6075.75,
+            6002.0,
+            5188.07
           ],
-          "latency_p50_ms": 6970.07,
-          "latency_p95_ms": 7132.25
+          "latency_p50_ms": 6002.0,
+          "latency_p95_ms": 6134.75
         },
         {
-          "id": "C",
-          "title": "C 第二个讲什么",
           "utterance": "第二个讲什么？",
           "reply": "《大明王朝》（电视剧，2007 年，46 集，出品：湖南广播电视台）讲的是：嘉靖年间朝廷与海瑞的博弈。",
           "status": "SUCCESS",
@@ -227,14 +237,14 @@
             "decision_source": "deterministic",
             "tool_name": "catalog_detail",
             "tool_status": "ok",
-            "llm_latency_ms": 3138.9227230029064,
-            "tool_latency_ms": 0.20403399685164914,
-            "total_latency_ms": 3169.037373998435,
+            "llm_latency_ms": 3184.363003994804,
+            "tool_latency_ms": 0.205901000299491,
+            "total_latency_ms": 3212.5681590041495,
             "fallback_reason": "ungrounded_answer",
             "failed_stage": null,
             "route_ms": 0.0,
             "llm_ms": 0.0,
-            "total_ms": 7252.082300998154,
+            "total_ms": 6651.9384479979635,
             "observe_ms": 0.0
           },
           "tool_trace": [
@@ -244,7 +254,7 @@
               "arguments": {
                 "limit": 3
               },
-              "latency_ms": 656.59,
+              "latency_ms": 82.97,
               "error": null
             },
             {
@@ -266,8 +276,8 @@
               "status": "SUCCESS",
               "intent": "assistant",
               "route": "agent",
-              "decision_source": "llm",
-              "reply": "为你挑选了本地库里的 3 部：1）《师兄太稳健》（2026，短剧，共 200 集，1 天前入库）；2）《大明王朝》（2007，电视剧，共 46 集，出品方为湖南广播电视台）；3）《我不是大师》（2026，短剧，共 30 集，5 天前入库）。库中这 3 部都没有题材标签，所以暂时无法按题材细分推荐。需要我播放其中某一部吗？",
+              "decision_source": "assistant_fallback",
+              "reply": "本地影视库里为你挑了 3 部： 1. 《师兄太稳健》（2026，短剧，共 200 集）——讲的是穿越者留在宗门里稳健修行。 2. 《大明王朝》（2007，电视剧，共 46 集，出品：湖南广播电视台）——讲的是嘉靖年间朝廷与海瑞之间的博弈。 3. 《我不是大师》（2026，短剧，共 30 集）——讲的是外卖员误入武林后成为大师。 这几部的类型标签在本地元数据里都还是空的，所以只能按类型和简介来介绍。想看哪一部，告诉我即可。",
               "candidates": [
                 {
                   "id": "19a87d781516fa11f2db2bb4",
@@ -291,17 +301,17 @@
                 "decision_source": "llm",
                 "tool_name": "catalog_recommend",
                 "tool_status": "ok",
-                "llm_latency_ms": 3597.187415994995,
-                "tool_latency_ms": 656.712479001726,
-                "total_latency_ms": 4279.640895998455,
+                "llm_latency_ms": 4165.050789997622,
+                "tool_latency_ms": 83.10041799995815,
+                "total_latency_ms": 4253.522808001435,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 3759.78825600032,
-                "llm_ms": 3756.755139998859,
-                "total_ms": 8084.099050996883,
+                "route_ms": 0.0,
+                "llm_ms": 0.0,
+                "total_ms": 7030.355748000147,
                 "observe_ms": 0.0
               },
-              "wall_ms": 8085.06
+              "wall_ms": 7031.26
             },
             {
               "utterance": "第二个讲什么？",
@@ -317,19 +327,21 @@
                 "decision_source": "deterministic",
                 "tool_name": "catalog_detail",
                 "tool_status": "ok",
-                "llm_latency_ms": 3138.9227230029064,
-                "tool_latency_ms": 0.20403399685164914,
-                "total_latency_ms": 3169.037373998435,
+                "llm_latency_ms": 3184.363003994804,
+                "tool_latency_ms": 0.205901000299491,
+                "total_latency_ms": 3212.5681590041495,
                 "fallback_reason": "ungrounded_answer",
                 "failed_stage": null,
                 "route_ms": 0.0,
                 "llm_ms": 0.0,
-                "total_ms": 7252.082300998154,
+                "total_ms": 6651.9384479979635,
                 "observe_ms": 0.0
               },
-              "wall_ms": 7253.3
+              "wall_ms": 6653.03
             }
           ],
+          "id": "C",
+          "title": "C 第二个讲什么",
           "fact_checks": [
             {
               "check": "有回复",
@@ -357,162 +369,26 @@
               "detail": "师兄太稳健"
             }
           ],
-          "passed": true,
-          "verified": true,
-          "verified_reason": "",
-          "latency_samples_ms": [
-            6620.04,
-            8311.85,
-            7253.3
-          ],
-          "latency_p50_ms": 7253.3,
-          "latency_p95_ms": 9158.69
-        },
-        {
-          "id": "D",
-          "title": "D 换一个类似的",
-          "utterance": "换一个类似的。",
-          "reply": "你想换成和哪一部类似的？请先告诉我参考的是哪部。",
-          "status": "NEEDS_CLARIFICATION",
-          "intent": "refine",
-          "answer_source": null,
-          "diagnostics": {
-            "model_name": null,
-            "decision_source": null,
-            "tool_name": null,
-            "tool_status": null,
-            "llm_latency_ms": null,
-            "tool_latency_ms": null,
-            "total_latency_ms": null,
-            "fallback_reason": null,
-            "failed_stage": null,
-            "route_ms": 3060.0964090044727,
-            "llm_ms": 3058.319132993347,
-            "total_ms": 3069.1719629976433,
-            "observe_ms": 0.0
+          "reps": {
+            "total": 3,
+            "passed": 3
           },
-          "tool_trace": [
-            {
-              "tool": "recommend",
-              "ok": true,
-              "arguments": {
-                "limit": 3
-              },
-              "latency_ms": 86.13,
-              "error": null
-            }
-          ],
-          "candidates": [],
-          "agent_run_called": 0,
-          "agent_run_commands": [],
-          "turns": [
-            {
-              "utterance": "推荐三部好看的。",
-              "status": "SUCCESS",
-              "intent": "assistant",
-              "route": "agent",
-              "decision_source": "llm",
-              "reply": "给你挑了 3 部本地已入库的作品： 1.《师兄太稳健》（2026，短剧，共 200 集，1 天前新增）——穿越者苟在宗门里稳健修行。 2.《大明王朝》（2007，电视剧，共 46 集，出品：湖南广播电视台）——嘉靖年间朝廷与海瑞的博弈。 3.《我不是大师》（2026，短剧，共 30 集，5 天前新增）——外卖员误入武林成为大师。 说明：这三部的题材标签在库里都缺失，所以没法按类型给你过滤。想先看哪一部？说一声我就帮你起播。",
-              "candidates": [
-                {
-                  "id": "19a87d781516fa11f2db2bb4",
-                  "title": "师兄太稳健",
-                  "episodes": 200
-                },
-                {
-                  "id": "3cbbb776b16e83edd76803ec",
-                  "title": "大明王朝",
-                  "episodes": 46
-                },
-                {
-                  "id": "cadc97ff222cb08035d68cf0",
-                  "title": "我不是大师",
-                  "episodes": 30
-                }
-              ],
-              "answer_source": "local_catalog",
-              "diagnostics": {
-                "model_name": "cn:deepseek-v4.1-flash",
-                "decision_source": "llm",
-                "tool_name": "catalog_recommend",
-                "tool_status": "ok",
-                "llm_latency_ms": 4651.660942006856,
-                "tool_latency_ms": 86.23413700115634,
-                "total_latency_ms": 4742.534925004293,
-                "fallback_reason": null,
-                "failed_stage": null,
-                "route_ms": 3345.556434993341,
-                "llm_ms": 3343.6425189938745,
-                "total_ms": 8095.33182400628,
-                "observe_ms": 0.0
-              },
-              "wall_ms": 8096.28
-            },
-            {
-              "utterance": "换一个类似的。",
-              "status": "NEEDS_CLARIFICATION",
-              "intent": "refine",
-              "route": "clarify",
-              "decision_source": "llm",
-              "reply": "你想换成和哪一部类似的？请先告诉我参考的是哪部。",
-              "candidates": [],
-              "answer_source": null,
-              "diagnostics": {
-                "model_name": null,
-                "decision_source": null,
-                "tool_name": null,
-                "tool_status": null,
-                "llm_latency_ms": null,
-                "tool_latency_ms": null,
-                "total_latency_ms": null,
-                "fallback_reason": null,
-                "failed_stage": null,
-                "route_ms": 3060.0964090044727,
-                "llm_ms": 3058.319132993347,
-                "total_ms": 3069.1719629976433,
-                "observe_ms": 0.0
-              },
-              "wall_ms": 3070.19
-            }
-          ],
-          "fact_checks": [
-            {
-              "check": "有回复",
-              "ok": true,
-              "detail": "你想换成和哪一部类似的？请先告诉我参考的是哪部。"
-            },
-            {
-              "check": "电视动作次数",
-              "ok": true,
-              "detail": "agent.run=0 期望=0"
-            },
-            {
-              "check": "已给候选被排除",
-              "ok": false,
-              "detail": "exclusions=[]"
-            },
-            {
-              "check": "新候选不重复",
-              "ok": false,
-              "detail": "新=0 旧=3"
-            }
-          ],
-          "passed": false,
+          "rep_failures": [],
+          "detail_rep": 3,
           "verified": true,
           "verified_reason": "",
+          "passed": true,
           "latency_samples_ms": [
-            10436.88,
-            4541.29,
-            3070.19
+            6366.6,
+            5615.8,
+            6653.03
           ],
-          "latency_p50_ms": 4541.29,
-          "latency_p95_ms": 15153.35
+          "latency_p50_ms": 6366.6,
+          "latency_p95_ms": 6882.17
         },
         {
-          "id": "E",
-          "title": "E 不要太长",
-          "utterance": "不要那么长的。",
-          "reply": "从本地已入库内容里给你挑了这几部：1.《大明王朝》（2007） · 46 集；2.《我不是大师》（2026） · 30 集；3.《漫长的季节》（2023） · 12 集；4.《三体》（2023） · 10 集。可以说“第几部”继续选择。",
+          "utterance": "换一个类似的。",
+          "reply": "从本地已入库内容里给你挑了这几部：1.《漫长的季节》（2023） · 12 集；2.《三体》（2023） · 10 集。可以说“第几部”继续选择。",
           "status": "SUCCESS",
           "intent": "assistant",
           "answer_source": "local_catalog",
@@ -521,14 +397,14 @@
             "decision_source": "deterministic",
             "tool_name": "library_recommend",
             "tool_status": "ok",
-            "llm_latency_ms": 4010.4329949972453,
-            "tool_latency_ms": 2.674043003935367,
-            "total_latency_ms": 4014.477356002317,
-            "fallback_reason": "timeout",
-            "failed_stage": "model",
+            "llm_latency_ms": 3997.816255003272,
+            "tool_latency_ms": 0.9079910014406778,
+            "total_latency_ms": 4000.3952079932787,
+            "fallback_reason": "ungrounded_answer",
+            "failed_stage": null,
             "route_ms": 0.0,
             "llm_ms": 0.0,
-            "total_ms": 8041.852039001242,
+            "total_ms": 8017.779168003472,
             "observe_ms": 0.0
           },
           "tool_trace": [
@@ -538,7 +414,7 @@
               "arguments": {
                 "limit": 3
               },
-              "latency_ms": 82.75,
+              "latency_ms": 97.75,
               "error": null
             },
             {
@@ -546,23 +422,17 @@
               "ok": true,
               "arguments": {
                 "limit": 5,
-                "max_episodes": 120
+                "exclusions": [
+                  "19a87d781516fa11f2db2bb4",
+                  "3cbbb776b16e83edd76803ec",
+                  "cadc97ff222cb08035d68cf0"
+                ]
               },
-              "latency_ms": 1.25,
+              "latency_ms": 0.81,
               "error": null
             }
           ],
           "candidates": [
-            {
-              "id": "3cbbb776b16e83edd76803ec",
-              "title": "大明王朝",
-              "episodes": 46
-            },
-            {
-              "id": "cadc97ff222cb08035d68cf0",
-              "title": "我不是大师",
-              "episodes": 30
-            },
             {
               "id": "f9772e3f5653ac8a0b68da4a",
               "title": "漫长的季节",
@@ -583,7 +453,7 @@
               "intent": "assistant",
               "route": "agent",
               "decision_source": "llm",
-              "reply": "给你挑了本地库里的三部作品： 1. 《师兄太稳健》（2026，短剧，共 200 集）——穿越者苟在宗门里稳健修行，7 天内新增。 2. 《大明王朝》（2007，电视剧，共 46 集，湖南广播电视台出品）——嘉靖年间朝廷与海瑞的博弈。 3. 《我不是大师》（2026，短剧，共 30 集）——外卖员误入武林成为大师，7 天内新增。 这三部的类型标签在库里都是空的，所以没法按题材给你更细的筛选；想先看哪一部的话告诉我，我帮你发起播放。",
+              "reply": "按本地库推荐这三部：1）《师兄太稳健》（2026，短剧，共 200 集，剧情是穿越者苟在宗门里稳健修行）；2）《大明王朝》（2007，电视剧，共 46 集，讲嘉靖年间朝廷与海瑞的博弈，出品湖南广播电视台）；3）《我不是大师》（2026，短剧，共 30 集，讲外卖员误入武林成为大师）。这三部都没有题材标签信息，我无法判断类型偏好；想直接看哪一部，告诉我即可。",
               "candidates": [
                 {
                   "id": "19a87d781516fa11f2db2bb4",
@@ -607,36 +477,26 @@
                 "decision_source": "llm",
                 "tool_name": "catalog_recommend",
                 "tool_status": "ok",
-                "llm_latency_ms": 4060.1136240002234,
-                "tool_latency_ms": 82.88638700469164,
-                "total_latency_ms": 4153.098399998271,
+                "llm_latency_ms": 3361.1571379951783,
+                "tool_latency_ms": 97.88153199770022,
+                "total_latency_ms": 3465.2145139989443,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 1832.5647460005712,
-                "llm_ms": 1830.9329070034437,
-                "total_ms": 5992.604398001276,
+                "route_ms": 2225.5967960009,
+                "llm_ms": 2223.6851639972883,
+                "total_ms": 5697.603621003509,
                 "observe_ms": 0.0
               },
-              "wall_ms": 5993.52
+              "wall_ms": 5698.53
             },
             {
-              "utterance": "不要那么长的。",
+              "utterance": "换一个类似的。",
               "status": "SUCCESS",
               "intent": "assistant",
               "route": "agent",
               "decision_source": "assistant_fallback",
-              "reply": "从本地已入库内容里给你挑了这几部：1.《大明王朝》（2007） · 46 集；2.《我不是大师》（2026） · 30 集；3.《漫长的季节》（2023） · 12 集；4.《三体》（2023） · 10 集。可以说“第几部”继续选择。",
+              "reply": "从本地已入库内容里给你挑了这几部：1.《漫长的季节》（2023） · 12 集；2.《三体》（2023） · 10 集。可以说“第几部”继续选择。",
               "candidates": [
-                {
-                  "id": "3cbbb776b16e83edd76803ec",
-                  "title": "大明王朝",
-                  "episodes": 46
-                },
-                {
-                  "id": "cadc97ff222cb08035d68cf0",
-                  "title": "我不是大师",
-                  "episodes": 30
-                },
                 {
                   "id": "f9772e3f5653ac8a0b68da4a",
                   "title": "漫长的季节",
@@ -654,24 +514,26 @@
                 "decision_source": "deterministic",
                 "tool_name": "library_recommend",
                 "tool_status": "ok",
-                "llm_latency_ms": 4010.4329949972453,
-                "tool_latency_ms": 2.674043003935367,
-                "total_latency_ms": 4014.477356002317,
-                "fallback_reason": "timeout",
-                "failed_stage": "model",
+                "llm_latency_ms": 3997.816255003272,
+                "tool_latency_ms": 0.9079910014406778,
+                "total_latency_ms": 4000.3952079932787,
+                "fallback_reason": "ungrounded_answer",
+                "failed_stage": null,
                 "route_ms": 0.0,
                 "llm_ms": 0.0,
-                "total_ms": 8041.852039001242,
+                "total_ms": 8017.779168003472,
                 "observe_ms": 0.0
               },
-              "wall_ms": 8043.0
+              "wall_ms": 8018.71
             }
           ],
+          "id": "D",
+          "title": "D 换一个类似的",
           "fact_checks": [
             {
               "check": "有回复",
               "ok": true,
-              "detail": "从本地已入库内容里给你挑了这几部：1.《大明王朝》（2007） · 46 集；2.《我不是大师》（2026） · 30 集；3.《漫长的季节》（2023） · "
+              "detail": "从本地已入库内容里给你挑了这几部：1.《漫长的季节》（2023） · 12 集；2.《三体》（2023） · 10 集。可以说“第几部”继续选择。"
             },
             {
               "check": "电视动作次数",
@@ -679,14 +541,155 @@
               "detail": "agent.run=0 期望=0"
             },
             {
-              "check": "带上 max_episodes",
+              "check": "已给候选被排除",
               "ok": true,
-              "detail": "120"
+              "detail": "exclusions=['19a87d781516fa11f2db2bb4', '3cbbb776b16e83edd76803ec', 'cadc97ff222cb08035d68cf0']"
             },
             {
-              "check": "候选集数不超上限",
+              "check": "新候选不重复",
               "ok": true,
-              "detail": "最大 46 集 / 上限 120"
+              "detail": "重叠=[]"
+            }
+          ],
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
+          "verified": true,
+          "verified_reason": "",
+          "passed": true,
+          "latency_samples_ms": [
+            6588.41,
+            7048.59,
+            8018.71
+          ],
+          "latency_p50_ms": 7048.59,
+          "latency_p95_ms": 8794.81
+        },
+        {
+          "utterance": "不要那么长的。",
+          "reply": "我还不能确定你的意思，请补充具体内容。",
+          "status": "NEEDS_CLARIFICATION",
+          "intent": "assistant",
+          "answer_source": null,
+          "diagnostics": {
+            "model_name": null,
+            "decision_source": null,
+            "tool_name": null,
+            "tool_status": null,
+            "llm_latency_ms": null,
+            "tool_latency_ms": null,
+            "total_latency_ms": null,
+            "fallback_reason": null,
+            "failed_stage": null,
+            "route_ms": 3916.2151150012505,
+            "llm_ms": 3911.8844800032093,
+            "total_ms": 3928.2831370001077,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [
+            {
+              "tool": "recommend",
+              "ok": true,
+              "arguments": {
+                "limit": 3
+              },
+              "latency_ms": 93.0,
+              "error": null
+            }
+          ],
+          "candidates": [],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": [
+            {
+              "utterance": "推荐三部好看的。",
+              "status": "SUCCESS",
+              "intent": "assistant",
+              "route": "agent",
+              "decision_source": "llm",
+              "reply": "本地影视库里给你挑了三部：第一部是 2026 年的短剧《师兄太稳健》，共 200 集；第二部是 2007 年的电视剧《大明王朝》，共 46 集；第三部是 2026 年的短剧《我不是大师》，共 30 集。这三部都没有题材标签，暂时无法按类型进一步筛选。你想先看哪一部？",
+              "candidates": [
+                {
+                  "id": "19a87d781516fa11f2db2bb4",
+                  "title": "师兄太稳健",
+                  "episodes": 200
+                },
+                {
+                  "id": "3cbbb776b16e83edd76803ec",
+                  "title": "大明王朝",
+                  "episodes": 46
+                },
+                {
+                  "id": "cadc97ff222cb08035d68cf0",
+                  "title": "我不是大师",
+                  "episodes": 30
+                }
+              ],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": "cn:deepseek-v4.1-flash",
+                "decision_source": "llm",
+                "tool_name": "catalog_recommend",
+                "tool_status": "ok",
+                "llm_latency_ms": 2801.8927779994556,
+                "tool_latency_ms": 93.11744599835947,
+                "total_latency_ms": 2899.604199999885,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 2887.036726999213,
+                "llm_ms": 2879.3636560003506,
+                "total_ms": 5795.297165997908,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 5796.21
+            },
+            {
+              "utterance": "不要那么长的。",
+              "status": "NEEDS_CLARIFICATION",
+              "intent": "assistant",
+              "route": "clarify",
+              "decision_source": "llm",
+              "reply": "我还不能确定你的意思，请补充具体内容。",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 3916.2151150012505,
+                "llm_ms": 3911.8844800032093,
+                "total_ms": 3928.2831370001077,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 3929.53
+            }
+          ],
+          "id": "E",
+          "title": "E 不要太长",
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "我还不能确定你的意思，请补充具体内容。"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=0 期望=0"
+            },
+            {
+              "check": "未套上限时如实澄清（不编造候选）",
+              "ok": false,
+              "detail": "limit=None candidates=0 我还不能确定你的意思，请补充具体内容。"
             },
             {
               "check": "不暴露内部降级文案",
@@ -694,20 +697,31 @@
               "detail": ""
             }
           ],
-          "passed": true,
+          "reps": {
+            "total": 3,
+            "passed": 2
+          },
+          "rep_failures": [
+            {
+              "rep": 3,
+              "failed": [
+                "未套上限时如实澄清（不编造候选）"
+              ]
+            }
+          ],
+          "detail_rep": 3,
           "verified": true,
           "verified_reason": "",
+          "passed": false,
           "latency_samples_ms": [
-            8845.64,
-            3492.98,
-            8043.0
+            8123.3,
+            8855.66,
+            3929.53
           ],
-          "latency_p50_ms": 8043.0,
-          "latency_p95_ms": 9487.75
+          "latency_p50_ms": 8123.3,
+          "latency_p95_ms": 9441.55
         },
         {
-          "id": "F",
-          "title": "F 上次看到哪里",
           "utterance": "我上次看到哪里了？",
           "reply": "我还没有记录到你上次播放到哪一集。可以说片名让我查，或说“随便推荐一部”。",
           "status": "NEEDS_CLARIFICATION",
@@ -723,9 +737,9 @@
             "total_latency_ms": null,
             "fallback_reason": null,
             "failed_stage": null,
-            "route_ms": 2483.775651999167,
-            "llm_ms": 2479.981972996029,
-            "total_ms": 2490.593048001756,
+            "route_ms": 3783.33611600101,
+            "llm_ms": 3779.8672260032617,
+            "total_ms": 3790.597539002192,
             "observe_ms": 0.0
           },
           "tool_trace": [],
@@ -733,6 +747,8 @@
           "agent_run_called": 0,
           "agent_run_commands": [],
           "turns": null,
+          "id": "F",
+          "title": "F 上次看到哪里",
           "fact_checks": [
             {
               "check": "有回复",
@@ -755,20 +771,24 @@
               "detail": ""
             }
           ],
-          "passed": true,
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
           "verified": true,
           "verified_reason": "",
+          "passed": true,
           "latency_samples_ms": [
-            4026.42,
-            2610.52,
-            2491.1
+            2673.28,
+            3553.85,
+            3791.2
           ],
-          "latency_p50_ms": 2610.52,
-          "latency_p95_ms": 5159.14
+          "latency_p50_ms": 3553.85,
+          "latency_p95_ms": 3981.08
         },
         {
-          "id": "G",
-          "title": "G 打开第N季（确认）",
           "utterance": "打开这部剧第二季。",
           "reply": "确认执行 播放《三体》第2季第一集 吗？小爱可能也响应同一句话；请明确说“确认”或“不确认”。",
           "status": "NEEDS_CONFIRMATION",
@@ -786,7 +806,7 @@
             "failed_stage": null,
             "route_ms": 0.0,
             "llm_ms": 0.0,
-            "total_ms": 4077.3655450029764,
+            "total_ms": 4038.9811459972407,
             "observe_ms": 0.0
           },
           "tool_trace": [],
@@ -839,12 +859,12 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 0.4661630009650253,
+                "route_ms": 0.48995899851433933,
                 "llm_ms": 0.0,
-                "total_ms": 113.50674299319508,
+                "total_ms": 88.32952800003113,
                 "observe_ms": 0.0
               },
-              "wall_ms": 114.51
+              "wall_ms": 89.21
             },
             {
               "utterance": "第一部。",
@@ -865,12 +885,12 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 3427.7127039968036,
-                "llm_ms": 3424.1528599959565,
-                "total_ms": 3440.220880002016,
+                "route_ms": 3099.572769999213,
+                "llm_ms": 3096.071904998098,
+                "total_ms": 3111.7635280024842,
                 "observe_ms": 0.0
               },
-              "wall_ms": 3441.58
+              "wall_ms": 3112.88
             },
             {
               "utterance": "打开这部剧第二季。",
@@ -893,12 +913,14 @@
                 "failed_stage": null,
                 "route_ms": 0.0,
                 "llm_ms": 0.0,
-                "total_ms": 4077.3655450029764,
+                "total_ms": 4038.9811459972407,
                 "observe_ms": 0.0
               },
-              "wall_ms": 4080.25
+              "wall_ms": 4040.6
             }
           ],
+          "id": "G",
+          "title": "G 打开第N季（确认）",
           "fact_checks": [
             {
               "check": "有回复",
@@ -911,7 +933,7 @@
               "detail": "agent.run=0 期望=0"
             },
             {
-              "check": "走确认流程",
+              "check": "有第 2 季时走确认流程",
               "ok": true,
               "detail": "NEEDS_CONFIRMATION"
             },
@@ -921,20 +943,24 @@
               "detail": "0"
             }
           ],
-          "passed": true,
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
           "verified": true,
           "verified_reason": "",
+          "passed": true,
           "latency_samples_ms": [
-            4252.78,
-            4041.88,
-            4080.25
+            3556.04,
+            4039.9,
+            4040.6
           ],
-          "latency_p50_ms": 4080.25,
-          "latency_p95_ms": 4390.8
+          "latency_p50_ms": 4039.9,
+          "latency_p95_ms": 4041.16
         },
         {
-          "id": "G3",
-          "title": "G3 不存在的季",
           "utterance": "打开这部剧第三季。",
           "reply": "这部作品没有你指定的那一集，我没有执行播放。",
           "status": "NEEDS_CLARIFICATION",
@@ -952,7 +978,7 @@
             "failed_stage": null,
             "route_ms": 0.0,
             "llm_ms": 0.0,
-            "total_ms": 3974.049869000737,
+            "total_ms": 4030.488704003801,
             "observe_ms": 0.0
           },
           "tool_trace": [],
@@ -1005,12 +1031,12 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 0.48134999815374613,
+                "route_ms": 0.487411001813598,
                 "llm_ms": 0.0,
-                "total_ms": 86.34842299943557,
+                "total_ms": 101.96007900231052,
                 "observe_ms": 0.0
               },
-              "wall_ms": 87.24
+              "wall_ms": 102.93
             },
             {
               "utterance": "第一部。",
@@ -1031,12 +1057,12 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 3018.1225940032164,
-                "llm_ms": 3014.3932110004243,
-                "total_ms": 3030.343959995662,
+                "route_ms": 3340.79870700225,
+                "llm_ms": 3337.488792996737,
+                "total_ms": 3353.1044159972225,
                 "observe_ms": 0.0
               },
-              "wall_ms": 3031.52
+              "wall_ms": 3354.22
             },
             {
               "utterance": "打开这部剧第三季。",
@@ -1059,12 +1085,14 @@
                 "failed_stage": null,
                 "route_ms": 0.0,
                 "llm_ms": 0.0,
-                "total_ms": 3974.049869000737,
+                "total_ms": 4030.488704003801,
                 "observe_ms": 0.0
               },
-              "wall_ms": 3976.29
+              "wall_ms": 4032.22
             }
           ],
+          "id": "G3",
+          "title": "G3 不存在的季",
           "fact_checks": [
             {
               "check": "有回复",
@@ -1087,20 +1115,24 @@
               "detail": "0"
             }
           ],
-          "passed": true,
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
           "verified": true,
           "verified_reason": "",
+          "passed": true,
           "latency_samples_ms": [
-            4034.39,
-            4037.7,
-            3976.29
+            4031.42,
+            4032.43,
+            4032.22
           ],
-          "latency_p50_ms": 4034.39,
-          "latency_p95_ms": 4040.35
+          "latency_p50_ms": 4032.22,
+          "latency_p95_ms": 4032.6
         },
         {
-          "id": "H",
-          "title": "H 确认播放",
           "utterance": "确认播放。",
           "reply": "已完成。",
           "status": "SUCCESS",
@@ -1116,9 +1148,9 @@
             "total_latency_ms": null,
             "fallback_reason": null,
             "failed_stage": null,
-            "route_ms": 3437.4785339969094,
-            "llm_ms": 3433.77366400091,
-            "total_ms": 3467.037722002715,
+            "route_ms": 2867.4032400012948,
+            "llm_ms": 2862.7870170021197,
+            "total_ms": 2899.866423998901,
             "observe_ms": 0.0
           },
           "tool_trace": [],
@@ -1173,12 +1205,12 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 0.4664739972213283,
+                "route_ms": 0.4869700060226023,
                 "llm_ms": 0.0,
-                "total_ms": 86.65728499909164,
+                "total_ms": 90.56449399940902,
                 "observe_ms": 0.0
               },
-              "wall_ms": 87.54
+              "wall_ms": 91.44
             },
             {
               "utterance": "第一部。",
@@ -1199,19 +1231,19 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 3598.103677999461,
-                "llm_ms": 3593.9189399941824,
-                "total_ms": 3610.2313439987483,
+                "route_ms": 4008.529222999641,
+                "llm_ms": 4005.5695280025247,
+                "total_ms": 4020.713755999168,
                 "observe_ms": 0.0
               },
-              "wall_ms": 3611.39
+              "wall_ms": 4021.84
             },
             {
               "utterance": "播放第一集。",
               "status": "NEEDS_CONFIRMATION",
               "intent": "play",
               "route": "clarify",
-              "decision_source": "context_rule",
+              "decision_source": "llm",
               "reply": "确认执行 播放《三体》第1季第一集 吗？小爱可能也响应同一句话；请明确说“确认”或“不确认”。",
               "candidates": [],
               "answer_source": null,
@@ -1225,12 +1257,12 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 4009.6432490026928,
-                "llm_ms": 4006.5627779986244,
-                "total_ms": 4031.667725997977,
+                "route_ms": 3141.212625996559,
+                "llm_ms": 3136.238597006013,
+                "total_ms": 3166.71322700131,
                 "observe_ms": 0.0
               },
-              "wall_ms": 4032.94
+              "wall_ms": 3168.4
             },
             {
               "utterance": "确认播放。",
@@ -1251,14 +1283,16 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 3437.4785339969094,
-                "llm_ms": 3433.77366400091,
-                "total_ms": 3467.037722002715,
+                "route_ms": 2867.4032400012948,
+                "llm_ms": 2862.7870170021197,
+                "total_ms": 2899.866423998901,
                 "observe_ms": 0.0
               },
-              "wall_ms": 3468.87
+              "wall_ms": 2901.63
             }
           ],
+          "id": "H",
+          "title": "H 确认播放",
           "fact_checks": [
             {
               "check": "有回复",
@@ -1271,6 +1305,11 @@
               "detail": "agent.run=1 期望=1"
             },
             {
+              "check": "确认意图未被误路由（NATIVE/其他）",
+              "ok": true,
+              "detail": "SUCCESS"
+            },
+            {
               "check": "只执行一次",
               "ok": true,
               "detail": "1"
@@ -1281,20 +1320,24 @@
               "detail": "播放《三体》第1季第一集"
             }
           ],
-          "passed": true,
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
           "verified": true,
           "verified_reason": "",
+          "passed": true,
           "latency_samples_ms": [
-            4046.3,
-            3901.89,
-            3468.87
+            4046.39,
+            4037.48,
+            2901.63
           ],
-          "latency_p50_ms": 3901.89,
-          "latency_p95_ms": 4161.83
+          "latency_p50_ms": 4037.48,
+          "latency_p95_ms": 4053.52
         },
         {
-          "id": "H2",
-          "title": "H2 取消播放",
           "utterance": "取消播放。",
           "reply": "已取消刚才的待确认操作，没有执行任何电视动作。",
           "status": "NEEDS_CLARIFICATION",
@@ -1310,9 +1353,9 @@
             "total_latency_ms": null,
             "fallback_reason": null,
             "failed_stage": null,
-            "route_ms": 4009.1144329999224,
-            "llm_ms": 4005.9857980013476,
-            "total_ms": 4026.9455350062344,
+            "route_ms": 4013.327472996025,
+            "llm_ms": 4009.405501994479,
+            "total_ms": 4032.8977660028613,
             "observe_ms": 0.0
           },
           "tool_trace": [],
@@ -1365,12 +1408,12 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 0.47753500257385895,
+                "route_ms": 0.47525200352538377,
                 "llm_ms": 0.0,
-                "total_ms": 94.96283900080016,
+                "total_ms": 86.47487899725093,
                 "observe_ms": 0.0
               },
-              "wall_ms": 95.86
+              "wall_ms": 87.34
             },
             {
               "utterance": "第一部。",
@@ -1391,12 +1434,12 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 4009.5067380025284,
-                "llm_ms": 4006.5017100059777,
-                "total_ms": 4022.2446249972563,
+                "route_ms": 3712.2362519949093,
+                "llm_ms": 3708.01807299722,
+                "total_ms": 3725.1849719978054,
                 "observe_ms": 0.0
               },
-              "wall_ms": 4023.42
+              "wall_ms": 3726.5
             },
             {
               "utterance": "播放第一集。",
@@ -1417,12 +1460,12 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 4013.7639160020626,
-                "llm_ms": 4006.4259020000463,
-                "total_ms": 4036.129713000264,
+                "route_ms": 3541.464784000709,
+                "llm_ms": 3536.7554650001694,
+                "total_ms": 3566.4252700007637,
                 "observe_ms": 0.0
               },
-              "wall_ms": 4037.57
+              "wall_ms": 3567.95
             },
             {
               "utterance": "取消播放。",
@@ -1443,14 +1486,16 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 4009.1144329999224,
-                "llm_ms": 4005.9857980013476,
-                "total_ms": 4026.9455350062344,
+                "route_ms": 4013.327472996025,
+                "llm_ms": 4009.405501994479,
+                "total_ms": 4032.8977660028613,
                 "observe_ms": 0.0
               },
-              "wall_ms": 4028.37
+              "wall_ms": 4034.74
             }
           ],
+          "id": "H2",
+          "title": "H2 取消播放",
           "fact_checks": [
             {
               "check": "有回复",
@@ -1473,20 +1518,24 @@
               "detail": "已取消刚才的待确认操作，没有执行任何电视动作。"
             }
           ],
-          "passed": true,
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
           "verified": true,
           "verified_reason": "",
+          "passed": true,
           "latency_samples_ms": [
-            3308.04,
-            4034.68,
-            4028.37
+            4030.56,
+            4033.97,
+            4034.74
           ],
-          "latency_p50_ms": 4028.37,
-          "latency_p95_ms": 4039.73
+          "latency_p50_ms": 4033.97,
+          "latency_p95_ms": 4035.36
         },
         {
-          "id": "I",
-          "title": "I 电视在放什么",
           "utterance": "电视现在在放什么？",
           "reply": "正在播放《漫长的季节》 第1季 第5集",
           "status": "SUCCESS",
@@ -1502,10 +1551,10 @@
             "total_latency_ms": null,
             "fallback_reason": null,
             "failed_stage": null,
-            "route_ms": 0.40992299909703434,
+            "route_ms": 0.4099139987374656,
             "llm_ms": 0.0,
-            "total_ms": 8.08098100242205,
-            "observe_ms": 0.1260759963770397
+            "total_ms": 8.080721003352664,
+            "observe_ms": 0.12829899787902832
           },
           "tool_trace": [],
           "candidates": [],
@@ -1514,6 +1563,8 @@
             "现在播放的是什么"
           ],
           "turns": null,
+          "id": "I",
+          "title": "I 电视在放什么",
           "fact_checks": [
             {
               "check": "有回复",
@@ -1536,20 +1587,24 @@
               "detail": ""
             }
           ],
-          "passed": true,
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
           "verified": false,
           "verified_reason": "无真实电视可观测，使用注入的固定设备观测",
+          "passed": true,
           "latency_samples_ms": [
-            22.52,
-            8.56,
-            8.58
+            21.99,
+            8.7,
+            8.57
           ],
-          "latency_p50_ms": 8.58,
-          "latency_p95_ms": 33.67
+          "latency_p50_ms": 8.7,
+          "latency_p95_ms": 32.62
         },
         {
-          "id": "J",
-          "title": "J 最近新增",
           "utterance": "最近新增了哪些资源？",
           "reply": "最近加入/更新的本地作品是：1.《师兄太稳健》（2026） · 200 集；2.《三体》（2023） · 10 集；3.《我不是大师》（2026） · 30 集；4.《漫长的季节》（2023） · 12 集；5.《大明王朝》（2007） · 46 集。可以说“第几部”继续选择。",
           "status": "SUCCESS",
@@ -1560,14 +1615,14 @@
             "decision_source": "deterministic",
             "tool_name": "catalog_recent",
             "tool_status": "ok",
-            "llm_latency_ms": 4351.238306000596,
-            "tool_latency_ms": 82.06920699740294,
-            "total_latency_ms": 4436.507091006206,
+            "llm_latency_ms": 4621.220240005641,
+            "tool_latency_ms": 83.20539699343499,
+            "total_latency_ms": 4707.72581500205,
             "fallback_reason": "ungrounded_answer",
             "failed_stage": null,
-            "route_ms": 2929.2005070019513,
-            "llm_ms": 2925.0474920045235,
-            "total_ms": 7374.639135996404,
+            "route_ms": 2424.2087460006587,
+            "llm_ms": 2419.2927529948065,
+            "total_ms": 7141.9647020011325,
             "observe_ms": 0.0
           },
           "tool_trace": [
@@ -1575,9 +1630,10 @@
               "tool": "recent",
               "ok": true,
               "arguments": {
-                "limit": 10
+                "limit": 10,
+                "kind": "any"
               },
-              "latency_ms": 81.94,
+              "latency_ms": 83.08,
               "error": null
             }
           ],
@@ -1611,6 +1667,8 @@
           "agent_run_called": 0,
           "agent_run_commands": [],
           "turns": null,
+          "id": "J",
+          "title": "J 最近新增",
           "fact_checks": [
             {
               "check": "有回复",
@@ -1633,57 +1691,67 @@
               "detail": ""
             }
           ],
-          "passed": true,
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
           "verified": true,
           "verified_reason": "",
+          "passed": true,
           "latency_samples_ms": [
-            6618.01,
-            7385.09,
-            7375.74
+            6669.97,
+            6429.64,
+            7143.06
           ],
-          "latency_p50_ms": 7375.74,
-          "latency_p95_ms": 7392.57
+          "latency_p50_ms": 6669.97,
+          "latency_p95_ms": 7521.53
         },
         {
-          "id": "K",
-          "title": "K 我想看电影",
           "utterance": "我想看电影。",
-          "reply": "我查了一下本地影视库，目前电影是 0 部，所以暂时没有可播放的电影。库里现有 5 部作品：3 部剧集、2 部短剧，共 298 集。如果你想看，我可以帮你从剧集或短剧里推荐几部。",
+          "reply": "本地库里没有符合条件的作品。可以换个片名或去掉筛选条件再试。",
           "status": "SUCCESS",
           "intent": "search",
           "answer_source": "local_catalog",
           "diagnostics": {
             "model_name": "cn:deepseek-v4.1-flash",
-            "decision_source": "llm",
-            "tool_name": "library_summary",
+            "decision_source": "deterministic",
+            "tool_name": "catalog_overview",
             "tool_status": "ok",
-            "llm_latency_ms": 4933.5649800050305,
-            "tool_latency_ms": 82.01616200676654,
-            "total_latency_ms": 5020.385919000546,
-            "fallback_reason": null,
+            "llm_latency_ms": 5583.487747993786,
+            "tool_latency_ms": 83.68891400459688,
+            "total_latency_ms": 5672.8900560046895,
+            "fallback_reason": "ungrounded_answer",
             "failed_stage": null,
-            "route_ms": 3214.077828997688,
-            "llm_ms": 3210.6709919971763,
-            "total_ms": 8324.742999997397,
+            "route_ms": 3791.6752329983865,
+            "llm_ms": 3788.0163119989447,
+            "total_ms": 9561.181518001831,
             "observe_ms": 0.0
           },
           "tool_trace": [
             {
-              "tool": "browse",
+              "tool": "recommend",
               "ok": true,
               "arguments": {
                 "kind": "movie",
-                "limit": 10,
-                "sort": "recent"
+                "limit": 5
               },
-              "latency_ms": 81.49,
+              "latency_ms": 82.82,
+              "error": null
+            },
+            {
+              "tool": "overview",
+              "ok": true,
+              "arguments": {},
+              "latency_ms": 0.66,
               "error": null
             },
             {
               "tool": "summary",
               "ok": true,
               "arguments": {},
-              "latency_ms": 0.35,
+              "latency_ms": 0.48,
               "error": null
             }
           ],
@@ -1691,11 +1759,13 @@
           "agent_run_called": 0,
           "agent_run_commands": [],
           "turns": null,
+          "id": "K",
+          "title": "K 我想看电影",
           "fact_checks": [
             {
               "check": "有回复",
               "ok": true,
-              "detail": "我查了一下本地影视库，目前电影是 0 部，所以暂时没有可播放的电影。库里现有 5 部作品：3 部剧集、2 部短剧，共 298 集。如果你想看，我可以帮你从剧集或"
+              "detail": "本地库里没有符合条件的作品。可以换个片名或去掉筛选条件再试。"
             },
             {
               "check": "电视动作次数",
@@ -1705,11 +1775,11 @@
             {
               "check": "说明没有电影",
               "ok": false,
-              "detail": "我查了一下本地影视库，目前电影是 0 部，所以暂时没有可播放的电影。库里现有 5 部作品：3 部剧集、2 部短剧，共 298 集。如果你想看，我可以帮你从剧集或"
+              "detail": "本地库里没有符合条件的作品。可以换个片名或去掉筛选条件再试。"
             },
             {
               "check": "给出真实剧集数",
-              "ok": true,
+              "ok": false,
               "detail": "3"
             },
             {
@@ -1718,80 +1788,93 @@
               "detail": ""
             }
           ],
-          "passed": false,
+          "reps": {
+            "total": 3,
+            "passed": 2
+          },
+          "rep_failures": [
+            {
+              "rep": 3,
+              "failed": [
+                "说明没有电影",
+                "给出真实剧集数"
+              ]
+            }
+          ],
+          "detail_rep": 3,
           "verified": true,
           "verified_reason": "",
+          "passed": false,
           "latency_samples_ms": [
-            6487.15,
-            8615.12,
-            8325.46
+            8250.93,
+            8728.2,
+            9562.07
           ],
-          "latency_p50_ms": 8325.46,
-          "latency_p95_ms": 8846.85
+          "latency_p50_ms": 8728.2,
+          "latency_p95_ms": 10229.17
         },
         {
-          "id": "L",
-          "title": "L 悬疑剧",
           "utterance": "推荐一部悬疑剧。",
-          "reply": "从本地已入库内容里给你挑了这几部：1.《大明王朝》（2007） · 46 集；2.《漫长的季节》（2023） · 12 集；3.《三体》（2023） · 10 集。可以说“第几部”继续选择。",
+          "reply": "本地库里的作品都没有题材标签（NFO 元数据里没有 genre/tag 信息），所以我无法按“悬疑”筛选，也不会凭空猜类型。可以按集数、新增时间或片名来找。",
           "status": "SUCCESS",
           "intent": "search",
           "answer_source": "local_catalog",
           "diagnostics": {
             "model_name": "cn:deepseek-v4.1-flash",
             "decision_source": "deterministic",
-            "tool_name": "catalog_recommend",
+            "tool_name": "library_search",
             "tool_status": "ok",
-            "llm_latency_ms": 5287.538823991781,
-            "tool_latency_ms": 83.43866000359412,
-            "total_latency_ms": 5375.612468997133,
-            "fallback_reason": "ungrounded_answer",
-            "failed_stage": null,
-            "route_ms": 2430.9525989956455,
-            "llm_ms": 2426.37717800244,
-            "total_ms": 7898.3293769997545,
+            "llm_latency_ms": 0.0,
+            "tool_latency_ms": 0.26960199465975165,
+            "total_latency_ms": 82.79305199539522,
+            "fallback_reason": "genre_unverifiable",
+            "failed_stage": "grounding",
+            "route_ms": 2146.7846859959536,
+            "llm_ms": 2143.2960169986472,
+            "total_ms": 2321.7659319998347,
             "observe_ms": 0.0
           },
           "tool_trace": [
             {
-              "tool": "recommend",
+              "tool": "search",
               "ok": true,
               "arguments": {
-                "kind": "series",
-                "preferences": [
-                  "悬疑"
-                ],
-                "limit": 5
+                "genre": "悬疑",
+                "limit": 1
               },
-              "latency_ms": 83.33,
+              "latency_ms": 81.4,
+              "error": null
+            },
+            {
+              "tool": "search",
+              "ok": true,
+              "arguments": {
+                "genre": "悬疑",
+                "kind": "any",
+                "limit": 8
+              },
+              "latency_ms": 0.19,
+              "error": null
+            },
+            {
+              "tool": "summary",
+              "ok": true,
+              "arguments": {},
+              "latency_ms": 0.33,
               "error": null
             }
           ],
-          "candidates": [
-            {
-              "id": "3cbbb776b16e83edd76803ec",
-              "title": "大明王朝",
-              "episodes": 46
-            },
-            {
-              "id": "f9772e3f5653ac8a0b68da4a",
-              "title": "漫长的季节",
-              "episodes": 12
-            },
-            {
-              "id": "9f4c311a5cba9b3d0360cb35",
-              "title": "三体",
-              "episodes": 10
-            }
-          ],
+          "candidates": [],
           "agent_run_called": 0,
           "agent_run_commands": [],
           "turns": null,
+          "id": "L",
+          "title": "L 悬疑剧",
           "fact_checks": [
             {
               "check": "有回复",
               "ok": true,
-              "detail": "从本地已入库内容里给你挑了这几部：1.《大明王朝》（2007） · 46 集；2.《漫长的季节》（2023） · 12 集；3.《三体》（2023） · 10 "
+              "detail": "本地库里的作品都没有题材标签（NFO 元数据里没有 genre/tag 信息），所以我无法按“悬疑”筛选，也不会凭空猜类型。可以按集数、新增时间或片名来找。"
             },
             {
               "check": "电视动作次数",
@@ -1799,25 +1882,39 @@
               "detail": "agent.run=0 期望=0"
             },
             {
-              "check": "说明无法按题材筛选",
-              "ok": false,
-              "detail": "从本地已入库内容里给你挑了这几部：1.《大明王朝》（2007） · 46 集；2.《漫长的季节》（2023） · 12 集；3.《三体》（2023） · 10 集。可以说“第几部”继续选择。"
+              "check": "如实说明没有该题材或没有类型标签",
+              "ok": true,
+              "detail": "本地库里的作品都没有题材标签（NFO 元数据里没有 genre/tag 信息），所以我无法按“悬疑”筛选，也不会凭空猜类型。可以按集数、新增时间或片名来找。"
+            },
+            {
+              "check": "不谎称库里有带标签的作品",
+              "ok": true,
+              "detail": "本地库里的作品都没有题材标签（NFO 元数据里没有 genre/tag 信息），所以我无法按“悬疑”筛选，也不会凭空猜类型。可以按集数、新增时间或片名来找。"
+            },
+            {
+              "check": "不编造该题材作品",
+              "ok": true,
+              "detail": ""
             }
           ],
-          "passed": false,
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
           "verified": true,
           "verified_reason": "",
+          "passed": true,
           "latency_samples_ms": [
-            6817.33,
-            5567.44,
-            7899.3
+            2143.77,
+            1783.43,
+            2322.65
           ],
-          "latency_p50_ms": 6817.33,
-          "latency_p95_ms": 8764.88
+          "latency_p50_ms": 2143.77,
+          "latency_p95_ms": 2465.75
         },
         {
-          "id": "M",
-          "title": "M 能力说明",
           "utterance": "你能帮我做什么？",
           "reply": "我可以查询本地影视库（总数、按类型浏览、按片名/年份搜索、推荐、最近添加），也可以打开应用、暂停/继续、查当前播放；播放前会先请你确认。",
           "status": "SUCCESS",
@@ -1835,7 +1932,7 @@
             "failed_stage": null,
             "route_ms": 0.0,
             "llm_ms": 0.0,
-            "total_ms": 93.56139900046401,
+            "total_ms": 81.07910100079607,
             "observe_ms": 0.0
           },
           "tool_trace": [
@@ -1843,7 +1940,7 @@
               "tool": "status",
               "ok": true,
               "arguments": {},
-              "latency_ms": 92.87,
+              "latency_ms": 80.43,
               "error": null
             }
           ],
@@ -1851,6 +1948,8 @@
           "agent_run_called": 0,
           "agent_run_commands": [],
           "turns": null,
+          "id": "M",
+          "title": "M 能力说明",
           "fact_checks": [
             {
               "check": "有回复",
@@ -1868,20 +1967,24 @@
               "detail": "我可以查询本地影视库（总数、按类型浏览、按片名/年份搜索、推荐、最近添加），也可以打开应用、暂停/继续、查当前播放；播放前会先请你确认。"
             }
           ],
-          "passed": true,
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
           "verified": true,
           "verified_reason": "",
+          "passed": true,
           "latency_samples_ms": [
-            91.58,
-            91.95,
-            93.61
+            84.51,
+            81.86,
+            81.12
           ],
-          "latency_p50_ms": 91.95,
-          "latency_p95_ms": 94.94
+          "latency_p50_ms": 81.86,
+          "latency_p95_ms": 86.63
         },
         {
-          "id": "N",
-          "title": "N 多轮组合",
           "utterance": "确认。",
           "reply": "已完成。",
           "status": "SUCCESS",
@@ -1897,9 +2000,9 @@
             "total_latency_ms": null,
             "fallback_reason": null,
             "failed_stage": null,
-            "route_ms": 4009.022307000123,
-            "llm_ms": 4005.9175549977226,
-            "total_ms": 4031.9918359964504,
+            "route_ms": 3901.328827996622,
+            "llm_ms": 3897.902709999471,
+            "total_ms": 3924.9296439957106,
             "observe_ms": 0.0
           },
           "tool_trace": [
@@ -1909,7 +2012,7 @@
               "arguments": {
                 "limit": 3
               },
-              "latency_ms": 82.44,
+              "latency_ms": 83.88,
               "error": null
             },
             {
@@ -1929,9 +2032,9 @@
                 "exclusions": [
                   "大明王朝"
                 ],
-                "limit": 5
+                "limit": 10
               },
-              "latency_ms": 1.26,
+              "latency_ms": 0.88,
               "error": null
             },
             {
@@ -1940,20 +2043,23 @@
               "arguments": {
                 "kind": "series",
                 "max_episodes": 8,
-                "limit": 5
+                "exclusions": [
+                  "漫长的季节",
+                  "三体"
+                ],
+                "limit": 10
               },
-              "latency_ms": 0.4,
+              "latency_ms": 0.67,
               "error": null
             },
             {
               "tool": "recommend",
               "ok": true,
               "arguments": {
-                "kind": "series",
-                "max_episodes": 10,
-                "limit": 5
+                "kind": "short_drama",
+                "limit": 10
               },
-              "latency_ms": 0.66,
+              "latency_ms": 0.82,
               "error": null
             }
           ],
@@ -1968,8 +2074,8 @@
               "status": "SUCCESS",
               "intent": "assistant",
               "route": "agent",
-              "decision_source": "assistant_fallback",
-              "reply": "给你推荐这三部（都来自本地影视库）： 1.《师兄太稳健》（2026，短剧，共 200 集，1 天前入库）：穿越者留在宗门里稳健修行。 2.《大明王朝》（2007，电视剧，共 46 集，湖南广播电视台出品）：讲述嘉靖年间朝廷与海瑞之间的博弈。 3.《我不是大师》（2026，短剧，共 30 集，5 天前入库）：外卖员误入武林后成为大师。 这三部在库里都还没有题材标签，所以没法按类型筛选。想先看哪一部？我可以帮你打开。",
+              "decision_source": "llm",
+              "reply": "从本地已入库内容里给你挑了这几部：1.《师兄太稳健》（2026） · 200 集；2.《大明王朝》（2007） · 46 集；3.《我不是大师》（2026） · 30 集。可以说“第几部”继续选择。",
               "candidates": [
                 {
                   "id": "19a87d781516fa11f2db2bb4",
@@ -1990,20 +2096,20 @@
               "answer_source": "local_catalog",
               "diagnostics": {
                 "model_name": "cn:deepseek-v4.1-flash",
-                "decision_source": "llm",
+                "decision_source": "deterministic",
                 "tool_name": "catalog_recommend",
                 "tool_status": "ok",
-                "llm_latency_ms": 4675.964466005098,
-                "tool_latency_ms": 82.55073000327684,
-                "total_latency_ms": 4764.00169399858,
-                "fallback_reason": null,
+                "llm_latency_ms": 2772.043721997761,
+                "tool_latency_ms": 83.98892600234831,
+                "total_latency_ms": 2861.4211610038183,
+                "fallback_reason": "ungrounded_answer",
                 "failed_stage": null,
-                "route_ms": 0.0,
-                "llm_ms": 0.0,
-                "total_ms": 8601.202670994098,
+                "route_ms": 2663.7860370028648,
+                "llm_ms": 2661.9279630031087,
+                "total_ms": 5537.6089950004825,
                 "observe_ms": 0.0
               },
-              "wall_ms": 8602.12
+              "wall_ms": 5538.55
             },
             {
               "utterance": "第二个讲什么？",
@@ -2019,17 +2125,17 @@
                 "decision_source": "deterministic",
                 "tool_name": "catalog_detail",
                 "tool_status": "ok",
-                "llm_latency_ms": 3841.181919000519,
-                "tool_latency_ms": 0.2300750056747347,
-                "total_latency_ms": 3844.9636040022597,
+                "llm_latency_ms": 2624.725083995145,
+                "tool_latency_ms": 0.2011559990933165,
+                "total_latency_ms": 2628.8897179983906,
                 "fallback_reason": "ungrounded_answer",
                 "failed_stage": null,
                 "route_ms": 0.0,
                 "llm_ms": 0.0,
-                "total_ms": 7425.098466999771,
+                "total_ms": 6652.424173997133,
                 "observe_ms": 0.0
               },
-              "wall_ms": 7426.29
+              "wall_ms": 6653.7
             },
             {
               "utterance": "换一个类似的。",
@@ -2056,17 +2162,17 @@
                 "decision_source": "deterministic",
                 "tool_name": "catalog_recommend",
                 "tool_status": "ok",
-                "llm_latency_ms": 5371.9891180007835,
-                "tool_latency_ms": 1.4029289959580638,
-                "total_latency_ms": 5377.5664909990155,
+                "llm_latency_ms": 4197.361077996902,
+                "tool_latency_ms": 0.9812220014282502,
+                "total_latency_ms": 4202.011409004626,
                 "fallback_reason": "ungrounded_answer",
                 "failed_stage": null,
                 "route_ms": 0.0,
                 "llm_ms": 0.0,
-                "total_ms": 9403.392995001923,
+                "total_ms": 8076.039368999773,
                 "observe_ms": 0.0
               },
-              "wall_ms": 9404.83
+              "wall_ms": 8077.21
             },
             {
               "utterance": "不要那么长的。",
@@ -2074,31 +2180,36 @@
               "intent": "assistant",
               "route": "agent",
               "decision_source": "assistant_fallback",
-              "reply": "那可以看《三体》，共 10 集，2023 年，出品方是腾讯视频，是本地刚入库的。要的话我可以帮你打开。",
+              "reply": "从本地已入库内容里给你挑了这几部：1.《师兄太稳健》（2026） · 200 集；2.《我不是大师》（2026） · 30 集。可以说“第几部”继续选择。",
               "candidates": [
                 {
-                  "id": "9f4c311a5cba9b3d0360cb35",
-                  "title": "三体",
-                  "episodes": 10
+                  "id": "19a87d781516fa11f2db2bb4",
+                  "title": "师兄太稳健",
+                  "episodes": 200
+                },
+                {
+                  "id": "cadc97ff222cb08035d68cf0",
+                  "title": "我不是大师",
+                  "episodes": 30
                 }
               ],
               "answer_source": "local_catalog",
               "diagnostics": {
                 "model_name": "cn:deepseek-v4.1-flash",
-                "decision_source": "llm",
+                "decision_source": "deterministic",
                 "tool_name": "catalog_recommend",
                 "tool_status": "ok",
-                "llm_latency_ms": 6644.02790999884,
-                "tool_latency_ms": 1.2675860052695498,
-                "total_latency_ms": 6649.912049004342,
-                "fallback_reason": null,
+                "llm_latency_ms": 7741.788609004288,
+                "tool_latency_ms": 1.731138996547088,
+                "total_latency_ms": 7748.752033003257,
+                "fallback_reason": "ungrounded_answer",
                 "failed_stage": null,
                 "route_ms": 0.0,
                 "llm_ms": 0.0,
-                "total_ms": 10680.88431200158,
+                "total_ms": 11775.445644998399,
                 "observe_ms": 0.0
               },
-              "wall_ms": 10681.9
+              "wall_ms": 11776.61
             },
             {
               "utterance": "就看刚才那个。",
@@ -2121,10 +2232,10 @@
                 "failed_stage": null,
                 "route_ms": 0.0,
                 "llm_ms": 0.0,
-                "total_ms": 4114.583032001974,
+                "total_ms": 3982.0161210009246,
                 "observe_ms": 0.0
               },
-              "wall_ms": 4115.81
+              "wall_ms": 3983.29
             },
             {
               "utterance": "确认。",
@@ -2145,14 +2256,16 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 4009.022307000123,
-                "llm_ms": 4005.9175549977226,
-                "total_ms": 4031.9918359964504,
+                "route_ms": 3901.328827996622,
+                "llm_ms": 3897.902709999471,
+                "total_ms": 3924.9296439957106,
                 "observe_ms": 0.0
               },
-              "wall_ms": 4033.25
+              "wall_ms": 3926.34
             }
           ],
+          "id": "N",
+          "title": "N 多轮组合",
           "fact_checks": [
             {
               "check": "有回复",
@@ -2161,8 +2274,8 @@
             },
             {
               "check": "电视动作次数",
-              "ok": false,
-              "detail": "agent.run=1 期望=0"
+              "ok": true,
+              "detail": "agent.run=1 期望=1"
             },
             {
               "check": "「就看刚才那个」命中第 2 个候选",
@@ -2175,20 +2288,24 @@
               "detail": "1"
             }
           ],
-          "passed": false,
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
           "verified": true,
           "verified_reason": "",
+          "passed": true,
           "latency_samples_ms": [
-            4037.36,
-            4033.65,
-            4033.25
+            4048.97,
+            3779.23,
+            3926.34
           ],
-          "latency_p50_ms": 4033.65,
-          "latency_p95_ms": 4040.33
+          "latency_p50_ms": 3926.34,
+          "latency_p95_ms": 4147.07
         },
         {
-          "id": "O",
-          "title": "O 重复确认",
           "utterance": "确认播放。",
           "reply": "没有可确认的操作（可能已过期或在另一入口执行过），请重新说明要求。",
           "status": "NEEDS_CLARIFICATION",
@@ -2204,9 +2321,9 @@
             "total_latency_ms": null,
             "fallback_reason": null,
             "failed_stage": null,
-            "route_ms": 3437.565528001869,
-            "llm_ms": 3433.2517119983095,
-            "total_ms": 3458.8676359999226,
+            "route_ms": 3661.018589999003,
+            "llm_ms": 3657.545071997447,
+            "total_ms": 3677.7056960054324,
             "observe_ms": 0.0
           },
           "tool_trace": [],
@@ -2261,12 +2378,12 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 0.47222099965438247,
+                "route_ms": 0.47335300041595474,
                 "llm_ms": 0.0,
-                "total_ms": 99.5528089988511,
+                "total_ms": 88.07883500412572,
                 "observe_ms": 0.0
               },
-              "wall_ms": 100.44
+              "wall_ms": 88.95
             },
             {
               "utterance": "第一部。",
@@ -2287,19 +2404,19 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 4008.6612260056427,
-                "llm_ms": 4005.625311001495,
-                "total_ms": 4021.941405997495,
+                "route_ms": 4009.050346001459,
+                "llm_ms": 4006.094308999309,
+                "total_ms": 4021.421208999527,
                 "observe_ms": 0.0
               },
-              "wall_ms": 4023.26
+              "wall_ms": 4022.58
             },
             {
               "utterance": "播放第一集。",
               "status": "NEEDS_CONFIRMATION",
               "intent": "play",
               "route": "clarify",
-              "decision_source": "context_rule",
+              "decision_source": "llm",
               "reply": "确认执行 播放《三体》第1季第一集 吗？小爱可能也响应同一句话；请明确说“确认”或“不确认”。",
               "candidates": [],
               "answer_source": null,
@@ -2313,12 +2430,12 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 4017.7557349961717,
-                "llm_ms": 4007.5948550002067,
-                "total_ms": 4047.094946996367,
+                "route_ms": 3124.9072490027174,
+                "llm_ms": 3120.128119997389,
+                "total_ms": 3149.0130979946116,
                 "observe_ms": 0.0
               },
-              "wall_ms": 4048.34
+              "wall_ms": 3150.26
             },
             {
               "utterance": "确认播放。",
@@ -2339,12 +2456,12 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 4009.6750790035003,
-                "llm_ms": 4006.1834459993406,
-                "total_ms": 4040.8451659968705,
+                "route_ms": 2887.838839000324,
+                "llm_ms": 2884.1683600039687,
+                "total_ms": 2911.91665000224,
                 "observe_ms": 0.0
               },
-              "wall_ms": 4042.67
+              "wall_ms": 2913.26
             },
             {
               "utterance": "确认播放。",
@@ -2365,14 +2482,16 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 3437.565528001869,
-                "llm_ms": 3433.2517119983095,
-                "total_ms": 3458.8676359999226,
+                "route_ms": 3661.018589999003,
+                "llm_ms": 3657.545071997447,
+                "total_ms": 3677.7056960054324,
                 "observe_ms": 0.0
               },
-              "wall_ms": 3460.29
+              "wall_ms": 3679.29
             }
           ],
+          "id": "O",
+          "title": "O 重复确认",
           "fact_checks": [
             {
               "check": "有回复",
@@ -2395,16 +2514,22 @@
               "detail": "没有可确认的操作（可能已过期或在另一入口执行过），请重新说明要求。"
             }
           ],
-          "passed": true,
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
           "verified": true,
           "verified_reason": "",
+          "passed": true,
           "latency_samples_ms": [
-            2734.45,
-            4033.04,
-            3460.29
+            4042.53,
+            3157.8,
+            3679.29
           ],
-          "latency_p50_ms": 3460.29,
-          "latency_p95_ms": 4491.24
+          "latency_p50_ms": 3679.29,
+          "latency_p95_ms": 4333.12
         }
       ],
       "summary": {
@@ -2421,7 +2546,7 @@
         "roots": [
           "<library>"
         ],
-        "index_age_seconds": 0.07831931114196777,
+        "index_age_seconds": 0.08084487915039062,
         "errors": [],
         "short_dramas": 2,
         "seasons": 6,
@@ -2430,13 +2555,11 @@
         "recent_added_7d": 3,
         "recent_added_30d": 4
       },
-      "elapsed_s": 498.5
+      "elapsed_s": 477.0
     },
     "production": {
       "records": [
         {
-          "id": "A",
-          "title": "A 资源库总览",
           "utterance": "现在资源库有什么？",
           "reply": "已查询 NAS 本地影视库：共 35 部影视作品，其中电影 0 部、剧集 2 部、短剧 33 部。例如：1.《一身腱子肉，乱世做谋臣》；2.《万妖图录传》；3.《从小兵开始》；4.《从布衣开始成圣》；5.《光之巨人：原初之光》；6.《光之战神奥帝伽》；7.《全民机械飞升》；8.《大夏之始》。以上只是部分条目，可以继续按片名或类型搜索。",
           "status": "SUCCESS",
@@ -2452,9 +2575,9 @@
             "total_latency_ms": null,
             "fallback_reason": null,
             "failed_stage": null,
-            "route_ms": 0.5024050042266026,
+            "route_ms": 0.49124799988931045,
             "llm_ms": 0.0,
-            "total_ms": 1278.0684309982462,
+            "total_ms": 1828.9934099957463,
             "observe_ms": 0.0
           },
           "tool_trace": [],
@@ -2503,6 +2626,8 @@
           "agent_run_called": 0,
           "agent_run_commands": [],
           "turns": null,
+          "id": "A",
+          "title": "A 资源库总览",
           "fact_checks": [
             {
               "check": "有回复",
@@ -2545,38 +2670,42 @@
               "detail": ""
             }
           ],
-          "passed": true,
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
           "verified": true,
           "verified_reason": "",
+          "passed": true,
           "latency_samples_ms": [
-            1238.61,
-            1245.39,
-            1279.33
+            1341.98,
+            1263.64,
+            1830.16
           ],
-          "latency_p50_ms": 1245.39,
-          "latency_p95_ms": 1306.48
+          "latency_p50_ms": 1341.98,
+          "latency_p95_ms": 2220.7
         },
         {
-          "id": "B",
-          "title": "B 推荐三部",
           "utterance": "推荐三部好看的。",
-          "reply": "从本地已入库内容里给你挑了这几部：1.《穿成野神我靠香火斩诸神》（2026） · 1305 集；2.《从布衣开始成圣》（2026） · 257 集；3.《我合成了全世界啊》（2026） · 351 集。可以说“第几部”继续选择。",
+          "reply": "给你挑了三部本地已入库的，都是短剧（题材标签暂缺，没法按类型筛选）： 1.《穿成野神我靠香火斩诸神》（2026，红果短剧，共 1305 集，2 天前新增）——主角穿越成神弃之地一尊没人供奉的泥塑野神，唯一的信徒是个六岁孩子，他从一盏香火起步，收妖斩神，最终让被神明遗弃的世界等来凡尘的神明。 2.《从布衣开始成圣》（2026，红果短剧，共 257 集，3 天前新增）——靖安侯府的骑奴陈实卷入后宅阴谋，为救人和脱籍踏上武道之路，凭天赋与心性一路周旋权贵江湖，最终打破阶层桎梏、登顶武道。 3.《我合成了全世界啊》（2026，红果短剧，共 351 集，4 天前新增）——第二纪元文明覆灭后地球成了星际科技垃圾场，被弃在垃圾山的程乞带着能融合升级装备的 STC 手腕，靠拾荒合成一步步爬起来。 要播哪部的话告诉我，每部具体从第几集开始我也可以先查一下。",
           "status": "SUCCESS",
           "intent": "assistant",
           "answer_source": "local_catalog",
           "diagnostics": {
             "model_name": "cn:deepseek-v4.1-flash",
-            "decision_source": "deterministic",
+            "decision_source": "llm",
             "tool_name": "catalog_recommend",
             "tool_status": "ok",
-            "llm_latency_ms": 4728.374136000639,
-            "tool_latency_ms": 1344.8071450038697,
-            "total_latency_ms": 6077.592050998646,
-            "fallback_reason": "ungrounded_answer",
+            "llm_latency_ms": 4924.024722000468,
+            "tool_latency_ms": 1297.9511649973574,
+            "total_latency_ms": 6227.734164996946,
+            "fallback_reason": null,
             "failed_stage": null,
-            "route_ms": 2449.4630940025672,
-            "llm_ms": 2447.5728799952776,
-            "total_ms": 8548.893428996962,
+            "route_ms": 0.0,
+            "llm_ms": 0.0,
+            "total_ms": 8591.358714002126,
             "observe_ms": 0.0
           },
           "tool_trace": [
@@ -2586,7 +2715,7 @@
               "arguments": {
                 "limit": 3
               },
-              "latency_ms": 1344.69,
+              "latency_ms": 1297.84,
               "error": null
             }
           ],
@@ -2610,11 +2739,13 @@
           "agent_run_called": 0,
           "agent_run_commands": [],
           "turns": null,
+          "id": "B",
+          "title": "B 推荐三部",
           "fact_checks": [
             {
               "check": "有回复",
               "ok": true,
-              "detail": "从本地已入库内容里给你挑了这几部：1.《穿成野神我靠香火斩诸神》（2026） · 1305 集；2.《从布衣开始成圣》（2026） · 257 集；3.《我合成"
+              "detail": "给你挑了三部本地已入库的，都是短剧（题材标签暂缺，没法按类型筛选）： 1.《穿成野神我靠香火斩诸神》（2026，红果短剧，共 1305 集，2 天前新增）——主"
             },
             {
               "check": "电视动作次数",
@@ -2642,20 +2773,24 @@
               "detail": ""
             }
           ],
-          "passed": true,
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
           "verified": true,
           "verified_reason": "",
+          "passed": true,
           "latency_samples_ms": [
-            8174.61,
-            9495.64,
-            8550.4
+            8874.45,
+            8250.06,
+            8592.53
           ],
-          "latency_p50_ms": 8550.4,
-          "latency_p95_ms": 10251.83
+          "latency_p50_ms": 8592.53,
+          "latency_p95_ms": 9099.99
         },
         {
-          "id": "C",
-          "title": "C 第二个讲什么",
           "utterance": "第二个讲什么？",
           "reply": "《从布衣开始成圣》（短剧，2026 年，257 集，出品：红果短剧）讲的是：陈实本是靖安侯府骑奴，因卷入顾承泽与萧凤箫的后宅阴谋，被迫夹缝求生。为挣脱奴籍救下翠浓，他毅然踏上武道之路。凭借绝佳天赋与坚韧心性，他修成神力象胎，周旋于权贵与江湖帮派之间。随着实力攀升，他卷入扶风会养蛊与叛军平定等惊天风暴，最终打破阶层桎梏迎娶侯门千金，逆袭掌控自身命运，登顶大乾武道巅峰。",
           "status": "SUCCESS",
@@ -2666,14 +2801,14 @@
             "decision_source": "deterministic",
             "tool_name": "catalog_detail",
             "tool_status": "ok",
-            "llm_latency_ms": 3220.804185999441,
-            "tool_latency_ms": 0.20779199985554442,
-            "total_latency_ms": 3224.133243995311,
+            "llm_latency_ms": 4136.328878994391,
+            "tool_latency_ms": 0.20071799372090027,
+            "total_latency_ms": 4141.00632500049,
             "fallback_reason": "ungrounded_answer",
             "failed_stage": null,
             "route_ms": 0.0,
             "llm_ms": 0.0,
-            "total_ms": 7456.969096005196,
+            "total_ms": 6470.296393003082,
             "observe_ms": 0.0
           },
           "tool_trace": [
@@ -2683,7 +2818,7 @@
               "arguments": {
                 "limit": 3
               },
-              "latency_ms": 1289.8,
+              "latency_ms": 1259.44,
               "error": null
             },
             {
@@ -2706,7 +2841,7 @@
               "intent": "assistant",
               "route": "agent",
               "decision_source": "llm",
-              "reply": "给你挑了本地库里最近入库的三部短剧： 1.《穿成野神我靠香火斩诸神》（2026，红果短剧，共 1305 集）——穿越成无人问津的泥塑野神，从一盏香火起步，收妖邪、斩正神。 2.《从布衣开始成圣》（2026，红果短剧，共 257 集）——骑奴陈实踏上武道之路，逆袭掌控命运。 3.《我合成了全世界啊》（2026，红果短剧，共 351 集）——地球沦为星际科技垃圾场，主角靠万物合成能力升级装备。 这三部的类型标签暂时缺失，只能如实按“短剧”推荐；另外集数都不少，想先看哪部可以告诉我，我帮你起播。",
+              "reply": "给你从本地库挑了 3 部最近入库的短剧，类型标签都还没有，以下按简介内容介绍： 1. 《穿成野神我靠香火斩诸神》（2026，短剧，共 1305 集）：穿越者成为神弃之地一尊无人问津的野神，从河西村一盏香火起步，收妖邪、斩正神，走的是逆袭封神路线。 2. 《从布衣开始成圣》（2026，短剧，共 257 集）：侯府骑奴陈实为脱奴籍踏上武道，卷入权贵与江湖纷争，最终打破阶层桎梏，属于典型的底层逆袭。 3. 《我合成了全世界啊》（2026，短剧，共 351 集）：文明覆灭后的地球沦为星际垃圾场，主角靠“万物合成”能力把废弃科技迭代升级，科幻废土设定。 想看哪部，我可以直接帮你起播。另外这几部集数都不少，如果只想看短一点的，我可以再筛一轮。",
               "candidates": [
                 {
                   "id": "7a52615b3bbdba3beb2670d5",
@@ -2728,19 +2863,19 @@
               "diagnostics": {
                 "model_name": "cn:deepseek-v4.1-flash",
                 "decision_source": "llm",
-                "tool_name": "library_recommend",
+                "tool_name": "catalog_recommend",
                 "tool_status": "ok",
-                "llm_latency_ms": 4936.661118008487,
-                "tool_latency_ms": 1289.9281989957672,
-                "total_latency_ms": 6231.377607000468,
+                "llm_latency_ms": 5177.844678997644,
+                "tool_latency_ms": 1259.5501620016876,
+                "total_latency_ms": 6442.678877996514,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 2517.2168069984764,
-                "llm_ms": 2515.409310995892,
-                "total_ms": 8755.829175002873,
+                "route_ms": 2615.055727001163,
+                "llm_ms": 2613.229679998767,
+                "total_ms": 9066.24918000307,
                 "observe_ms": 0.0
               },
-              "wall_ms": 8756.78
+              "wall_ms": 9067.16
             },
             {
               "utterance": "第二个讲什么？",
@@ -2756,19 +2891,21 @@
                 "decision_source": "deterministic",
                 "tool_name": "catalog_detail",
                 "tool_status": "ok",
-                "llm_latency_ms": 3220.804185999441,
-                "tool_latency_ms": 0.20779199985554442,
-                "total_latency_ms": 3224.133243995311,
+                "llm_latency_ms": 4136.328878994391,
+                "tool_latency_ms": 0.20071799372090027,
+                "total_latency_ms": 4141.00632500049,
                 "fallback_reason": "ungrounded_answer",
                 "failed_stage": null,
                 "route_ms": 0.0,
                 "llm_ms": 0.0,
-                "total_ms": 7456.969096005196,
+                "total_ms": 6470.296393003082,
                 "observe_ms": 0.0
               },
-              "wall_ms": 7458.1
+              "wall_ms": 6471.39
             }
           ],
+          "id": "C",
+          "title": "C 第二个讲什么",
           "fact_checks": [
             {
               "check": "有回复",
@@ -2796,38 +2933,42 @@
               "detail": "穿成野神我靠香火斩诸神"
             }
           ],
-          "passed": true,
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
           "verified": true,
           "verified_reason": "",
+          "passed": true,
           "latency_samples_ms": [
-            7152.2,
-            7932.8,
-            7458.1
+            6252.95,
+            6401.64,
+            6471.39
           ],
-          "latency_p50_ms": 7458.1,
-          "latency_p95_ms": 8312.56
+          "latency_p50_ms": 6401.64,
+          "latency_p95_ms": 6527.19
         },
         {
-          "id": "D",
-          "title": "D 换一个类似的",
           "utterance": "换一个类似的。",
-          "reply": "给你换个口味，这几部都是本地已入库的玄幻修仙类短剧： 1.《万妖图录传》（202 集）——少女以妖谱斩妖夺神通，镇压万古妖魔。 2.《虾无邪修仙记》（1000 集）——凡人林凡靠神秘铜瓶一步步修仙。 3.《末世轮回：我以尸躯化神明》（310 集）——末世觉醒，化丧尸之王逆命成神。 4.《大夏之始》（308 集）——废土穿越，御兽开荒重建文明。 想看哪部跟我说，我帮你打开。",
+          "reply": "从本地已入库内容里给你挑了这几部：1.《星际长生：活得够久就能称霸宇宙》（2026） · 272 集；2.《万妖图录传》（2026） · 202 集；3.《末世轮回：我以尸躯化神明》（2026） · 310 集；4.《虾无邪修仙记》（2026） · 1000 集；5.《大夏之始》（2026） · 308 集。可以说“第几部”继续选择。",
           "status": "SUCCESS",
-          "intent": "assistant",
+          "intent": "refine",
           "answer_source": "local_catalog",
           "diagnostics": {
             "model_name": "cn:deepseek-v4.1-flash",
-            "decision_source": "llm",
+            "decision_source": "deterministic",
             "tool_name": "catalog_recommend",
             "tool_status": "ok",
-            "llm_latency_ms": 6222.461381003086,
-            "tool_latency_ms": 14.201974001480266,
-            "total_latency_ms": 6242.838942998787,
-            "fallback_reason": null,
+            "llm_latency_ms": 5098.66203799902,
+            "tool_latency_ms": 12.658851999731269,
+            "total_latency_ms": 5116.151884001738,
+            "fallback_reason": "ungrounded_answer",
             "failed_stage": null,
-            "route_ms": 3134.9985279957764,
-            "llm_ms": 3133.084613000392,
-            "total_ms": 9392.11858100316,
+            "route_ms": 4882.479952000722,
+            "llm_ms": 4880.631460997392,
+            "total_ms": 10012.690881994786,
             "observe_ms": 0.0
           },
           "tool_trace": [
@@ -2835,9 +2976,10 @@
               "tool": "recommend",
               "ok": true,
               "arguments": {
-                "limit": 3
+                "limit": 3,
+                "kind": "any"
               },
-              "latency_ms": 1287.66,
+              "latency_ms": 1496.68,
               "error": null
             },
             {
@@ -2852,7 +2994,7 @@
                 ],
                 "limit": 5
               },
-              "latency_ms": 14.09,
+              "latency_ms": 12.55,
               "error": null
             }
           ],
@@ -2916,25 +3058,25 @@
                 "decision_source": "deterministic",
                 "tool_name": "catalog_recommend",
                 "tool_status": "ok",
-                "llm_latency_ms": 4079.845560998365,
-                "tool_latency_ms": 1287.7640209990204,
-                "total_latency_ms": 5372.166734996426,
+                "llm_latency_ms": 5010.514217996388,
+                "tool_latency_ms": 1496.7860169999767,
+                "total_latency_ms": 6511.200672000996,
                 "fallback_reason": "ungrounded_answer",
                 "failed_stage": null,
-                "route_ms": 2926.0709320005844,
-                "llm_ms": 2924.238350999076,
-                "total_ms": 8305.552067999088,
+                "route_ms": 1689.1138780047186,
+                "llm_ms": 1687.3252459990908,
+                "total_ms": 8207.399828002963,
                 "observe_ms": 0.0
               },
-              "wall_ms": 8306.62
+              "wall_ms": 8208.37
             },
             {
               "utterance": "换一个类似的。",
               "status": "SUCCESS",
-              "intent": "assistant",
+              "intent": "refine",
               "route": "agent",
               "decision_source": "llm",
-              "reply": "给你换个口味，这几部都是本地已入库的玄幻修仙类短剧： 1.《万妖图录传》（202 集）——少女以妖谱斩妖夺神通，镇压万古妖魔。 2.《虾无邪修仙记》（1000 集）——凡人林凡靠神秘铜瓶一步步修仙。 3.《末世轮回：我以尸躯化神明》（310 集）——末世觉醒，化丧尸之王逆命成神。 4.《大夏之始》（308 集）——废土穿越，御兽开荒重建文明。 想看哪部跟我说，我帮你打开。",
+              "reply": "从本地已入库内容里给你挑了这几部：1.《星际长生：活得够久就能称霸宇宙》（2026） · 272 集；2.《万妖图录传》（2026） · 202 集；3.《末世轮回：我以尸躯化神明》（2026） · 310 集；4.《虾无邪修仙记》（2026） · 1000 集；5.《大夏之始》（2026） · 308 集。可以说“第几部”继续选择。",
               "candidates": [
                 {
                   "id": "adc161a17581ba1a5ccceef0",
@@ -2965,27 +3107,29 @@
               "answer_source": "local_catalog",
               "diagnostics": {
                 "model_name": "cn:deepseek-v4.1-flash",
-                "decision_source": "llm",
+                "decision_source": "deterministic",
                 "tool_name": "catalog_recommend",
                 "tool_status": "ok",
-                "llm_latency_ms": 6222.461381003086,
-                "tool_latency_ms": 14.201974001480266,
-                "total_latency_ms": 6242.838942998787,
-                "fallback_reason": null,
+                "llm_latency_ms": 5098.66203799902,
+                "tool_latency_ms": 12.658851999731269,
+                "total_latency_ms": 5116.151884001738,
+                "fallback_reason": "ungrounded_answer",
                 "failed_stage": null,
-                "route_ms": 3134.9985279957764,
-                "llm_ms": 3133.084613000392,
-                "total_ms": 9392.11858100316,
+                "route_ms": 4882.479952000722,
+                "llm_ms": 4880.631460997392,
+                "total_ms": 10012.690881994786,
                 "observe_ms": 0.0
               },
-              "wall_ms": 9393.43
+              "wall_ms": 10013.89
             }
           ],
+          "id": "D",
+          "title": "D 换一个类似的",
           "fact_checks": [
             {
               "check": "有回复",
               "ok": true,
-              "detail": "给你换个口味，这几部都是本地已入库的玄幻修仙类短剧： 1.《万妖图录传》（202 集）——少女以妖谱斩妖夺神通，镇压万古妖魔。 2.《虾无邪修仙记》（1000 "
+              "detail": "从本地已入库内容里给你挑了这几部：1.《星际长生：活得够久就能称霸宇宙》（2026） · 272 集；2.《万妖图录传》（2026） · 202 集；3.《末世"
             },
             {
               "check": "电视动作次数",
@@ -2994,47 +3138,51 @@
             },
             {
               "check": "已给候选被排除",
-              "ok": false,
+              "ok": true,
               "detail": "exclusions=['从布衣开始成圣', '我合成了全世界啊', '穿成野神我靠香火斩诸神']"
             },
             {
               "check": "新候选不重复",
               "ok": true,
-              "detail": "新=5 旧=3"
+              "detail": "重叠=[]"
             }
           ],
-          "passed": false,
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
           "verified": true,
           "verified_reason": "",
+          "passed": true,
           "latency_samples_ms": [
-            8691.73,
-            11687.34,
-            9393.43
+            7941.75,
+            9370.49,
+            10013.89
           ],
-          "latency_p50_ms": 9393.43,
-          "latency_p95_ms": 13522.47
+          "latency_p50_ms": 9370.49,
+          "latency_p95_ms": 10528.61
         },
         {
-          "id": "E",
-          "title": "E 不要太长",
           "utterance": "不要那么长的。",
-          "reply": "你是想找集数少一些的短剧吧？大概多少集以内？",
-          "status": "NEEDS_CLARIFICATION",
-          "intent": "refine",
-          "answer_source": null,
+          "reply": "从本地已入库内容里给你挑了这几部：1.《光之战神奥帝伽》（2026） · 18 集。可以说“第几部”继续选择。",
+          "status": "SUCCESS",
+          "intent": "assistant",
+          "answer_source": "local_catalog",
           "diagnostics": {
-            "model_name": null,
-            "decision_source": null,
-            "tool_name": null,
-            "tool_status": null,
-            "llm_latency_ms": null,
-            "tool_latency_ms": null,
-            "total_latency_ms": null,
-            "fallback_reason": null,
-            "failed_stage": null,
-            "route_ms": 5333.59806399676,
-            "llm_ms": 5329.3920240030275,
-            "total_ms": 5346.278072000132,
+            "model_name": "cn:deepseek-v4.1-flash",
+            "decision_source": "deterministic",
+            "tool_name": "catalog_recommend",
+            "tool_status": "ok",
+            "llm_latency_ms": 5318.050457994104,
+            "tool_latency_ms": 5.419959998107515,
+            "total_latency_ms": 5328.474051995727,
+            "fallback_reason": "timeout",
+            "failed_stage": "model",
+            "route_ms": 0.0,
+            "llm_ms": 0.0,
+            "total_ms": 14013.511165001546,
             "observe_ms": 0.0
           },
           "tool_trace": [
@@ -3044,11 +3192,64 @@
               "arguments": {
                 "limit": 3
               },
-              "latency_ms": 1334.99,
+              "latency_ms": 1303.67,
+              "error": null
+            },
+            {
+              "tool": "recommend",
+              "ok": true,
+              "arguments": {
+                "kind": "short_drama",
+                "max_episodes": 100,
+                "limit": 5
+              },
+              "latency_ms": 3.53,
+              "error": null
+            },
+            {
+              "tool": "recommend",
+              "ok": true,
+              "arguments": {
+                "kind": "short_drama",
+                "max_episodes": 40,
+                "limit": 6
+              },
+              "latency_ms": 1.68,
               "error": null
             }
           ],
-          "candidates": [],
+          "candidates": [
+            {
+              "id": "ce92dd5d999c1b86065624ad",
+              "title": "我，史前霸王龙",
+              "episodes": 99
+            },
+            {
+              "id": "83026dbde0d1d057cf66c538",
+              "title": "洪荒我十凶天角蚁，睡觉就变强",
+              "episodes": 95
+            },
+            {
+              "id": "8d522d4a657d9c8a451bfef2",
+              "title": "机骸重铸，从破旧机器人开始",
+              "episodes": 85
+            },
+            {
+              "id": "9b9db5294cfe9b7d92f2fa96",
+              "title": "光之巨人：原初之光",
+              "episodes": 73
+            },
+            {
+              "id": "b2e57a3f75fc197cd99c7796",
+              "title": "我的巨人",
+              "episodes": 70
+            },
+            {
+              "id": "f4c868189de03cee0490cf67",
+              "title": "光之战神奥帝伽",
+              "episodes": 18
+            }
+          ],
           "agent_run_called": 0,
           "agent_run_commands": [],
           "turns": [
@@ -3058,7 +3259,7 @@
               "intent": "assistant",
               "route": "agent",
               "decision_source": "llm",
-              "reply": "给你挑了三部本地已入库的短剧（都来自红果短剧，且是近 7 天新增的）： 1. 《穿成野神我靠香火斩诸神》——共 1305 集。主角穿越成一位无人问津的泥塑野神，从河西村的一盏香火起步，收妖邪、斩正神，想为被神明遗弃的世界立起属于凡尘的神明。 2. 《从布衣开始成圣》——共 257 集。靖安侯府骑奴陈实卷入后宅阴谋，为挣脱奴籍踏上武道之路，一路逆袭登上武道巅峰。 3. 《我合成了全世界啊》——共 351 集。文明覆灭后，地球成了星际科技垃圾场；孤儿程乞带着有万物合成能力的 STC，靠融合科技残骸不断升级装备。 这三部的类型标签在库里都是空的，所以只能确认它们是短剧，没法给出更细的题材分类。想先看哪部，我可以直接帮你起播。",
+              "reply": "从本地已入库内容里给你挑了这几部：1.《穿成野神我靠香火斩诸神》（2026） · 1305 集；2.《从布衣开始成圣》（2026） · 257 集；3.《我合成了全世界啊》（2026） · 351 集。可以说“第几部”继续选择。",
               "candidates": [
                 {
                   "id": "7a52615b3bbdba3beb2670d5",
@@ -3079,53 +3280,86 @@
               "answer_source": "local_catalog",
               "diagnostics": {
                 "model_name": "cn:deepseek-v4.1-flash",
-                "decision_source": "llm",
-                "tool_name": "catalog_recommend",
+                "decision_source": "deterministic",
+                "tool_name": "library_recommend",
                 "tool_status": "ok",
-                "llm_latency_ms": 4953.382459003478,
-                "tool_latency_ms": 1335.1025329975528,
-                "total_latency_ms": 6293.5161989953485,
-                "fallback_reason": null,
+                "llm_latency_ms": 4479.581760999281,
+                "tool_latency_ms": 1303.7963679962559,
+                "total_latency_ms": 5787.869034000323,
+                "fallback_reason": "ungrounded_answer",
                 "failed_stage": null,
-                "route_ms": 2208.5438089998206,
-                "llm_ms": 2206.6681510041235,
-                "total_ms": 8510.893609003688,
+                "route_ms": 3298.685939000279,
+                "llm_ms": 3296.845224998833,
+                "total_ms": 9093.356302000757,
                 "observe_ms": 0.0
               },
-              "wall_ms": 8511.92
+              "wall_ms": 9094.54
             },
             {
               "utterance": "不要那么长的。",
-              "status": "NEEDS_CLARIFICATION",
-              "intent": "refine",
-              "route": "clarify",
-              "decision_source": "llm",
-              "reply": "你是想找集数少一些的短剧吧？大概多少集以内？",
-              "candidates": [],
-              "answer_source": null,
+              "status": "SUCCESS",
+              "intent": "assistant",
+              "route": "agent",
+              "decision_source": "assistant_fallback",
+              "reply": "从本地已入库内容里给你挑了这几部：1.《光之战神奥帝伽》（2026） · 18 集。可以说“第几部”继续选择。",
+              "candidates": [
+                {
+                  "id": "ce92dd5d999c1b86065624ad",
+                  "title": "我，史前霸王龙",
+                  "episodes": 99
+                },
+                {
+                  "id": "83026dbde0d1d057cf66c538",
+                  "title": "洪荒我十凶天角蚁，睡觉就变强",
+                  "episodes": 95
+                },
+                {
+                  "id": "8d522d4a657d9c8a451bfef2",
+                  "title": "机骸重铸，从破旧机器人开始",
+                  "episodes": 85
+                },
+                {
+                  "id": "9b9db5294cfe9b7d92f2fa96",
+                  "title": "光之巨人：原初之光",
+                  "episodes": 73
+                },
+                {
+                  "id": "b2e57a3f75fc197cd99c7796",
+                  "title": "我的巨人",
+                  "episodes": 70
+                },
+                {
+                  "id": "f4c868189de03cee0490cf67",
+                  "title": "光之战神奥帝伽",
+                  "episodes": 18
+                }
+              ],
+              "answer_source": "local_catalog",
               "diagnostics": {
-                "model_name": null,
-                "decision_source": null,
-                "tool_name": null,
-                "tool_status": null,
-                "llm_latency_ms": null,
-                "tool_latency_ms": null,
-                "total_latency_ms": null,
-                "fallback_reason": null,
-                "failed_stage": null,
-                "route_ms": 5333.59806399676,
-                "llm_ms": 5329.3920240030275,
-                "total_ms": 5346.278072000132,
+                "model_name": "cn:deepseek-v4.1-flash",
+                "decision_source": "deterministic",
+                "tool_name": "catalog_recommend",
+                "tool_status": "ok",
+                "llm_latency_ms": 5318.050457994104,
+                "tool_latency_ms": 5.419959998107515,
+                "total_latency_ms": 5328.474051995727,
+                "fallback_reason": "timeout",
+                "failed_stage": "model",
+                "route_ms": 0.0,
+                "llm_ms": 0.0,
+                "total_ms": 14013.511165001546,
                 "observe_ms": 0.0
               },
-              "wall_ms": 5347.3
+              "wall_ms": 14015.11
             }
           ],
+          "id": "E",
+          "title": "E 不要太长",
           "fact_checks": [
             {
               "check": "有回复",
               "ok": true,
-              "detail": "你是想找集数少一些的短剧吧？大概多少集以内？"
+              "detail": "从本地已入库内容里给你挑了这几部：1.《光之战神奥帝伽》（2026） · 18 集。可以说“第几部”继续选择。"
             },
             {
               "check": "电视动作次数",
@@ -3133,35 +3367,41 @@
               "detail": "agent.run=0 期望=0"
             },
             {
-              "check": "带上 max_episodes",
+              "check": "集数上限生效",
               "ok": false,
-              "detail": "None"
+              "detail": "最大 99 集 / 上限 40"
             },
             {
               "check": "不暴露内部降级文案",
               "ok": true,
               "detail": ""
-            },
-            {
-              "check": "未套用上限时如实澄清（不编造候选）",
-              "ok": true,
-              "detail": "你是想找集数少一些的短剧吧？大概多少集以内？"
             }
           ],
-          "passed": false,
+          "reps": {
+            "total": 3,
+            "passed": 2
+          },
+          "rep_failures": [
+            {
+              "rep": 2,
+              "failed": [
+                "集数上限生效"
+              ]
+            }
+          ],
+          "detail_rep": 2,
           "verified": true,
           "verified_reason": "",
+          "passed": false,
           "latency_samples_ms": [
-            11699.53,
-            13514.57,
-            5347.3
+            12115.01,
+            14015.11,
+            12063.13
           ],
-          "latency_p50_ms": 11699.53,
-          "latency_p95_ms": 14966.6
+          "latency_p50_ms": 12115.01,
+          "latency_p95_ms": 15535.19
         },
         {
-          "id": "F",
-          "title": "F 上次看到哪里",
           "utterance": "我上次看到哪里了？",
           "reply": "我还没有记录到你上次播放到哪一集。可以说片名让我查，或说“随便推荐一部”。",
           "status": "NEEDS_CLARIFICATION",
@@ -3177,9 +3417,9 @@
             "total_latency_ms": null,
             "fallback_reason": null,
             "failed_stage": null,
-            "route_ms": 3052.2084390031523,
-            "llm_ms": 3048.2067609991645,
-            "total_ms": 3059.084877000714,
+            "route_ms": 3755.0506080006016,
+            "llm_ms": 3750.891399999091,
+            "total_ms": 3762.287407000258,
             "observe_ms": 0.0
           },
           "tool_trace": [],
@@ -3187,6 +3427,8 @@
           "agent_run_called": 0,
           "agent_run_commands": [],
           "turns": null,
+          "id": "F",
+          "title": "F 上次看到哪里",
           "fact_checks": [
             {
               "check": "有回复",
@@ -3209,20 +3451,24 @@
               "detail": ""
             }
           ],
-          "passed": true,
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
           "verified": true,
           "verified_reason": "",
+          "passed": true,
           "latency_samples_ms": [
-            2631.73,
-            5332.08,
-            3059.61
+            2490.0,
+            3590.23,
+            3762.85
           ],
-          "latency_p50_ms": 3059.61,
-          "latency_p95_ms": 7150.06
+          "latency_p50_ms": 3590.23,
+          "latency_p95_ms": 3900.95
         },
         {
-          "id": "G",
-          "title": "G 打开第N季（确认）",
           "utterance": "打开这部剧第二季。",
           "reply": "这部作品没有你指定的那一集，我没有执行播放。",
           "status": "NEEDS_CLARIFICATION",
@@ -3240,7 +3486,7 @@
             "failed_stage": null,
             "route_ms": 0.0,
             "llm_ms": 0.0,
-            "total_ms": 3569.162082996627,
+            "total_ms": 8286.334669006465,
             "observe_ms": 0.0
           },
           "tool_trace": [],
@@ -3308,12 +3554,12 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 0.5239820020506158,
+                "route_ms": 0.4850270051974803,
                 "llm_ms": 0.0,
-                "total_ms": 1567.8547200004687,
+                "total_ms": 1302.340322996315,
                 "observe_ms": 0.0
               },
-              "wall_ms": 1569.32
+              "wall_ms": 1303.46
             },
             {
               "utterance": "第一部。",
@@ -3334,12 +3580,12 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 8614.335884005413,
-                "llm_ms": 8609.911015999387,
-                "total_ms": 8631.833819003077,
+                "route_ms": 3437.826376000885,
+                "llm_ms": 3434.2513120063813,
+                "total_ms": 3453.685045999009,
                 "observe_ms": 0.0
               },
-              "wall_ms": 8633.79
+              "wall_ms": 3456.24
             },
             {
               "utterance": "打开这部剧第二季。",
@@ -3362,12 +3608,14 @@
                 "failed_stage": null,
                 "route_ms": 0.0,
                 "llm_ms": 0.0,
-                "total_ms": 3569.162082996627,
+                "total_ms": 8286.334669006465,
                 "observe_ms": 0.0
               },
-              "wall_ms": 3570.79
+              "wall_ms": 8287.81
             }
           ],
+          "id": "G",
+          "title": "G 打开第N季（确认）",
           "fact_checks": [
             {
               "check": "有回复",
@@ -3380,9 +3628,9 @@
               "detail": "agent.run=0 期望=0"
             },
             {
-              "check": "走确认流程",
-              "ok": false,
-              "detail": "NEEDS_CLARIFICATION"
+              "check": "该作品没有第 2 季时如实拒绝且不执行",
+              "ok": true,
+              "detail": "seasons=[3] 这部作品没有你指定的那一集，我没有执行播放。"
             },
             {
               "check": "未直接执行",
@@ -3390,20 +3638,24 @@
               "detail": "0"
             }
           ],
-          "passed": false,
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
           "verified": true,
           "verified_reason": "",
+          "passed": true,
           "latency_samples_ms": [
-            3615.11,
-            6878.97,
-            3570.79
+            8768.62,
+            7686.42,
+            8287.81
           ],
-          "latency_p50_ms": 3615.11,
-          "latency_p95_ms": 9490.06
+          "latency_p50_ms": 8287.81,
+          "latency_p95_ms": 9153.27
         },
         {
-          "id": "G3",
-          "title": "G3 不存在的季",
           "utterance": "打开这部剧第三季。",
           "reply": "确认执行 播放《一身腱子肉，乱世做谋臣》第3季第一集 吗？小爱可能也响应同一句话；请明确说“确认”或“不确认”。",
           "status": "NEEDS_CONFIRMATION",
@@ -3421,7 +3673,7 @@
             "failed_stage": null,
             "route_ms": 0.0,
             "llm_ms": 0.0,
-            "total_ms": 2854.779000997951,
+            "total_ms": 4468.222201998287,
             "observe_ms": 0.0
           },
           "tool_trace": [],
@@ -3489,12 +3741,12 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 0.5952310020802543,
+                "route_ms": 0.4792500039911829,
                 "llm_ms": 0.0,
-                "total_ms": 1532.8581009962363,
+                "total_ms": 1296.889740995539,
                 "observe_ms": 0.0
               },
-              "wall_ms": 1534.49
+              "wall_ms": 1298.02
             },
             {
               "utterance": "第一部。",
@@ -3515,12 +3767,12 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 3984.63167900627,
-                "llm_ms": 3980.5478179987404,
-                "total_ms": 4002.2589079962927,
+                "route_ms": 4750.267960000201,
+                "llm_ms": 4746.76688699401,
+                "total_ms": 4766.683358000591,
                 "observe_ms": 0.0
               },
-              "wall_ms": 4003.7
+              "wall_ms": 4768.09
             },
             {
               "utterance": "打开这部剧第三季。",
@@ -3543,12 +3795,14 @@
                 "failed_stage": null,
                 "route_ms": 0.0,
                 "llm_ms": 0.0,
-                "total_ms": 2854.779000997951,
+                "total_ms": 4468.222201998287,
                 "observe_ms": 0.0
               },
-              "wall_ms": 2856.83
+              "wall_ms": 4469.76
             }
           ],
+          "id": "G3",
+          "title": "G3 不存在的季",
           "fact_checks": [
             {
               "check": "有回复",
@@ -3571,25 +3825,29 @@
               "detail": "0"
             }
           ],
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
+          "verified": true,
+          "verified_reason": "",
           "passed": true,
-          "verified": true,
-          "verified_reason": "",
           "latency_samples_ms": [
-            8445.73,
-            3575.18,
-            2856.83
+            2489.1,
+            5155.05,
+            4469.76
           ],
-          "latency_p50_ms": 3575.18,
-          "latency_p95_ms": 12342.17
+          "latency_p50_ms": 4469.76,
+          "latency_p95_ms": 5703.28
         },
         {
-          "id": "H",
-          "title": "H 确认播放",
           "utterance": "确认播放。",
-          "reply": "没有可确认的操作（可能已过期或在另一入口执行过），请重新说明要求。",
-          "status": "NEEDS_CLARIFICATION",
+          "reply": "已完成。",
+          "status": "SUCCESS",
           "intent": "confirm",
-          "answer_source": null,
+          "answer_source": "local_catalog",
           "diagnostics": {
             "model_name": null,
             "decision_source": null,
@@ -3600,15 +3858,17 @@
             "total_latency_ms": null,
             "fallback_reason": null,
             "failed_stage": null,
-            "route_ms": 8669.4295480047,
-            "llm_ms": 8665.530525999202,
-            "total_ms": 8691.64825399639,
+            "route_ms": 8423.536123002123,
+            "llm_ms": 8419.169886001328,
+            "total_ms": 8458.946081998874,
             "observe_ms": 0.0
           },
           "tool_trace": [],
           "candidates": [],
-          "agent_run_called": 0,
-          "agent_run_commands": [],
+          "agent_run_called": 1,
+          "agent_run_commands": [
+            "播放《一身腱子肉，乱世做谋臣》第3季第一集"
+          ],
           "turns": [
             {
               "utterance": "现在资源库有什么？",
@@ -3670,12 +3930,12 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 0.47660499694757164,
+                "route_ms": 0.7857289965613745,
                 "llm_ms": 0.0,
-                "total_ms": 1343.919063998328,
+                "total_ms": 1435.0068519997876,
                 "observe_ms": 0.0
               },
-              "wall_ms": 1345.13
+              "wall_ms": 1436.26
             },
             {
               "utterance": "第一部。",
@@ -3696,219 +3956,12 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 3554.9419230010244,
-                "llm_ms": 3551.00566100009,
-                "total_ms": 3570.847392002179,
+                "route_ms": 4275.551274004101,
+                "llm_ms": 4271.196410998527,
+                "total_ms": 4292.450916000234,
                 "observe_ms": 0.0
               },
-              "wall_ms": 3572.42
-            },
-            {
-              "utterance": "播放第一集。",
-              "status": "NATIVE",
-              "intent": "play",
-              "route": "native",
-              "decision_source": "llm",
-              "reply": "交由电视原生助手处理。",
-              "candidates": [],
-              "answer_source": null,
-              "diagnostics": {
-                "model_name": null,
-                "decision_source": null,
-                "tool_name": null,
-                "tool_status": null,
-                "llm_latency_ms": null,
-                "tool_latency_ms": null,
-                "total_latency_ms": null,
-                "fallback_reason": null,
-                "failed_stage": null,
-                "route_ms": 7872.468052999466,
-                "llm_ms": 7867.500724998536,
-                "total_ms": 7891.388834999816,
-                "observe_ms": 0.0
-              },
-              "wall_ms": 7893.26
-            },
-            {
-              "utterance": "确认播放。",
-              "status": "NEEDS_CLARIFICATION",
-              "intent": "confirm",
-              "route": "clarify",
-              "decision_source": "context_rule",
-              "reply": "没有可确认的操作（可能已过期或在另一入口执行过），请重新说明要求。",
-              "candidates": [],
-              "answer_source": null,
-              "diagnostics": {
-                "model_name": null,
-                "decision_source": null,
-                "tool_name": null,
-                "tool_status": null,
-                "llm_latency_ms": null,
-                "tool_latency_ms": null,
-                "total_latency_ms": null,
-                "fallback_reason": null,
-                "failed_stage": null,
-                "route_ms": 8669.4295480047,
-                "llm_ms": 8665.530525999202,
-                "total_ms": 8691.64825399639,
-                "observe_ms": 0.0
-              },
-              "wall_ms": 8693.66
-            }
-          ],
-          "fact_checks": [
-            {
-              "check": "有回复",
-              "ok": true,
-              "detail": "没有可确认的操作（可能已过期或在另一入口执行过），请重新说明要求。"
-            },
-            {
-              "check": "电视动作次数",
-              "ok": false,
-              "detail": "agent.run=0 期望=1"
-            },
-            {
-              "check": "只执行一次",
-              "ok": false,
-              "detail": "0"
-            },
-            {
-              "check": "执行的是播放命令",
-              "ok": false,
-              "detail": ""
-            }
-          ],
-          "passed": false,
-          "verified": true,
-          "verified_reason": "",
-          "latency_samples_ms": [
-            9245.04,
-            4293.06,
-            8693.66
-          ],
-          "latency_p50_ms": 8693.66,
-          "latency_p95_ms": 9686.14
-        },
-        {
-          "id": "H2",
-          "title": "H2 取消播放",
-          "utterance": "取消播放。",
-          "reply": "已取消刚才的待确认操作，没有执行任何电视动作。",
-          "status": "NEEDS_CLARIFICATION",
-          "intent": "deny",
-          "answer_source": null,
-          "diagnostics": {
-            "model_name": null,
-            "decision_source": null,
-            "tool_name": null,
-            "tool_status": null,
-            "llm_latency_ms": null,
-            "tool_latency_ms": null,
-            "total_latency_ms": null,
-            "fallback_reason": null,
-            "failed_stage": null,
-            "route_ms": 8794.411953000235,
-            "llm_ms": 8790.93919099978,
-            "total_ms": 8814.934151996567,
-            "observe_ms": 0.0
-          },
-          "tool_trace": [],
-          "candidates": [],
-          "agent_run_called": 0,
-          "agent_run_commands": [],
-          "turns": [
-            {
-              "utterance": "现在资源库有什么？",
-              "status": "SUCCESS",
-              "intent": "browse_library",
-              "route": "agent",
-              "decision_source": "rule",
-              "reply": "已查询 NAS 本地影视库：共 35 部影视作品，其中电影 0 部、剧集 2 部、短剧 33 部。例如：1.《一身腱子肉，乱世做谋臣》；2.《万妖图录传》；3.《从小兵开始》；4.《从布衣开始成圣》；5.《光之巨人：原初之光》；6.《光之战神奥帝伽》；7.《全民机械飞升》；8.《大夏之始》。以上只是部分条目，可以继续按片名或类型搜索。",
-              "candidates": [
-                {
-                  "id": "3a6c4d7029ba3aa71e851c1b",
-                  "title": "一身腱子肉，乱世做谋臣",
-                  "episodes": 107
-                },
-                {
-                  "id": "07f4dd129959ad2594a94013",
-                  "title": "万妖图录传",
-                  "episodes": 202
-                },
-                {
-                  "id": "c68f2f337ac96e70cc70f4aa",
-                  "title": "从小兵开始",
-                  "episodes": 226
-                },
-                {
-                  "id": "3700e476cf08265cf7ca85b2",
-                  "title": "从布衣开始成圣",
-                  "episodes": 257
-                },
-                {
-                  "id": "9b9db5294cfe9b7d92f2fa96",
-                  "title": "光之巨人：原初之光",
-                  "episodes": 73
-                },
-                {
-                  "id": "f4c868189de03cee0490cf67",
-                  "title": "光之战神奥帝伽",
-                  "episodes": 18
-                },
-                {
-                  "id": "aa11654c5d453e7eda22932a",
-                  "title": "全民机械飞升",
-                  "episodes": 151
-                },
-                {
-                  "id": "ed66b1d214d3f9b7e855a7f8",
-                  "title": "大夏之始",
-                  "episodes": 308
-                }
-              ],
-              "answer_source": "local_catalog",
-              "diagnostics": {
-                "model_name": null,
-                "decision_source": null,
-                "tool_name": null,
-                "tool_status": null,
-                "llm_latency_ms": null,
-                "tool_latency_ms": null,
-                "total_latency_ms": null,
-                "fallback_reason": null,
-                "failed_stage": null,
-                "route_ms": 0.5440599998109974,
-                "llm_ms": 0.0,
-                "total_ms": 1578.18430000043,
-                "observe_ms": 0.0
-              },
-              "wall_ms": 1579.48
-            },
-            {
-              "utterance": "第一部。",
-              "status": "NEEDS_CLARIFICATION",
-              "intent": "select",
-              "route": "clarify",
-              "decision_source": "context_rule",
-              "reply": "已选择《一身腱子肉，乱世做谋臣》。你想从第几集开始？",
-              "candidates": [],
-              "answer_source": null,
-              "diagnostics": {
-                "model_name": null,
-                "decision_source": null,
-                "tool_name": null,
-                "tool_status": null,
-                "llm_latency_ms": null,
-                "tool_latency_ms": null,
-                "total_latency_ms": null,
-                "fallback_reason": null,
-                "failed_stage": null,
-                "route_ms": 5007.392199004244,
-                "llm_ms": 5003.854908994981,
-                "total_ms": 5026.083377000759,
-                "observe_ms": 0.0
-              },
-              "wall_ms": 5027.56
+              "wall_ms": 4293.87
             },
             {
               "utterance": "播放第一集。",
@@ -3929,12 +3982,230 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 8980.904233998444,
-                "llm_ms": 8977.484604001802,
-                "total_ms": 9011.40585700341,
+                "route_ms": 4239.022832996852,
+                "llm_ms": 4234.286486003839,
+                "total_ms": 4273.492405001889,
                 "observe_ms": 0.0
               },
-              "wall_ms": 9012.93
+              "wall_ms": 4275.6
+            },
+            {
+              "utterance": "确认播放。",
+              "status": "SUCCESS",
+              "intent": "confirm",
+              "route": "agent",
+              "decision_source": "context_rule",
+              "reply": "已完成。",
+              "candidates": [],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 8423.536123002123,
+                "llm_ms": 8419.169886001328,
+                "total_ms": 8458.946081998874,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 8460.61
+            }
+          ],
+          "id": "H",
+          "title": "H 确认播放",
+          "fact_checks": [
+            {
+              "check": "有回复",
+              "ok": true,
+              "detail": "已完成。"
+            },
+            {
+              "check": "电视动作次数",
+              "ok": true,
+              "detail": "agent.run=1 期望=1"
+            },
+            {
+              "check": "确认意图未被误路由（NATIVE/其他）",
+              "ok": true,
+              "detail": "SUCCESS"
+            },
+            {
+              "check": "只执行一次",
+              "ok": true,
+              "detail": "1"
+            },
+            {
+              "check": "执行的是播放命令",
+              "ok": true,
+              "detail": "播放《一身腱子肉，乱世做谋臣》第3季第一集"
+            }
+          ],
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
+          "verified": true,
+          "verified_reason": "",
+          "passed": true,
+          "latency_samples_ms": [
+            8473.18,
+            5873.13,
+            8460.61
+          ],
+          "latency_p50_ms": 8460.61,
+          "latency_p95_ms": 8483.24
+        },
+        {
+          "utterance": "取消播放。",
+          "reply": "已取消刚才的待确认操作，没有执行任何电视动作。",
+          "status": "NEEDS_CLARIFICATION",
+          "intent": "deny",
+          "answer_source": null,
+          "diagnostics": {
+            "model_name": null,
+            "decision_source": null,
+            "tool_name": null,
+            "tool_status": null,
+            "llm_latency_ms": null,
+            "tool_latency_ms": null,
+            "total_latency_ms": null,
+            "fallback_reason": null,
+            "failed_stage": null,
+            "route_ms": 8862.012617006258,
+            "llm_ms": 8857.13261699857,
+            "total_ms": 8886.94697900064,
+            "observe_ms": 0.0
+          },
+          "tool_trace": [],
+          "candidates": [],
+          "agent_run_called": 0,
+          "agent_run_commands": [],
+          "turns": [
+            {
+              "utterance": "现在资源库有什么？",
+              "status": "SUCCESS",
+              "intent": "browse_library",
+              "route": "agent",
+              "decision_source": "rule",
+              "reply": "已查询 NAS 本地影视库：共 35 部影视作品，其中电影 0 部、剧集 2 部、短剧 33 部。例如：1.《一身腱子肉，乱世做谋臣》；2.《万妖图录传》；3.《从小兵开始》；4.《从布衣开始成圣》；5.《光之巨人：原初之光》；6.《光之战神奥帝伽》；7.《全民机械飞升》；8.《大夏之始》。以上只是部分条目，可以继续按片名或类型搜索。",
+              "candidates": [
+                {
+                  "id": "3a6c4d7029ba3aa71e851c1b",
+                  "title": "一身腱子肉，乱世做谋臣",
+                  "episodes": 107
+                },
+                {
+                  "id": "07f4dd129959ad2594a94013",
+                  "title": "万妖图录传",
+                  "episodes": 202
+                },
+                {
+                  "id": "c68f2f337ac96e70cc70f4aa",
+                  "title": "从小兵开始",
+                  "episodes": 226
+                },
+                {
+                  "id": "3700e476cf08265cf7ca85b2",
+                  "title": "从布衣开始成圣",
+                  "episodes": 257
+                },
+                {
+                  "id": "9b9db5294cfe9b7d92f2fa96",
+                  "title": "光之巨人：原初之光",
+                  "episodes": 73
+                },
+                {
+                  "id": "f4c868189de03cee0490cf67",
+                  "title": "光之战神奥帝伽",
+                  "episodes": 18
+                },
+                {
+                  "id": "aa11654c5d453e7eda22932a",
+                  "title": "全民机械飞升",
+                  "episodes": 151
+                },
+                {
+                  "id": "ed66b1d214d3f9b7e855a7f8",
+                  "title": "大夏之始",
+                  "episodes": 308
+                }
+              ],
+              "answer_source": "local_catalog",
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 0.5086620003567077,
+                "llm_ms": 0.0,
+                "total_ms": 1416.3763250035117,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 1417.5
+            },
+            {
+              "utterance": "第一部。",
+              "status": "NEEDS_CLARIFICATION",
+              "intent": "select",
+              "route": "clarify",
+              "decision_source": "context_rule",
+              "reply": "已选择《一身腱子肉，乱世做谋臣》。你想从第几集开始？",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 3762.5544930051547,
+                "llm_ms": 3759.1043089996674,
+                "total_ms": 3779.6779229975073,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 3781.32
+            },
+            {
+              "utterance": "播放第一集。",
+              "status": "NEEDS_CONFIRMATION",
+              "intent": "play",
+              "route": "clarify",
+              "decision_source": "context_rule",
+              "reply": "确认执行 播放《一身腱子肉，乱世做谋臣》第3季第一集 吗？小爱可能也响应同一句话；请明确说“确认”或“不确认”。",
+              "candidates": [],
+              "answer_source": null,
+              "diagnostics": {
+                "model_name": null,
+                "decision_source": null,
+                "tool_name": null,
+                "tool_status": null,
+                "llm_latency_ms": null,
+                "tool_latency_ms": null,
+                "total_latency_ms": null,
+                "fallback_reason": null,
+                "failed_stage": null,
+                "route_ms": 6287.344718002714,
+                "llm_ms": 6281.972374999896,
+                "total_ms": 6317.685893998714,
+                "observe_ms": 0.0
+              },
+              "wall_ms": 6319.68
             },
             {
               "utterance": "取消播放。",
@@ -3955,14 +4226,16 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 8794.411953000235,
-                "llm_ms": 8790.93919099978,
-                "total_ms": 8814.934151996567,
+                "route_ms": 8862.012617006258,
+                "llm_ms": 8857.13261699857,
+                "total_ms": 8886.94697900064,
                 "observe_ms": 0.0
               },
-              "wall_ms": 8816.44
+              "wall_ms": 8888.99
             }
           ],
+          "id": "H2",
+          "title": "H2 取消播放",
           "fact_checks": [
             {
               "check": "有回复",
@@ -3985,20 +4258,24 @@
               "detail": "已取消刚才的待确认操作，没有执行任何电视动作。"
             }
           ],
-          "passed": true,
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
           "verified": true,
           "verified_reason": "",
+          "passed": true,
           "latency_samples_ms": [
-            5884.31,
-            3854.26,
-            8816.44
+            3932.02,
+            4784.65,
+            8888.99
           ],
-          "latency_p50_ms": 5884.31,
-          "latency_p95_ms": 11162.14
+          "latency_p50_ms": 4784.65,
+          "latency_p95_ms": 12172.46
         },
         {
-          "id": "I",
-          "title": "I 电视在放什么",
           "utterance": "电视现在在放什么？",
           "reply": "正在播放《漫长的季节》 第1季 第5集",
           "status": "SUCCESS",
@@ -4014,10 +4291,10 @@
             "total_latency_ms": null,
             "fallback_reason": null,
             "failed_stage": null,
-            "route_ms": 0.40212299791164696,
+            "route_ms": 0.45150300138629973,
             "llm_ms": 0.0,
-            "total_ms": 7.932957996672485,
-            "observe_ms": 0.1266149993170984
+            "total_ms": 8.364317000086885,
+            "observe_ms": 0.1536880008643493
           },
           "tool_trace": [],
           "candidates": [],
@@ -4026,6 +4303,8 @@
             "现在播放的是什么"
           ],
           "turns": null,
+          "id": "I",
+          "title": "I 电视在放什么",
           "fact_checks": [
             {
               "check": "有回复",
@@ -4048,20 +4327,24 @@
               "detail": ""
             }
           ],
-          "passed": true,
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
           "verified": false,
           "verified_reason": "无真实电视可观测，使用注入的固定设备观测",
+          "passed": true,
           "latency_samples_ms": [
-            8.72,
-            9.13,
-            8.44
+            8.4,
+            8.55,
+            8.89
           ],
-          "latency_p50_ms": 8.72,
-          "latency_p95_ms": 9.46
+          "latency_p50_ms": 8.55,
+          "latency_p95_ms": 9.16
         },
         {
-          "id": "J",
-          "title": "J 最近新增",
           "utterance": "最近新增了哪些资源？",
           "reply": "最近加入/更新的本地作品是：1.《我，史前霸王龙》（2026） · 99 集；2.《巨人纪元》（2026） · 60 集；3.《我的巨人》（2026） · 70 集；4.《光之战神奥帝伽》（2026） · 18 集；5.《光之巨人：原初之光》（2026） · 73 集；6.《穿成野神我靠香火斩诸神》（2026） · 1305 集；7.《西游：圣僧的自我修养》（2026） · 128 集；8.《从布衣开始成圣》（2026） · 257 集；9.《我合成了全世界啊》（2026） · 351 集；10.《洪荒我十凶天角蚁，睡觉就变强》（2026） · 95 集。可以说“第几部”继续选择。",
           "status": "SUCCESS",
@@ -4072,14 +4355,14 @@
             "decision_source": "deterministic",
             "tool_name": "catalog_recent",
             "tool_status": "ok",
-            "llm_latency_ms": 5443.889110996679,
-            "tool_latency_ms": 1313.7660939974012,
-            "total_latency_ms": 6762.222837998706,
+            "llm_latency_ms": 5465.647133998573,
+            "tool_latency_ms": 1308.885750004265,
+            "total_latency_ms": 6781.301401002565,
             "fallback_reason": "ungrounded_answer",
             "failed_stage": null,
-            "route_ms": 3197.894324999652,
-            "llm_ms": 3193.470347003313,
-            "total_ms": 9970.831498001644,
+            "route_ms": 2811.8576830020174,
+            "llm_ms": 2807.7543940016767,
+            "total_ms": 9603.607871998975,
             "observe_ms": 0.0
           },
           "tool_trace": [
@@ -4087,9 +4370,10 @@
               "tool": "recent",
               "ok": true,
               "arguments": {
-                "limit": 10
+                "limit": 10,
+                "kind": "any"
               },
-              "latency_ms": 1313.62,
+              "latency_ms": 1308.74,
               "error": null
             }
           ],
@@ -4148,6 +4432,8 @@
           "agent_run_called": 0,
           "agent_run_commands": [],
           "turns": null,
+          "id": "J",
+          "title": "J 最近新增",
           "fact_checks": [
             {
               "check": "有回复",
@@ -4162,7 +4448,7 @@
             {
               "check": "按 added_days_ago 递增",
               "ok": true,
-              "detail": "[2.9, 2.91, 2.91, 2.91, 2.92]"
+              "detail": "[2.93, 2.94, 2.94, 2.95, 2.95]"
             },
             {
               "check": "回复含最近作品",
@@ -4170,38 +4456,42 @@
               "detail": ""
             }
           ],
-          "passed": true,
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
           "verified": true,
           "verified_reason": "",
+          "passed": true,
           "latency_samples_ms": [
-            11966.61,
-            10770.64,
-            9972.41
+            8136.66,
+            8411.3,
+            9605.2
           ],
-          "latency_p50_ms": 10770.64,
-          "latency_p95_ms": 12923.39
+          "latency_p50_ms": 8411.3,
+          "latency_p95_ms": 10560.32
         },
         {
-          "id": "K",
-          "title": "K 我想看电影",
           "utterance": "我想看电影。",
-          "reply": "本地库里目前没有电影，有 2 部剧集（共 8483 集）。要我列几部剧集，或者按片名找吗？",
+          "reply": "本地库里没有符合条件的作品。可以换个片名或去掉筛选条件再试。",
           "status": "SUCCESS",
           "intent": "search",
           "answer_source": "local_catalog",
           "diagnostics": {
             "model_name": "cn:deepseek-v4.1-flash",
             "decision_source": "deterministic",
-            "tool_name": "catalog_recommend",
+            "tool_name": "catalog_overview",
             "tool_status": "ok",
-            "llm_latency_ms": 3313.5022909991676,
-            "tool_latency_ms": 1521.2486829987029,
-            "total_latency_ms": 4838.98825700453,
+            "llm_latency_ms": 5541.322243007016,
+            "tool_latency_ms": 1291.2517850054428,
+            "total_latency_ms": 6881.0310139961075,
             "fallback_reason": "ungrounded_answer",
             "failed_stage": null,
-            "route_ms": 2584.2909249986405,
-            "llm_ms": 2580.261937000614,
-            "total_ms": 8926.588544003607,
+            "route_ms": 6040.9354269941105,
+            "llm_ms": 6037.3500819987385,
+            "total_ms": 14200.327314996684,
             "observe_ms": 0.0
           },
           "tool_trace": [
@@ -4210,16 +4500,23 @@
               "ok": true,
               "arguments": {
                 "kind": "movie",
-                "limit": 10
+                "limit": 8
               },
-              "latency_ms": 1521.13,
+              "latency_ms": 1289.65,
+              "error": null
+            },
+            {
+              "tool": "overview",
+              "ok": true,
+              "arguments": {},
+              "latency_ms": 1.39,
               "error": null
             },
             {
               "tool": "summary",
               "ok": true,
               "arguments": {},
-              "latency_ms": 0.47,
+              "latency_ms": 0.45,
               "error": null
             }
           ],
@@ -4227,11 +4524,13 @@
           "agent_run_called": 0,
           "agent_run_commands": [],
           "turns": null,
+          "id": "K",
+          "title": "K 我想看电影",
           "fact_checks": [
             {
               "check": "有回复",
               "ok": true,
-              "detail": "本地库里目前没有电影，有 2 部剧集（共 8483 集）。要我列几部剧集，或者按片名找吗？"
+              "detail": "本地库里没有符合条件的作品。可以换个片名或去掉筛选条件再试。"
             },
             {
               "check": "电视动作次数",
@@ -4240,12 +4539,12 @@
             },
             {
               "check": "说明没有电影",
-              "ok": true,
-              "detail": "本地库里目前没有电影，有 2 部剧集（共 8483 集）。要我列几部剧集，或者按片名找吗？"
+              "ok": false,
+              "detail": "本地库里没有符合条件的作品。可以换个片名或去掉筛选条件再试。"
             },
             {
               "check": "给出真实剧集数",
-              "ok": true,
+              "ok": false,
               "detail": "2"
             },
             {
@@ -4254,20 +4553,39 @@
               "detail": ""
             }
           ],
-          "passed": true,
+          "reps": {
+            "total": 3,
+            "passed": 1
+          },
+          "rep_failures": [
+            {
+              "rep": 1,
+              "failed": [
+                "说明没有电影",
+                "给出真实剧集数"
+              ]
+            },
+            {
+              "rep": 3,
+              "failed": [
+                "说明没有电影",
+                "给出真实剧集数"
+              ]
+            }
+          ],
+          "detail_rep": 1,
           "verified": true,
           "verified_reason": "",
+          "passed": false,
           "latency_samples_ms": [
-            17079.88,
-            10471.25,
-            8927.3
+            14201.13,
+            10051.4,
+            11346.31
           ],
-          "latency_p50_ms": 10471.25,
-          "latency_p95_ms": 22366.78
+          "latency_p50_ms": 11346.31,
+          "latency_p95_ms": 16484.99
         },
         {
-          "id": "L",
-          "title": "L 悬疑剧",
           "utterance": "推荐一部悬疑剧。",
           "reply": "本地库里有题材标签的 2 部作品中没有“悬疑”。可以按片名搜索，或让我列几部带题材标签的作品。",
           "status": "SUCCESS",
@@ -4276,30 +4594,27 @@
           "diagnostics": {
             "model_name": "cn:deepseek-v4.1-flash",
             "decision_source": "deterministic",
-            "tool_name": "catalog_search",
+            "tool_name": "library_search",
             "tool_status": "ok",
-            "llm_latency_ms": 7884.518053993816,
-            "tool_latency_ms": 1325.3365470009157,
-            "total_latency_ms": 9214.998868003022,
-            "fallback_reason": "ungrounded_answer",
-            "failed_stage": null,
-            "route_ms": 3172.962696000468,
-            "llm_ms": 3168.95489700255,
-            "total_ms": 13644.493576997775,
+            "llm_latency_ms": 0.0,
+            "tool_latency_ms": 0.561581997317262,
+            "total_latency_ms": 1677.4138900000253,
+            "fallback_reason": "genre_unverifiable",
+            "failed_stage": "grounding",
+            "route_ms": 2431.70848400041,
+            "llm_ms": 2428.1887030010694,
+            "total_ms": 5490.467416995671,
             "observe_ms": 0.0
           },
           "tool_trace": [
             {
-              "tool": "recommend",
+              "tool": "search",
               "ok": true,
               "arguments": {
-                "kind": "series",
-                "preferences": [
-                  "悬疑"
-                ],
-                "limit": 5
+                "genre": "悬疑",
+                "limit": 1
               },
-              "latency_ms": 1324.87,
+              "latency_ms": 1675.57,
               "error": null
             },
             {
@@ -4307,35 +4622,26 @@
               "ok": true,
               "arguments": {
                 "genre": "悬疑",
-                "kind": "series",
-                "limit": 10
+                "kind": "any",
+                "limit": 8
               },
-              "latency_ms": 0.26,
+              "latency_ms": 0.47,
               "error": null
             },
             {
               "tool": "summary",
               "ok": true,
               "arguments": {},
-              "latency_ms": 0.64,
+              "latency_ms": 0.43,
               "error": null
             }
           ],
-          "candidates": [
-            {
-              "id": "19a87d781516fa11f2db2bb4",
-              "title": "师兄太稳健",
-              "episodes": 2
-            },
-            {
-              "id": "cadc97ff222cb08035d68cf0",
-              "title": "我不是大师",
-              "episodes": 2
-            }
-          ],
+          "candidates": [],
           "agent_run_called": 0,
           "agent_run_commands": [],
           "turns": null,
+          "id": "L",
+          "title": "L 悬疑剧",
           "fact_checks": [
             {
               "check": "有回复",
@@ -4348,25 +4654,34 @@
               "detail": "agent.run=0 期望=0"
             },
             {
-              "check": "说明无法按题材筛选",
-              "ok": false,
+              "check": "如实说明没有该题材或没有类型标签",
+              "ok": true,
               "detail": "本地库里有题材标签的 2 部作品中没有“悬疑”。可以按片名搜索，或让我列几部带题材标签的作品。"
+            },
+            {
+              "check": "不编造该题材作品",
+              "ok": true,
+              "detail": ""
             }
           ],
-          "passed": false,
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
           "verified": true,
           "verified_reason": "",
+          "passed": true,
           "latency_samples_ms": [
-            11873.96,
-            12713.67,
-            13645.67
+            4927.85,
+            4577.21,
+            5491.17
           ],
-          "latency_p50_ms": 12713.67,
-          "latency_p95_ms": 14391.27
+          "latency_p50_ms": 4927.85,
+          "latency_p95_ms": 5941.83
         },
         {
-          "id": "M",
-          "title": "M 能力说明",
           "utterance": "你能帮我做什么？",
           "reply": "我可以查询本地影视库（总数、按类型浏览、按片名/年份搜索、推荐、最近添加），也可以打开应用、暂停/继续、查当前播放；播放前会先请你确认。",
           "status": "SUCCESS",
@@ -4384,7 +4699,7 @@
             "failed_stage": null,
             "route_ms": 0.0,
             "llm_ms": 0.0,
-            "total_ms": 1246.3727940048557,
+            "total_ms": 1343.6462660029065,
             "observe_ms": 0.0
           },
           "tool_trace": [
@@ -4392,7 +4707,7 @@
               "tool": "status",
               "ok": true,
               "arguments": {},
-              "latency_ms": 1244.98,
+              "latency_ms": 1342.8,
               "error": null
             }
           ],
@@ -4400,6 +4715,8 @@
           "agent_run_called": 0,
           "agent_run_commands": [],
           "turns": null,
+          "id": "M",
+          "title": "M 能力说明",
           "fact_checks": [
             {
               "check": "有回复",
@@ -4417,20 +4734,24 @@
               "detail": "我可以查询本地影视库（总数、按类型浏览、按片名/年份搜索、推荐、最近添加），也可以打开应用、暂停/继续、查当前播放；播放前会先请你确认。"
             }
           ],
-          "passed": true,
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
           "verified": true,
           "verified_reason": "",
+          "passed": true,
           "latency_samples_ms": [
-            1258.98,
-            1240.24,
-            1246.43
+            1264.61,
+            1360.12,
+            1343.7
           ],
-          "latency_p50_ms": 1246.43,
-          "latency_p95_ms": 1269.02
+          "latency_p50_ms": 1343.7,
+          "latency_p95_ms": 1373.26
         },
         {
-          "id": "N",
-          "title": "N 多轮组合",
           "utterance": "确认。",
           "reply": "已完成。",
           "status": "SUCCESS",
@@ -4446,9 +4767,9 @@
             "total_latency_ms": null,
             "fallback_reason": null,
             "failed_stage": null,
-            "route_ms": 5675.717193997116,
-            "llm_ms": 5671.798120994936,
-            "total_ms": 5791.69303499657,
+            "route_ms": 4113.307311999961,
+            "llm_ms": 4109.3041300046025,
+            "total_ms": 4143.888247999712,
             "observe_ms": 0.0
           },
           "tool_trace": [
@@ -4458,7 +4779,7 @@
               "arguments": {
                 "limit": 3
               },
-              "latency_ms": 1419.1,
+              "latency_ms": 1296.77,
               "error": null
             },
             {
@@ -4480,7 +4801,7 @@
                 ],
                 "limit": 5
               },
-              "latency_ms": 7.45,
+              "latency_ms": 10.33,
               "error": null
             },
             {
@@ -4488,18 +4809,10 @@
               "ok": true,
               "arguments": {
                 "kind": "short_drama",
-                "max_episodes": 200,
-                "exclusions": [
-                  "穿成野神我靠香火斩诸神",
-                  "我合成了全世界啊",
-                  "星际长生：活得够久就能称霸宇宙",
-                  "万妖图录传",
-                  "末世轮回：我以尸躯化神明",
-                  "3700e476cf08265cf7ca85b2"
-                ],
-                "limit": 8
+                "max_episodes": 100,
+                "limit": 10
               },
-              "latency_ms": 6.32,
+              "latency_ms": 4.52,
               "error": null
             },
             {
@@ -4507,18 +4820,10 @@
               "ok": true,
               "arguments": {
                 "kind": "short_drama",
-                "max_episodes": 60,
-                "exclusions": [
-                  "穿成野神我靠香火斩诸神",
-                  "我合成了全世界啊",
-                  "星际长生：活得够久就能称霸宇宙",
-                  "万妖图录传",
-                  "末世轮回：我以尸躯化神明",
-                  "3700e476cf08265cf7ca85b2"
-                ],
-                "limit": 8
+                "max_episodes": 30,
+                "limit": 10
               },
-              "latency_ms": 2.49,
+              "latency_ms": 2.32,
               "error": null
             }
           ],
@@ -4534,7 +4839,7 @@
               "intent": "assistant",
               "route": "agent",
               "decision_source": "llm",
-              "reply": "给你挑了三部本地已入库的短剧（题材标签暂无元数据，无法按类型筛选）： 1.《穿成野神我靠香火斩诸神》（2026，共 1305 集，红果短剧）——穿越成无人问津的野神，从一盏香火起步，收妖邪、斩正神。 2.《从布衣开始成圣》（2026，共 257 集，红果短剧）——骑奴陈实踏上武道之路，打破阶层逆袭。 3.《我合成了全世界啊》（2026，共 351 集，红果短剧）——垃圾山弃儿靠万物合成能力迭代升级装备。 想播哪一部可以直接说，我来帮你起播。",
+              "reply": "从本地已入库内容里给你挑了这几部：1.《穿成野神我靠香火斩诸神》（2026） · 1305 集；2.《从布衣开始成圣》（2026） · 257 集；3.《我合成了全世界啊》（2026） · 351 集。可以说“第几部”继续选择。",
               "candidates": [
                 {
                   "id": "7a52615b3bbdba3beb2670d5",
@@ -4555,20 +4860,20 @@
               "answer_source": "local_catalog",
               "diagnostics": {
                 "model_name": "cn:deepseek-v4.1-flash",
-                "decision_source": "llm",
+                "decision_source": "deterministic",
                 "tool_name": "catalog_recommend",
                 "tool_status": "ok",
-                "llm_latency_ms": 4343.833874001575,
-                "tool_latency_ms": 1419.2076640028972,
-                "total_latency_ms": 5772.810553993622,
-                "fallback_reason": null,
+                "llm_latency_ms": 4331.57996799855,
+                "tool_latency_ms": 1296.884299001249,
+                "total_latency_ms": 5632.329018000746,
+                "fallback_reason": "ungrounded_answer",
                 "failed_stage": null,
-                "route_ms": 2328.008780001255,
-                "llm_ms": 2326.1319709999952,
-                "total_ms": 8110.237294997205,
+                "route_ms": 2560.9692340003676,
+                "llm_ms": 2559.078463993501,
+                "total_ms": 8200.777247999213,
                 "observe_ms": 0.0
               },
-              "wall_ms": 8111.23
+              "wall_ms": 8201.71
             },
             {
               "utterance": "第二个讲什么？",
@@ -4584,17 +4889,17 @@
                 "decision_source": "deterministic",
                 "tool_name": "catalog_detail",
                 "tool_status": "ok",
-                "llm_latency_ms": 4155.205691000447,
-                "tool_latency_ms": 0.20471899915719405,
-                "total_latency_ms": 4158.578053000383,
+                "llm_latency_ms": 3474.4441130096675,
+                "tool_latency_ms": 0.20311499974923208,
+                "total_latency_ms": 3478.5501290025422,
                 "fallback_reason": "ungrounded_answer",
                 "failed_stage": null,
                 "route_ms": 0.0,
                 "llm_ms": 0.0,
-                "total_ms": 6954.140868001559,
+                "total_ms": 7377.943350998976,
                 "observe_ms": 0.0
               },
-              "wall_ms": 6955.24
+              "wall_ms": 7379.46
             },
             {
               "utterance": "换一个类似的。",
@@ -4636,17 +4941,17 @@
                 "decision_source": "deterministic",
                 "tool_name": "catalog_recommend",
                 "tool_status": "ok",
-                "llm_latency_ms": 5802.396655999473,
-                "tool_latency_ms": 7.553609000751749,
-                "total_latency_ms": 5814.8751740009175,
+                "llm_latency_ms": 4926.360337994993,
+                "tool_latency_ms": 10.547051999310497,
+                "total_latency_ms": 4942.393837998679,
                 "fallback_reason": "ungrounded_answer",
                 "failed_stage": null,
                 "route_ms": 0.0,
                 "llm_ms": 0.0,
-                "total_ms": 11818.784693998168,
+                "total_ms": 8903.623899001104,
                 "observe_ms": 0.0
               },
-              "wall_ms": 11820.14
+              "wall_ms": 8904.94
             },
             {
               "utterance": "不要那么长的。",
@@ -4654,81 +4959,25 @@
               "intent": "assistant",
               "route": "agent",
               "decision_source": "assistant_fallback",
-              "reply": "从本地已入库内容里给你挑了这几部：1.《巨人纪元》（2026） · 60 集；2.《师傅在干嘛！》（2026） · 60 集；3.《光之战神奥帝伽》（2026） · 18 集。可以说“第几部”继续选择。",
-              "candidates": [
-                {
-                  "id": "97828abdd621cc8d43fad655",
-                  "title": "我的同桌兰呦呦",
-                  "episodes": 190
-                },
-                {
-                  "id": "1695546409f7aed9fe54c5e4",
-                  "title": "末世星主：一切从零开始",
-                  "episodes": 189
-                },
-                {
-                  "id": "c4b68494a62e4613f5d804bc",
-                  "title": "蜀山执剑人",
-                  "episodes": 183
-                },
-                {
-                  "id": "8d108492045e64b7d2564a68",
-                  "title": "我的右眼是神级计算机：",
-                  "episodes": 179
-                },
-                {
-                  "id": "cef7df5c9ff10f17dce6107e",
-                  "title": "那妖魔是我老婆！",
-                  "episodes": 153
-                },
-                {
-                  "id": "aa11654c5d453e7eda22932a",
-                  "title": "全民机械飞升",
-                  "episodes": 151
-                },
-                {
-                  "id": "d419e04178658c9b3e95c82e",
-                  "title": "摊牌了我真的有系统",
-                  "episodes": 145
-                },
-                {
-                  "id": "eeed1516963ef82726441bd4",
-                  "title": "天与咒缚：无咒力的我肉身成圣",
-                  "episodes": 142
-                },
-                {
-                  "id": "889b3447c19769f727fa4811",
-                  "title": "巨人纪元",
-                  "episodes": 60
-                },
-                {
-                  "id": "18345b99124249cb4b295888",
-                  "title": "师傅在干嘛！",
-                  "episodes": 60
-                },
-                {
-                  "id": "f4c868189de03cee0490cf67",
-                  "title": "光之战神奥帝伽",
-                  "episodes": 18
-                }
-              ],
+              "reply": "从本地已入库内容里给你挑了这几部：1.《光之战神奥帝伽》（2026） · 18 集。可以说“第几部”继续选择。",
+              "candidates": [],
               "answer_source": "local_catalog",
               "diagnostics": {
                 "model_name": "cn:deepseek-v4.1-flash",
                 "decision_source": "deterministic",
                 "tool_name": "catalog_recommend",
                 "tool_status": "ok",
-                "llm_latency_ms": 7354.1256450043875,
-                "tool_latency_ms": 9.029726999870036,
-                "total_latency_ms": 7372.560019000957,
+                "llm_latency_ms": 7409.395716007566,
+                "tool_latency_ms": 7.134225998015609,
+                "total_latency_ms": 7425.478126002417,
                 "fallback_reason": "ungrounded_answer",
                 "failed_stage": null,
                 "route_ms": 0.0,
                 "llm_ms": 0.0,
-                "total_ms": 12296.129037997162,
+                "total_ms": 11536.411823995877,
                 "observe_ms": 0.0
               },
-              "wall_ms": 12298.18
+              "wall_ms": 11538.36
             },
             {
               "utterance": "就看刚才那个。",
@@ -4751,10 +5000,10 @@
                 "failed_stage": null,
                 "route_ms": 0.0,
                 "llm_ms": 0.0,
-                "total_ms": 9152.181245997781,
+                "total_ms": 4807.544495997718,
                 "observe_ms": 0.0
               },
-              "wall_ms": 9154.35
+              "wall_ms": 4809.11
             },
             {
               "utterance": "确认。",
@@ -4775,14 +5024,16 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 5675.717193997116,
-                "llm_ms": 5671.798120994936,
-                "total_ms": 5791.69303499657,
+                "route_ms": 4113.307311999961,
+                "llm_ms": 4109.3041300046025,
+                "total_ms": 4143.888247999712,
                 "observe_ms": 0.0
               },
-              "wall_ms": 5793.99
+              "wall_ms": 4145.5
             }
           ],
+          "id": "N",
+          "title": "N 多轮组合",
           "fact_checks": [
             {
               "check": "有回复",
@@ -4791,8 +5042,8 @@
             },
             {
               "check": "电视动作次数",
-              "ok": false,
-              "detail": "agent.run=1 期望=0"
+              "ok": true,
+              "detail": "agent.run=1 期望=1"
             },
             {
               "check": "「就看刚才那个」命中第 2 个候选",
@@ -4805,24 +5056,28 @@
               "detail": "1"
             }
           ],
-          "passed": false,
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
           "verified": true,
           "verified_reason": "",
+          "passed": true,
           "latency_samples_ms": [
-            4941.25,
-            4951.83,
-            5793.99
+            2316.93,
+            6793.93,
+            4145.5
           ],
-          "latency_p50_ms": 4951.83,
-          "latency_p95_ms": 6467.72
+          "latency_p50_ms": 4145.5,
+          "latency_p95_ms": 8912.67
         },
         {
-          "id": "O",
-          "title": "O 重复确认",
           "utterance": "确认播放。",
-          "reply": "交由电视原生助手处理。",
-          "status": "NATIVE",
-          "intent": "play",
+          "reply": "没有可确认的操作（可能已过期或在另一入口执行过），请重新说明要求。",
+          "status": "NEEDS_CLARIFICATION",
+          "intent": "confirm",
           "answer_source": null,
           "diagnostics": {
             "model_name": null,
@@ -4834,15 +5089,17 @@
             "total_latency_ms": null,
             "fallback_reason": null,
             "failed_stage": null,
-            "route_ms": 5758.228015998611,
-            "llm_ms": 5753.019388001121,
-            "total_ms": 5780.737793000299,
+            "route_ms": 5561.020073000691,
+            "llm_ms": 5557.5105030002305,
+            "total_ms": 5581.946466001682,
             "observe_ms": 0.0
           },
           "tool_trace": [],
           "candidates": [],
-          "agent_run_called": 0,
-          "agent_run_commands": [],
+          "agent_run_called": 1,
+          "agent_run_commands": [
+            "播放《一身腱子肉，乱世做谋臣》第3季第一集"
+          ],
           "turns": [
             {
               "utterance": "现在资源库有什么？",
@@ -4904,12 +5161,12 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 0.4875679951510392,
+                "route_ms": 0.5541810023714788,
                 "llm_ms": 0.0,
-                "total_ms": 1249.2424860029132,
+                "total_ms": 1316.070059001504,
                 "observe_ms": 0.0
               },
-              "wall_ms": 1250.4
+              "wall_ms": 1317.22
             },
             {
               "utterance": "第一部。",
@@ -4930,20 +5187,20 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 4537.034002998553,
-                "llm_ms": 4533.361560002959,
-                "total_ms": 4553.001831001893,
+                "route_ms": 3825.2163090000977,
+                "llm_ms": 3821.709709998686,
+                "total_ms": 3840.4238779985462,
                 "observe_ms": 0.0
               },
-              "wall_ms": 4554.43
+              "wall_ms": 3841.79
             },
             {
               "utterance": "播放第一集。",
-              "status": "NATIVE",
+              "status": "NEEDS_CONFIRMATION",
               "intent": "play",
-              "route": "native",
-              "decision_source": "llm",
-              "reply": "交由电视原生助手处理。",
+              "route": "clarify",
+              "decision_source": "context_rule",
+              "reply": "确认执行 播放《一身腱子肉，乱世做谋臣》第3季第一集 吗？小爱可能也响应同一句话；请明确说“确认”或“不确认”。",
               "candidates": [],
               "answer_source": null,
               "diagnostics": {
@@ -4956,22 +5213,22 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 7469.153971003834,
-                "llm_ms": 7464.881619998778,
-                "total_ms": 7486.823151004501,
+                "route_ms": 7942.456445998687,
+                "llm_ms": 7938.9093830031925,
+                "total_ms": 7970.673859999806,
                 "observe_ms": 0.0
               },
-              "wall_ms": 7489.54
+              "wall_ms": 7973.79
             },
             {
               "utterance": "确认播放。",
-              "status": "NATIVE",
-              "intent": "play",
-              "route": "native",
-              "decision_source": "llm",
-              "reply": "交由电视原生助手处理。",
+              "status": "SUCCESS",
+              "intent": "confirm",
+              "route": "agent",
+              "decision_source": "context_rule",
+              "reply": "已完成。",
               "candidates": [],
-              "answer_source": null,
+              "answer_source": "local_catalog",
               "diagnostics": {
                 "model_name": null,
                 "decision_source": null,
@@ -4982,20 +5239,20 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 5548.590254998999,
-                "llm_ms": 5543.145578994881,
-                "total_ms": 5570.850978998351,
+                "route_ms": 5114.768115003244,
+                "llm_ms": 5108.715533002396,
+                "total_ms": 5171.986335997644,
                 "observe_ms": 0.0
               },
-              "wall_ms": 5572.93
+              "wall_ms": 5173.65
             },
             {
               "utterance": "确认播放。",
-              "status": "NATIVE",
-              "intent": "play",
-              "route": "native",
-              "decision_source": "llm",
-              "reply": "交由电视原生助手处理。",
+              "status": "NEEDS_CLARIFICATION",
+              "intent": "confirm",
+              "route": "clarify",
+              "decision_source": "context_rule",
+              "reply": "没有可确认的操作（可能已过期或在另一入口执行过），请重新说明要求。",
               "candidates": [],
               "answer_source": null,
               "diagnostics": {
@@ -5008,46 +5265,54 @@
                 "total_latency_ms": null,
                 "fallback_reason": null,
                 "failed_stage": null,
-                "route_ms": 5758.228015998611,
-                "llm_ms": 5753.019388001121,
-                "total_ms": 5780.737793000299,
+                "route_ms": 5561.020073000691,
+                "llm_ms": 5557.5105030002305,
+                "total_ms": 5581.946466001682,
                 "observe_ms": 0.0
               },
-              "wall_ms": 5782.36
+              "wall_ms": 5583.88
             }
           ],
+          "id": "O",
+          "title": "O 重复确认",
           "fact_checks": [
             {
               "check": "有回复",
               "ok": true,
-              "detail": "交由电视原生助手处理。"
+              "detail": "没有可确认的操作（可能已过期或在另一入口执行过），请重新说明要求。"
             },
             {
               "check": "电视动作次数",
-              "ok": false,
-              "detail": "agent.run=0 期望=1"
+              "ok": true,
+              "detail": "agent.run=1 期望=1"
             },
             {
               "check": "重复确认只执行一次",
-              "ok": false,
-              "detail": "0"
+              "ok": true,
+              "detail": "1"
             },
             {
               "check": "第二次确认被拒绝",
-              "ok": false,
-              "detail": "交由电视原生助手处理。"
+              "ok": true,
+              "detail": "没有可确认的操作（可能已过期或在另一入口执行过），请重新说明要求。"
             }
           ],
-          "passed": false,
+          "reps": {
+            "total": 3,
+            "passed": 3
+          },
+          "rep_failures": [],
+          "detail_rep": 3,
           "verified": true,
           "verified_reason": "",
+          "passed": true,
           "latency_samples_ms": [
-            6315.12,
-            4879.97,
-            5782.36
+            3259.51,
+            4315.67,
+            5583.88
           ],
-          "latency_p50_ms": 5782.36,
-          "latency_p95_ms": 6741.33
+          "latency_p50_ms": 4315.67,
+          "latency_p95_ms": 6598.45
         }
       ],
       "summary": {
@@ -5064,7 +5329,7 @@
         "roots": [
           "<library>"
         ],
-        "index_age_seconds": 1.3926119804382324,
+        "index_age_seconds": 1.2944424152374268,
         "errors": [],
         "short_dramas": 33,
         "seasons": 42,
@@ -5073,334 +5338,334 @@
         "recent_added_7d": 21,
         "recent_added_30d": 33
       },
-      "elapsed_s": 837.3
+      "elapsed_s": 767.4
     }
   },
   "metrics": {
     "reps": 3,
-    "elapsed_s": 1339.2,
+    "elapsed_s": 1247.5,
     "latency_ms": {
-      "p50": 4879.97,
-      "p95": 11873.96,
-      "max": 17079.88,
+      "p50": 4145.5,
+      "p95": 10051.4,
+      "max": 14201.13,
       "samples": 102,
       "per_utterance": {
         "fixture": {
           "A": {
-            "p50": 89.74,
-            "p95": 1116.87,
+            "p50": 92.67,
+            "p95": 1056.37,
             "samples": [
-              660.37,
-              89.74,
-              86.32
+              628.06,
+              89.63,
+              92.67
             ]
           },
           "B": {
-            "p50": 6970.07,
-            "p95": 7132.25,
+            "p50": 6002.0,
+            "p95": 6134.75,
             "samples": [
-              6970.07,
-              6860.98,
-              7060.17
+              6075.75,
+              6002.0,
+              5188.07
             ]
           },
           "C": {
-            "p50": 7253.3,
-            "p95": 9158.69,
+            "p50": 6366.6,
+            "p95": 6882.17,
             "samples": [
-              6620.04,
-              8311.85,
-              7253.3
+              6366.6,
+              5615.8,
+              6653.03
             ]
           },
           "D": {
-            "p50": 4541.29,
-            "p95": 15153.35,
+            "p50": 7048.59,
+            "p95": 8794.81,
             "samples": [
-              10436.88,
-              4541.29,
-              3070.19
+              6588.41,
+              7048.59,
+              8018.71
             ]
           },
           "E": {
-            "p50": 8043.0,
-            "p95": 9487.75,
+            "p50": 8123.3,
+            "p95": 9441.55,
             "samples": [
-              8845.64,
-              3492.98,
-              8043.0
+              8123.3,
+              8855.66,
+              3929.53
             ]
           },
           "F": {
-            "p50": 2610.52,
-            "p95": 5159.14,
+            "p50": 3553.85,
+            "p95": 3981.08,
             "samples": [
-              4026.42,
-              2610.52,
-              2491.1
+              2673.28,
+              3553.85,
+              3791.2
             ]
           },
           "G": {
-            "p50": 4080.25,
-            "p95": 4390.8,
+            "p50": 4039.9,
+            "p95": 4041.16,
             "samples": [
-              4252.78,
-              4041.88,
-              4080.25
+              3556.04,
+              4039.9,
+              4040.6
             ]
           },
           "G3": {
-            "p50": 4034.39,
-            "p95": 4040.35,
+            "p50": 4032.22,
+            "p95": 4032.6,
             "samples": [
-              4034.39,
-              4037.7,
-              3976.29
+              4031.42,
+              4032.43,
+              4032.22
             ]
           },
           "H": {
-            "p50": 3901.89,
-            "p95": 4161.83,
+            "p50": 4037.48,
+            "p95": 4053.52,
             "samples": [
-              4046.3,
-              3901.89,
-              3468.87
+              4046.39,
+              4037.48,
+              2901.63
             ]
           },
           "H2": {
-            "p50": 4028.37,
-            "p95": 4039.73,
+            "p50": 4033.97,
+            "p95": 4035.36,
             "samples": [
-              3308.04,
-              4034.68,
-              4028.37
+              4030.56,
+              4033.97,
+              4034.74
             ]
           },
           "I": {
-            "p50": 8.58,
-            "p95": 33.67,
+            "p50": 8.7,
+            "p95": 32.62,
             "samples": [
-              22.52,
-              8.56,
-              8.58
+              21.99,
+              8.7,
+              8.57
             ]
           },
           "J": {
-            "p50": 7375.74,
-            "p95": 7392.57,
+            "p50": 6669.97,
+            "p95": 7521.53,
             "samples": [
-              6618.01,
-              7385.09,
-              7375.74
+              6669.97,
+              6429.64,
+              7143.06
             ]
           },
           "K": {
-            "p50": 8325.46,
-            "p95": 8846.85,
+            "p50": 8728.2,
+            "p95": 10229.17,
             "samples": [
-              6487.15,
-              8615.12,
-              8325.46
+              8250.93,
+              8728.2,
+              9562.07
             ]
           },
           "L": {
-            "p50": 6817.33,
-            "p95": 8764.88,
+            "p50": 2143.77,
+            "p95": 2465.75,
             "samples": [
-              6817.33,
-              5567.44,
-              7899.3
+              2143.77,
+              1783.43,
+              2322.65
             ]
           },
           "M": {
-            "p50": 91.95,
-            "p95": 94.94,
+            "p50": 81.86,
+            "p95": 86.63,
             "samples": [
-              91.58,
-              91.95,
-              93.61
+              84.51,
+              81.86,
+              81.12
             ]
           },
           "N": {
-            "p50": 4033.65,
-            "p95": 4040.33,
+            "p50": 3926.34,
+            "p95": 4147.07,
             "samples": [
-              4037.36,
-              4033.65,
-              4033.25
+              4048.97,
+              3779.23,
+              3926.34
             ]
           },
           "O": {
-            "p50": 3460.29,
-            "p95": 4491.24,
+            "p50": 3679.29,
+            "p95": 4333.12,
             "samples": [
-              2734.45,
-              4033.04,
-              3460.29
+              4042.53,
+              3157.8,
+              3679.29
             ]
           }
         },
         "production": {
           "A": {
-            "p50": 1245.39,
-            "p95": 1306.48,
+            "p50": 1341.98,
+            "p95": 2220.7,
             "samples": [
-              1238.61,
-              1245.39,
-              1279.33
+              1341.98,
+              1263.64,
+              1830.16
             ]
           },
           "B": {
-            "p50": 8550.4,
-            "p95": 10251.83,
+            "p50": 8592.53,
+            "p95": 9099.99,
             "samples": [
-              8174.61,
-              9495.64,
-              8550.4
+              8874.45,
+              8250.06,
+              8592.53
             ]
           },
           "C": {
-            "p50": 7458.1,
-            "p95": 8312.56,
+            "p50": 6401.64,
+            "p95": 6527.19,
             "samples": [
-              7152.2,
-              7932.8,
-              7458.1
+              6252.95,
+              6401.64,
+              6471.39
             ]
           },
           "D": {
-            "p50": 9393.43,
-            "p95": 13522.47,
+            "p50": 9370.49,
+            "p95": 10528.61,
             "samples": [
-              8691.73,
-              11687.34,
-              9393.43
+              7941.75,
+              9370.49,
+              10013.89
             ]
           },
           "E": {
-            "p50": 11699.53,
-            "p95": 14966.6,
+            "p50": 12115.01,
+            "p95": 15535.19,
             "samples": [
-              11699.53,
-              13514.57,
-              5347.3
+              12115.01,
+              14015.11,
+              12063.13
             ]
           },
           "F": {
-            "p50": 3059.61,
-            "p95": 7150.06,
+            "p50": 3590.23,
+            "p95": 3900.95,
             "samples": [
-              2631.73,
-              5332.08,
-              3059.61
+              2490.0,
+              3590.23,
+              3762.85
             ]
           },
           "G": {
-            "p50": 3615.11,
-            "p95": 9490.06,
+            "p50": 8287.81,
+            "p95": 9153.27,
             "samples": [
-              3615.11,
-              6878.97,
-              3570.79
+              8768.62,
+              7686.42,
+              8287.81
             ]
           },
           "G3": {
-            "p50": 3575.18,
-            "p95": 12342.17,
+            "p50": 4469.76,
+            "p95": 5703.28,
             "samples": [
-              8445.73,
-              3575.18,
-              2856.83
+              2489.1,
+              5155.05,
+              4469.76
             ]
           },
           "H": {
-            "p50": 8693.66,
-            "p95": 9686.14,
+            "p50": 8460.61,
+            "p95": 8483.24,
             "samples": [
-              9245.04,
-              4293.06,
-              8693.66
+              8473.18,
+              5873.13,
+              8460.61
             ]
           },
           "H2": {
-            "p50": 5884.31,
-            "p95": 11162.14,
+            "p50": 4784.65,
+            "p95": 12172.46,
             "samples": [
-              5884.31,
-              3854.26,
-              8816.44
+              3932.02,
+              4784.65,
+              8888.99
             ]
           },
           "I": {
-            "p50": 8.72,
-            "p95": 9.46,
+            "p50": 8.55,
+            "p95": 9.16,
             "samples": [
-              8.72,
-              9.13,
-              8.44
+              8.4,
+              8.55,
+              8.89
             ]
           },
           "J": {
-            "p50": 10770.64,
-            "p95": 12923.39,
+            "p50": 8411.3,
+            "p95": 10560.32,
             "samples": [
-              11966.61,
-              10770.64,
-              9972.41
+              8136.66,
+              8411.3,
+              9605.2
             ]
           },
           "K": {
-            "p50": 10471.25,
-            "p95": 22366.78,
+            "p50": 11346.31,
+            "p95": 16484.99,
             "samples": [
-              17079.88,
-              10471.25,
-              8927.3
+              14201.13,
+              10051.4,
+              11346.31
             ]
           },
           "L": {
-            "p50": 12713.67,
-            "p95": 14391.27,
+            "p50": 4927.85,
+            "p95": 5941.83,
             "samples": [
-              11873.96,
-              12713.67,
-              13645.67
+              4927.85,
+              4577.21,
+              5491.17
             ]
           },
           "M": {
-            "p50": 1246.43,
-            "p95": 1269.02,
+            "p50": 1343.7,
+            "p95": 1373.26,
             "samples": [
-              1258.98,
-              1240.24,
-              1246.43
+              1264.61,
+              1360.12,
+              1343.7
             ]
           },
           "N": {
-            "p50": 4951.83,
-            "p95": 6467.72,
+            "p50": 4145.5,
+            "p95": 8912.67,
             "samples": [
-              4941.25,
-              4951.83,
-              5793.99
+              2316.93,
+              6793.93,
+              4145.5
             ]
           },
           "O": {
-            "p50": 5782.36,
-            "p95": 6741.33,
+            "p50": 4315.67,
+            "p95": 6598.45,
             "samples": [
-              6315.12,
-              4879.97,
-              5782.36
+              3259.51,
+              4315.67,
+              5583.88
             ]
           }
         }
       }
     },
     "memory": {
-      "tracemalloc_peak_mb": 63.09,
-      "tracemalloc_current_mb": 48.45,
-      "ru_maxrss_mb": 145.69
+      "tracemalloc_peak_mb": 63.11,
+      "tracemalloc_current_mb": 48.46,
+      "ru_maxrss_mb": 150.63
     }
   },
   "unverified": [
