@@ -57,6 +57,7 @@ git-autosync --no-push            # 只本地提交
 git-autosync -m "fix(adb): ..."   # 指定 commit 信息
 git-autosync --test "make test" --build "python3 -m compileall adbtv"
 git-autosync --skip-tests         # 应急跳过测试（不建议）
+git-autosync --only docs/x.md --only adbtv/y.py   # 只提交指定路径（其他未完成改动不受影响）
 ```
 
 ## 禁止事项

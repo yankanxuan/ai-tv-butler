@@ -10,11 +10,13 @@
 git-autosync --repo ~/ai-tv-butler
 ```
 
-- 远程：`origin` → `git@github.com:czg86389-hub/ai-tv-butler.git`（SSH，密钥 `~/.ssh/id_ed25519_github`）
+- 远程：`origin` → `git@github.com:yankanxuan/ai-tv-butler.git`（SSH，密钥 `~/.ssh/id_ed25519_github`）
 - 自动提交目标分支：`agent/dev`（首次会自动创建并 `-u` 关联）
 - `main` 是稳定版本，**永不自动提交/推送**，由人工合并
 - 测试入口 `make test`（`tests/test_suite.py` + `unittest discover`），构建检查 `python3 -m compileall adbtv`
 - 报告输出：`~/dsh-autosync/reports/`
+- 若同时有其他改动（其他会话/人工未完成的修改）不该被提交，用 `--only` 限定路径：
+  `git-autosync --only docs/x.md --only adbtv/y.py`
 
 ### 硬性禁止
 
