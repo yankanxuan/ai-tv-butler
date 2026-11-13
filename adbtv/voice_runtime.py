@@ -866,10 +866,13 @@ class VoiceDialogue:
             if pending_question:
                 model_context['waiting_question']=pending_question
             decision=self.router.decide(text,model_context)
+            # A resolved reference ("就看刚才那个") is deterministic evidence of
+            # what the user means; it must not be lost because the model asked a
+            # clarifying question or proposed a different work. Explicit
+            # confirmation/denial still wins, and the play path still asks for
+            # confirmation before any ADB action.
             reference=self._reference_decision(tv_id,text)
-            if (reference is not None and decision.route in ('clarify','agent')
-                    and not decision.requires_confirmation
-                    and decision.intent not in ('confirm','deny','play')):
+            if reference is not None and decision.intent not in ('confirm','deny'):
                 decision=reference
             # Clear, finite slot answers are safe even if the model is offline.
             contextual=self._context_decision(self.router.policy_text(text)[0],tv_id,
